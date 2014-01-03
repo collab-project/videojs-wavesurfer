@@ -8,7 +8,6 @@ videojs.Waveform = videojs.Component.extend({
         videojs.Component.call(this, player, options);
 
         // customize controls
-        console.log(this.player().options());
         if (this.player().options().autoplay)
         {
         	this.player().bigPlayButton.hide();
@@ -41,9 +40,7 @@ videojs.Waveform = videojs.Component.extend({
     {
         // set waveform element and dimensions
         opts.container = this.el();
-        opts.height = this.player().height() - (
-            this.player().controlBar.height()
-        );
+        opts.height = this.player().height() - this.player().controlBar.height()
 
         // customize waveform appearance
         this.surfer.init(opts);
@@ -82,14 +79,28 @@ videojs.Waveform = videojs.Component.extend({
     },
 
     /**
-     * 
+     * Updates the current time.
      */
     setCurrentTime: function()
     {
-    	// set current time
-    	var currentTime = this.formatTime(this.surfer.backend.getCurrentTime());
-    	$(this.player().controlBar.currentTimeDisplay.el()).find(
-    	    '.vjs-current-time-display').text(currentTime);
+    	var currentTime = Math.min(this.surfer.backend.getDuration(),
+    		this.surfer.backend.getCurrentTime());
+
+    	// update control
+    	this.player().controlBar.currentTimeDisplay.el(
+    		).children[0].innerHTML = this.formatTime(currentTime, 600);
+    },
+    
+    /**
+     * Updates the duration time.
+     */
+    setDuration: function()
+    {
+        var duration = this.surfer.backend.getDuration();
+
+        // update control
+        this.player().controlBar.durationDisplay.el(
+            ).children[0].innerHTML = this.formatTime(duration, 600);
     },
 
     /**
@@ -97,10 +108,8 @@ videojs.Waveform = videojs.Component.extend({
      */
     onWaveReady: function()
     {
-        // set total time
-        var duration = this.formatTime(this.surfer.backend.getDuration());
-        $(this.player().controlBar.durationDisplay.el()).find(
-        	'.vjs-duration-display').text(duration);
+    	// update duration
+        this.setDuration();
 
         // remove loading spinner
         $(this.player().loadingSpinner.el()).remove();
@@ -116,13 +125,20 @@ videojs.Waveform = videojs.Component.extend({
      */
     onWaveProgress: function(percent)
     {
-    	this.setCurrentTime();
-    	
     	// completed playback
         if (percent >= 1)
         {
-        	// pause player
-        	this.player().pause();
+        	if (!this.player().paused())
+        	{
+        		console.log('asddasdsa');
+        		
+        		// pause player
+            	this.player().pause();
+        	}
+        }
+        else
+        {
+        	this.setCurrentTime();
         }
     },
 
@@ -149,7 +165,7 @@ videojs.Waveform = videojs.Component.extend({
     },
 
     /**
-     * Fired whenever the media begins or resumes playback.
+     * Fired whenever the media in the player begins or resumes playback.
      */
     onPlay: function()
     {
@@ -157,7 +173,7 @@ videojs.Waveform = videojs.Component.extend({
     },
 
     /**
-     * Fired whenever the media has been paused.
+     * Fired whenever the media in the player has been paused.
      */
     onPause: function()
     {
@@ -165,7 +181,7 @@ videojs.Waveform = videojs.Component.extend({
     },
 
     /**
-     * Fired when the volume changes.
+     * Fired when the volume in the player changes.
      */
     onVolumeChange: function()
     {
@@ -181,9 +197,6 @@ videojs.Waveform = videojs.Component.extend({
 
     /**
      * Fired when the current playback position has changed
-     *
-     * During playback this is fired every 15-250 milliseconds,
-     * depending on the playback technology in use.
      */
     onTimeUpdate: function()
     {
@@ -197,43 +210,69 @@ videojs.Waveform = videojs.Component.extend({
     {
         console.warn(error);
     },
-    
+
     /**
-    * Format seconds as a time string, H:MM:SS or M:SS
+    * Format seconds as a time string, H:MM:SS, M:SS or SS:MMM.
+    * 
     * Supplying a guide (in seconds) will force a number of leading zeros
-    * to cover the length of the guide
+    * to cover the length of the guide.
+    * 
     * @param {Number} seconds Number of seconds to be turned into a string
     * @param {Number} guide Number (in seconds) to model the string after
-    * @return {String} Time formatted as H:MM:SS or M:SS
+    * @return {String} Time formatted as H:MM:SS, M:SS or SS:MMM.
     */
     formatTime: function(seconds, guide)
     {
-      // Default to using seconds as guide
-      guide = guide || seconds;
-      var s = Math.floor(seconds % 60),
-          m = Math.floor(seconds / 60 % 60),
-          h = Math.floor(seconds / 3600),
-          gm = Math.floor(guide / 60 % 60),
-          gh = Math.floor(guide / 3600);
+    	// Default to using seconds as guide
+    	guide = guide || seconds;
+    	var s = Math.floor(seconds % 60),
+        	m = Math.floor(seconds / 60 % 60),
+        	h = Math.floor(seconds / 3600),
+        	gm = Math.floor(guide / 60 % 60),
+        	gh = Math.floor(guide / 3600),
+    	    ms = Math.floor((seconds - s) * 1000);
+    	
+    	// handle invalid times
+    	if (isNaN(seconds) || seconds === Infinity)
+    	{
+    		// '-' is false for all relational operators (e.g. <, >=) so this
+    		// setting will add the minimum number of fields specified by the
+    		// guide
+    		h = m = s = ms = '-';
+    	}
 
-      // handle invalid times
-      if (isNaN(seconds) || seconds === Infinity) {
-        // '-' is false for all relational operators (e.g. <, >=) so this setting
-        // will add the minimum number of fields specified by the guide
-        h = m = s = '-';
-      }
+    	// Check if we need to show millseconds
+    	if (s < 3)
+    	{
+    		if (ms < 100)
+    		{
+    			if (ms < 10)
+    			{
+    				ms = '00' + ms;
+    			}
+    			else
+    			{
+    				ms = '0' + ms;
+    			}
+    		}
+			ms = ":" + ms;
+    	}
+    	else
+    	{
+    		ms = '';
+    	}
+    	
+    	// Check if we need to show hours
+    	h = (h > 0 || gh > 0) ? h + ':' : '';
 
-      // Check if we need to show hours
-      h = (h > 0 || gh > 0) ? h + ':' : '';
+    	// If hours are showing, we may need to add a leading zero.
+    	// Always show at least one digit of minutes.
+    	m = (((h || gm >= 10) && m < 10) ? '0' + m : m) + ':';
 
-      // If hours are showing, we may need to add a leading zero.
-      // Always show at least one digit of minutes.
-      m = (((h || gm >= 10) && m < 10) ? '0' + m : m) + ':';
-
-      // Check if leading zero is need for seconds
-      s = (s < 10) ? '0' + s : s;
-
-      return h + m + s;
+    	// Check if leading zero is need for seconds
+    	s = ((s < 10) ? '0' + s : s);
+    	
+    	return h + m + s + ms;
     }
 
 });
