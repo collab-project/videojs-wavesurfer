@@ -3,20 +3,20 @@
  */
 videojs.Waveform = videojs.Component.extend({
 
-	init: function(player, options)
-    {
-        videojs.Component.call(this, player, options);
+    init: function(player, options)
+	{
+	    videojs.Component.call(this, player, options);
 
         // customize controls
         if (this.player().options().autoplay)
         {
-        	this.player().bigPlayButton.hide();
+            this.player().bigPlayButton.hide();
         }
         if (this.player().options().controls)
-    	{
-        	this.player().controlBar.show();
+        {
+            this.player().controlBar.show();
             this.player().controlBar.progressControl.hide();
-    	}
+        }
 
         // waveform events
         this.surfer = Object.create(WaveSurfer);
@@ -83,12 +83,14 @@ videojs.Waveform = videojs.Component.extend({
      */
     setCurrentTime: function()
     {
-        var currentTime = Math.min(this.surfer.backend.getDuration(),
-    	    this.surfer.backend.getCurrentTime());
+        var duration = this.surfer.backend.getDuration();
+        var currentTime = this.surfer.backend.getCurrentTime()
+        var time = Math.min(currentTime, duration);
 
         // update control
         this.player().controlBar.currentTimeDisplay.el(
-    	    ).children[0].innerHTML = this.formatTime(currentTime, 600);
+    	    ).children[0].innerHTML = this.formatTime(
+    	    time, duration);
     },
     
     /**
@@ -100,7 +102,8 @@ videojs.Waveform = videojs.Component.extend({
 
         // update control
         this.player().controlBar.durationDisplay.el(
-            ).children[0].innerHTML = this.formatTime(duration, 600);
+            ).children[0].innerHTML = this.formatTime(
+            duration, duration);
     },
 
     /**
@@ -112,7 +115,7 @@ videojs.Waveform = videojs.Component.extend({
         this.setDuration();
 
         // remove loading spinner
-        $(this.player().loadingSpinner.el()).remove();
+        this.player().removeChild(this.player().loadingSpinner);
 
         // auto-play when ready
         this.play();
@@ -128,11 +131,11 @@ videojs.Waveform = videojs.Component.extend({
         // completed playback
         if (percent >= 1)
         {
-        	if (!this.player().paused())
-        	{
-        	    // pause player
+            if (!this.player().paused())
+            {
+                // pause player
                 this.player().pause();
-        	}
+            }
         }
         else
         {
@@ -183,18 +186,18 @@ videojs.Waveform = videojs.Component.extend({
      */
     onVolumeChange: function()
     {
-    	var volume = this.player().volume();
-    	if (this.player().muted())
-    	{
-    		// muted
-    		volume = 0;
-    	}
+        var volume = this.player().volume();
+        if (this.player().muted())
+        {
+            // muted volume
+            volume = 0;
+        }
 
-    	this.setVolume(volume);
+        this.setVolume(volume);
     },
 
     /**
-     * Fired when the current playback position has changed
+     * Fired when the current playback position has changed.
      */
     onTimeUpdate: function()
     {
@@ -221,56 +224,56 @@ videojs.Waveform = videojs.Component.extend({
     */
     formatTime: function(seconds, guide)
     {
-    	// Default to using seconds as guide
-    	guide = guide || seconds;
-    	var s = Math.floor(seconds % 60),
-        	m = Math.floor(seconds / 60 % 60),
-        	h = Math.floor(seconds / 3600),
-        	gm = Math.floor(guide / 60 % 60),
-        	gh = Math.floor(guide / 3600),
-    	    ms = Math.floor((seconds - s) * 1000);
+        // Default to using seconds as guide
+        guide = guide || seconds;
+        var s = Math.floor(seconds % 60),
+            m = Math.floor(seconds / 60 % 60),
+            h = Math.floor(seconds / 3600),
+            gm = Math.floor(guide / 60 % 60),
+            gh = Math.floor(guide / 3600),
+            ms = Math.floor((seconds - s) * 1000);
 
-    	// handle invalid times
-    	if (isNaN(seconds) || seconds === Infinity)
-    	{
-    		// '-' is false for all relational operators (e.g. <, >=) so this
-    		// setting will add the minimum number of fields specified by the
-    		// guide
-    		h = m = s = ms = '-';
+        // handle invalid times
+        if (isNaN(seconds) || seconds === Infinity)
+        {
+            // '-' is false for all relational operators (e.g. <, >=) so this
+            // setting will add the minimum number of fields specified by the
+            // guide
+            h = m = s = ms = '-';
     	}
 
-    	// Check if we need to show millseconds
-    	if (s < 3)
-    	{
-    		if (ms < 100)
-    		{
-    			if (ms < 10)
+        // Check if we need to show millseconds
+        if (guide > 0 && guide < 3)
+        {
+            if (ms < 100)
+            {
+                if (ms < 10)
+                {
+                    ms = '00' + ms;
+                }
+                else
     			{
-    				ms = '00' + ms;
+                    ms = '0' + ms;
     			}
-    			else
-    			{
-    				ms = '0' + ms;
-    			}
-    		}
-    		ms = ":" + ms;
-    	}
-    	else
-    	{
-    		ms = '';
-    	}
+            }
+            ms = ":" + ms;
+        }
+        else
+        {
+            ms = '';
+        }
 
-    	// Check if we need to show hours
-    	h = (h > 0 || gh > 0) ? h + ':' : '';
+        // Check if we need to show hours
+        h = (h > 0 || gh > 0) ? h + ':' : '';
 
-    	// If hours are showing, we may need to add a leading zero.
-    	// Always show at least one digit of minutes.
-    	m = (((h || gm >= 10) && m < 10) ? '0' + m : m) + ':';
+        // If hours are showing, we may need to add a leading zero.
+        // Always show at least one digit of minutes.
+        m = (((h || gm >= 10) && m < 10) ? '0' + m : m) + ':';
 
-    	// Check if leading zero is need for seconds
-    	s = ((s < 10) ? '0' + s : s);
+        // Check if leading zero is need for seconds
+        s = ((s < 10) ? '0' + s : s);
 
-    	return h + m + s + ms;
+        return h + m + s + ms;
     }
 
 });

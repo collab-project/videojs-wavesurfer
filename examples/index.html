@@ -6,9 +6,18 @@
   <link href="http://vjs.zencdn.net/4.3.0/video-js.css" rel="stylesheet">
 
   <script src="http://wavesurfer.fm/build/wavesurfer.min.js"></script>
-  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="http://vjs.zencdn.net/4.3.0/video.js"></script>
   <script src="../videojs.wavesurfer.js"></script>
+  
+  <style type="text/css">
+  /* Increase width of time controls so it can display milliseconds
+     XXX: move to plugin */
+  .vjs-default-skin .vjs-current-time,
+  .vjs-default-skin .vjs-duration {
+	  float: left;
+	  width: 6em;
+  }
+  </style>
 </head>
 <body>
 
@@ -33,7 +42,7 @@ var player = videojs('myAudio',
 });
 
 // change player background color
-$(player.el()).css('background-color', '#FFFFFF');
+player.el().style.backgroundColor = "#FFEEFF";
 </script>
 
 </body>
