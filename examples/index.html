@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <title>Wavesurfer Plugin for Video.js Example</title>
+
+  <link href="http://vjs.zencdn.net/4.3.0/video-js.css" rel="stylesheet">
+
+  <script src="http://wavesurfer.fm/build/wavesurfer.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="http://vjs.zencdn.net/4.3.0/video.js"></script>
+  <script src="../videojs.wavesurfer.js"></script>
+</head>
+<body>
+
+<audio id="myAudio" class="video-js vjs-default-skin"></audio>
+
+<script>
+var player = videojs('myAudio',
+{
+    "controls": true,
+    "autoplay": true,
+    "width": 600,
+    "height": 300,
+    "plugins": {
+        "wavesurfer": {
+            "src": 'media/heres_johnny.wav',
+            "waveColor": 'grey',
+            "progressColor": 'black',
+            "cursorColor": 'black',
+            "markerWidth": 2
+        }
+    }
+});
+
+// change player background color
+$(player.el()).css('background-color', '#FFFFFF');
+</script>
+
+</body>
+</html>

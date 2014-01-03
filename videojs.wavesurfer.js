@@ -8,9 +8,16 @@ videojs.Waveform = videojs.Component.extend({
         videojs.Component.call(this, player, options);
 
         // customize controls
-        this.player().bigPlayButton.hide();
-        this.player().controlBar.show();
-        this.player().controlBar.progressControl.hide();
+        console.log(this.player().options());
+        if (this.player().options().autoplay)
+        {
+        	this.player().bigPlayButton.hide();
+        }
+        if (this.player().options().controls)
+    	{
+        	this.player().controlBar.show();
+            this.player().controlBar.progressControl.hide();
+    	}
 
         // waveform events
         this.surfer = Object.create(WaveSurfer);
@@ -252,9 +259,6 @@ function wavesurferPlugin(options)
     
     // add waveform to dom
     this.el().appendChild(this.waveform.el());
-
-    // change player background
-    $(this.el()).css('background-color', '#FFFFFF');
 };
 
 videojs.plugin('wavesurfer', wavesurferPlugin);
