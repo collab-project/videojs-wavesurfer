@@ -75,7 +75,7 @@ videojs.Waveform = videojs.Component.extend({
      */
     setVolume: function(volume)
     {
-    	this.surfer.setVolume(volume);
+        this.surfer.setVolume(volume);
     },
 
     /**
@@ -83,12 +83,12 @@ videojs.Waveform = videojs.Component.extend({
      */
     setCurrentTime: function()
     {
-    	var currentTime = Math.min(this.surfer.backend.getDuration(),
-    		this.surfer.backend.getCurrentTime());
+        var currentTime = Math.min(this.surfer.backend.getDuration(),
+    	    this.surfer.backend.getCurrentTime());
 
-    	// update control
-    	this.player().controlBar.currentTimeDisplay.el(
-    		).children[0].innerHTML = this.formatTime(currentTime, 600);
+        // update control
+        this.player().controlBar.currentTimeDisplay.el(
+    	    ).children[0].innerHTML = this.formatTime(currentTime, 600);
     },
     
     /**
@@ -108,7 +108,7 @@ videojs.Waveform = videojs.Component.extend({
      */
     onWaveReady: function()
     {
-    	// update duration
+        // update duration
         this.setDuration();
 
         // remove loading spinner
@@ -125,20 +125,18 @@ videojs.Waveform = videojs.Component.extend({
      */
     onWaveProgress: function(percent)
     {
-    	// completed playback
+        // completed playback
         if (percent >= 1)
         {
         	if (!this.player().paused())
         	{
-        		console.log('asddasdsa');
-        		
-        		// pause player
-            	this.player().pause();
+        	    // pause player
+                this.player().pause();
         	}
         }
         else
         {
-        	this.setCurrentTime();
+            this.setCurrentTime();
         }
     },
 
@@ -147,7 +145,7 @@ videojs.Waveform = videojs.Component.extend({
      */
     onWaveSeek: function()
     {
-    	this.setCurrentTime();
+        this.setCurrentTime();
     },
 
     /**
@@ -155,7 +153,7 @@ videojs.Waveform = videojs.Component.extend({
      */
     onFirstPlay: function()
     {
-    	var options = this.options().options;
+        var options = this.options().options;
 
         // init waveform
         this.initialize(options);
@@ -177,7 +175,7 @@ videojs.Waveform = videojs.Component.extend({
      */
     onPause: function()
     {
-    	this.pause();
+        this.pause();
     },
 
     /**
@@ -200,7 +198,7 @@ videojs.Waveform = videojs.Component.extend({
      */
     onTimeUpdate: function()
     {
-    	this.setCurrentTime();
+        this.setCurrentTime();
     },
 
     /**
@@ -231,7 +229,7 @@ videojs.Waveform = videojs.Component.extend({
         	gm = Math.floor(guide / 60 % 60),
         	gh = Math.floor(guide / 3600),
     	    ms = Math.floor((seconds - s) * 1000);
-    	
+
     	// handle invalid times
     	if (isNaN(seconds) || seconds === Infinity)
     	{
@@ -255,13 +253,13 @@ videojs.Waveform = videojs.Component.extend({
     				ms = '0' + ms;
     			}
     		}
-			ms = ":" + ms;
+    		ms = ":" + ms;
     	}
     	else
     	{
     		ms = '';
     	}
-    	
+
     	// Check if we need to show hours
     	h = (h > 0 || gh > 0) ? h + ':' : '';
 
@@ -271,7 +269,7 @@ videojs.Waveform = videojs.Component.extend({
 
     	// Check if leading zero is need for seconds
     	s = ((s < 10) ? '0' + s : s);
-    	
+
     	return h + m + s + ms;
     }
 
