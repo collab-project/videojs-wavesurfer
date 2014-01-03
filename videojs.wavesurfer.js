@@ -3,9 +3,12 @@
  */
 videojs.Waveform = videojs.Component.extend({
 
+    /**
+     * 
+     */
     init: function(player, options)
-	{
-	    videojs.Component.call(this, player, options);
+    {
+        videojs.Component.call(this, player, options);
 
         // customize controls
         if (this.player().options().autoplay)
@@ -35,6 +38,8 @@ videojs.Waveform = videojs.Component.extend({
 
     /**
      * Initializes the waveform.
+     * 
+     * @param opts: 
      */
     initialize: function(opts)
     {
@@ -72,6 +77,8 @@ videojs.Waveform = videojs.Component.extend({
 
     /**
      * Set the current volume of the media.
+     * 
+     * @param volume: The new volume level.
      */
     setVolume: function(volume)
     {
@@ -89,8 +96,8 @@ videojs.Waveform = videojs.Component.extend({
 
         // update control
         this.player().controlBar.currentTimeDisplay.el(
-    	    ).children[0].innerHTML = this.formatTime(
-    	    time, duration);
+            ).children[0].innerHTML = this.formatTime(
+            time, duration);
     },
     
     /**
@@ -213,14 +220,14 @@ videojs.Waveform = videojs.Component.extend({
     },
 
     /**
-    * Format seconds as a time string, H:MM:SS, M:SS or SS:MMM.
+    * Format seconds as a time string, H:MM:SS, M:SS or M:SS:MMM.
     * 
     * Supplying a guide (in seconds) will force a number of leading zeros
     * to cover the length of the guide.
     * 
     * @param {Number} seconds Number of seconds to be turned into a string
     * @param {Number} guide Number (in seconds) to model the string after
-    * @return {String} Time formatted as H:MM:SS, M:SS or SS:MMM.
+    * @return {String} Time formatted as H:MM:SS, M:SS or M:SS:MMM.
     */
     formatTime: function(seconds, guide)
     {
@@ -240,7 +247,7 @@ videojs.Waveform = videojs.Component.extend({
             // setting will add the minimum number of fields specified by the
             // guide
             h = m = s = ms = '-';
-    	}
+        }
 
         // Check if we need to show millseconds
         if (guide > 0 && guide < 3)
@@ -252,9 +259,9 @@ videojs.Waveform = videojs.Component.extend({
                     ms = '00' + ms;
                 }
                 else
-    			{
+                {
                     ms = '0' + ms;
-    			}
+                }
             }
             ms = ":" + ms;
         }
