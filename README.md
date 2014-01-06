@@ -20,3 +20,32 @@ in your page:
 
     <script src='videojs.wavesurfer.js'></script>
 
+Include an `audio` tag:
+
+    <audio id="myAudio" class="video-js vjs-default-skin"></audio>
+
+Configure the player using the video.js
+[options](https://github.com/videojs/video.js/blob/master/docs/guides/options.md),
+and enable the plugin by adding a `wavesurfer` entry with the related wavesurfer.js
+[options](https://github.com/katspaugh/wavesurfer.js#options):
+
+    var player = videojs('myAudio',
+    {
+        "controls": true,
+        "autoplay": true,
+        "loop": false,
+        "width": 600,
+        "height": 300,
+        "plugins": {
+            "wavesurfer": {
+                "src": 'media/heres_johnny.wav',
+                "waveColor": 'grey',
+                "progressColor": 'black',
+                "cursorColor": 'black',
+                "markerWidth": 2
+            }
+        }
+    });
+
+ Notice the `src` option for the plugin; this setting is used to specify the
+ URL of the audio file.
