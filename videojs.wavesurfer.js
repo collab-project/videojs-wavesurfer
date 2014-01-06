@@ -4,12 +4,22 @@
 videojs.Waveform = videojs.Component.extend({
 
     /**
+     * The constructor function for the class.
      * 
+     * @param options: Player options.
+     * @param ready: Ready callback function.
      */
-    init: function(player, options)
+    init: function(player, options, ready)
     {
-        videojs.Component.call(this, player, options);
+        // Run base component initializing with new options.
+        videojs.Component.call(this, player, options, ready);
 
+        // indicates the number of seconds that is considered
+        // the boundary value for displaying milliseconds in the
+        // time controls. An audio clip with a total length of
+        // 2 seconds with a msDisplayMax of 3 will be displayed
+        // as M:SS:MMM. Clips longer than msDisplayMax will be
+        // displayed as M:SS or HH:MM:SS.
         this.msDisplayMax = 3;
 
         // customize controls
@@ -46,7 +56,7 @@ videojs.Waveform = videojs.Component.extend({
     /**
      * Initializes the waveform.
      * 
-     * @param opts: 
+     * @param opts: Plugin options.
      */
     initialize: function(opts)
     {
@@ -60,6 +70,8 @@ videojs.Waveform = videojs.Component.extend({
 
     /**
      * Start loading waveform data.
+     * 
+     * @param url: URL of audio file to load.
      */
     load: function(url)
     {
@@ -334,4 +346,5 @@ function wavesurferPlugin(options)
     this.el().appendChild(this.waveform.el());
 };
 
+// register the plugin
 videojs.plugin('wavesurfer', wavesurferPlugin);
