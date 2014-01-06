@@ -23,6 +23,11 @@ videojs.Waveform = videojs.Component.extend({
             this.player().controlBar.progressControl.hide();
         }
 
+        // hide fullscreen control until it's supported by
+        // wavesurfer.js
+        this.player().controlBar.fullscreenToggle.hide();
+        this.player().controlBar.volumeControl.el().style.marginRight = '10px';
+
         // waveform events
         this.surfer = Object.create(WaveSurfer);
         this.surfer.on('ready', this.onWaveReady.bind(this));
