@@ -45,7 +45,7 @@ videojs.Waveform = videojs.Component.extend({
     {
         // set waveform element and dimensions
         opts.container = this.el();
-        opts.height = this.player().height() - this.player().controlBar.height()
+        opts.height = this.player().height() - this.player().controlBar.height();
 
         // customize waveform appearance
         this.surfer.init(opts);
@@ -138,10 +138,21 @@ videojs.Waveform = videojs.Component.extend({
         // completed playback
         if (percent >= 1)
         {
+            // check if player isn't paused already
             if (!this.player().paused())
             {
-                // pause player
-                this.player().pause();
+                // check if loop is enabled
+                if (this.player().options().loop)
+                {
+                    // rewind and play
+                    this.surfer.skipBackward();
+                    this.play();
+                }
+                else
+                {
+                    // pause player
+                    this.player().pause();
+                }
             }
         }
         else
