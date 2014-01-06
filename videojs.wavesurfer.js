@@ -10,6 +10,8 @@ videojs.Waveform = videojs.Component.extend({
     {
         videojs.Component.call(this, player, options);
 
+        this.msDisplayMax = 3;
+
         // customize controls
         if (this.player().options().autoplay)
         {
@@ -99,7 +101,7 @@ videojs.Waveform = videojs.Component.extend({
             ).children[0].innerHTML = this.formatTime(
             time, duration);
     },
-    
+
     /**
      * Updates the duration time.
      */
@@ -120,6 +122,14 @@ videojs.Waveform = videojs.Component.extend({
     {
         // update duration
         this.setDuration();
+
+        // make sure the size of time controls is large enough to
+        // display milliseconds
+        if (this.surfer.backend.getDuration() < this.msDisplayMax)
+        {
+            this.player().controlBar.durationDisplay.el().style.width = 
+                this.player().controlBar.currentTimeDisplay.el().style.width = '6em';
+        }
 
         // remove loading spinner
         this.player().removeChild(this.player().loadingSpinner);
@@ -260,8 +270,8 @@ videojs.Waveform = videojs.Component.extend({
             h = m = s = ms = '-';
         }
 
-        // Check if we need to show millseconds
-        if (guide > 0 && guide < 3)
+        // Check if we need to show milliseconds
+        if (guide > 0 && guide < this.msDisplayMax)
         {
             if (ms < 100)
             {
