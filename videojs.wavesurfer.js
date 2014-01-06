@@ -159,8 +159,8 @@ videojs.Waveform = videojs.Component.extend({
                 // check if loop is enabled
                 if (this.player().options().loop)
                 {
-                    // rewind and play
-                    this.surfer.skipBackward();
+                    // stop and play
+                    this.surfer.stop();
                     this.play();
                 }
                 else
