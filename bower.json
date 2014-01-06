@@ -1,0 +1,7 @@
+{
+  "name"          : "videojs-wavesurfer",
+  "version"       : "0.1",
+  "homepage"      : "https://github.com/collab-project/videojs-wavesurfer",
+  "main"          : "videojs.wavesurfer.js",
+  "license"       : "MIT"
+}
