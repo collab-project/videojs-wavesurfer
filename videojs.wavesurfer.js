@@ -104,13 +104,22 @@
         {
             this.surfer.play();
         },
-        
+
         /**
          * Pauses playback.
          */
         pause: function()
         {
             this.surfer.pause();
+        },
+
+        /**
+         * Remove the player and waveform.
+         */
+        destroy: function()
+        {
+            this.surfer.destroy();
+            this.player().dispose();
         },
 
         /**
