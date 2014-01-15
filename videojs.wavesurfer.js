@@ -235,7 +235,10 @@
             this.initialize(options);
 
             // start loading
-            this.load(options.src);
+            if (options.src != undefined)
+            {
+                this.load(options.src);
+            }
         },
 
         /**
