@@ -28,6 +28,8 @@
             // run base component initializing with new options.
             videojs.Component.call(this, player, options, ready);
 
+            this.waveReady = false;
+
             // indicates the number of seconds that is considered
             // the boundary value for displaying milliseconds in the
             // time controls. An audio clip with a total length of
@@ -165,6 +167,8 @@
          */
         onWaveReady: function()
         {
+            this.waveReady = true;
+
             // update duration
             this.setDuration();
 
@@ -246,7 +250,11 @@
          */
         onPlay: function()
         {
-            this.play();
+            // don't start playing until waveform's ready
+            if (this.waveReady)
+            {
+                this.play();
+            }
         },
 
         /**
