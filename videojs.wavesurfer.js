@@ -92,11 +92,19 @@
         /**
          * Start loading waveform data.
          * 
-         * @param url: URL of audio file to load.
+         * @param url: Either the URL of the audio file, or a Blob or File
+         *             object.
          */
         load: function(url)
         {
-            this.surfer.load(url);
+            if (url instanceof Blob || url instanceof File)
+            {
+                this.surfer.loadArrayBuffer(url);
+            }
+            else
+            {
+                this.surfer.load(url);
+            }
         },
 
         /**
