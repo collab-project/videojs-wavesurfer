@@ -54,7 +54,7 @@
                 });
             }
 
-            // hide fullscreen control until it's supported by
+            // hide fullscreen control until it's easier to implement with
             // wavesurfer.js
             this.player().controlBar.fullscreenToggle.hide();
             this.player().controlBar.volumeControl.el().style.marginRight = '15px';
@@ -63,6 +63,7 @@
             this.surfer = Object.create(WaveSurfer);
             this.surfer.on('ready', this.onWaveReady.bind(this));
             this.surfer.on('error', this.onWaveError.bind(this));
+            this.surfer.on('finish', this.onWaveFinish.bind(this));
             this.surfer.on('progress', this.onWaveProgress.bind(this));
             this.surfer.on('seek', this.onWaveSeek.bind(this));
 
@@ -71,7 +72,6 @@
             this.player().on('play', this.onPlay.bind(this));
             this.player().on('pause', this.onPause.bind(this));
             this.player().on('volumechange', this.onVolumeChange.bind(this));
-            this.player().on('timeupdate', this.onTimeUpdate.bind(this));
         },
 
         /**
@@ -143,7 +143,7 @@
         },
 
         /**
-         * Updates the current time.
+         * Updates the player's current time.
          */
         setCurrentTime: function()
         {
@@ -196,36 +196,36 @@
         },
 
         /**
+         * 
+         */
+        onWaveFinish: function()
+        {
+            // check if player isn't paused already
+            if (!this.player().paused())
+            {
+                // check if loop is enabled
+                if (this.player().options().loop)
+                {
+                    // reset waveform
+                    this.surfer.stop();
+                    this.play();
+                }
+                else
+                {
+                    // pause player
+                    this.player().pause();
+                }
+            }
+        },
+
+        /**
          * Fires continuously during audio playback.
          * 
          * @param percent: Percentage played so far.
          */
         onWaveProgress: function(percent)
         {
-            // completed playback
-            if (percent >= 1)
-            {
-                // check if player isn't paused already
-                if (!this.player().paused())
-                {
-                    // check if loop is enabled
-                    if (this.player().options().loop)
-                    {
-                        // stop and play
-                        this.surfer.stop();
-                        this.play();
-                    }
-                    else
-                    {
-                        // pause player
-                        this.player().pause();
-                    }
-                }
-            }
-            else
-            {
-                this.setCurrentTime();
-            }
+            this.setCurrentTime();
         },
 
         /**
@@ -286,14 +286,6 @@
             }
 
             this.setVolume(volume);
-        },
-
-        /**
-         * Fired when the current playback position has changed.
-         */
-        onTimeUpdate: function()
-        {
-            this.setCurrentTime();
         },
 
         /**
