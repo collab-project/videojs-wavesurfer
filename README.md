@@ -59,3 +59,8 @@ var player = videojs("myAudio",
 
 Notice the `src` option for the plugin; this setting is used to specify the
 URL of the audio file.
+
+License
+-------
+
+This work is licensed under the [MIT License](LICENSE).
