@@ -23,7 +23,7 @@ The plugin automatically registers itself when you include `videojs.wavesurfer.j
 in your page:
 
 ```html
-<script src='videojs.wavesurfer.js'></script>
+<script src="videojs.wavesurfer.js"></script>
 ```
 
 Include an `audio` tag:
@@ -35,10 +35,10 @@ Include an `audio` tag:
 Configure the player using the video.js
 [options](https://github.com/videojs/video.js/blob/master/docs/guides/options.md),
 and enable the plugin by adding a `wavesurfer` entry with the related wavesurfer.js
-[options](https://github.com/katspaugh/wavesurfer.js#options):
+[options](https://github.com/katspaugh/wavesurfer.js#wavesurfer-options):
 
 ```javascript
-var player = videojs('myAudio',
+var player = videojs("myAudio",
 {
     "controls": true,
     "autoplay": true,
@@ -47,10 +47,10 @@ var player = videojs('myAudio',
     "height": 300,
     "plugins": {
         "wavesurfer": {
-            "src": 'media/heres_johnny.wav',
-            "waveColor": 'grey',
-            "progressColor": 'black',
-            "cursorColor": 'black',
+            "src": "media/heres_johnny.wav",
+            "waveColor": "grey",
+            "progressColor": "black",
+            "cursorColor": "black",
             "markerWidth": 2
         }
     }
