@@ -10,10 +10,10 @@ Using the Plugin
 
 The plugin depends on wavesurfer.js and video.js:
 
-    <link href="http://vjs.zencdn.net/4.3.0/video-js.css" rel="stylesheet">
+    <link href="http://vjs.zencdn.net/4.6/video-js.css" rel="stylesheet">
     
     <script src="http://wavesurfer.fm/build/wavesurfer.min.js"></script>
-    <script src="http://vjs.zencdn.net/4.3.0/video.js"></script>
+    <script src="http://vjs.zencdn.net/4.6/video.js"></script>
 
 The plugin automatically registers itself when you include `videojs.wavesurfer.js`
 in your page:
