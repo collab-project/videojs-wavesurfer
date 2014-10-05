@@ -52,6 +52,10 @@
                 {
                    this.player().userActive(true);
                 });
+
+                // videojs automatically hides the controls when no valid 'source' element
+                // is included in the 'audio' tag. Don't.
+                this.player().controlBar.show();
             }
 
             // hide fullscreen control until it's easier to implement with
@@ -68,10 +72,29 @@
             this.surfer.on('seek', this.onWaveSeek.bind(this));
 
             // player events
-            this.player().on('firstplay', this.onFirstPlay.bind(this));
             this.player().on('play', this.onPlay.bind(this));
             this.player().on('pause', this.onPause.bind(this));
             this.player().on('volumechange', this.onVolumeChange.bind(this));
+
+            // kick things off
+            this.startPlayers();
+        },
+
+        /**
+         * Start the players.
+         */
+        startPlayers: function()
+        {
+            var options = this.options().options;
+
+            // init waveform
+            this.initialize(options);
+
+            // start loading
+            if (options.src != undefined)
+            {
+                this.load(options.src);
+            }
         },
 
         /**
@@ -121,6 +144,8 @@
         pause: function()
         {
             this.surfer.pause();
+
+            this.setCurrentTime();
         },
 
         /**
@@ -234,23 +259,6 @@
         onWaveSeek: function()
         {
             this.setCurrentTime();
-        },
-
-        /**
-         * Fired the first time a clip is played.
-         */
-        onFirstPlay: function()
-        {
-            var options = this.options().options;
-
-            // init waveform
-            this.initialize(options);
-
-            // start loading
-            if (options.src != undefined)
-            {
-                this.load(options.src);
-            }
         },
 
         /**
