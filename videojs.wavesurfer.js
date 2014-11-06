@@ -214,6 +214,9 @@
             // update duration
             this.setDuration();
 
+            // prevent horizontal scrollbar appearing
+            this.surfer.container.firstChild.style.overflowX = "hidden";
+
             // make sure the size of time controls is large enough to
             // display milliseconds
             if (this.surfer.backend.getDuration() < this.msDisplayMax)
