@@ -69,7 +69,7 @@
             this.surfer.on('ready', this.onWaveReady.bind(this));
             this.surfer.on('error', this.onWaveError.bind(this));
             this.surfer.on('finish', this.onWaveFinish.bind(this));
-            this.surfer.on('progress', this.onWaveProgress.bind(this));
+            this.surfer.on('audioprocess', this.onWaveProgress.bind(this));
             this.surfer.on('seek', this.onWaveSeek.bind(this));
 
             // player events
