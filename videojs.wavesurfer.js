@@ -29,6 +29,7 @@
             videojs.Component.call(this, player, options, ready);
 
             this.waveReady = false;
+            this.waveFinished = false;
 
             // indicates the number of seconds that is considered
             // the boundary value for displaying milliseconds in the
@@ -143,7 +144,14 @@
          */
         pause: function()
         {
-            this.surfer.pause();
+        	if (!this.waveFinished)
+        	{
+        		this.surfer.pause();
+        	}
+        	else
+        	{
+        		this.waveFinished = false;
+        	}
 
             this.setCurrentTime();
         },
@@ -201,6 +209,7 @@
         onWaveReady: function()
         {
             this.waveReady = true;
+            this.waveFinished = false;
 
             // update duration
             this.setDuration();
@@ -221,7 +230,7 @@
         },
 
         /**
-         * 
+         * Fires when audio playback completed.
          */
         onWaveFinish: function()
         {
@@ -237,6 +246,9 @@
                 }
                 else
                 {
+                	// finished
+                	this.waveFinished = true;
+
                     // pause player
                     this.player().pause();
                 }
