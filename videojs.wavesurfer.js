@@ -59,9 +59,6 @@
                 this.player().controlBar.show();
             }
 
-            // hide fullscreen control until it's easier to implement with
-            // wavesurfer.js
-            this.player().controlBar.fullscreenToggle.hide();
             this.player().controlBar.volumeControl.el().style.marginRight = '15px';
 
             // waveform events
@@ -76,6 +73,7 @@
             this.player().on('play', this.onPlay.bind(this));
             this.player().on('pause', this.onPause.bind(this));
             this.player().on('volumechange', this.onVolumeChange.bind(this));
+            this.player().on('fullscreenchange', this.onScreenChange.bind(this));
 
             // kick things off
             this.startPlayers();
@@ -105,6 +103,8 @@
          */
         initialize: function(opts)
         {
+            this.originalHeight = this.player().options().height;
+
             // set waveform element and dimensions
             opts.container = this.el();
             opts.height = this.player().height() - this.player().controlBar.height();
@@ -186,7 +186,7 @@
 
             // update control
             this.player().controlBar.currentTimeDisplay.el(
-                ).children[0].innerHTML = this.formatTime(
+                ).firstChild.innerHTML = this.formatTime(
                 time, duration);
         },
 
@@ -199,7 +199,7 @@
 
             // update control
             this.player().controlBar.durationDisplay.el(
-                ).children[0].innerHTML = this.formatTime(
+                ).firstChild.innerHTML = this.formatTime(
                 duration, duration);
         },
 
@@ -309,6 +309,37 @@
             }
 
             this.setVolume(volume);
+        },
+
+        /**
+         * Fired when the player switches in or out of fullscreen mode.
+         */
+        onScreenChange: function()
+        {
+            var isFullscreen = this.player().isFullscreen();
+            var newHeight;
+
+            if (!isFullscreen)
+            {
+                // restore original height
+                newHeight = this.originalHeight;
+            }
+            else
+            {
+                // fullscreen height
+                newHeight = window.outerHeight;
+            }
+
+            // destroy old drawing
+            this.surfer.drawer.destroy();
+
+            // set new height
+            this.surfer.params.height = newHeight - this.player().controlBar.height();
+            this.surfer.createDrawer();
+
+            // redraw
+            this.surfer.drawBuffer();
+            
         },
 
         /**
