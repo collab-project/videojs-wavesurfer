@@ -13,10 +13,10 @@ Using the Plugin
 The plugin depends on wavesurfer.js and video.js:
 
 ```html
-<link href="http://vjs.zencdn.net/4.6/video-js.css" rel="stylesheet">
+<link href="http://vjs.zencdn.net/4.10.2/video-js.css" rel="stylesheet">
 
 <script src="http://wavesurfer.fm/build/wavesurfer.min.js"></script>
-<script src="http://vjs.zencdn.net/4.6/video.js"></script>
+<script src="http://vjs.zencdn.net/4.10.2/video.js"></script>
 ```
 
 The plugin automatically registers itself when you include `videojs.wavesurfer.js`
@@ -51,7 +51,7 @@ var player = videojs("myAudio",
             "waveColor": "grey",
             "progressColor": "black",
             "cursorColor": "black",
-            "markerWidth": 2
+            "hideScrollbar": true
         }
     }
 });
