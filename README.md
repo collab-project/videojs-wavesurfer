@@ -10,9 +10,9 @@ library.
 Using the Plugin
 ----------------
 
-You can use [bower](http://bower.io) to install the plugin
-(`bower install videojs-wavesurfer`), or simply download and include
-`videojs.wavesurfer.js` in your project.
+You can use [bower](http://bower.io) (`bower install videojs-wavesurfer`) or
+[npm](https://www.npmjs.org) (`npm install videojs-wavesurfer`) to install the
+plugin, or download and include `videojs.wavesurfer.js` in your project.
 
 The plugin depends on the wavesurfer.js and video.js packages:
 
