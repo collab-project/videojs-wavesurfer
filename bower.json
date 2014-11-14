@@ -1,7 +1,22 @@
 {
-  "name"          : "videojs-wavesurfer",
-  "version"       : "0.3",
-  "homepage"      : "https://github.com/collab-project/videojs-wavesurfer",
-  "main"          : "videojs.wavesurfer.js",
-  "license"       : "MIT"
+  "name": "videojs-wavesurfer",
+  "version": "0.3.0",
+  "homepage": "https://github.com/collab-project/videojs-wavesurfer",
+  "description": "video.js plugin that adds a navigable waveform for audio files.",
+  "main": "videojs.wavesurfer.js",
+  "keywords": [
+    "waveform",
+    "audio",
+    "wavesurfer",
+    "videojs",
+    "player"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
