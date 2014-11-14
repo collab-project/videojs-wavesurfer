@@ -13,10 +13,14 @@
   ],
   "license": "MIT",
   "ignore": [
-    "**/.*",
+    ".gitignore",
     "node_modules",
     "bower_components",
-    "test",
-    "tests"
-  ]
+    "README.md",
+    "examples"
+  ],
+  "dependencies": {
+    "video.js": ">=4.6",
+    "wavesurfer.js": ">=1.0.0"
+  }
 }
