@@ -10,7 +10,7 @@ library.
 Using the Plugin
 ----------------
 
-You can use [bower](https://http://bower.io) to install the plugin
+You can use [bower](http://bower.io) to install the plugin
 (`bower install videojs-wavesurfer`), or simply download and include
 `videojs.wavesurfer.js` in your project.
 
