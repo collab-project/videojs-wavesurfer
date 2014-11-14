@@ -40,10 +40,8 @@
             this.msDisplayMax = 3;
 
             // customize controls
-            if (this.player().options().autoplay)
-            {
-                this.player().bigPlayButton.hide();
-            }
+            this.player().bigPlayButton.hide();
+
             if (this.player().options().controls)
             {
                 this.player().controlBar.progressControl.hide();
@@ -228,8 +226,11 @@
             // remove loading spinner
             this.player().removeChild(this.player().loadingSpinner);
 
-            // auto-play when ready
-            this.play();
+            // auto-play when ready (if enabled)
+            if (this.player().options().autoplay)
+            {
+                this.play();
+            }
         },
 
         /**
