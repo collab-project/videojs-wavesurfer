@@ -1,4 +1,5 @@
 .project
 *.pid
+*.log
 
 examples/media/test
