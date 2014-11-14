@@ -5,12 +5,16 @@ A [video.js](http://www.videojs.com/) plugin that adds a navigable waveform
 for audio files, using the excellent [wavesurfer.js](https://github.com/katspaugh/wavesurfer.js)
 library.
 
-![Alt text](/examples/img/screenshot.png?raw=true "Screenshot")
+![Screenshot](/examples/img/screenshot.png?raw=true "Screenshot")
 
 Using the Plugin
 ----------------
 
-The plugin depends on wavesurfer.js and video.js:
+You can use [bower](https://http://bower.io) to install the plugin
+(`bower install videojs-wavesurfer`), or simply download and include
+`videojs.wavesurfer.js` in your project.
+
+The plugin depends on the wavesurfer.js and video.js packages:
 
 ```html
 <link href="http://vjs.zencdn.net/4.10.2/video-js.css" rel="stylesheet">
