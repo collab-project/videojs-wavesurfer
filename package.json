@@ -20,6 +20,10 @@
     "videojs",
     "player"
   ],
+  "dependencies": {
+    "video.js": ">=4.6",
+    "wavesurfer.js": ">=1.0.0"
+  },
   "author": "",
   "license": "MIT",
   "bugs": {
