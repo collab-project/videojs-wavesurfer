@@ -88,7 +88,7 @@
             this.initialize(options);
 
             // start loading
-            if (options.src != undefined)
+            if (options.src !== undefined)
             {
                 this.load(options.src);
             }
@@ -179,7 +179,7 @@
         setCurrentTime: function()
         {
             var duration = this.surfer.backend.getDuration();
-            var currentTime = this.surfer.backend.getCurrentTime()
+            var currentTime = this.surfer.backend.getCurrentTime();
             var time = Math.min(currentTime, duration);
 
             // update control
