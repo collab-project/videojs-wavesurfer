@@ -178,8 +178,8 @@
          */
         setCurrentTime: function()
         {
-            var duration = this.surfer.backend.getDuration();
-            var currentTime = this.surfer.backend.getCurrentTime();
+            var duration = this.surfer.getDuration();
+            var currentTime = this.surfer.getCurrentTime();
             var time = Math.min(currentTime, duration);
 
             // update control
@@ -193,7 +193,7 @@
          */
         setDuration: function()
         {
-            var duration = this.surfer.backend.getDuration();
+            var duration = this.surfer.getDuration();
 
             // update control
             this.player().controlBar.durationDisplay.el(
@@ -217,7 +217,7 @@
 
             // make sure the size of time controls is large enough to
             // display milliseconds
-            if (this.surfer.backend.getDuration() < this.msDisplayMax)
+            if (this.surfer.getDuration() < this.msDisplayMax)
             {
                 this.player().controlBar.durationDisplay.el().style.width = 
                     this.player().controlBar.currentTimeDisplay.el().style.width = '6em';
