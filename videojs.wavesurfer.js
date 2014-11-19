@@ -65,8 +65,6 @@
                 this.player().controlBar.show();
             }
 
-            this.player().controlBar.volumeControl.el().style.marginRight = '15px';
-
             // waveform events
             this.surfer = Object.create(WaveSurfer);
             this.surfer.on('ready', this.onWaveReady.bind(this));
