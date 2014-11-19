@@ -31,13 +31,21 @@
             this.waveReady = false;
             this.waveFinished = false;
 
-            // indicates the number of seconds that is considered
-            // the boundary value for displaying milliseconds in the
-            // time controls. An audio clip with a total length of
-            // 2 seconds with a msDisplayMax of 3 will be displayed
-            // as M:SS:MMM. Clips longer than msDisplayMax will be
-            // displayed as M:SS or HH:MM:SS.
-            this.msDisplayMax = 3;
+            if (this.options().options.msDisplayMax !== undefined)
+            {
+            	// msDisplayMax indicates the number of seconds that is
+                // considered the boundary value for displaying milliseconds
+                // in the time controls. An audio clip with a total length of
+                // 2 seconds with a msDisplayMax of 3 will be displayed as
+                // M:SS:MMM. Clips longer than msDisplayMax will be displayed
+            	// as M:SS or HH:MM:SS.
+            	this.msDisplayMax = parseFloat(this.options().options.msDisplayMax);
+            }
+            else
+            {
+            	// default
+            	this.msDisplayMax = 3;
+            }
 
             // customize controls
             this.player().bigPlayButton.hide();
@@ -437,7 +445,7 @@
 
         // add waveform to dom
         this.el().appendChild(this.waveform.el());
-    };
+    }
 
     // register the plugin
     videojs.plugin('wavesurfer', wavesurferPlugin);
