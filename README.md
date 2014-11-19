@@ -44,18 +44,18 @@ and enable the plugin by adding a `wavesurfer` entry with the related wavesurfer
 ```javascript
 var player = videojs("myAudio",
 {
-    "controls": true,
-    "autoplay": true,
-    "loop": false,
-    "width": 600,
-    "height": 300,
-    "plugins": {
-        "wavesurfer": {
-            "src": "media/heres_johnny.wav",
-            "waveColor": "grey",
-            "progressColor": "black",
-            "cursorColor": "black",
-            "hideScrollbar": true
+    controls: true,
+    autoplay: true,
+    loop: false,
+    width: 600,
+    height: 300,
+    plugins: {
+        wavesurfer: {
+            src: "media/heres_johnny.wav",
+            waveColor: "grey",
+            progressColor: "black",
+            cursorColor: "black",
+            hideScrollbar: true
         }
     }
 });
