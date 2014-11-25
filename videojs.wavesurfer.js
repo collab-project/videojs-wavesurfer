@@ -63,6 +63,11 @@
                 // videojs automatically hides the controls when no valid 'source' element
                 // is included in the 'audio' tag. Don't.
                 this.player().controlBar.show();
+
+                // disable currentTimeDisplay component that constantly tries to reset the value
+                // to 0
+                this.player().controlBar.currentTimeDisplay.disable();
+                this.player().controlBar.currentTimeDisplay.el().style.display = 'block';
             }
 
             // waveform events
@@ -215,10 +220,6 @@
             this.waveReady = true;
             this.waveFinished = false;
 
-            // update time display
-            this.setCurrentTime();
-            this.setDuration();
-
             // make sure the size of time controls is large enough to
             // display milliseconds
             if (this.surfer.getDuration() < this.msDisplayMax)
@@ -226,6 +227,10 @@
                 this.player().controlBar.durationDisplay.el().style.width = 
                     this.player().controlBar.currentTimeDisplay.el().style.width = '6em';
             }
+
+            // update time display
+            this.setCurrentTime();
+            this.setDuration();
 
             // remove loading spinner
             this.player().removeChild(this.player().loadingSpinner);
