@@ -47,7 +47,8 @@
             	this.msDisplayMax = 3;
             }
 
-
+            // start loading spinner
+            this.player().loadingSpinner.show();
 
             // customize controls
             this.player().bigPlayButton.hide();
