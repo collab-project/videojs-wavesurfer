@@ -47,11 +47,14 @@
             	this.msDisplayMax = 3;
             }
 
+
+
             // customize controls
             this.player().bigPlayButton.hide();
 
             if (this.player().options().controls)
             {
+            	// progress control isn't used by this plugin
                 this.player().controlBar.progressControl.hide();
 
                 // prevent controlbar fadeout
@@ -63,6 +66,9 @@
                 // videojs automatically hides the controls when no valid 'source' element
                 // is included in the 'audio' tag. Don't.
                 this.player().controlBar.show();
+
+                // disable play button until waveform is ready
+                this.player().controlBar.playToggle.hide();
 
                 // disable currentTimeDisplay component that constantly tries to reset the value
                 // to 0
@@ -231,6 +237,9 @@
             // update time display
             this.setCurrentTime();
             this.setDuration();
+
+            // enable and show play button
+            this.player().controlBar.playToggle.show();
 
             // remove loading spinner
             this.player().removeChild(this.player().loadingSpinner);
