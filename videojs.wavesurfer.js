@@ -215,7 +215,8 @@
             this.waveReady = true;
             this.waveFinished = false;
 
-            // update duration
+            // update time display
+            this.setCurrentTime();
             this.setDuration();
 
             // make sure the size of time controls is large enough to
