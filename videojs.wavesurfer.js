@@ -359,7 +359,9 @@
 
             // redraw
             this.surfer.drawBuffer();
-            
+
+            // make sure playhead is restored at right position
+            this.surfer.drawer.progress(this.surfer.backend.getPlayedPercents());
         },
 
         /**
