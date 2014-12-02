@@ -64,17 +64,16 @@
                    this.player().userActive(true);
                 });
 
-                // videojs automatically hides the controls when no valid 'source' element
-                // is included in the 'audio' tag. Don't.
+                // videojs automatically hides the controls when no valid 'source'
+                // element is included in the 'audio' tag. Don't.
                 this.player().controlBar.show();
 
                 // disable play button until waveform is ready
                 this.player().controlBar.playToggle.hide();
 
-                // disable currentTimeDisplay component that constantly tries to reset the value
-                // to 0
-                this.player().controlBar.currentTimeDisplay.disable();
-                this.player().controlBar.currentTimeDisplay.el().style.display = 'block';
+                // disable currentTimeDisplay's 'timeupdate' event listener that
+                // constantly tries to reset the current time value to 0
+                this.player().off('timeupdate');
             }
 
             // waveform events
