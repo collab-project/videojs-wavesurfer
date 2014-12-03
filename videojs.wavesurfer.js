@@ -47,9 +47,6 @@
             	this.msDisplayMax = 3;
             }
 
-            // start loading spinner
-            this.player().loadingSpinner.show();
-
             // customize controls
             this.player().bigPlayButton.hide();
 
@@ -104,10 +101,18 @@
             // init waveform
             this.initialize(options);
 
-            // start loading
             if (options.src !== undefined)
             {
+                // show loading spinner
+                this.player().loadingSpinner.show();
+
+                // start loading file
                 this.load(options.src);
+            }
+            else
+            {
+                // no valid src found, hide loading spinner
+                this.player().loadingSpinner.hide();
             }
         },
 
