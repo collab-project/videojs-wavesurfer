@@ -354,18 +354,21 @@
                 newHeight = window.outerHeight;
             }
 
-            // destroy old drawing
-            this.surfer.drawer.destroy();
+            if (this.waveReady)
+            {
+                // destroy old drawing
+                this.surfer.drawer.destroy();
 
-            // set new height
-            this.surfer.params.height = newHeight - this.player().controlBar.height();
-            this.surfer.createDrawer();
+                // set new height
+                this.surfer.params.height = newHeight - this.player().controlBar.height();
+                this.surfer.createDrawer();
 
-            // redraw
-            this.surfer.drawBuffer();
+                // redraw
+                this.surfer.drawBuffer();
 
-            // make sure playhead is restored at right position
-            this.surfer.drawer.progress(this.surfer.backend.getPlayedPercents());
+                // make sure playhead is restored at right position
+                this.surfer.drawer.progress(this.surfer.backend.getPlayedPercents());
+            }
         },
 
         /**
