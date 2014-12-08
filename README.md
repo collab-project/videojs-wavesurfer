@@ -17,10 +17,10 @@ plugin, or download and include `videojs.wavesurfer.js` in your project.
 The plugin depends on the wavesurfer.js and video.js packages:
 
 ```html
-<link href="http://vjs.zencdn.net/4.10.2/video-js.css" rel="stylesheet">
+<link href="http://vjs.zencdn.net/4.11.1/video-js.css" rel="stylesheet">
 
 <script src="http://wavesurfer.fm/build/wavesurfer.min.js"></script>
-<script src="http://vjs.zencdn.net/4.10.2/video.js"></script>
+<script src="http://vjs.zencdn.net/4.11.1/video.js"></script>
 ```
 
 The plugin automatically registers itself when you include `videojs.wavesurfer.js`
