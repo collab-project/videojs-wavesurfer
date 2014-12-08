@@ -2,17 +2,21 @@ Video.js Wavesurfer
 ===================
 
 A [video.js](http://www.videojs.com/) plugin that adds a navigable waveform
-for audio files, using the excellent [wavesurfer.js](https://github.com/katspaugh/wavesurfer.js)
-library.
+for audio files, using the [wavesurfer.js](https://github.com/katspaugh/wavesurfer.js)
+library. Includes support for fullscreen mode and realtime visualization of microphone
+input.
 
 ![Screenshot](/examples/img/screenshot.png?raw=true "Screenshot")
 
-Using the Plugin
-----------------
+Installation
+------------
 
 You can use [bower](http://bower.io) (`bower install videojs-wavesurfer`) or
 [npm](https://www.npmjs.org) (`npm install videojs-wavesurfer`) to install the
 plugin, or download and include `videojs.wavesurfer.js` in your project.
+
+Using the Plugin
+----------------
 
 The plugin depends on the wavesurfer.js and video.js packages:
 
@@ -70,6 +74,23 @@ It indicates the number of seconds that is considered the boundary value for
 displaying milliseconds in the time controls. An audio clip with a total
 length of 2 seconds and a `msDisplayMax` of 3 will use the format `M:SS:MMM`.
 Clips longer than `msDisplayMax` will be displayed as `M:SS` or `HH:MM:SS`.
+
+Customizing controls
+--------------------
+
+If you want to disable and hide specific controls, use the video.js `children`
+option:
+
+```javascript
+children: {
+    controlBar: {
+        children: {
+            // hide fullscreen control
+            fullscreenToggle: false
+        }
+    }
+},
+```
 
 License
 -------
