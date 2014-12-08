@@ -40,6 +40,9 @@ Include an `audio` tag:
 <audio id="myAudio" class="video-js vjs-default-skin"></audio>
 ```
 
+Options
+-------
+
 Configure the player using the video.js
 [options](https://github.com/videojs/video.js/blob/master/docs/guides/options.md),
 and enable the plugin by adding a `wavesurfer` entry with the related wavesurfer.js
@@ -66,8 +69,10 @@ var player = videojs("myAudio",
 });
 ```
 
-Options
--------
+Plugin options
+--------------
+
+Additional options for this plugin.
 
 | option | type | default | description |
 | --- | --- | --- | --- |
