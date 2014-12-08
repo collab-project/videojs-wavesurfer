@@ -69,6 +69,8 @@ var player = videojs("myAudio",
 });
 ```
 
+See the ![full example here](/examples/index.html "Example").
+
 Plugin options
 --------------
 
