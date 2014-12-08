@@ -66,14 +66,16 @@ var player = videojs("myAudio",
 });
 ```
 
-Notice the `src` option for the plugin; this setting is used to specify the
-URL of the audio file.
+Options
+-------
 
-The `msDisplayMax` plugin option is an optional setting that defaults to 3 sec.
-It indicates the number of seconds that is considered the boundary value for
+| option | type | default | description |
+| --- | --- | --- | --- |
+| `src` | string | `null` | The URL of the audio file or 'live' when using the microphone.|
+| `msDisplayMax` | float | `3` | Indicates the number of seconds that is considered the boundary value for
 displaying milliseconds in the time controls. An audio clip with a total
 length of 2 seconds and a `msDisplayMax` of 3 will use the format `M:SS:MMM`.
-Clips longer than `msDisplayMax` will be displayed as `M:SS` or `HH:MM:SS`.
+Clips with a duration that is longer than `msDisplayMax` will be displayed as `M:SS` or `HH:MM:SS`. |
 
 Customizing controls
 --------------------
