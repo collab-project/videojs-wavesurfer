@@ -28,13 +28,13 @@ The plugin depends on the wavesurfer.js and video.js packages:
 ```
 
 The plugin automatically registers itself when you include `videojs.wavesurfer.js`
-in your page:
+on your page:
 
 ```html
 <script src="videojs.wavesurfer.js"></script>
 ```
 
-Include an `audio` tag:
+Add an `audio` element:
 
 ```html
 <audio id="myAudio" class="video-js vjs-default-skin"></audio>
@@ -105,19 +105,19 @@ It's also possible to use a microphone for real-time rendering of the audio wave
 uses the ![microphone plugin](https://github.com/katspaugh/wavesurfer.js/blob/master/plugin/wavesurfer.microphone.js "Microphone plugin for wavesurfer.js")
 that comes with wavesurfer.js.
 
-Include the additional `wavesurfer.microphone.js` plugin in your page:
+Include the additional `wavesurfer.microphone.js` plugin on your page:
 
 ```html
 <script src="http://wavesurfer.fm/plugin/wavesurfer.microphone.js"></script>
 ```
 
-Include an `audio` tag:
+Add an `audio` element:
 
 ```html
 <audio id="myLiveAudio" class="video-js vjs-default-skin"></audio>
 ```
 
-Configure the player: use `'live'` for the `src` option and [hide some player
+Configure the player: use the value `'live'` for the `src` option and [hide some player
 controls](#customizing-controls) that we don't use:
 
 ```javascript
@@ -149,6 +149,24 @@ var player = videojs("myLiveAudio",
 ```
 
 See the [full example here](/examples/live.html "Microphone Example").
+
+
+Contributing
+------------
+
+Install grunt:
+
+```
+sudo npm install -g grunt-cli
+```
+
+Build a minified version:
+
+```
+grunt
+```
+
+Generated files are created in the `dist` directory.
 
 License
 -------

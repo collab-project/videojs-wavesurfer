@@ -5,4 +5,5 @@
 
 examples/media/test
 node_modules
+bower_components
 dist
