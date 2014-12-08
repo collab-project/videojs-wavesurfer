@@ -30,6 +30,24 @@
 
             this.waveReady = false;
             this.waveFinished = false;
+            this.liveMode = false;
+
+            if (this.options().options.src == 'live')
+            {
+                // check if the Microphone plugin can be enabled
+                try
+                {
+                    this.microphone = Object.create(WaveSurfer.Microphone);
+
+                    // enable audio input from a microphone
+                    this.liveMode = true;
+                    this.waveReady = true;
+                }
+                catch (TypeError)
+                {
+                    console.warn('Could not find Microphone plugin!');
+                }
+            }
 
             if (this.options().options.msDisplayMax !== undefined)
             {
@@ -49,7 +67,6 @@
 
             // customize controls
             this.player().bigPlayButton.hide();
-
             if (this.player().options().controls)
             {
             	// progress control isn't used by this plugin
@@ -66,7 +83,11 @@
                 this.player().controlBar.show();
 
                 // disable play button until waveform is ready
-                this.player().controlBar.playToggle.hide();
+                // (except when in live mode)
+                if (!this.liveMode)
+                {
+                    this.player().controlBar.playToggle.hide();
+                }
 
                 // disable currentTimeDisplay's 'timeupdate' event listener that
                 // constantly tries to reset the current time value to 0
@@ -75,11 +96,16 @@
 
             // waveform events
             this.surfer = Object.create(WaveSurfer);
-            this.surfer.on('ready', this.onWaveReady.bind(this));
             this.surfer.on('error', this.onWaveError.bind(this));
             this.surfer.on('finish', this.onWaveFinish.bind(this));
-            this.surfer.on('audioprocess', this.onWaveProgress.bind(this));
-            this.surfer.on('seek', this.onWaveSeek.bind(this));
+
+            // only listen to these events when we're not in live mode
+            if (!this.liveMode)
+            {
+                this.surfer.on('ready', this.onWaveReady.bind(this));
+                this.surfer.on('audioprocess', this.onWaveProgress.bind(this));
+                this.surfer.on('seek', this.onWaveSeek.bind(this));
+            }
 
             // player events
             this.player().on('play', this.onPlay.bind(this));
@@ -103,11 +129,24 @@
 
             if (options.src !== undefined)
             {
-                // show loading spinner
-                this.player().loadingSpinner.show();
+                if (this.microphone === undefined)
+                {
+                    // show loading spinner
+                    this.player().loadingSpinner.show();
 
-                // start loading file
-                this.load(options.src);
+                    // start loading file
+                    this.load(options.src);
+                }
+                else
+                {
+                    // hide loading spinner
+                    this.player().loadingSpinner.hide();
+
+                    // connect microphone input to our waveform
+                    this.microphone.init({
+                        wavesurfer: this.surfer
+                    });
+                }
             }
             else
             {
@@ -152,28 +191,46 @@
         },
 
         /**
-         * Start or resume playback.
+         * Start/resume playback or microphone.
          */
         play: function()
         {
-            this.surfer.play();
+            if (this.liveMode)
+            {
+                // toggle microphone
+                this.microphone.togglePlay();
+            }
+            else
+            {
+                // start playback
+                this.surfer.play();
+            }
         },
 
         /**
-         * Pauses playback.
+         * Pauses playback or microphone.
          */
         pause: function()
         {
-        	if (!this.waveFinished)
-        	{
-        		this.surfer.pause();
-        	}
-        	else
-        	{
-        		this.waveFinished = false;
-        	}
+            if (this.liveMode)
+            {
+                // toggle microphone
+                this.microphone.togglePlay();
+            }
+            else
+            {
+                // pause playback
+                if (!this.waveFinished)
+                {
+                    this.surfer.pause();
+                }
+                else
+                {
+                    this.waveFinished = false;
+                }
 
-            this.setCurrentTime();
+                this.setCurrentTime();
+            }
         },
 
         /**

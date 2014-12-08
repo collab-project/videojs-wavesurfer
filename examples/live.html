@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+  <title>Wavesurfer Microphone Plugin for Video.js Example</title>
+
+  <link href="http://vjs.zencdn.net/4.11.1/video-js.css" rel="stylesheet">
+
+  <script src="http://vjs.zencdn.net/4.11.1/video.js"></script>
+  <script src="http://wavesurfer.fm/build/wavesurfer.min.js"></script>
+  <script src="http://wavesurfer.fm/plugin/wavesurfer.microphone.js"></script>
+  <script src="../videojs.wavesurfer.js"></script>
+
+</head>
+<body>
+
+<audio id="myLiveAudio" class="video-js vjs-default-skin"></audio>
+
+<script>
+var player = videojs("myLiveAudio",
+{
+    controls: true,
+    width: 600,
+    height: 300,
+    children: {
+        controlBar: {
+            children: {
+                currentTimeDisplay: false,
+                durationDisplay: false,
+                muteToggle: false,
+                timeDivider: false,
+                volumeControl: false
+            }
+        }
+    },
+    plugins: {
+        wavesurfer: {
+            src: "live",
+            waveColor: "black",
+            cursorWidth: 0,
+            interact: false
+        }
+    }
+});
+
+// change player background color
+player.el().style.backgroundColor = "#ADD3FF";
+</script>
+
+</body>
+</html>

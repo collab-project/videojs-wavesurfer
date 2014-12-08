@@ -1,5 +1,5 @@
 .project
 *.pid
 *.log
-
+.DS_Store
 examples/media/test
