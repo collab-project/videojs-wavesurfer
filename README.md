@@ -76,11 +76,8 @@ Additional options for this plugin.
 
 | option | type | default | description |
 | --- | --- | --- | --- |
-| `src` | string | `null` | The URL of the audio file or 'live' when using the microphone.|
-| `msDisplayMax` | float | `3` | Indicates the number of seconds that is considered the boundary value for
-displaying milliseconds in the time controls. An audio clip with a total
-length of 2 seconds and a `msDisplayMax` of 3 will use the format `M:SS:MMM`.
-Clips with a duration that is longer than `msDisplayMax` will be displayed as `M:SS` or `HH:MM:SS`. |
+| `src` | string | `null` | The URL of the audio file or `'live'` when using the microphone.|
+| `msDisplayMax` | float | `3` | Indicates the number of seconds that is considered the boundary value for displaying milliseconds in the time controls. An audio clip with a total length of 2 seconds and a `msDisplayMax` of 3 will use the format `M:SS:MMM`. Clips with a duration that is longer than `msDisplayMax` will be displayed as `M:SS` or `HH:MM:SS`.|
 
 Customizing controls
 --------------------
