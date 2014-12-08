@@ -102,7 +102,7 @@ Microphone plugin
 -----------------
 
 It's also possible to use a microphone for real-time rendering of the audio waveform. This
-uses the ![microphone plugin](http://wavesurfer.fm/example/microphone/ "Microphone plugin for wavesurfer.js")
+uses the ![microphone plugin](http://wavesurfer.fm/example/microphone/index.html "Microphone plugin for wavesurfer.js")
 that comes with wavesurfer.js.
 
 Make sure to additionally include the `wavesurfer.microphone.js` plugin in your page:
