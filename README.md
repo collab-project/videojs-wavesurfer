@@ -69,7 +69,7 @@ var player = videojs("myAudio",
 });
 ```
 
-See the ![full example here](/examples/index.html "Example").
+See the [full example here](/examples/index.html "Basic example").
 
 Plugin options
 --------------
@@ -97,6 +97,57 @@ children: {
     }
 },
 ```
+
+Microphone plugin
+-----------------
+
+It's also possible to use a microphone for real-time rendering of the audio waveform. This
+uses the ![microphone plugin](http://wavesurfer.fm/example/microphone/ "Microphone plugin for wavesurfer.js")
+that comes with wavesurfer.js.
+
+Make sure to additionally include the `wavesurfer.microphone.js` plugin in your page:
+
+```html
+<script src="http://wavesurfer.fm/plugin/wavesurfer.microphone.js"></script>
+```
+
+Include an `audio` tag:
+
+```html
+<audio id="myLiveAudio" class="video-js vjs-default-skin"></audio>
+```
+
+Configure the player: use `'live'` for the `src` option and hide controls that we don't need:
+
+```javascript
+var player = videojs("myLiveAudio",
+{
+    controls: true,
+    width: 600,
+    height: 300,
+    children: {
+        controlBar: {
+            children: {
+                currentTimeDisplay: false,
+                durationDisplay: false,
+                muteToggle: false,
+                timeDivider: false,
+                volumeControl: false
+            }
+        }
+    },
+    plugins: {
+        wavesurfer: {
+            src: "live",
+            waveColor: "black",
+            cursorWidth: 0,
+            interact: false
+        }
+    }
+});
+```
+
+See the [full example here](/examples/live.html "Microphone Example").
 
 License
 -------
