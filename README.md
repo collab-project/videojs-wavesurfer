@@ -3,8 +3,8 @@ Video.js Wavesurfer
 
 A [video.js](http://www.videojs.com/) plugin that adds a navigable waveform
 for audio files, using the [wavesurfer.js](https://github.com/katspaugh/wavesurfer.js)
-library. Includes support for fullscreen mode and realtime visualization of microphone
-input.
+library. Includes support for fullscreen mode and [real-time visualization of microphone
+input](#microphone-plugin).
 
 ![Screenshot](/examples/img/screenshot.png?raw=true "Screenshot")
 
@@ -78,7 +78,7 @@ Additional options for this plugin.
 
 | option | type | default | description |
 | --- | --- | --- | --- |
-| `src` | string | `null` | The URL of the audio file or `'live'` when using the microphone.|
+| `src` | string | `null` | The URL of the audio file or `'live'` when [using the microphone plugin](#microphone-plugin).|
 | `msDisplayMax` | float | `3` | Indicates the number of seconds that is considered the boundary value for displaying milliseconds in the time controls. An audio clip with a total length of 2 seconds and a `msDisplayMax` of 3 will use the format `M:SS:MMM`. Clips with a duration that is longer than `msDisplayMax` will be displayed as `M:SS` or `HH:MM:SS`.|
 
 Customizing controls
@@ -105,7 +105,7 @@ It's also possible to use a microphone for real-time rendering of the audio wave
 uses the ![microphone plugin](https://github.com/katspaugh/wavesurfer.js/blob/master/plugin/wavesurfer.microphone.js "Microphone plugin for wavesurfer.js")
 that comes with wavesurfer.js.
 
-Make sure to additionally include the `wavesurfer.microphone.js` plugin in your page:
+Include the additional `wavesurfer.microphone.js` plugin in your page:
 
 ```html
 <script src="http://wavesurfer.fm/plugin/wavesurfer.microphone.js"></script>
@@ -117,7 +117,8 @@ Include an `audio` tag:
 <audio id="myLiveAudio" class="video-js vjs-default-skin"></audio>
 ```
 
-Configure the player: use `'live'` for the `src` option and hide controls that we don't need:
+Configure the player: use `'live'` for the `src` option and [hide some player
+controls](#customizing-controls) that we don't use:
 
 ```javascript
 var player = videojs("myLiveAudio",
