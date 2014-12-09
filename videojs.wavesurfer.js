@@ -413,6 +413,13 @@
 
             if (this.waveReady)
             {
+                if (this.liveMode && !this.microphone.active)
+                {
+                    // we're in live mode but the microphone hasn't been
+                    // started yet
+                    return;
+                }
+
                 // destroy old drawing
                 this.surfer.drawer.destroy();
 
