@@ -1,5 +1,6 @@
-// Copyright Collab 2014
-
+/*! videojs-wavesurfer
+ * Copyright (c) 2014 Collab
+ * Licensed under the MIT license. */
 (function(root, factory)
 {
     if (typeof define === 'function' && define.amd)
@@ -518,17 +519,26 @@
         return videojs.Component.prototype.createEl(null, props);
     };
 
-    function wavesurferPlugin(options)
+    var defaults = {};
+
+    /**
+     * Initialize the plugin.
+     * @param options (optional) {object} configuration for the plugin
+     */
+    var wavesurferPlugin = function(options)
     {
+        var settings = videojs.util.mergeOptions(defaults, options);
+        var player = this;
+
         // create new waveform
-        this.waveform = new videojs.Waveform(this,
+        player.waveform = new videojs.Waveform(player,
         {
             'el': createWaveform(),
-            'options': options
+            'options': settings
         });
 
         // add waveform to dom
-        this.el().appendChild(this.waveform.el());
+        player.el().appendChild(player.waveform.el());
     }
 
     // register the plugin
