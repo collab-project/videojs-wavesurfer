@@ -183,7 +183,7 @@
         {
             if (url instanceof Blob || url instanceof File)
             {
-                this.surfer.loadArrayBuffer(url);
+                this.surfer.loadBlob(url);
             }
             else
             {
