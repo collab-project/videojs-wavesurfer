@@ -21,8 +21,8 @@
     "player"
   ],
   "dependencies": {
-    "video.js": ">=4.6",
-    "wavesurfer.js": ">=1.0.0"
+    "video.js": ">=4.7.3",
+    "wavesurfer.js": ">=1.0.9"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
