@@ -154,10 +154,16 @@ See the [full example here](/examples/live.html "Microphone Example").
 Contributing
 ------------
 
-Install grunt:
+Install `grunt-cli`:
 
 ```
 sudo npm install -g grunt-cli
+```
+
+Install dependencies:
+
+```
+npm install
 ```
 
 Build a minified version:
@@ -166,7 +172,7 @@ Build a minified version:
 grunt
 ```
 
-Generated files are created in the `dist` directory.
+Generated files are placed in the `dist` directory.
 
 License
 -------
