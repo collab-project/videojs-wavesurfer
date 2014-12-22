@@ -21,6 +21,7 @@
         /**
          * The constructor function for the class.
          * 
+         * @param {videojs.Player|Object} player
          * @param {Object} options Player options.
          * @param {Function} ready Ready callback function.
          */
@@ -103,9 +104,7 @@
             // only listen to these events when we're not in live mode
             if (!this.liveMode)
             {
-                this.surfer.on('ready', this.onWaveReady.bind(this));
-                this.surfer.on('audioprocess', this.onWaveProgress.bind(this));
-                this.surfer.on('seek', this.onWaveSeek.bind(this));
+                this.setupPlaybackEvents();
             }
 
             // player events
@@ -116,6 +115,16 @@
 
             // kick things off
             this.startPlayers();
+        },
+
+        /**
+         * 
+         */
+        setupPlaybackEvents: function()
+        {
+            this.surfer.on('ready', this.onWaveReady.bind(this));
+            this.surfer.on('audioprocess', this.onWaveProgress.bind(this));
+            this.surfer.on('seek', this.onWaveSeek.bind(this));
         },
 
         /**
@@ -181,6 +190,12 @@
          */
         load: function(url)
         {
+            // XXX:
+            if (this.liveMode)
+            {
+                this.setupPlaybackEvents();
+            }
+
             if (url instanceof Blob || url instanceof File)
             {
                 this.surfer.loadBlob(url);
@@ -244,22 +259,37 @@
         },
 
         /**
-         * Set the current volume of the media.
+         * Set the current volume.
          * 
          * @param {Number} volume The new volume level.
          */
         setVolume: function(volume)
         {
-            this.surfer.setVolume(volume);
+            if (volume !== undefined)
+            {
+                this.surfer.setVolume(volume);
+            }
         },
 
         /**
          * Updates the player's current time.
+         *
+         * @param {Number} currentTime (optional) Current position of the
+         *    playhead (in seconds).
+         * @param {Number} duration (optional) Duration of the waveform
+         *    (in seconds).
          */
-        setCurrentTime: function()
+        setCurrentTime: function(currentTime, duration)
         {
-            var duration = this.surfer.getDuration();
-            var currentTime = this.surfer.getCurrentTime();
+            if (currentTime === undefined)
+            {
+                currentTime = this.surfer.getCurrentTime();
+            }
+
+            if (duration === undefined)
+            {
+                duration = this.surfer.getDuration();
+            }
             var time = Math.min(currentTime, duration);
 
             // update control
@@ -288,6 +318,7 @@
         {
             this.waveReady = true;
             this.waveFinished = false;
+            this.liveMode = false;
 
             // make sure the size of time controls is large enough to
             // display milliseconds
