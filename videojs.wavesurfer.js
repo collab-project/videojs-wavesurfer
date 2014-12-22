@@ -21,8 +21,8 @@
         /**
          * The constructor function for the class.
          * 
-         * @param options: Player options.
-         * @param ready: Ready callback function.
+         * @param {Object} options Player options.
+         * @param {Function} ready Ready callback function.
          */
         init: function(player, options, ready)
         {
@@ -159,7 +159,7 @@
         /**
          * Initializes the waveform.
          * 
-         * @param opts: Plugin options.
+         * @param {Object} opts Plugin options.
          */
         initialize: function(opts)
         {
@@ -176,8 +176,8 @@
         /**
          * Start loading waveform data.
          * 
-         * @param url: Either the URL of the audio file, or a Blob or File
-         *             object.
+         * @param {String|Blob|File} url Either the URL of the audio file,
+         *     or a Blob or File object.
          */
         load: function(url)
         {
@@ -246,7 +246,7 @@
         /**
          * Set the current volume of the media.
          * 
-         * @param volume: The new volume level.
+         * @param {Number} volume The new volume level.
          */
         setVolume: function(volume)
         {
@@ -343,7 +343,7 @@
         /**
          * Fires continuously during audio playback.
          * 
-         * @param percent: Percentage played so far.
+         * @param {Number} percent Percentage played so far.
          */
         onWaveProgress: function(percent)
         {
@@ -438,6 +438,8 @@
 
         /**
          * Waveform error.
+         *
+         * @param {String} error The wavesurfer error.
          */
         onWaveError: function(error)
         {
@@ -519,6 +521,7 @@
         return videojs.Component.prototype.createEl(null, props);
     };
 
+    // plugin defaults
     var defaults = {};
 
     /**
