@@ -272,7 +272,7 @@
         },
 
         /**
-         * Updates the player's current time.
+         * Updates the player's element displaying the current time.
          *
          * @param {Number} currentTime (optional) Current position of the
          *    playhead (in seconds).
@@ -299,11 +299,17 @@
         },
 
         /**
-         * Updates the duration time.
+         * Updates the player's element displaying the duration time.
+         *
+         * @param {Number} duration (optional) Duration of the waveform
+         *    (in seconds).
          */
-        setDuration: function()
+        setDuration: function(duration)
         {
-            var duration = this.surfer.getDuration();
+            if (duration === undefined)
+            {
+                duration = this.surfer.getDuration();
+            }
 
             // update control
             this.player().controlBar.durationDisplay.el(
