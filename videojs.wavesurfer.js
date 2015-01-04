@@ -101,6 +101,10 @@
             this.surfer.on('error', this.onWaveError.bind(this));
             this.surfer.on('finish', this.onWaveFinish.bind(this));
 
+            this.surferReady = this.onWaveReady.bind(this);
+            this.surferProgress = this.onWaveProgress.bind(this);
+            this.surferSeek = this.onWaveSeek.bind(this);
+
             // only listen to these events when we're not in live mode
             if (!this.liveMode)
             {
@@ -118,13 +122,25 @@
         },
 
         /**
-         * 
+         * Starts or stops listening to events related to audio-playback.
+         *
+         * @param {boolean} enable Start or stop listening to playback related
+         *     events.
          */
-        setupPlaybackEvents: function()
+        setupPlaybackEvents: function(enable)
         {
-            this.surfer.on('ready', this.onWaveReady.bind(this));
-            this.surfer.on('audioprocess', this.onWaveProgress.bind(this));
-            this.surfer.on('seek', this.onWaveSeek.bind(this));
+            if (enable === false)
+            {
+                this.surfer.un('ready', this.surferReady);
+                this.surfer.un('audioprocess', this.surferProgress);
+                this.surfer.un('seek', this.surferSeek);
+            }
+            else if (enable === true)
+            {
+                this.surfer.on('ready', this.surferReady);
+                this.surfer.on('audioprocess', this.surferProgress);
+                this.surfer.on('seek', this.surferSeek);
+            }
         },
 
         /**
@@ -190,12 +206,6 @@
          */
         load: function(url)
         {
-            // XXX:
-            if (this.liveMode)
-            {
-                this.setupPlaybackEvents();
-            }
-
             if (url instanceof Blob || url instanceof File)
             {
                 this.surfer.loadBlob(url);
@@ -380,9 +390,9 @@
         /**
          * Fires continuously during audio playback.
          * 
-         * @param {Number} percent Percentage played so far.
+         * @param {Number} time Current time/location of the playhead.
          */
-        onWaveProgress: function(percent)
+        onWaveProgress: function(time)
         {
             this.setCurrentTime();
         },
@@ -579,7 +589,7 @@
 
         // add waveform to dom
         player.el().appendChild(player.waveform.el());
-    }
+    };
 
     // register the plugin
     videojs.plugin('wavesurfer', wavesurferPlugin);
