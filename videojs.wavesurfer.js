@@ -108,7 +108,7 @@
             // only listen to these events when we're not in live mode
             if (!this.liveMode)
             {
-                this.setupPlaybackEvents();
+                this.setupPlaybackEvents(true);
             }
 
             // player events
@@ -351,8 +351,8 @@
             // enable and show play button
             this.player().controlBar.playToggle.show();
 
-            // remove loading spinner
-            this.player().removeChild(this.player().loadingSpinner);
+            // hide loading spinner
+            this.player().loadingSpinner.hide();
 
             // auto-play when ready (if enabled)
             if (this.player().options().autoplay)
