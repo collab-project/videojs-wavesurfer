@@ -1,5 +1,5 @@
 /*! videojs-wavesurfer
- * Copyright (c) 2014 Collab
+ * Copyright (c) 2014-2015 Collab
  * Licensed under the MIT license. */
 (function(root, factory)
 {
@@ -494,15 +494,15 @@
         },
 
         /**
-        * Format seconds as a time string, H:MM:SS, M:SS or M:SS:MMM.
-        * 
-        * Supplying a guide (in seconds) will force a number of leading zeros
-        * to cover the length of the guide.
-        * 
-        * @param {Number} seconds Number of seconds to be turned into a string
-        * @param {Number} guide Number (in seconds) to model the string after
-        * @return {String} Time formatted as H:MM:SS, M:SS or M:SS:MMM.
-        */
+         * Format seconds as a time string, H:MM:SS, M:SS or M:SS:MMM.
+         * 
+         * Supplying a guide (in seconds) will force a number of leading zeros
+         * to cover the length of the guide.
+         * 
+         * @param {Number} seconds Number of seconds to be turned into a string
+         * @param {Number} guide Number (in seconds) to model the string after
+         * @return {String} Time formatted as H:MM:SS, M:SS or M:SS:MMM.
+         */
         formatTime: function(seconds, guide)
         {
             // Default to using seconds as guide
