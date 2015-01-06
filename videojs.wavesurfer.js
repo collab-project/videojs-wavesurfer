@@ -34,7 +34,7 @@
             this.waveFinished = false;
             this.liveMode = false;
 
-            if (this.options().options.src == 'live')
+            if (this.options().options.src === 'live')
             {
                 // check if the Microphone plugin can be enabled
                 try
@@ -537,7 +537,7 @@
                         ms = '0' + ms;
                     }
                 }
-                ms = ":" + ms;
+                ms = ':' + ms;
             }
             else
             {

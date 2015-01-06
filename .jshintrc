@@ -7,5 +7,10 @@
     "undef"    : true,
     "predef"   : [
         "videojs"
-    ]
+    ],
+    "globals"   : {
+	    "define"   : false,
+	    "console"  : false,
+	    "File"     : false
+    }
 }
