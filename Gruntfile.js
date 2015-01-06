@@ -29,23 +29,15 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        unused: true,
-        boss: true,
-        eqnull: true,
-        globals: {}
-      },
       gruntfile: {
         src: 'Gruntfile.js'
-      }
+      },
+      src: {
+        options: {
+          jshintrc: '.jshintrc'
+        },
+        src: ['videojs.wavesurfer.js']
+      },
     },
     watch: {
       gruntfile: {
