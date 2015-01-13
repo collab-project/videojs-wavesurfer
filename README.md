@@ -6,7 +6,7 @@ for audio files, using the [wavesurfer.js](https://github.com/katspaugh/wavesurf
 library. Includes support for fullscreen mode and [real-time visualization of microphone
 input](#microphone-plugin).
 
-![Screenshot](/examples/img/screenshot.png?raw=true "Screenshot")
+![Screenshot](examples/img/screenshot.png?raw=true "Screenshot")
 
 Installation
 ------------
@@ -40,8 +40,8 @@ Add an `audio` element:
 <audio id="myAudio" class="video-js vjs-default-skin"></audio>
 ```
 
-Options
--------
+Plugin Options
+--------------
 
 Configure the player using the video.js
 [options](https://github.com/videojs/video.js/blob/master/docs/guides/options.md),
@@ -71,10 +71,8 @@ var player = videojs("myAudio",
 
 See the [full example here](/examples/index.html "Basic example").
 
-Plugin options
---------------
 
-Additional options for this plugin.
+The additional options for this plugin are:
 
 | option | type | default | description |
 | --- | --- | --- | --- |
@@ -102,7 +100,7 @@ Microphone plugin
 -----------------
 
 It's also possible to use a microphone for real-time rendering of the audio waveform. This
-uses the ![microphone plugin](https://github.com/katspaugh/wavesurfer.js/blob/master/plugin/wavesurfer.microphone.js)
+uses the [microphone plugin](https://github.com/katspaugh/wavesurfer.js/blob/master/plugin/wavesurfer.microphone.js)
 that comes with wavesurfer.js.
 
 Include the additional `wavesurfer.microphone.js` plugin on your page:
@@ -149,6 +147,19 @@ var player = videojs("myLiveAudio",
 ```
 
 See the [full example here](/examples/live.html "Microphone Example").
+
+
+More features using other plugins
+---------------------------------
+
+The Video.js community created
+[lots of plugins](https://github.com/videojs/video.js/wiki/Plugins)
+that can be used to enhance the player's functionality. Plugins actually
+tested with `videojs-wavesurfer`:
+
+- [videojs-persistvolume](https://github.com/theonion/videojs-persistvolume) -
+  Saves user's volume setting using `localStorage`, but falls back to cookies
+  if necessary.
 
 
 Contributing
