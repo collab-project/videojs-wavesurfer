@@ -173,10 +173,16 @@ Install `grunt-cli`:
 sudo npm install -g grunt-cli
 ```
 
-Install dependencies:
+Install dependencies using npm:
 
 ```
 npm install
+```
+
+Or using bower:
+
+```
+bower install
 ```
 
 Build a minified version:
