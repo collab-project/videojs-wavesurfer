@@ -21,10 +21,10 @@ Using the Plugin
 The plugin depends on the wavesurfer.js and video.js packages:
 
 ```html
-<link href="http://vjs.zencdn.net/4.11.3/video-js.css" rel="stylesheet">
+<link href="http://cdnjs.cloudflare.com/ajax/libs/video.js/4.11.3/video-js.css" rel="stylesheet">
 
 <script src="http://wavesurfer.fm/build/wavesurfer.min.js"></script>
-<script src="http://vjs.zencdn.net/4.11.3/video.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/video.js/4.11.3/video.js"></script>
 ```
 
 The plugin automatically registers itself when you include `videojs.wavesurfer.js`
