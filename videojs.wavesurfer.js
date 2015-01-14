@@ -1,6 +1,3 @@
-/*! videojs-wavesurfer
- * Copyright (c) 2014-2015 Collab
- * Licensed under the MIT license. */
 (function(root, factory)
 {
     if (typeof define === 'function' && define.amd)
