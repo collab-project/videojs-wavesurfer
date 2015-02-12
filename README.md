@@ -2,7 +2,7 @@ Video.js Wavesurfer
 ===================
 
 A [video.js](http://www.videojs.com/) plugin that adds a navigable waveform
-for audio files, using the [wavesurfer.js](https://github.com/katspaugh/wavesurfer.js)
+for audio and video files, using the [wavesurfer.js](https://github.com/katspaugh/wavesurfer.js)
 library. Includes support for fullscreen mode and [real-time visualization of microphone
 input](#microphone-plugin).
 
@@ -37,7 +37,13 @@ on your page:
 Add an `audio` element:
 
 ```html
-<audio id="myAudio" class="video-js vjs-default-skin"></audio>
+<audio id="myClip" class="video-js vjs-default-skin"></audio>
+```
+
+Or `video` element:
+
+```html
+<video id="myClip" class="video-js vjs-default-skin"></video>
 ```
 
 Plugin Options
@@ -49,7 +55,7 @@ and enable the plugin by adding a `wavesurfer` entry with the related wavesurfer
 [options](https://github.com/katspaugh/wavesurfer.js#wavesurfer-options):
 
 ```javascript
-var player = videojs("myAudio",
+var player = videojs("myClip",
 {
     controls: true,
     autoplay: true,
@@ -69,14 +75,15 @@ var player = videojs("myAudio",
 });
 ```
 
-See the [full example here](/examples/index.html "Basic example").
+See the full [audio example](/examples/index.html "Basic audio example") or
+the [video example](/examples/video.html "Basic video example").
 
 
 The additional options for this plugin are:
 
 | option | type | default | description |
 | --- | --- | --- | --- |
-| `src` | string | `null` | The URL of the audio file or `'live'` when [using the microphone plugin](#microphone-plugin).|
+| `src` | string | `null` | The URL of the audio/video file or `'live'` when [using the microphone plugin](#microphone-plugin).|
 | `msDisplayMax` | float | `3` | Indicates the number of seconds that is considered the boundary value for displaying milliseconds in the time controls. An audio clip with a total length of 2 seconds and a `msDisplayMax` of 3 will use the format `M:SS:MMM`. Clips with a duration that is longer than `msDisplayMax` will be displayed as `M:SS` or `HH:MM:SS`.|
 
 Customizing controls
@@ -146,7 +153,7 @@ var player = videojs("myLiveAudio",
 });
 ```
 
-See the [full example here](/examples/live.html "Microphone Example").
+See the full [live example here](/examples/live.html "Microphone Example").
 
 
 More features using other plugins
