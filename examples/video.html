@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+  <title>Wavesurfer Plugin Video Example</title>
+
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/video.js/4.11.3/video-js.css" rel="stylesheet">
+
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/video.js/4.11.3/video.js"></script>
+  <script src="http://wavesurfer.fm/build/wavesurfer.min.js"></script>
+  <script src="../videojs.wavesurfer.js"></script>
+
+</head>
+<body>
+
+<video id="myVideo" class="video-js vjs-default-skin"></video>
+
+<script>
+var player = videojs("myVideo",
+{
+    controls: true,
+    autoplay: true,
+    loop: false,
+    width: 600,
+    height: 300,
+    plugins: {
+        wavesurfer: {
+            src: "media/example.mp4",
+            msDisplayMax: 10,
+            waveColor: "grey",
+            progressColor: "black",
+            cursorColor: "black",
+            hideScrollbar: true
+        }
+    }
+});
+
+// change player background color
+player.el().style.backgroundColor = "#FFEEFF";
+</script>
+
+</body>
+</html>
