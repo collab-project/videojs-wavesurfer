@@ -187,9 +187,18 @@
         {
             this.originalHeight = this.player().options().height;
 
+            var controlBarHeight = this.player().controlBar.height();
+            if (this.player().options().controls === true && controlBarHeight == 0)
+            {
+                // The dimensions of the controlbar are not known yet, but we need
+                // it now, so we can calculate the height of the waveform.
+                // The default height is 30px, so use that instead.
+                controlBarHeight = 30;
+            }
+
             // set waveform element and dimensions
             opts.container = this.el();
-            opts.height = this.player().height() - this.player().controlBar.height();
+            opts.height = this.player().height() - controlBarHeight;
 
             // customize waveform appearance
             this.surfer.init(opts);
