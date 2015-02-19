@@ -188,7 +188,7 @@
             this.originalHeight = this.player().options().height;
 
             var controlBarHeight = this.player().controlBar.height();
-            if (this.player().options().controls === true && controlBarHeight == 0)
+            if (this.player().options().controls === true && controlBarHeight === 0)
             {
                 // The dimensions of the controlbar are not known yet, but we need
                 // it now, so we can calculate the height of the waveform.
