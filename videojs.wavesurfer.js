@@ -78,8 +78,9 @@
                 });
 
                 // videojs automatically hides the controls when no valid 'source'
-                // element is included in the 'audio' tag. Don't.
+                // element is included in the 'audio' tag. Don't.Ever again.
                 this.player().controlBar.show();
+                this.player().controlBar.el().style.display = 'block';
 
                 // disable play button until waveform is ready
                 // (except when in live mode)
