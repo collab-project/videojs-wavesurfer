@@ -385,8 +385,8 @@
                 }
                 else
                 {
-                	// finished
-                	this.waveFinished = true;
+                    // finished
+                    this.waveFinished = true;
 
                     // pause player
                     this.player().pause();
