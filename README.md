@@ -8,6 +8,10 @@ input](#microphone-plugin).
 
 ![Screenshot](examples/img/screenshot.png?raw=true "Screenshot")
 
+[![npm version](https://img.shields.io/npm/v/videojs-wavesurfer.svg?style=flat)](https://www.npmjs.com/package/videojs-wavesurfer)
+[![npm](https://img.shields.io/npm/dm/videojs-wavesurfer.svg)]()
+[![License](https://img.shields.io/npm/l/videojs-wavesurfer.svg)](LICENSE)
+
 Installation
 ------------
 
