@@ -271,6 +271,12 @@
          */
         destroy: function()
         {
+            if (this.liveMode && this.microphone)
+            {
+                // destroy microphone plugin
+                this.microphone.destroy();
+            }
+
             this.surfer.destroy();
             this.player().dispose();
         },
