@@ -80,9 +80,8 @@ var player = videojs("myClip",
 });
 ```
 
-See the full [audio example](/examples/index.html "Basic audio example") or
-the [video example](/examples/video.html "Basic video example").
-
+See the full audio example ([demo](http://collab-project.github.io/videojs-wavesurfer/examples/index.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/index.html)) and
+the video example ([demo](http://collab-project.github.io/videojs-wavesurfer/examples/video.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/video.html)).
 
 The additional options for this plugin are:
 
@@ -158,7 +157,9 @@ var player = videojs("myLiveAudio",
 });
 ```
 
-See the full [live example here](/examples/live.html "Microphone Example").
+See the full live example
+([demo](http://collab-project.github.io/videojs-wavesurfer/examples/live.html) or
+[source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/live.html)).
 
 
 More features using other plugins
