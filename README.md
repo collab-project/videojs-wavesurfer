@@ -28,7 +28,7 @@ The plugin depends on the wavesurfer.js and video.js packages:
 ```html
 <link href="http://vjs.zencdn.net/4.12.12/video-js.css" rel="stylesheet">
 
-<script src="http://wavesurfer.fm/dist/wavesurfer.min.js"></script>
+<script src="http://www.wavesurfer-js.org/dist/wavesurfer.min.js"></script>
 <script src="http://vjs.zencdn.net/4.12.12/video.js"></script>
 ```
 
@@ -117,7 +117,7 @@ that comes with wavesurfer.js.
 Include the additional `wavesurfer.microphone.js` plugin on your page:
 
 ```html
-<script src="http://wavesurfer.fm/dist/plugin/wavesurfer.microphone.min.js"></script>
+<script src="http://wavesurfer-js.org/dist/plugin/wavesurfer.microphone.min.js"></script>
 ```
 
 Add an `audio` element:
