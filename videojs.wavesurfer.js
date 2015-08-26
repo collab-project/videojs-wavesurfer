@@ -50,25 +50,25 @@
 
             if (this.options().options.msDisplayMax !== undefined)
             {
-            	// msDisplayMax indicates the number of seconds that is
+                // msDisplayMax indicates the number of seconds that is
                 // considered the boundary value for displaying milliseconds
                 // in the time controls. An audio clip with a total length of
                 // 2 seconds and a msDisplayMax of 3 will use the format
                 // M:SS:MMM. Clips longer than msDisplayMax will be displayed
-            	// as M:SS or HH:MM:SS.
-            	this.msDisplayMax = parseFloat(this.options().options.msDisplayMax);
+                // as M:SS or HH:MM:SS.
+                this.msDisplayMax = parseFloat(this.options().options.msDisplayMax);
             }
             else
             {
-            	// default
-            	this.msDisplayMax = 3;
+                // default
+                this.msDisplayMax = 3;
             }
 
             // customize controls
             this.player().bigPlayButton.hide();
             if (this.player().options().controls)
             {
-            	// progress control isn't used by this plugin
+                // progress control isn't used by this plugin
                 this.player().controlBar.progressControl.hide();
 
                 // prevent controlbar fadeout
@@ -198,12 +198,12 @@
             }
 
             // set waveform element and dimensions
-			// Set the container to player's container if "container" option is not provided
-			// If a waveform needs to be appended to your custom element, then use below option
-			// <code>container: document.querySelector("#vjs-waveform")</code>
+        // Set the container to player's container if "container" option is not provided
+        // If a waveform needs to be appended to your custom element, then use below option
+        // <code>container: document.querySelector("#vjs-waveform")</code>
             if (opts.container == undefined) {
-				opts.container = this.el();
-			}
+            opts.container = this.el();
+        }
             opts.height = this.player().height() - controlBarHeight;
 
             // customize waveform appearance
