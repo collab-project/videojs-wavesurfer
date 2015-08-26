@@ -201,7 +201,7 @@
             // Set the container to player's container if "container" option is not provided
             // If a waveform needs to be appended to your custom element, then use below option
             // <code>container: document.querySelector("#vjs-waveform")</code>
-            if (opts.container == undefined) {
+            if (opts.container === undefined) {
                 opts.container = this.el();
             }
             opts.height = this.player().height() - controlBarHeight;
