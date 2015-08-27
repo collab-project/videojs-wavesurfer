@@ -18,7 +18,8 @@ Installation
 
 You can use [bower](http://bower.io) (`bower install videojs-wavesurfer`) or
 [npm](https://www.npmjs.org) (`npm install videojs-wavesurfer`) to install the
-plugin, or download and include `videojs.wavesurfer.js` in your project.
+plugin, or [download](https://github.com/collab-project/videojs-wavesurfer/releases)
+it elsewhere.
 
 Using the Plugin
 ----------------
