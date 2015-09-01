@@ -204,7 +204,16 @@
             if (opts.container === undefined) {
                 opts.container = this.el();
             }
-            opts.height = this.player().height() - controlBarHeight;
+
+            // Set the height of generated waveform if user has provided height from options.
+            // If height of waveform need to be customized then use below option
+            // Example: <code>waveformHeight:30</code>
+            if(opts.waveformHeight === undefined){
+               opts.height = this.player().height() - controlBarHeight;
+            }
+            else{
+               opts.height = opts.waveformHeight;
+            }
 
             // customize waveform appearance
             this.surfer.init(opts);
