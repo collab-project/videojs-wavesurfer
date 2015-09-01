@@ -75,7 +75,8 @@ var player = videojs("myClip",
             waveColor: "grey",
             progressColor: "black",
             cursorColor: "black",
-            hideScrollbar: true
+            hideScrollbar: true,
+            waveformHeight: 40
         }
     }
 });
