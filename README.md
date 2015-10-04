@@ -30,10 +30,10 @@ Using the Plugin
 The plugin depends on the wavesurfer.js and video.js packages:
 
 ```html
-<link href="http://vjs.zencdn.net/4.12.14/video-js.css" rel="stylesheet">
+<link href="//vjs.zencdn.net/4.12.15/video-js.css" rel="stylesheet">
 
-<script src="http://www.wavesurfer-js.org/dist/wavesurfer.min.js"></script>
-<script src="http://vjs.zencdn.net/4.12.14/video.js"></script>
+<script src="//katspaugh.github.io/wavesurfer.js/dist/wavesurfer.min.js"></script>
+<script src="//vjs.zencdn.net/4.12.15/video.js"></script>
 ```
 
 The plugin automatically registers itself when you include `videojs.wavesurfer.js`
@@ -85,8 +85,8 @@ var player = videojs("myClip",
 });
 ```
 
-See the full audio example ([demo](http://collab-project.github.io/videojs-wavesurfer/examples/index.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/index.html)) and
-the video example ([demo](http://collab-project.github.io/videojs-wavesurfer/examples/video.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/video.html)).
+See the full audio example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/index.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/index.html)) and
+the video example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/video.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/video.html)).
 
 The additional options for this plugin are:
 
@@ -122,7 +122,7 @@ that comes with wavesurfer.js.
 Include the additional `wavesurfer.microphone.js` plugin on your page:
 
 ```html
-<script src="http://wavesurfer-js.org/dist/plugin/wavesurfer.microphone.min.js"></script>
+<script src="//katspaugh.github.io/wavesurfer.js/dist/plugin/wavesurfer.microphone.min.js"></script>
 ```
 
 Add an `audio` element:
@@ -163,7 +163,7 @@ var player = videojs("myLiveAudio",
 ```
 
 See the full live example
-([demo](http://collab-project.github.io/videojs-wavesurfer/examples/live.html) or
+([demo](https://collab-project.github.io/videojs-wavesurfer/examples/live.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/live.html)).
 
 
