@@ -201,17 +201,20 @@
             // Set the container to player's container if "container" option is not provided
             // If a waveform needs to be appended to your custom element, then use below option
             // <code>container: document.querySelector("#vjs-waveform")</code>
-            if (opts.container === undefined) {
+            if (opts.container === undefined)
+            {
                 opts.container = this.el();
             }
 
             // Set the height of generated waveform if user has provided height from options.
             // If height of waveform need to be customized then use below option
             // Example: <code>waveformHeight:30</code>
-            if(opts.waveformHeight === undefined){
+            if (opts.waveformHeight === undefined)
+            {
                opts.height = this.player().height() - controlBarHeight;
             }
-            else{
+            else
+            {
                opts.height = opts.waveformHeight;
             }
 
@@ -244,8 +247,15 @@
         {
             if (this.liveMode)
             {
-                // toggle microphone
-                this.microphone.togglePlay();
+                // start/resume microphone visualization
+                if (!this.microphone.active)
+                {
+                    this.microphone.start();
+                }
+                else
+                {
+                    this.microphone.play();
+                }
             }
             else
             {
@@ -255,14 +265,14 @@
         },
 
         /**
-         * Pauses playback or microphone.
+         * Pauses playback or microphone visualization.
          */
         pause: function()
         {
             if (this.liveMode)
             {
-                // toggle microphone
-                this.microphone.togglePlay();
+                // pause microphone visualization
+                this.microphone.pause();
             }
             else
             {
