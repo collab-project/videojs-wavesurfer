@@ -22,7 +22,7 @@
     "examples"
   ],
   "dependencies": {
-    "video.js": ">=4.7.3 < 5.0.0",
+    "video.js": ">=5.0.0",
     "wavesurfer.js": ">=1.0.44"
   },
   "devDependencies": {

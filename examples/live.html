@@ -11,6 +11,17 @@
   <script src="//katspaugh.github.io/wavesurfer.js/dist/plugin/wavesurfer.microphone.min.js"></script>
   <script src="../videojs.wavesurfer.js"></script>
 
+  <style>
+  /* place fullscreen control on right side of the player */
+  .video-js .vjs-custom-control-spacer {
+      display: block;
+      width: 100%;
+  }
+  /* change player background color */
+  #myLiveAudio {
+      background-color: #ADD3FF;
+  }
+  </style>
 </head>
 <body>
 
@@ -22,17 +33,6 @@ var player = videojs("myLiveAudio",
     controls: true,
     width: 600,
     height: 300,
-    children: {
-        controlBar: {
-            children: {
-                currentTimeDisplay: false,
-                durationDisplay: false,
-                muteToggle: false,
-                timeDivider: false,
-                volumeControl: false
-            }
-        }
-    },
     plugins: {
         wavesurfer: {
             src: "live",
@@ -42,9 +42,6 @@ var player = videojs("myLiveAudio",
         }
     }
 });
-
-// change player background color
-player.el().style.backgroundColor = "#ADD3FF";
 </script>
 
 </body>
