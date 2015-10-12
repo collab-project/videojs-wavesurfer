@@ -21,8 +21,10 @@ You can use [bower](http://bower.io) (`bower install videojs-wavesurfer`) or
 plugin, or [download](https://github.com/collab-project/videojs-wavesurfer/releases)
 it elsewhere.
 
-Note about video.js v5.0: this plugin is [currently](https://github.com/collab-project/videojs-wavesurfer/issues/5) only compatible with video.js v.4.x
-releases (for example [4.12.15](https://github.com/videojs/video.js/tree/v4.12.15)).
+Since v1.0 this plugin is compatible with video.js 5.0 and newer. If you want to use
+this plugin with an older video.js 4.x version, check the
+[archived releases](https://github.com/collab-project/videojs-wavesurfer/releases)
+for a 0.9.x release or earlier.
 
 Using the Plugin
 ----------------
@@ -30,10 +32,10 @@ Using the Plugin
 The plugin depends on the wavesurfer.js and video.js packages:
 
 ```html
-<link href="//vjs.zencdn.net/4.12.15/video-js.css" rel="stylesheet">
+<link href="//vjs.zencdn.net/5.0/video-js.css" rel="stylesheet">
 
 <script src="//katspaugh.github.io/wavesurfer.js/dist/wavesurfer.min.js"></script>
-<script src="//vjs.zencdn.net/4.12.15/video.js"></script>
+<script src="//vjs.zencdn.net/5.0/video.js"></script>
 ```
 
 The plugin automatically registers itself when you include `videojs.wavesurfer.js`
@@ -78,8 +80,7 @@ var player = videojs("myClip",
             waveColor: "grey",
             progressColor: "black",
             cursorColor: "black",
-            hideScrollbar: true,
-            waveformHeight: 40
+            hideScrollbar: true
         }
     }
 });
@@ -131,8 +132,7 @@ Add an `audio` element:
 <audio id="myLiveAudio" class="video-js vjs-default-skin"></audio>
 ```
 
-Configure the player: use the value `'live'` for the `src` option and [hide some player
-controls](#customizing-controls) that we don't use:
+Configure the player: use the value `'live'` for the `src` option:
 
 ```javascript
 var player = videojs("myLiveAudio",
@@ -140,17 +140,6 @@ var player = videojs("myLiveAudio",
     controls: true,
     width: 600,
     height: 300,
-    children: {
-        controlBar: {
-            children: {
-                currentTimeDisplay: false,
-                durationDisplay: false,
-                muteToggle: false,
-                timeDivider: false,
-                volumeControl: false
-            }
-        }
-    },
     plugins: {
         wavesurfer: {
             src: "live",
