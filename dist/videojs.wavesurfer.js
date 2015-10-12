@@ -1,4 +1,4 @@
-/*! videojs-wavesurfer v0.9.9
+/*! videojs-wavesurfer v1.0.0
 * https://github.com/collab-project/videojs-wavesurfer
 * Copyright (c) 2015 - Licensed MIT */
 (function(root, factory)
@@ -13,28 +13,28 @@
     }
 }(this, function(WaveSurfer)
 {
+    var VjsComponent = videojs.getComponent('Component');
+
     /**
      * Use waveform for audio files in video.js player.
      */
-    videojs.Waveform = videojs.Component.extend({
-
+    videojs.Waveform = videojs.extend(VjsComponent, {
         /**
          * The constructor function for the class.
          * 
          * @param {videojs.Player|Object} player
          * @param {Object} options Player options.
-         * @param {Function} ready Ready callback function.
          */
-        init: function(player, options, ready)
+        constructor: function(player, options)
         {
             // run base component initializing with new options.
-            videojs.Component.call(this, player, options, ready);
+            VjsComponent.call(this, player, options);
 
             this.waveReady = false;
             this.waveFinished = false;
             this.liveMode = false;
 
-            if (this.options().options.src === 'live')
+            if (this.options_.options.src === 'live')
             {
                 // check if the Microphone plugin can be enabled
                 try
@@ -51,39 +51,64 @@
                 }
             }
 
-            if (this.options().options.msDisplayMax !== undefined)
+            if (this.options_.options.msDisplayMax !== undefined)
             {
-            	// msDisplayMax indicates the number of seconds that is
+                // msDisplayMax indicates the number of seconds that is
                 // considered the boundary value for displaying milliseconds
                 // in the time controls. An audio clip with a total length of
                 // 2 seconds and a msDisplayMax of 3 will use the format
                 // M:SS:MMM. Clips longer than msDisplayMax will be displayed
-            	// as M:SS or HH:MM:SS.
-            	this.msDisplayMax = parseFloat(this.options().options.msDisplayMax);
+                // as M:SS or HH:MM:SS.
+                this.msDisplayMax = parseFloat(this.options_.options.msDisplayMax);
             }
             else
             {
-            	// default
-            	this.msDisplayMax = 3;
+                // default
+                this.msDisplayMax = 3;
             }
 
+            // wait until player ui is ready
+            this.player().one('ready', this.setupUI.bind(this));
+        },
+
+        /**
+         * Player UI is ready.
+         */
+        setupUI: function()
+        {
             // customize controls
             this.player().bigPlayButton.hide();
-            if (this.player().options().controls)
+            if (this.player().options_.controls)
             {
-            	// progress control isn't used by this plugin
+                if (this.liveMode)
+                {
+
+                    // make sure controlBar is showing
+                    this.player().controlBar.show();
+                    this.player().controlBar.el().style.display = 'block';
+                }
+
+                // progress control isn't used by this plugin
                 this.player().controlBar.progressControl.hide();
 
                 // prevent controlbar fadeout
                 this.player().on('userinactive', function(event)
                 {
-                   this.player().userActive(true);
+                    this.player().userActive(true);
                 });
 
-                // videojs automatically hides the controls when no valid 'source'
-                // element is included in the 'audio' tag. Don't.Ever again.
-                this.player().controlBar.show();
-                this.player().controlBar.el().style.display = 'block';
+                // make sure time display is visible
+                var uiElements = [this.player().controlBar.currentTimeDisplay,
+                                  this.player().controlBar.timeDivider,
+                                  this.player().controlBar.durationDisplay];
+                for (var element in uiElements)
+                {
+                    uiElements[element].el().style.display = 'block';
+                    uiElements[element].show();
+                }
+                this.player().controlBar.remainingTimeDisplay.hide();
+                this.player().controlBar.timeDivider.el().style.textAlign = 'center';
+                this.player().controlBar.timeDivider.el().style.width = '2em';
 
                 // disable play button until waveform is ready
                 // (except when in live mode)
@@ -91,10 +116,6 @@
                 {
                     this.player().controlBar.playToggle.hide();
                 }
-
-                // disable currentTimeDisplay's 'timeupdate' event listener that
-                // constantly tries to reset the current time value to 0
-                this.player().off('timeupdate');
             }
 
             // waveform events
@@ -149,7 +170,7 @@
          */
         startPlayers: function()
         {
-            var options = this.options().options;
+            var options = this.options_.options;
 
             // init waveform
             this.initialize(options);
@@ -189,10 +210,9 @@
          */
         initialize: function(opts)
         {
-            this.originalHeight = this.player().options().height;
-
+            this.originalHeight = this.player().options_.height;
             var controlBarHeight = this.player().controlBar.height();
-            if (this.player().options().controls === true && controlBarHeight === 0)
+            if (this.player().options_.controls === true && controlBarHeight === 0)
             {
                 // The dimensions of the controlbar are not known yet, but we need
                 // it now, so we can calculate the height of the waveform.
@@ -210,7 +230,7 @@
             }
 
             // Set the height of generated waveform if user has provided height from options.
-            // If height of waveform need to be customized then use below option
+            // If height of waveform need to be customized then use option below.
             // Example: <code>waveformHeight:30</code>
             if (opts.waveformHeight === undefined)
             {
@@ -343,9 +363,8 @@
             var time = Math.min(currentTime, duration);
 
             // update control
-            this.player().controlBar.currentTimeDisplay.el(
-                ).firstChild.innerHTML = this.formatTime(
-                time, duration);
+            this.player().controlBar.currentTimeDisplay.contentEl(
+                ).innerHTML = this.formatTime(time, duration);
         },
 
         /**
@@ -362,9 +381,8 @@
             }
 
             // update control
-            this.player().controlBar.durationDisplay.el(
-                ).firstChild.innerHTML = this.formatTime(
-                duration, duration);
+            this.player().controlBar.durationDisplay.contentEl(
+                ).innerHTML = this.formatTime(duration, duration);
         },
 
         /**
@@ -375,14 +393,6 @@
             this.waveReady = true;
             this.waveFinished = false;
             this.liveMode = false;
-
-            // make sure the size of time controls is large enough to
-            // display milliseconds
-            if (this.surfer.getDuration() < this.msDisplayMax)
-            {
-                this.player().controlBar.durationDisplay.el().style.width = 
-                    this.player().controlBar.currentTimeDisplay.el().style.width = '6em';
-            }
 
             // update time display
             this.setCurrentTime();
@@ -395,7 +405,7 @@
             this.player().loadingSpinner.hide();
 
             // auto-play when ready (if enabled)
-            if (this.player().options().autoplay)
+            if (this.player().options_.autoplay)
             {
                 this.play();
             }
@@ -410,7 +420,7 @@
             if (!this.player().paused())
             {
                 // check if loop is enabled
-                if (this.player().options().loop)
+                if (this.player().options_.loop)
                 {
                     // reset waveform
                     this.surfer.stop();
@@ -605,7 +615,7 @@
             className: 'vjs-waveform',
             tabIndex: 0
         };
-        return videojs.Component.prototype.createEl(null, props);
+        return VjsComponent.prototype.createEl('div', props);
     };
 
     // plugin defaults
@@ -617,7 +627,7 @@
      */
     var wavesurferPlugin = function(options)
     {
-        var settings = videojs.util.mergeOptions(defaults, options);
+        var settings = videojs.mergeOptions(defaults, options);
         var player = this;
 
         // create new waveform
