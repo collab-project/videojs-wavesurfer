@@ -33,6 +33,13 @@ var player = videojs("myLiveAudio",
     controls: true,
     width: 600,
     height: 300,
+    controlBar: {
+        currentTimeDisplay: false,
+        timeDivider: false,
+        durationDisplay: false,
+        remainingTimeDisplay: false,
+        volumeMenuButton: false
+    },
     plugins: {
         wavesurfer: {
             src: "live",

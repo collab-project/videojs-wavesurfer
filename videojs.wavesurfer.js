@@ -99,12 +99,22 @@
                                   this.player().controlBar.durationDisplay];
                 for (var element in uiElements)
                 {
-                    uiElements[element].el().style.display = 'block';
-                    uiElements[element].show();
+                    // ignore when elements have been disabled by user
+                    if (uiElements[element] !== undefined)
+                    {
+                        uiElements[element].el().style.display = 'block';
+                        uiElements[element].show();
+                    }
                 }
-                this.player().controlBar.remainingTimeDisplay.hide();
-                this.player().controlBar.timeDivider.el().style.textAlign = 'center';
-                this.player().controlBar.timeDivider.el().style.width = '2em';
+                if (this.player().controlBar.remainingTimeDisplay !== undefined)
+                {
+                    this.player().controlBar.remainingTimeDisplay.hide();
+                }
+                if (this.player().controlBar.timeDivider !== undefined)
+                {
+                    this.player().controlBar.timeDivider.el().style.textAlign = 'center';
+                    this.player().controlBar.timeDivider.el().style.width = '2em';
+                }
 
                 // disable play button until waveform is ready
                 // (except when in live mode)
