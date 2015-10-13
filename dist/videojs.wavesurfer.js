@@ -1,4 +1,4 @@
-/*! videojs-wavesurfer v1.0.0
+/*! videojs-wavesurfer v1.0.1
 * https://github.com/collab-project/videojs-wavesurfer
 * Copyright (c) 2015 - Licensed MIT */
 (function(root, factory)
@@ -82,10 +82,9 @@
             {
                 if (this.liveMode)
                 {
-
                     // make sure controlBar is showing
                     this.player().controlBar.show();
-                    this.player().controlBar.el().style.display = 'block';
+                    this.player().controlBar.el().style.display = 'flex';
                 }
 
                 // progress control isn't used by this plugin
@@ -103,12 +102,22 @@
                                   this.player().controlBar.durationDisplay];
                 for (var element in uiElements)
                 {
-                    uiElements[element].el().style.display = 'block';
-                    uiElements[element].show();
+                    // ignore when elements have been disabled by user
+                    if (uiElements[element] !== undefined)
+                    {
+                        uiElements[element].el().style.display = 'block';
+                        uiElements[element].show();
+                    }
                 }
-                this.player().controlBar.remainingTimeDisplay.hide();
-                this.player().controlBar.timeDivider.el().style.textAlign = 'center';
-                this.player().controlBar.timeDivider.el().style.width = '2em';
+                if (this.player().controlBar.remainingTimeDisplay !== undefined)
+                {
+                    this.player().controlBar.remainingTimeDisplay.hide();
+                }
+                if (this.player().controlBar.timeDivider !== undefined)
+                {
+                    this.player().controlBar.timeDivider.el().style.textAlign = 'center';
+                    this.player().controlBar.timeDivider.el().style.width = '2em';
+                }
 
                 // disable play button until waveform is ready
                 // (except when in live mode)
