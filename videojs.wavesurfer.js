@@ -79,10 +79,9 @@
             {
                 if (this.liveMode)
                 {
-
                     // make sure controlBar is showing
                     this.player().controlBar.show();
-                    this.player().controlBar.el().style.display = 'block';
+                    this.player().controlBar.el().style.display = 'flex';
                 }
 
                 // progress control isn't used by this plugin
