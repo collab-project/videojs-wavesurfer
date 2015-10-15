@@ -9,8 +9,11 @@
         "videojs"
     ],
     "globals"   : {
-	    "define"   : false,
-	    "console"  : false,
-	    "File"     : false
+	    "define"    : false,
+            "require"   : false,
+            "module"    : false,
+	    "console"   : false,
+	    "File"      : false,
+            "WaveSurfer": false
     }
 }

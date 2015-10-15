@@ -1,21 +1,31 @@
-(function(root, factory)
+(function (root, factory)
 {
     if (typeof define === 'function' && define.amd)
     {
-        define(['wavesurfer'], factory);
+        // AMD. Register as an anonymous module.
+        define(['videojs'], factory);
+    }
+    else if (typeof module === 'object' && module.exports)
+    {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like environments that support module.exports,
+        // like Node.
+        module.exports = factory(require('videojs'));
     }
     else
     {
-        root.WaveSurfer.Videojs = factory(root.WaveSurfer);
+        // Browser globals (root is window)
+        root.returnExports = factory(root.videojs);
     }
-}(this, function(WaveSurfer)
+}(this, function (videojs)
 {
     var VjsComponent = videojs.getComponent('Component');
 
     /**
      * Use waveform for audio files in video.js player.
      */
-    videojs.Waveform = videojs.extend(VjsComponent, {
+    videojs.Waveform = videojs.extend(VjsComponent,
+    {
         /**
          * The constructor function for the class.
          * 
@@ -647,6 +657,7 @@
     // register the plugin
     videojs.plugin('wavesurfer', wavesurferPlugin);
 
+    // return a function to define the module export
     return wavesurferPlugin;
 
 }));
