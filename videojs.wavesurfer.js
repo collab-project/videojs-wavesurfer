@@ -3,21 +3,21 @@
     if (typeof define === 'function' && define.amd)
     {
         // AMD. Register as an anonymous module.
-        define(['videojs'], factory);
+        define(['videojs', 'wavesurfer'], factory);
     }
     else if (typeof module === 'object' && module.exports)
     {
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like environments that support module.exports,
         // like Node.
-        module.exports = factory(require('videojs'));
+        module.exports = factory(require('videojs'), require('wavesurfer'));
     }
     else
     {
         // Browser globals (root is window)
-        root.returnExports = factory(root.videojs);
+        root.returnExports = factory(root.videojs, root.WaveSurfer);
     }
-}(this, function (videojs)
+}(this, function (videojs, WaveSurfer)
 {
     var VjsComponent = videojs.getComponent('Component');
 
