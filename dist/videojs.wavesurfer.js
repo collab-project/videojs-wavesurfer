@@ -1,4 +1,4 @@
-/*! videojs-wavesurfer v1.0.3
+/*! videojs-wavesurfer v1.0.4
 * https://github.com/collab-project/videojs-wavesurfer
 * Copyright (c) 2015 - Licensed MIT */
 (function (root, factory)
@@ -13,7 +13,7 @@
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like environments that support module.exports,
         // like Node.
-        module.exports = factory(require('videojs'), require('wavesurfer'));
+        module.exports = factory(require('video.js'), require('wavesurfer'));
     }
     else
     {
