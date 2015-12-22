@@ -99,7 +99,7 @@ The additional options for this plugin are:
 Customizing controls
 --------------------
 
-To disable and hide specific controls, use the video.js `controlbar` option:
+To disable and hide specific controls, use the video.js `controlBar` option:
 
 ```javascript
 controlBar: {
