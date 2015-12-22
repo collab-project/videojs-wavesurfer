@@ -99,17 +99,12 @@ The additional options for this plugin are:
 Customizing controls
 --------------------
 
-If you want to disable and hide specific controls, use the video.js `children`
-option:
+To disable and hide specific controls, use the video.js `controlbar` option:
 
 ```javascript
-children: {
-    controlBar: {
-        children: {
-            // hide fullscreen control
-            fullscreenToggle: false
-        }
-    }
+controlBar: {
+    // hide fullscreen control
+    fullscreenToggle: false
 },
 ```
 
