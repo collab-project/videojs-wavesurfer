@@ -28,7 +28,7 @@
     {
         /**
          * The constructor function for the class.
-         * 
+         *
          * @param {videojs.Player|Object} player
          * @param {Object} options Player options.
          */
@@ -218,7 +218,7 @@
 
         /**
          * Initializes the waveform.
-         * 
+         *
          * @param {Object} opts Plugin options.
          */
         initialize: function(opts)
@@ -260,7 +260,7 @@
 
         /**
          * Start loading waveform data.
-         * 
+         *
          * @param {String|Blob|File} url Either the URL of the audio file,
          *     or a Blob or File object.
          */
@@ -343,7 +343,7 @@
 
         /**
          * Set the current volume.
-         * 
+         *
          * @param {Number} volume The new volume level.
          */
         setVolume: function(volume)
@@ -452,7 +452,7 @@
 
         /**
          * Fires continuously during audio playback.
-         * 
+         *
          * @param {Number} time Current time/location of the playhead.
          */
         onWaveProgress: function(time)
@@ -553,16 +553,15 @@
          */
         onWaveError: function(error)
         {
-            console.warn(error);
             this.player().trigger('error', error);
         },
 
         /**
          * Format seconds as a time string, H:MM:SS, M:SS or M:SS:MMM.
-         * 
+         *
          * Supplying a guide (in seconds) will force a number of leading zeros
          * to cover the length of the guide.
-         * 
+         *
          * @param {Number} seconds Number of seconds to be turned into a string
          * @param {Number} guide Number (in seconds) to model the string after
          * @return {String} Time formatted as H:MM:SS, M:SS or M:SS:MMM.
