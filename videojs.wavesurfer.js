@@ -554,6 +554,7 @@
         onWaveError: function(error)
         {
             console.warn(error);
+            this.player().trigger('error', error);
         },
 
         /**
