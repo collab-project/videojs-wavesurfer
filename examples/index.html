@@ -37,7 +37,7 @@ var player = videojs("myAudio",
     height: 300,
     plugins: {
         wavesurfer: {
-            src: "media/heres_johnny.wav",
+            src: "media/heres_johnny.wavd",
             msDisplayMax: 10,
             waveColor: "grey",
             progressColor: "black",
@@ -45,6 +45,12 @@ var player = videojs("myAudio",
             hideScrollbar: true
         }
     }
+});
+
+// error handling
+player.on('error', function(error)
+{
+    console.warn(error);
 });
 </script>
 

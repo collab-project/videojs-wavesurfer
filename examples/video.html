@@ -45,6 +45,12 @@ var player = videojs("myVideo",
         }
     }
 });
+
+// error handling
+player.on('error', function(error)
+{
+    console.warn(error);
+});
 </script>
 
 </body>
