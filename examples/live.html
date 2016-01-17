@@ -6,20 +6,26 @@
 
   <link href="//vjs.zencdn.net/5.4.6/video-js.css" rel="stylesheet">
 
-  <script src="//vjs.zencdn.net/5.4.6/video.js"></script>
+  <script src="//vjs.zencdn.net/5.4.6/video.min.js"></script>
   <script src="//katspaugh.github.io/wavesurfer.js/dist/wavesurfer.min.js"></script>
   <script src="//katspaugh.github.io/wavesurfer.js/dist/plugin/wavesurfer.microphone.min.js"></script>
   <script src="../dist/videojs.wavesurfer.min.js"></script>
 
   <style>
   /* place fullscreen control on right side of the player */
-  .video-js .vjs-custom-control-spacer {
-      display: block;
-      width: 100%;
+  .video-js .vjs-control.vjs-fullscreen-control {
+      position: absolute;
+      right: 0;
   }
   /* change player background color */
   #myLiveAudio {
       background-color: #ADD3FF;
+  }
+  /* make sure the custom controls are always visible because
+     the plugin hides and replace the video.js native mobile
+     controls */
+  .vjs-using-native-controls .vjs-control-bar {
+      display: flex !important;
   }
   </style>
 </head>
