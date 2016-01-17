@@ -20,6 +20,12 @@
   #myAudio {
       background-color: #FFEEFF;
   }
+  /* make sure the custom controls are always visible */
+  .vjs-controls-disabled .vjs-control-bar,
+  .vjs-using-native-controls .vjs-control-bar,
+  .vjs-error .vjs-control-bar {
+      display: flex !important;
+  }
   </style>
 
 </head>
