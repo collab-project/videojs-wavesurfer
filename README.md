@@ -29,17 +29,17 @@ for a 0.9.x or older release of this plugin.
 Using the Plugin
 ----------------
 
-The plugin depends on the wavesurfer.js and video.js packages:
+The plugin depends on the video.js and wavesurfer.js libraries:
 
 ```html
 <link href="//vjs.zencdn.net/5.4.6/video-js.css" rel="stylesheet">
 
+<script src="//vjs.zencdn.net/5.4.6/video.min.js"></script>
 <script src="//katspaugh.github.io/wavesurfer.js/dist/wavesurfer.min.js"></script>
-<script src="//vjs.zencdn.net/5.4.6/video.js"></script>
 ```
 
-The plugin automatically registers itself when you include `videojs.wavesurfer.js`
-on your page:
+The plugin automatically registers itself when you include the
+`videojs.wavesurfer.js` script on your page:
 
 ```html
 <script src="videojs.wavesurfer.js"></script>
