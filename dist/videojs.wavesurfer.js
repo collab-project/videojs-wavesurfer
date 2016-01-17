@@ -1,4 +1,4 @@
-/*! videojs-wavesurfer v1.0.5
+/*! videojs-wavesurfer v1.0.6
 * https://github.com/collab-project/videojs-wavesurfer
 * Copyright (c) Collab 2014-2016 - Licensed MIT */
 (function (root, factory)
@@ -88,6 +88,17 @@
         {
             // customize controls
             this.player().bigPlayButton.hide();
+
+            // the native controls don't work for this UI so disable
+            // them no matter what
+            if (this.player().usingNativeControls_ === true)
+            {
+                if (this.player().tech_.el_ !== undefined)
+                {
+                    this.player().tech_.el_.controls = false;
+                }
+            }
+
             if (this.player().options_.controls)
             {
                 // make sure controlBar is showing
