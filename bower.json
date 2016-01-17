@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "video.js": ">=5.0.0",
-    "wavesurfer.js": ">=1.0.46"
+    "wavesurfer.js": ">=1.0.50"
   },
   "devDependencies": {
     "grunt": ">=0.4.5",
