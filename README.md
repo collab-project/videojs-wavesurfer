@@ -32,10 +32,10 @@ Using the Plugin
 The plugin depends on the wavesurfer.js and video.js packages:
 
 ```html
-<link href="//vjs.zencdn.net/5.2.1/video-js.css" rel="stylesheet">
+<link href="//vjs.zencdn.net/5.4.6/video-js.css" rel="stylesheet">
 
 <script src="//katspaugh.github.io/wavesurfer.js/dist/wavesurfer.min.js"></script>
-<script src="//vjs.zencdn.net/5.2.1/video.js"></script>
+<script src="//vjs.zencdn.net/5.4.6/video.js"></script>
 ```
 
 The plugin automatically registers itself when you include `videojs.wavesurfer.js`
