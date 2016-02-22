@@ -48,6 +48,9 @@
                 {
                     this.microphone = Object.create(WaveSurfer.Microphone);
 
+                    // listen for events
+                    this.microphone.on('deviceError', this.onWaveError.bind(this));
+
                     // enable audio input from a microphone
                     this.liveMode = true;
                     this.waveReady = true;
