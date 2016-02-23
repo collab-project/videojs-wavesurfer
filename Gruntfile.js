@@ -34,8 +34,18 @@ module.exports = function(grunt) {
         options: {
           jshintrc: '.jshintrc'
         },
-        src: ['videojs.wavesurfer.js']
+        src: ['<%= pkg.main %>']
       },
+    },
+    jscs: {
+      src: ['<%= concat.dist.src %>'],
+      options: {
+        config: '.jscsrc',
+        esnext: false, // If you use ES6 http://jscs.info/overview.html#esnext
+        verbose: true, // If you need output with rule names http://jscs.info/overview.html#verbose
+        fix: false, // Autofix code style violations when possible.
+        requireCurlyBraces: [ "if" ]
+      }
     },
     watch: {
       gruntfile: {
@@ -50,8 +60,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-jscs');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'jscs', 'concat', 'uglify']);
 
 };

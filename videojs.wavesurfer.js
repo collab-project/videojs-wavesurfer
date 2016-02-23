@@ -261,11 +261,11 @@
             // Example: <code>waveformHeight:30</code>
             if (opts.waveformHeight === undefined)
             {
-               opts.height = this.player().height() - controlBarHeight;
+                opts.height = this.player().height() - controlBarHeight;
             }
             else
             {
-               opts.height = opts.waveformHeight;
+                opts.height = opts.waveformHeight;
             }
 
             // customize waveform appearance
@@ -673,5 +673,4 @@
 
     // return a function to define the module export
     return wavesurferPlugin;
-
 }));
