@@ -146,6 +146,9 @@ var player = videojs("myLiveAudio",
 });
 ```
 
+The microphone plugin has additional configuration
+[options](http://wavesurfer-js.org/plugins/microphone.html).
+
 See the full live example
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/live.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/live.html)).
