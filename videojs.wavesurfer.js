@@ -218,9 +218,8 @@
                     this.player().loadingSpinner.hide();
 
                     // connect microphone input to our waveform
-                    this.microphone.init({
-                        wavesurfer: this.surfer
-                    });
+                    options.wavesurfer = this.surfer;
+                    this.microphone.init(options);
                 }
             }
             else
