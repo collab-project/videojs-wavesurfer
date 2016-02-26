@@ -309,7 +309,10 @@
             }
             else
             {
-                // start playback
+                // put video.js player UI in playback mode
+                this.player().play();
+
+                // start surfer playback
                 this.surfer.play();
             }
         },
