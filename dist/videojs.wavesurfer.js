@@ -1,4 +1,4 @@
-/*! videojs-wavesurfer v1.0.6
+/*! videojs-wavesurfer v1.1.0
 * https://github.com/collab-project/videojs-wavesurfer
 * Copyright (c) Collab 2014-2016 - Licensed MIT */
 (function (root, factory)
@@ -50,6 +50,9 @@
                 try
                 {
                     this.microphone = Object.create(WaveSurfer.Microphone);
+
+                    // listen for events
+                    this.microphone.on('deviceError', this.onWaveError.bind(this));
 
                     // enable audio input from a microphone
                     this.liveMode = true;
@@ -218,9 +221,8 @@
                     this.player().loadingSpinner.hide();
 
                     // connect microphone input to our waveform
-                    this.microphone.init({
-                        wavesurfer: this.surfer
-                    });
+                    options.wavesurfer = this.surfer;
+                    this.microphone.init(options);
                 }
             }
             else
@@ -261,11 +263,11 @@
             // Example: <code>waveformHeight:30</code>
             if (opts.waveformHeight === undefined)
             {
-               opts.height = this.player().height() - controlBarHeight;
+                opts.height = this.player().height() - controlBarHeight;
             }
             else
             {
-               opts.height = opts.waveformHeight;
+                opts.height = opts.waveformHeight;
             }
 
             // customize waveform appearance
@@ -309,7 +311,10 @@
             }
             else
             {
-                // start playback
+                // put video.js player UI in playback mode
+                this.player().play();
+
+                // start surfer playback
                 this.surfer.play();
             }
         },
@@ -673,5 +678,4 @@
 
     // return a function to define the module export
     return wavesurferPlugin;
-
 }));
