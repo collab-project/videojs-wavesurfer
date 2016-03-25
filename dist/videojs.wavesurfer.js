@@ -1,4 +1,4 @@
-/*! videojs-wavesurfer v1.1.0
+/*! videojs-wavesurfer v1.2.0
 * https://github.com/collab-project/videojs-wavesurfer
 * Copyright (c) Collab 2014-2016 - Licensed MIT */
 (function (root, factory)
@@ -392,6 +392,9 @@
             {
                 duration = this.surfer.getDuration();
             }
+
+            currentTime = isNaN(currentTime) ? 0 : currentTime;
+            duration = isNaN(duration) ? 0 : duration;
             var time = Math.min(currentTime, duration);
 
             // update control
@@ -411,6 +414,8 @@
             {
                 duration = this.surfer.getDuration();
             }
+
+            duration = isNaN(duration) ? 0 : duration;
 
             // update control
             this.player().controlBar.durationDisplay.contentEl(
@@ -588,6 +593,7 @@
         formatTime: function(seconds, guide)
         {
             // Default to using seconds as guide
+            seconds = seconds < 0 ? 0 : seconds;
             guide = guide || seconds;
             var s = Math.floor(seconds % 60),
                 m = Math.floor(seconds / 60 % 60),
