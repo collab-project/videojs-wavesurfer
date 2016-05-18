@@ -33,9 +33,9 @@ The plugin depends on the video.js and wavesurfer.js libraries:
 
 ```html
 <link href="//vjs.zencdn.net/5.9.2/video-js.css" rel="stylesheet">
-
 <script src="//vjs.zencdn.net/5.9.2/video.min.js"></script>
-<script src="//katspaugh.github.io/wavesurfer.js/dist/wavesurfer.min.js"></script>
+
+<script src="wavesurfer.min.js"></script>
 ```
 
 The plugin automatically registers itself when you include the
@@ -63,7 +63,7 @@ Plugin Options
 Configure the player using the video.js
 [options](https://github.com/videojs/video.js/blob/master/docs/guides/options.md),
 and enable the plugin by adding a `wavesurfer` entry with the related wavesurfer.js
-[options](https://github.com/katspaugh/wavesurfer.js#wavesurfer-options):
+[options](http://wavesurfer-js.org/docs/options.html):
 
 ```javascript
 var player = videojs("myClip",
@@ -126,10 +126,10 @@ It's also possible to use a microphone for real-time rendering of the audio wave
 uses the [microphone plugin](https://github.com/katspaugh/wavesurfer.js/blob/master/plugin/wavesurfer.microphone.js)
 that comes with wavesurfer.js.
 
-Include the additional `wavesurfer.microphone.js` plugin on your page:
+Include the additional `wavesurfer.microphone.js` plugin on your page.
 
 ```html
-<script src="//katspaugh.github.io/wavesurfer.js/dist/plugin/wavesurfer.microphone.min.js"></script>
+<script src="wavesurfer.microphone.min.js"></script>
 ```
 
 Add an `audio` element:
