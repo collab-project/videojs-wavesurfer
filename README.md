@@ -32,8 +32,8 @@ Using the Plugin
 The plugin depends on the video.js and wavesurfer.js libraries:
 
 ```html
-<link href="//vjs.zencdn.net/5.9.2/video-js.css" rel="stylesheet">
-<script src="//vjs.zencdn.net/5.9.2/video.min.js"></script>
+<link href="video-js.min.css" rel="stylesheet">
+<script src="video.min.js"></script>
 
 <script src="wavesurfer.min.js"></script>
 ```
