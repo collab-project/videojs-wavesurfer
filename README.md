@@ -26,6 +26,9 @@ this plugin with an older video.js 4.x version, check the
 [archived releases](https://github.com/collab-project/videojs-wavesurfer/releases)
 for a 0.9.x or older release of this plugin.
 
+Take a look at the [changelog](./CHANGES.md) when upgrading from a previous
+version of videojs-wavesurfer.
+
 Using the Plugin
 ----------------
 
