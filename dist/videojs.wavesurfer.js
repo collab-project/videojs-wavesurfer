@@ -1,4 +1,4 @@
-/*! videojs-wavesurfer v1.2.0
+/*! videojs-wavesurfer v1.2.1
 * https://github.com/collab-project/videojs-wavesurfer
 * Copyright (c) Collab 2014-2016 - Licensed MIT */
 (function (root, factory)
