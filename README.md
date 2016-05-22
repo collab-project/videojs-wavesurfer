@@ -99,6 +99,24 @@ The additional options for this plugin are:
 | `src` | string | `null` | The URL of the audio/video file or `'live'` when [using the microphone plugin](#microphone-plugin).|
 | `msDisplayMax` | float | `3` | Indicates the number of seconds that is considered the boundary value for displaying milliseconds in the time controls. An audio clip with a total length of 2 seconds and a `msDisplayMax` of 3 will use the format `M:SS:MMM`. Clips with a duration that is longer than `msDisplayMax` will be displayed as `M:SS` or `HH:MM:SS`.|
 
+Methods
+-------
+
+Methods for this plugin documented below are available on the `waveform` object
+of the video.js player instance. For example:
+
+```javascript
+player.waveform.destroy();
+```
+
+| Method | Description |
+| --- | --- |
+| `destroy` | Destroys the wavesurfer instance and children (including the video.js player). |
+| `load(url)` | Load the clip at `url`. |
+| `setVolume(level)` | Set the volume level. |
+| `play` | Start playback. |
+| `pause` | Pause playback. |
+
 Other wavesurfer.js methods
 ---------------------------
 
