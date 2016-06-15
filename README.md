@@ -196,9 +196,6 @@ tested with `videojs-wavesurfer`:
 
 - [videojs-record](https://github.com/collab-project/videojs-record) - Adds
   support for recording audio/video/image files.
-- [videojs-persistvolume](https://github.com/theonion/videojs-persistvolume) -
-  Saves user's volume setting using `localStorage`, but falls back to cookies
-  if necessary.
 
 
 Contributing
