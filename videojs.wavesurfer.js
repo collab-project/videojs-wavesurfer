@@ -22,7 +22,7 @@
     var VjsComponent = videojs.getComponent('Component');
 
     /**
-     * Use waveform for audio files in video.js player.
+     * Draw a waveform for audio and video files in a video.js player.
      */
     videojs.Waveform = videojs.extend(VjsComponent,
     {
