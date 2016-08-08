@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+1.2.2 - 2016/08/08
+------------------
+
+- Bugfix: correct Node name for wavesurfer.js module (#19 by @monachilada)
+
+
 1.2.1 - 2016/05/22
 ------------------
 
