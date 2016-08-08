@@ -1,4 +1,4 @@
-/*! videojs-wavesurfer v1.2.1
+/*! videojs-wavesurfer v1.2.2
 * https://github.com/collab-project/videojs-wavesurfer
 * Copyright (c) Collab 2014-2016 - Licensed MIT */
 (function (root, factory)
@@ -13,7 +13,7 @@
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like environments that support module.exports,
         // like Node.
-        module.exports = factory(require('video.js'), require('wavesurfer'));
+        module.exports = factory(require('video.js'), require('wavesurfer.js'));
     }
     else
     {
@@ -25,7 +25,7 @@
     var VjsComponent = videojs.getComponent('Component');
 
     /**
-     * Use waveform for audio files in video.js player.
+     * Draw a waveform for audio and video files in a video.js player.
      */
     videojs.Waveform = videojs.extend(VjsComponent,
     {
