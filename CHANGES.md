@@ -1,10 +1,16 @@
 videojs-wavesurfer changelog
 ============================
 
-1.2.2 (unreleased)
+1.2.3 (unreleased)
 ------------------
 
 - Bugfix: add compatibility for video.js 5.11.0 and newer (#20)
+
+
+1.2.2 - 2016/08/08
+------------------
+
+- Bugfix: correct Node name for wavesurfer.js module (#19 by @monachilada)
 
 
 1.2.1 - 2016/05/22
