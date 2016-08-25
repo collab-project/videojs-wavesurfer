@@ -99,6 +99,14 @@
                 }
             }
 
+            // since video.js 5.11.0 the player won't start if no src is
+            // set (see PR 3378), so fake it
+            var self = this;
+            this.player().currentSrc = function()
+            {
+                return 'videojs-wavesurfer';
+            };
+
             if (this.player().options_.controls)
             {
                 // make sure controlBar is showing
