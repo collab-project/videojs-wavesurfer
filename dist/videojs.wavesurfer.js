@@ -1,4 +1,4 @@
-/*! videojs-wavesurfer v1.2.2
+/*! videojs-wavesurfer v1.2.3
 * https://github.com/collab-project/videojs-wavesurfer
 * Copyright (c) Collab 2014-2016 - Licensed MIT */
 (function (root, factory)
@@ -101,6 +101,13 @@
                     this.player().tech_.el_.controls = false;
                 }
             }
+
+            // since video.js 5.11.0 the player won't start if no src is
+            // set (see PR 3378), so fake it
+            this.player().currentSrc = function()
+            {
+                return 'videojs-wavesurfer';
+            };
 
             if (this.player().options_.controls)
             {
