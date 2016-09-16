@@ -1,6 +1,13 @@
 videojs-wavesurfer changelog
 ============================
 
+1.2.4 (unreleased)
+------------------
+
+- add `exportImage` to save an image of the waveform
+- bump required wavesurfer.js version to 1.2.0 for `exportImage` method
+
+
 1.2.3 (2016/08/27)
 ------------------
 

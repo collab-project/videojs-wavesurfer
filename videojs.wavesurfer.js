@@ -378,6 +378,23 @@
         },
 
         /**
+         * Save waveform image as data URI.
+         *
+         * The default format is 'image/png'. Other supported types are
+         * 'image/jpeg' and 'image/webp'.
+         *
+         * @param {String} format String indicating the image format. The
+         *                        default type is image/png.
+         * @param {Number} quality Number between 0 and 1 indicating image
+         *                 quality if the requested type is image/jpeg or
+         *                 image/webp. The default is 1.
+         */
+        exportImage: function(format, quality)
+        {
+            return this.surfer.exportImage(format, quality);
+        },
+
+        /**
          * Updates the player's element displaying the current time.
          *
          * @param {Number} currentTime (optional) Current position of the
