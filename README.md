@@ -69,7 +69,7 @@ and enable the plugin by adding a `wavesurfer` entry with the related wavesurfer
 [options](http://wavesurfer-js.org/docs/options.html):
 
 ```javascript
-var player = videojs("myClip",
+var player = videojs('myClip',
 {
     controls: true,
     autoplay: true,
@@ -78,11 +78,12 @@ var player = videojs("myClip",
     height: 300,
     plugins: {
         wavesurfer: {
-            src: "media/heres_johnny.wav",
+            src: 'media/heres_johnny.wav',
             msDisplayMax: 10,
-            waveColor: "grey",
-            progressColor: "black",
-            cursorColor: "black",
+            debug: true,
+            waveColor: 'grey',
+            progressColor: 'black',
+            cursorColor: 'black',
             hideScrollbar: true
         }
     }
@@ -97,6 +98,7 @@ The additional options for this plugin are:
 | option | type | default | description |
 | --- | --- | --- | --- |
 | `src` | string | `null` | The URL of the audio/video file or `'live'` when [using the microphone plugin](#microphone-plugin).|
+| `debug` | boolean | `false` | Display internal log messages using the `videojs.log` method. |
 | `msDisplayMax` | float | `3` | Indicates the number of seconds that is considered the boundary value for displaying milliseconds in the time controls. An audio clip with a total length of 2 seconds and a `msDisplayMax` of 3 will use the format `M:SS:MMM`. Clips with a duration that is longer than `msDisplayMax` will be displayed as `M:SS` or `HH:MM:SS`.|
 
 Methods
@@ -112,7 +114,7 @@ player.waveform.destroy();
 | Method | Description |
 | --- | --- |
 | `destroy` | Destroys the wavesurfer instance and children (including the video.js player). |
-| `load(url)` | Load the clip at `url`. |
+| `load(url)` | Load the clip at `url`. Also supports loading [File](https://developer.mozilla.org/nl/docs/Web/API/File) or [Blob](https://developer.mozilla.org/nl/docs/Web/API/Blob) objects. |
 | `setVolume(level)` | Set the volume level. |
 | `play` | Start playback. |
 | `pause` | Pause playback. |
@@ -163,15 +165,16 @@ Add an `audio` element:
 Configure the player: use the value `'live'` for the `src` option:
 
 ```javascript
-var player = videojs("myLiveAudio",
+var player = videojs('myLiveAudio',
 {
     controls: true,
     width: 600,
     height: 300,
     plugins: {
         wavesurfer: {
-            src: "live",
-            waveColor: "black",
+            src: 'live',
+            debug: true,
+            waveColor: 'black',
             cursorWidth: 0,
             interact: false
         }

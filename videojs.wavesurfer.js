@@ -19,6 +19,8 @@
     }
 }(this, function (videojs, WaveSurfer)
 {
+    var ERROR = 'error';
+    var WARN = 'warn';
     var VjsComponent = videojs.getComponent('Component');
 
     /**
@@ -34,16 +36,19 @@
          */
         constructor: function(player, options)
         {
-            // run base component initializing with new options.
+            // run base component initializing with new options
             VjsComponent.call(this, player, options);
 
+            // parse options
             this.waveReady = false;
             this.waveFinished = false;
             this.liveMode = false;
+            this.debug = (this.options_.options.debug.toString() === 'true');
+            this.msDisplayMax = parseFloat(this.options_.options.msDisplayMax);
 
             if (this.options_.options.src === 'live')
             {
-                // check if the Microphone plugin can be enabled
+                // check if the wavesurfer.js microphone plugin can be enabled
                 try
                 {
                     this.microphone = Object.create(WaveSurfer.Microphone);
@@ -54,14 +59,15 @@
                     // enable audio input from a microphone
                     this.liveMode = true;
                     this.waveReady = true;
+
+                    this.log('wavesurfer.js microphone plugin enabled.');
                 }
                 catch (TypeError)
                 {
-                    console.warn('Could not find Microphone plugin!');
+                    this.onWaveError('Could not find wavesurfer.js ' +
+                        'microphone plugin!');
                 }
             }
-
-            this.msDisplayMax = parseFloat(this.options_.options.msDisplayMax);
 
             // wait until player ui is ready
             this.player().one('ready', this.setupUI.bind(this));
@@ -274,10 +280,12 @@
         {
             if (url instanceof Blob || url instanceof File)
             {
+                this.log('Loading object: ' + url);
                 this.surfer.loadBlob(url);
             }
             else
             {
+                this.log('Loading URL: ' + url);
                 this.surfer.load(url);
             }
         },
@@ -292,15 +300,19 @@
                 // start/resume microphone visualization
                 if (!this.microphone.active)
                 {
+                    this.log('Start microphone');
                     this.microphone.start();
                 }
                 else
                 {
+                    this.log('Resume microphone');
                     this.microphone.play();
                 }
             }
             else
             {
+                this.log('Start playback');
+
                 // put video.js player UI in playback mode
                 this.player().play();
 
@@ -317,11 +329,13 @@
             if (this.liveMode)
             {
                 // pause microphone visualization
+                this.log('Pause microphone');
                 this.microphone.pause();
             }
             else
             {
                 // pause playback
+                this.log('Pause playback');
                 if (!this.waveFinished)
                 {
                     this.surfer.pause();
@@ -340,9 +354,12 @@
          */
         destroy: function()
         {
+            this.log('Destroying plugin');
+
             if (this.liveMode && this.microphone)
             {
                 // destroy microphone plugin
+                this.log('Destroying microphone');
                 this.microphone.destroy();
             }
 
@@ -359,6 +376,7 @@
         {
             if (volume !== undefined)
             {
+                this.log('Changing volume to: ' + volume);
                 this.surfer.setVolume(volume);
             }
         },
@@ -378,6 +396,28 @@
         exportImage: function(format, quality)
         {
             return this.surfer.exportImage(format, quality);
+        },
+
+        /**
+         * Log message (if the debug option is enabled).
+         */
+        log: function(args, logType)
+        {
+            if (this.debug === true)
+            {
+                if (logType === ERROR)
+                {
+                    videojs.log.error(args);
+                }
+                else if (logType === WARN)
+                {
+                    videojs.log.warn(args);
+                }
+                else
+                {
+                    videojs.log(args);
+                }
+            }
         },
 
         /**
@@ -434,6 +474,8 @@
          */
         onWaveReady: function()
         {
+            this.log('Waveform is ready');
+
             this.waveReady = true;
             this.waveFinished = false;
             this.liveMode = false;
@@ -460,6 +502,8 @@
          */
         onWaveFinish: function()
         {
+            this.log('Finished playback');
+
             // check if player isn't paused already
             if (!this.player().paused())
             {
@@ -584,6 +628,8 @@
          */
         onWaveError: function(error)
         {
+            this.log(error, ERROR);
+
             this.player().trigger('error', error);
         },
 
