@@ -116,6 +116,7 @@ player.waveform.destroy();
 | `setVolume(level)` | Set the volume level. |
 | `play` | Start playback. |
 | `pause` | Pause playback. |
+| `exportImage(format, quality)` | Save waveform image as data URI. Default format is 'image/png'. |
 
 Other wavesurfer.js methods
 ---------------------------
