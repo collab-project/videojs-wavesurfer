@@ -23,7 +23,7 @@
 <video id="myVideo" class="video-js vjs-default-skin"></video>
 
 <script>
-var player = videojs("myVideo",
+var player = videojs('myVideo',
 {
     controls: true,
     autoplay: true,
@@ -32,11 +32,12 @@ var player = videojs("myVideo",
     height: 300,
     plugins: {
         wavesurfer: {
-            src: "media/example.mp4",
+            src: 'media/example.mp4',
             msDisplayMax: 10,
-            waveColor: "#336699",
-            progressColor: "black",
-            cursorColor: "black",
+            debug: true,
+            waveColor: '#336699',
+            progressColor: 'black',
+            cursorColor: 'black',
             hideScrollbar: true
         }
     }

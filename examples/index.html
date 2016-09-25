@@ -24,7 +24,7 @@
 <audio id="myAudio" class="video-js vjs-default-skin"></audio>
 
 <script>
-var player = videojs("myAudio",
+var player = videojs('myAudio',
 {
     controls: true,
     autoplay: true,
@@ -33,11 +33,12 @@ var player = videojs("myAudio",
     height: 300,
     plugins: {
         wavesurfer: {
-            src: "media/heres_johnny.wav",
+            src: 'media/heres_johnny.wav',
+            msDisplayMax: 10,
             debug: true,
-            waveColor: "grey",
-            progressColor: "black",
-            cursorColor: "black",
+            waveColor: 'grey',
+            progressColor: 'black',
+            cursorColor: 'black',
             hideScrollbar: true
         }
     }

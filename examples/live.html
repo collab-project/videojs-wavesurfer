@@ -24,7 +24,7 @@
 <audio id="myLiveAudio" class="video-js vjs-default-skin"></audio>
 
 <script>
-var player = videojs("myLiveAudio",
+var player = videojs('myLiveAudio',
 {
     controls: true,
     width: 600,
@@ -38,8 +38,9 @@ var player = videojs("myLiveAudio",
     },
     plugins: {
         wavesurfer: {
-            src: "live",
-            waveColor: "black",
+            src: 'live',
+            waveColor: 'black',
+            debug: true,
             cursorWidth: 0,
             interact: false
         }
