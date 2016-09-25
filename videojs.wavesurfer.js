@@ -61,21 +61,7 @@
                 }
             }
 
-            if (this.options_.options.msDisplayMax !== undefined)
-            {
-                // msDisplayMax indicates the number of seconds that is
-                // considered the boundary value for displaying milliseconds
-                // in the time controls. An audio clip with a total length of
-                // 2 seconds and a msDisplayMax of 3 will use the format
-                // M:SS:MMM. Clips longer than msDisplayMax will be displayed
-                // as M:SS or HH:MM:SS.
-                this.msDisplayMax = parseFloat(this.options_.options.msDisplayMax);
-            }
-            else
-            {
-                // default
-                this.msDisplayMax = 3;
-            }
+            this.msDisplayMax = parseFloat(this.options_.options.msDisplayMax);
 
             // wait until player ui is ready
             this.player().one('ready', this.setupUI.bind(this));
@@ -661,7 +647,15 @@
     };
 
     // plugin defaults
-    var defaults = {};
+    var defaults = {
+        // msDisplayMax indicates the number of seconds that is
+        // considered the boundary value for displaying milliseconds
+        // in the time controls. An audio clip with a total length of
+        // 2 seconds and a msDisplayMax of 3 will use the format
+        // M:SS:MMM. Clips longer than msDisplayMax will be displayed
+        // as M:SS or HH:MM:SS.
+        msDisplayMax: 3
+    };
 
     /**
      * Initialize the plugin.
