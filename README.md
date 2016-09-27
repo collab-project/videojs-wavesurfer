@@ -41,8 +41,8 @@ The plugin depends on the video.js and wavesurfer.js libraries:
 <script src="wavesurfer.min.js"></script>
 ```
 
-The plugin automatically registers itself when you include the
-`videojs.wavesurfer.js` script on your page:
+The plugin automatically registers itself when the `videojs.wavesurfer.js`
+script is loaded:
 
 ```html
 <script src="videojs.wavesurfer.js"></script>
@@ -118,7 +118,7 @@ player.waveform.destroy();
 | `setVolume(level)` | Set the volume level. |
 | `play` | Start playback. |
 | `pause` | Pause playback. |
-| `exportImage(format, quality)` | Save waveform image as data URI. Default format is 'image/png'. |
+| `exportImage(format, quality)` | Save waveform image as data URI. Default format is `'image/png'`. |
 
 Other wavesurfer.js methods
 ---------------------------
