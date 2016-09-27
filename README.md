@@ -78,7 +78,7 @@ var player = videojs('myClip',
     height: 300,
     plugins: {
         wavesurfer: {
-            src: 'media/heres_johnny.wav',
+            src: 'media/hal.wav',
             msDisplayMax: 10,
             debug: true,
             waveColor: 'grey',
