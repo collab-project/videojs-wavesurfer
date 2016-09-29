@@ -1,11 +1,17 @@
 videojs-wavesurfer changelog
 ============================
 
+1.2.5 - unreleased
+------------------
+
+- Add support for the wavesurfer.js `splitChannels` option (#21)
+
+
 1.2.4 - 2016/09/16
 ------------------
 
-- add `exportImage` to save an image of the waveform
-- bump required wavesurfer.js version to 1.2.0 for `exportImage` method
+- Add `exportImage` to save an image of the waveform
+- Bump required wavesurfer.js version to 1.2.0 for `exportImage` method
 
 
 1.2.3 - 2016/08/27

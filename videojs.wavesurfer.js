@@ -239,24 +239,25 @@
             var controlBarHeight = this.player().controlBar.height();
             if (this.player().options_.controls === true && controlBarHeight === 0)
             {
-                // The dimensions of the controlbar are not known yet, but we need
-                // it now, so we can calculate the height of the waveform.
+                // the dimensions of the controlbar are not known yet, but we
+                // need it now, so we can calculate the height of the waveform.
                 // The default height is 30px, so use that instead.
                 controlBarHeight = 30;
             }
 
             // set waveform element and dimensions
-            // Set the container to player's container if "container" option is not provided
-            // If a waveform needs to be appended to your custom element, then use below option
-            // <code>container: document.querySelector("#vjs-waveform")</code>
+            // Set the container to player's container if "container" option is
+            // not provided. If a waveform needs to be appended to your custom
+            // element, then use below option. For example:
+            // container: document.querySelector("#vjs-waveform")
             if (opts.container === undefined)
             {
                 opts.container = this.el();
             }
 
-            // Set the height of generated waveform if user has provided height from options.
-            // If height of waveform need to be customized then use option below.
-            // Example: <code>waveformHeight:30</code>
+            // set the height of generated waveform if user has provided height
+            // from options. If height of waveform need to be customized then use
+            // option below. For example: waveformHeight: 30
             if (opts.waveformHeight === undefined)
             {
                 opts.height = this.player().height() - controlBarHeight;
@@ -264,6 +265,12 @@
             else
             {
                 opts.height = opts.waveformHeight;
+            }
+
+            // split channels
+            if (opts.splitChannels && opts.splitChannels === true)
+            {
+                opts.height /= 2;
             }
 
             // customize waveform appearance
