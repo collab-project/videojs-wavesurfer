@@ -131,6 +131,22 @@ instance:
 player.waveform.surfer.zoom(2);
 ```
 
+Events
+------
+
+Plugin events that are available on the video.js player instance. For example:
+
+```javascript
+player.on('waveReady', function()
+{
+    console.log('waveform is ready!');
+});
+```
+
+| Event | Description |
+| --- | --- |
+| `waveReady` | Audio is loaded, decoded and the waveform is drawn. |
+
 Customizing controls
 --------------------
 

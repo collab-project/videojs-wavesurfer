@@ -4,6 +4,7 @@ videojs-wavesurfer changelog
 1.2.5 - unreleased
 ------------------
 
+- Add `waveReady` event, useful for initializing wavesurfer.js plugins
 - Add support for the wavesurfer.js `splitChannels` option (#21)
 
 

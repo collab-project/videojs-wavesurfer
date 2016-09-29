@@ -481,11 +481,12 @@
          */
         onWaveReady: function()
         {
-            this.log('Waveform is ready');
-
             this.waveReady = true;
             this.waveFinished = false;
             this.liveMode = false;
+
+            this.log('Waveform is ready');
+            this.player().trigger('waveReady');
 
             // update time display
             this.setCurrentTime();
