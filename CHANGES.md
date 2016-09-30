@@ -1,7 +1,7 @@
 videojs-wavesurfer changelog
 ============================
 
-1.2.5 - unreleased
+1.2.5 - 2016/09/30
 ------------------
 
 - Add `waveReady` event, useful for initializing wavesurfer.js plugins
