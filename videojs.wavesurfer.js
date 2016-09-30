@@ -719,6 +719,8 @@
 
     // plugin defaults
     var defaults = {
+        // Display console log messages.
+        debug: false,
         // msDisplayMax indicates the number of seconds that is
         // considered the boundary value for displaying milliseconds
         // in the time controls. An audio clip with a total length of
