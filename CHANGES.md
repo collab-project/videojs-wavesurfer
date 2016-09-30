@@ -4,33 +4,33 @@ videojs-wavesurfer changelog
 1.2.6 - 2016/09/30
 ------------------
 
-- Bugfix: make sure the `debug` option has a default value (`false`)
+- Bugfix: made sure the `debug` option has a default value (`false`)
 
 
 1.2.5 - 2016/09/30
 ------------------
 
-- Add `waveReady` event, useful for initializing wavesurfer.js plugins
-- Add support for the wavesurfer.js `splitChannels` option (#21)
+- Added `waveReady` event, useful for initializing wavesurfer.js plugins
+- Added support for the wavesurfer.js `splitChannels` option (#21)
 
 
 1.2.4 - 2016/09/16
 ------------------
 
-- Add `exportImage` to save an image of the waveform
-- Bump required wavesurfer.js version to 1.2.0 for `exportImage` method
+- Added `exportImage` to save an image of the waveform
+- Bumped required wavesurfer.js version to 1.2.0 for `exportImage` method
 
 
 1.2.3 - 2016/08/27
 ------------------
 
-- Bugfix: add compatibility for video.js 5.11.0 and newer (#20)
+- Bugfix: added compatibility for video.js 5.11.0 and newer (#20)
 
 
 1.2.2 - 2016/08/08
 ------------------
 
-- Bugfix: correct Node name for wavesurfer.js module (#19 by @monachilada)
+- Bugfix: corrected Node name for wavesurfer.js module (#19 by @monachilada)
 
 
 1.2.1 - 2016/05/22
@@ -42,7 +42,7 @@ videojs-wavesurfer changelog
 1.2.0 - 2016/03/25
 ------------------
 
-- Prevent negative or invalid values in `formatTime`
+- Prevented negative or invalid values in `formatTime`
 - Documentation updates
 
 
@@ -50,7 +50,7 @@ videojs-wavesurfer changelog
 ------------------
 
 - Catch microphone device errors
-- Bump required wavesurfer.js version to 1.0.57 for microphone plugin fixes
+- Bumped required wavesurfer.js version to 1.0.57 for microphone plugin fixes
 - Bugfix: make sure video.js starts playback mode
 - Bugfix: pass wavesurfer config to microphone plugin
 
@@ -58,7 +58,7 @@ videojs-wavesurfer changelog
 1.0.6 - 2016/01/17
 ------------------
 
-- Fix issues with Firefox for Android (#15)
+- Fixed issues with Firefox for Android (#15)
 
 
 1.0.5 - 2016/01/17
@@ -76,20 +76,21 @@ videojs-wavesurfer changelog
 1.0.3 - 2015/10/15
 ------------------
 
-- Fix missing amd/node/global browser dependency for wavesurfer
+- Fixed missing amd/node/global browser dependency for wavesurfer
 
 
 1.0.2 - 2015/10/15
 ------------------
 
-- Make sure controlBar is always showing (if `controls: true`)
-- Fix module Node/AMD/browser globals
+- Made sure controlBar is always showing (if `controls: true`)
+- Fixed module Node/AMD/browser globals
 
 
 1.0.1 - 2015/10/14
 ------------------
 
- - Bugfix: use flex for controlBar so other plugins, like videojs-record, can add more controls to it.
+ - Bugfix: use flex for controlBar so other plugins, like videojs-record, can
+   add more controls to it.
 
 
 1.0.0 - 2015/10/12
@@ -103,14 +104,16 @@ videojs-wavesurfer changelog
 ------------------
 
 - Use new `microphone.pause` and `microphone.play` during `live` mode
-- Bump minimum version for wavesurfer.js to 1.0.44 (for microphone plugin updates)
+- Bumped minimum version for wavesurfer.js to 1.0.44 (for microphone plugin
+  updates)
 
 
 0.9.8 - 2015/10/04
 ------------------
 
-- Update bower and npm so only video.js v4.x releases are fetched, v5.0 is not supported yet (#5).
-- Ability to override waveform height (#9)
+- Updated bower and npm so only video.js v4.x releases are fetched, v5.0 is not
+  supported yet (#5).
+- Added ability to override waveform height (#9)
 
 
 0.9.7 - 2015/08/27
@@ -122,7 +125,7 @@ videojs-wavesurfer changelog
 0.9.6 - 2015/03/19
 ------------------
 
-- Also remove the microphone plugin (if enabled) in `destroy`
+- Microphone plugin (if enabled) now also being removed in `destroy`
 
 
 0.9.5 - 2015/03/03
@@ -146,7 +149,7 @@ videojs-wavesurfer changelog
 0.9.2 - 2015/02/12
 ------------------
 
-- Update metadata for video
+- Updated metadata for video
 
 
 0.9.1 - 2015/01/14
@@ -164,13 +167,13 @@ videojs-wavesurfer changelog
 0.8.1 - 2014/12/17
 ------------------
 
-- Fix bug with loading `Blob` or `File` objects
+- Fixed bug with loading `Blob` or `File` objects
 
 
 0.8.0 - 2014/12/17
 ------------------
 
-- Add microphone support for live audio visualization
+- Added microphone support for live audio visualization
 
 
 0.7.0 - 2014/12/08
@@ -178,7 +181,7 @@ videojs-wavesurfer changelog
 
 - Ignore fullscreen mode when no valid src was loaded
 - Hide loading spinner when no valid src is found
-- Fix issue with currentTimeDisplay's internal timer
+- Fixed issue with currentTimeDisplay's internal timer
 
 
 0.6.0 - 2014/11/25
@@ -196,16 +199,16 @@ videojs-wavesurfer changelog
 0.4.0 - 2014/11/19
 ------------------
 
-- Add `msDisplayMax` plugin setting
+- Added `msDisplayMax` plugin setting
 - Minor bugfixes, more docs
 
 
 0.3.0 - 2014/11/14
 ------------------
 
-- Add fullscreen feature
-- Fix issue with auto-play (#2)
-- Make package available on bower and npm
+- Added fullscreen feature
+- Fixed issue with auto-play (#2)
+- Made package available on bower and npm
 
 
 0.2.0 - 2014/10/05
