@@ -1,4 +1,4 @@
-/*! videojs-wavesurfer v1.2.5
+/*! videojs-wavesurfer v1.2.6
 * https://github.com/collab-project/videojs-wavesurfer
 * Copyright (c) Collab 2014-2016 - Licensed MIT */
 (function (root, factory)
@@ -722,6 +722,8 @@
 
     // plugin defaults
     var defaults = {
+        // Display console log messages.
+        debug: false,
         // msDisplayMax indicates the number of seconds that is
         // considered the boundary value for displaying milliseconds
         // in the time controls. An audio clip with a total length of
