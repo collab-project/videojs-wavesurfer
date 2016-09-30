@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+1.2.6 - 2016/09/30
+------------------
+
+- Bugfix: make sure the `debug` option has a default value (`false`)
+
+
 1.2.5 - 2016/09/30
 ------------------
 
