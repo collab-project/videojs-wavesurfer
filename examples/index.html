@@ -34,6 +34,11 @@
 <audio id="myAudio" class="video-js vjs-default-skin"></audio>
 
 <script>
+var src = 'media/hal.mp3';
+if (!audio.canPlayType('audio/mpeg;'))
+{
+    src = 'media/hal.wav';
+}
 var player = videojs("myAudio",
 {
     controls: true,
@@ -43,7 +48,7 @@ var player = videojs("myAudio",
     height: 300,
     plugins: {
         wavesurfer: {
-            src: "media/hal.wav",
+            src: src,
             msDisplayMax: 10,
             debug: true,
             waveColor: "grey",
