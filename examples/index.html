@@ -34,9 +34,11 @@
 <audio id="myAudio" class="video-js vjs-default-skin"></audio>
 
 <script>
+// use mp3 for IE11 support
 var src = 'media/hal.mp3';
-if (!audio.canPlayType('audio/mpeg;'))
+if (!document.getElementById('myAudio').canPlayType('audio/mpeg;'))
 {
+    // fallback with wav
     src = 'media/hal.wav';
 }
 var player = videojs("myAudio",
