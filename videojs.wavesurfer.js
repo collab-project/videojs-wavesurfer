@@ -523,12 +523,22 @@
         },
 
         /**
+         * Playback finish event.
+         *
+         * Fired when audio playback finished.
+         *
+         * @event playbackFinish
+        */
+
+        /**
          * Fires when audio playback completed.
          * @private
          */
         onWaveFinish: function()
         {
             this.log('Finished playback');
+
+            this.player().trigger('playbackFinish');
 
             // check if player isn't paused already
             if (!this.player().paused())

@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+1.2.7 - unreleased
+------------------
+
+- Added `playbackFinish` event (#24)
+
+
 1.2.6 - 2016/09/30
 ------------------
 

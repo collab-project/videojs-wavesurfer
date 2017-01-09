@@ -146,6 +146,7 @@ player.on('waveReady', function()
 | Event | Description |
 | --- | --- |
 | `waveReady` | Audio is loaded, decoded and the waveform is drawn. |
+| `playbackFinish` | Audio playback finished. |
 
 Customizing controls
 --------------------
