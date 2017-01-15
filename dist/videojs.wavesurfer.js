@@ -1,6 +1,6 @@
-/*! videojs-wavesurfer v1.2.6
+/*! videojs-wavesurfer v1.2.7
 * https://github.com/collab-project/videojs-wavesurfer
-* Copyright (c) Collab 2014-2016 - Licensed MIT */
+* Copyright (c) Collab 2014-2017 - Licensed MIT */
 (function (root, factory)
 {
     if (typeof define === 'function' && define.amd)
@@ -28,14 +28,16 @@
 
     /**
      * Draw a waveform for audio and video files in a video.js player.
+     * @class
+     * @augments videojs.Component
      */
     videojs.Waveform = videojs.extend(VjsComponent,
     {
         /**
          * The constructor function for the class.
          *
-         * @param {videojs.Player|Object} player
-         * @param {Object} options Player options.
+         * @param {(videojs.Player|Object)} player - Video.js player instance.
+         * @param {Object} options - Player options.
          */
         constructor: function(player, options)
         {
@@ -78,6 +80,7 @@
 
         /**
          * Player UI is ready.
+         * @private
          */
         setupUI: function()
         {
@@ -175,8 +178,9 @@
         /**
          * Starts or stops listening to events related to audio-playback.
          *
-         * @param {boolean} enable Start or stop listening to playback related
-         *     events.
+         * @param {boolean} enable - Start or stop listening to playback
+         *     related events.
+         * @private
          */
         setupPlaybackEvents: function(enable)
         {
@@ -196,6 +200,7 @@
 
         /**
          * Start the players.
+         * @private
          */
         startPlayers: function()
         {
@@ -234,7 +239,8 @@
         /**
          * Initializes the waveform.
          *
-         * @param {Object} opts Plugin options.
+         * @param {Object} opts - Plugin options.
+         * @private
          */
         initialize: function(opts)
         {
@@ -283,8 +289,8 @@
         /**
          * Start loading waveform data.
          *
-         * @param {String|Blob|File} url Either the URL of the audio file,
-         *     or a Blob or File object.
+         * @param {string|blob|file} url - Either the URL of the audio file,
+         *     a Blob or a File object.
          */
         load: function(url)
         {
@@ -380,7 +386,7 @@
         /**
          * Set the current volume.
          *
-         * @param {Number} volume The new volume level.
+         * @param {number} volume - The new volume level.
          */
         setVolume: function(volume)
         {
@@ -397,11 +403,10 @@
          * The default format is 'image/png'. Other supported types are
          * 'image/jpeg' and 'image/webp'.
          *
-         * @param {String} format String indicating the image format. The
-         *                        default type is image/png.
-         * @param {Number} quality Number between 0 and 1 indicating image
-         *                 quality if the requested type is image/jpeg or
-         *                 image/webp. The default is 1.
+         * @param {string} [format=image/png] - String indicating the image format.
+         * @param {number} [quality=1] - Number between 0 and 1 indicating image
+         *     quality if the requested type is 'image/jpeg' or 'image/webp'.
+         * @returns {string} The data URI of the image data.
          */
         exportImage: function(format, quality)
         {
@@ -410,6 +415,7 @@
 
         /**
          * Log message (if the debug option is enabled).
+         * @private
          */
         log: function(args, logType)
         {
@@ -433,10 +439,10 @@
         /**
          * Updates the player's element displaying the current time.
          *
-         * @param {Number} currentTime (optional) Current position of the
-         *    playhead (in seconds).
-         * @param {Number} duration (optional) Duration of the waveform
-         *    (in seconds).
+         * @param {number} [currentTime] - Current position of the playhead
+         *     (in seconds).
+         * @param {number} [duration] - Duration of the waveform (in seconds).
+         * @private
          */
         setCurrentTime: function(currentTime, duration)
         {
@@ -462,8 +468,8 @@
         /**
          * Updates the player's element displaying the duration time.
          *
-         * @param {Number} duration (optional) Duration of the waveform
-         *    (in seconds).
+         * @param {number} [duration] - Duration of the waveform (in seconds).
+         * @private
          */
         setDuration: function(duration)
         {
@@ -480,7 +486,18 @@
         },
 
         /**
+         * Wave ready event.
+         *
+         * Fired when audio is loaded, decoded and the waveform is drawn.
+         *
+         * @event waveReady
+        */
+
+        /**
          * Audio is loaded, decoded and the waveform is drawn.
+         *
+         * @fires waveReady
+         * @private
          */
         onWaveReady: function()
         {
@@ -509,11 +526,22 @@
         },
 
         /**
+         * Playback finish event.
+         *
+         * Fired when audio playback finished.
+         *
+         * @event playbackFinish
+        */
+
+        /**
          * Fires when audio playback completed.
+         * @private
          */
         onWaveFinish: function()
         {
             this.log('Finished playback');
+
+            this.player().trigger('playbackFinish');
 
             // check if player isn't paused already
             if (!this.player().paused())
@@ -539,7 +567,8 @@
         /**
          * Fires continuously during audio playback.
          *
-         * @param {Number} time Current time/location of the playhead.
+         * @param {number} time - Current time/location of the playhead.
+         * @private
          */
         onWaveProgress: function(time)
         {
@@ -548,6 +577,7 @@
 
         /**
          * Fires during seeking of the waveform.
+         * @private
          */
         onWaveSeek: function()
         {
@@ -556,6 +586,7 @@
 
         /**
          * Fired whenever the media in the player begins or resumes playback.
+         * @private
          */
         onPlay: function()
         {
@@ -568,6 +599,7 @@
 
         /**
          * Fired whenever the media in the player has been paused.
+         * @private
          */
         onPause: function()
         {
@@ -576,6 +608,7 @@
 
         /**
          * Fired when the volume in the player changes.
+         * @private
          */
         onVolumeChange: function()
         {
@@ -591,6 +624,7 @@
 
         /**
          * Fired when the player switches in or out of fullscreen mode.
+         * @private
          */
         onScreenChange: function()
         {
@@ -635,7 +669,8 @@
         /**
          * Waveform error.
          *
-         * @param {String} error The wavesurfer error.
+         * @param {string} error - The wavesurfer error.
+         * @private
          */
         onWaveError: function(error)
         {
@@ -650,9 +685,13 @@
          * Supplying a guide (in seconds) will force a number of leading zeros
          * to cover the length of the guide.
          *
-         * @param {Number} seconds Number of seconds to be turned into a string
-         * @param {Number} guide Number (in seconds) to model the string after
-         * @return {String} Time formatted as H:MM:SS, M:SS or M:SS:MMM.
+         * @param {number} seconds - Number of seconds to be turned into a
+         *     string.
+         * @param {number} guide - Number (in seconds) to model the string
+         *     after.
+         * @return {string} Time formatted as H:MM:SS, M:SS or M:SS:MMM, e.g.
+         *     0:00:12.
+         * @private
          */
         formatTime: function(seconds, guide)
         {
@@ -735,7 +774,9 @@
 
     /**
      * Initialize the plugin.
-     * @param options (optional) {object} configuration for the plugin
+     *
+     * @param {Object} [options] - Configuration for the plugin.
+     * @private
      */
     var wavesurferPlugin = function(options)
     {
