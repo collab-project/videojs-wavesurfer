@@ -2,4 +2,4 @@
 **/*
 !dist/**
 !lang/**
-!videojs.wavesurfer.js
+!src/**

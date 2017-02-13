@@ -16,8 +16,8 @@ module.exports = function(grunt) {
         stripBanners: true
       },
       dist: {
-        src: ['<%= pkg.main %>'],
-        dest: 'dist/<%= pkg.main %>'
+        src: 'src/js/videojs.wavesurfer.js',
+        dest: 'dist/videojs.wavesurfer.js'
       }
     },
     uglify: {
@@ -34,11 +34,11 @@ module.exports = function(grunt) {
         options: {
           jshintrc: '.jshintrc'
         },
-        src: ['<%= pkg.main %>']
+        src: ['src/js/**/*.js']
       },
     },
     jscs: {
-      src: ['<%= concat.dist.src %>'],
+      src: ['<%= jshint.src.src %>'],
       options: {
         config: '.jscsrc',
         fix: false, // Autofix code style violations when possible.

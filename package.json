@@ -2,7 +2,7 @@
   "name": "videojs-wavesurfer",
   "version": "1.2.7",
   "description": "video.js plugin that adds a navigable waveform for audio and video files.",
-  "main": "videojs.wavesurfer.js",
+  "main": "src/js/videojs.wavesurfer.js",
   "directories": {
     "examples": "examples"
   },
