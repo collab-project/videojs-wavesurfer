@@ -18,7 +18,7 @@
     ".gitignore",
     "node_modules",
     "bower_components",
-    "README.md",
+    "Gruntfile.js",
     "examples"
   ],
   "dependencies": {
