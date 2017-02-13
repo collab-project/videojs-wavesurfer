@@ -1,6 +1,13 @@
 videojs-wavesurfer changelog
 ============================
 
+1.3.0 - 2017/02/13
+------------------
+
+- Moved main script out of root into a new `src/js` directory
+- NPM package now includes `dist` directory with minified files
+
+
 1.2.7 - 2017/01/15
 ------------------
 
