@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+<style>
+body{
+  font: 15px helvetica,arial,freesans,clean,sans-serif;
+  margin: 20px auto;    
+  text-align: center;
+}
+#waveform{
+  background: rgba(0,0,0,0.8);
+}
+
+button{
+  background: #eee;
+  border: 1px solid #ddd;
+  border-bottom: 4px solid #ccc;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 10px;
+  padding: 10px;
+}
+button:active{
+  outline: none;
+  border-top: 4px solid #eee;
+  border-bottom: 2px solid #777;
+}
+button:focus{
+  outline: none;
+}
+</style>
+</head>
+<body>
+<h1>Media Session API - wavesurfer.js</h1>
+<h4>
+  <a target="_blank" href="https://github.com/entonbiba/Media-Session-API-wavesurfer-js">Example reference on github.com</a>
+</h4>
+
+<div id="waveform"></div>				
+
+<button id="loadprev"><i class="fa fa-step-backward"></i> Previous</button>
+
+<button id="backward"><i class="fa fa-backward"></i> Rewind</button>
+
+<button id="playpause"><i class="fa fa-play"></i> PLAY</button>
+
+<button id="stop"><i class="fa fa-stop"></i> STOP</button>
+
+<button id="forward"><i class="fa fa-forward"></i> Forward</button>
+
+<button id="loadnext"><i class="fa fa-step-forward"></i> Next</button>
+
+<h3>Live Output</h3>
+<div id="output" class="output">
+  <div id="content"></div>
+  <div id="status"></div>
+  <pre id="log"></pre>
+</div>
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.7/wavesurfer.min.js'></script>
+<script>
+console.log(navigator.mediaSession);
+var ChromeSamples = {
+    log: function () {
+        var line = Array.prototype.slice.call(arguments).map(function (argument) {
+            return typeof argument === 'string' ? argument : JSON.stringify(argument);
+        }).join(' ');
+        document.querySelector('#log').textContent += line + '\n';
+    },
+    clearLog: function () {
+        document.querySelector('#log').textContent = '';
+    },
+    setStatus: function (status) {
+        document.querySelector('#status').textContent = status;
+    },
+    setContent: function (newContent) {
+        var content = document.querySelector('#content');
+        while (content.hasChildNodes()) {
+            if (window.CP.shouldStopExecution(1)) {
+                break;
+            }
+            content.removeChild(content.lastChild);
+        }
+        window.CP.exitedLoop(1);
+        content.appendChild(newContent);
+    }
+};
+if (!('mediaSession' in navigator)) {
+    ChromeSamples.setStatus('The Media Session API is not yet available. Try Chrome for Android.');
+} else {
+    ChromeSamples.setStatus('yay it works');
+}
+navigator.mediaSession = navigator.mediaSession || {};
+navigator.mediaSession.setActionHandler = navigator.mediaSession.setActionHandler || function () {
+};
+window.MediaMetadata = window.MediaMetadata || function () {
+};
+
+$(window).resize(function() {
+  wavesurfer.empty();
+  wavesurfer.drawBuffer();
+});
+
+var wavesurfer = WaveSurfer.create({
+    container: '#waveform',
+    waveColor: '#D2EDD4',
+    progressColor: '#46B54D',
+    minPxPerSec: 1
+});
+var playlist = getAwesomePlaylist();
+var index = 0;
+wavesurfer.load(playlist[index].src);
+function playAudio() {
+    wavesurfer.playPause();
+    updateMetadata();
+}
+$('body').on('click', '#playpause', function () {
+    playAudio();
+});
+navigator.mediaSession.setActionHandler('play', function () {
+    wavesurfer.play();
+});
+navigator.mediaSession.setActionHandler('pause', function () {
+    wavesurfer.playPause();
+});
+wavesurfer.on('play', function () {
+    $('#playpause').html('<i class="fa fa-pause"></i> Pause');
+});
+wavesurfer.on('pause', function () {
+    $('#playpause').html('<i class="fa fa-play"></i> Play');
+});
+function stopAudio() {
+    wavesurfer.stop();
+}
+$('body').on('click', '#stop', function () {
+    stopAudio();
+});
+function loadprev() {
+    ChromeSamples.log('> User clicked "Previous Track" icon.');
+    index = (index - 1 + playlist.length) % playlist.length;
+    wavesurfer.load(playlist[index].src);
+}
+$('body').on('click', '#loadprev', function () {
+    loadprev();
+});
+navigator.mediaSession.setActionHandler('previoustrack', function () {
+    loadprev();
+});
+function loadnext() {
+    ChromeSamples.log('> User clicked "Next Track" icon.');
+    index = (index + 1) % playlist.length;
+    wavesurfer.load(playlist[index].src);
+}
+$('body').on('click', '#loadnext', function () {
+    loadnext();
+});
+navigator.mediaSession.setActionHandler('nexttrack', function () {
+    loadnext();
+});
+$('body').on('click', '#backward', function () {
+    wavesurfer.skipBackward();
+});
+navigator.mediaSession.setActionHandler('seekbackward', function () {
+    wavesurfer.skipBackward();
+});
+$('body').on('click', '#forward', function () {
+    wavesurfer.skipForward();
+});
+navigator.mediaSession.setActionHandler('seekforward', function () {
+    wavesurfer.skipForward();
+});
+function updateMetadata() {
+    var track = playlist[index];
+    if (wavesurfer.isPlaying()) {
+        ChromeSamples.log('Playing "' + track.title + '" track...');
+    } else {
+        ChromeSamples.log('Pausing "' + track.title + '" track...');
+    }
+    navigator.mediaSession.metadata = new MediaMetadata({
+        title: track.title,
+        artist: track.artist,
+        album: track.album,
+        artwork: track.artwork
+    });
+}
+function getAwesomePlaylist() {
+    var BASE_URL = 'https://storage.googleapis.com/media-session/';
+    return [
+        {
+            src: BASE_URL + 'sintel/snow-fight.mp3',
+            title: 'Snow Fight',
+            artist: 'Jan Morgenstern',
+            album: 'Sintel',
+            artwork: [
+                {
+                    src: BASE_URL + 'sintel/artwork-96.png',
+                    sizes: '96x96',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'sintel/artwork-128.png',
+                    sizes: '128x128',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'sintel/artwork-192.png',
+                    sizes: '192x192',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'sintel/artwork-256.png',
+                    sizes: '256x256',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'sintel/artwork-384.png',
+                    sizes: '384x384',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'sintel/artwork-512.png',
+                    sizes: '512x512',
+                    type: 'image/png'
+                }
+            ]
+        },
+        {
+            src: BASE_URL + 'big-buck-bunny/prelude.mp3',
+            title: 'Prelude',
+            artist: 'Jan Morgenstern',
+            album: 'Big Buck Bunny',
+            artwork: [
+                {
+                    src: BASE_URL + 'big-buck-bunny/artwork-96.png',
+                    sizes: '96x96',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'big-buck-bunny/artwork-128.png',
+                    sizes: '128x128',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'big-buck-bunny/artwork-192.png',
+                    sizes: '192x192',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'big-buck-bunny/artwork-256.png',
+                    sizes: '256x256',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'big-buck-bunny/artwork-384.png',
+                    sizes: '384x384',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'big-buck-bunny/artwork-512.png',
+                    sizes: '512x512',
+                    type: 'image/png'
+                }
+            ]
+        },
+        {
+            src: BASE_URL + 'elephants-dream/the-wires.mp3',
+            title: 'The Wires',
+            artist: 'Jan Morgenstern',
+            album: 'Elephants Dream',
+            artwork: [
+                {
+                    src: BASE_URL + 'elephants-dream/artwork-96.png',
+                    sizes: '96x96',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'elephants-dream/artwork-128.png',
+                    sizes: '128x128',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'elephants-dream/artwork-192.png',
+                    sizes: '192x192',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'elephants-dream/artwork-256.png',
+                    sizes: '256x256',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'elephants-dream/artwork-384.png',
+                    sizes: '384x384',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'elephants-dream/artwork-512.png',
+                    sizes: '512x512',
+                    type: 'image/png'
+                }
+            ]
+        },
+        {
+            src: BASE_URL + 'caminandes/original-score.mp3',
+            title: 'Original Score',
+            artist: 'Jan Morgenstern',
+            album: 'Caminandes 2: Gran Dillama',
+            artwork: [
+                {
+                    src: BASE_URL + 'caminandes/artwork-96.png',
+                    sizes: '96x96',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'caminandes/artwork-128.png',
+                    sizes: '128x128',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'caminandes/artwork-192.png',
+                    sizes: '192x192',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'caminandes/artwork-256.png',
+                    sizes: '256x256',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'caminandes/artwork-384.png',
+                    sizes: '384x384',
+                    type: 'image/png'
+                },
+                {
+                    src: BASE_URL + 'caminandes/artwork-512.png',
+                    sizes: '512x512',
+                    type: 'image/png'
+                }
+            ]
+        }
+    ];
+}
+</script>
+</body>
+</html>
