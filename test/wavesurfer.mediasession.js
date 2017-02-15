@@ -18,11 +18,11 @@ WaveSurfer.MediaSession = {
             // set metadata
             navigator.mediaSession.metadata = new MediaMetadata(metadata);
 
-            // set action handlers
-            navigator.mediaSession.setActionHandler('play', function() {});
-            navigator.mediaSession.setActionHandler('pause', function() {});
-            navigator.mediaSession.setActionHandler('seekbackward', function() {});
-            navigator.mediaSession.setActionHandler('seekforward', function() {});
+            // set playback action handlers
+            navigator.mediaSession.setActionHandler('play', wavesurfer.play);
+            navigator.mediaSession.setActionHandler('pause', wavesurfer.playPause);
+            navigator.mediaSession.setActionHandler('seekbackward', wavesurfer.skipBackward);
+            navigator.mediaSession.setActionHandler('seekforward', wavesurfer.skipForward);
         }
     }
 
