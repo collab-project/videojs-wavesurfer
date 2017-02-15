@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
             ]
         }
     };
-    var micBtn = document.querySelector('#micBtn');
 
     // Init wavesurfer
     wavesurfer.init(options);
@@ -40,5 +39,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Load audio from URL
-    wavesurfer.load('../media/demo.wav');
+    wavesurfer.load('../examples/media/hal.wav');
 });
