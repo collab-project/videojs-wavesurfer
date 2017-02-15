@@ -7,7 +7,16 @@ var wavesurfer = Object.create(WaveSurfer);
 document.addEventListener('DOMContentLoaded', function () {
     var options = {
         container     : '#waveform',
-        waveColor     : 'black',
+        waveColor     : 'black'
+    };
+
+    // Init wavesurfer
+    wavesurfer.init(options);
+
+    // Init MediaSession plugin
+    var msPlugin = Object.create(WaveSurfer.MediaSession);
+    msPlugin.init({
+        wavesurfer: wavesurfer,
         metadata: {
             title: 'Wavesurfer.js Example',
             artist: 'The Wavesurfer.js Project',
@@ -21,15 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 {src: 'img/hal-9000-512x512.png', sizes: '512x512', type: 'image/png'},
             ]
         }
-    };
-
-    // Init wavesurfer
-    wavesurfer.init(options);
-
-    // Init MediaSession plugin
-    var msPlugin = Object.create(WaveSurfer.MediaSession);
-    msPlugin.init({
-        wavesurfer: wavesurfer
     });
 
     wavesurfer.on('ready', function() {
