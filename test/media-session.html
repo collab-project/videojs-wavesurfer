@@ -45,8 +45,8 @@
                     <p>
                       <ol>
                         <li>add the MediaSession plugin script tag</li>
-                        <li>create a <code>WaveSurfer</code> instance and supply an object for the <code>metadata</code> property</li>
-                        <li>create a <code>MediaSession</code> instance</li>
+                        <li>create a <code>WaveSurfer</code> instance</li>
+                        <li>create a <code>MediaSession</code> instance and supply an object for the <code>metadata</code> property</li>
                         <li>control playback from the notification screen on a mobile device</li>
                       </ol>
                     </p>
@@ -64,9 +64,13 @@
 wavesurfer.init({
   container     : '#waveform',
   waveColor     : 'black',
-  interact      : false,
-  cursorWidth   : 0,
-  metadata: {
+});
+
+var msPlugin = Object.create(WaveSurfer.MediaSession);
+
+msPlugin.init({
+    wavesurfer: wavesurfer,
+    metadata: {
       title: 'Wavesurfer.js Example',
       artist: 'The Wavesurfer.js Project',
       album: 'Media Session Example',
@@ -76,15 +80,9 @@ wavesurfer.init({
           {src: 'images/hal-9000-192x192.png', sizes: '192x192', type: 'image/png'},
           {src: 'images/hal-9000-256x256.png', sizes: '256x256', type: 'image/png'},
           {src: 'images/hal-9000-384x384.png', sizes: '384x384', type: 'image/png'},
-          {src: 'images/hal-9000-512x512.png', sizes: '512x512', type: 'image/png'},
+          {src: 'images/hal-9000-512x512.png', sizes: '512x512', type: 'image/png'}
       ]
-  }
-});
-
-var msPlugin = Object.create(WaveSurfer.MediaSession);
-
-msPlugin.init({
-    wavesurfer: wavesurfer
+    }
 });
 </code></pre>
                     </p></noindex>
