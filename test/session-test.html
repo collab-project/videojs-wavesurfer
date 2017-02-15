@@ -139,12 +139,6 @@ function stopAudio() {
 $('body').on('click', '#stop', function () {
     stopAudio();
 });
-navigator.mediaSession.setActionHandler('stop', function () {
-    stopAudio();
-});
-wavesurfer.on('stop', function () {
-    $('#playpause').html('<i class="fa fa-play"></i> Play');
-});
 function loadprev() {
     ChromeSamples.log('> User clicked "Previous Track" icon.');
     index = (index - 1 + playlist.length) % playlist.length;
