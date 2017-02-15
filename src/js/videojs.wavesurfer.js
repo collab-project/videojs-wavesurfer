@@ -71,6 +71,22 @@
                 }
             }
 
+            // media session api
+            if ('mediaSession' in navigator)
+            {
+                var metadata = this.options_.options.metadata;
+                console.log('metadata', metadata);
+
+                navigator.mediaSession.metadata = new MediaMetadata(metadata);
+
+                /*
+                navigator.mediaSession.setActionHandler('play', function() {});
+                navigator.mediaSession.setActionHandler('pause', function() {});
+                navigator.mediaSession.setActionHandler('seekbackward', function() {});
+                navigator.mediaSession.setActionHandler('seekforward', function() {});
+                */
+            }
+
             // wait until player ui is ready
             this.player().one('ready', this.setupUI.bind(this));
         },
