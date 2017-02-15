@@ -10,13 +10,12 @@ WaveSurfer.MediaSession = {
             throw new Error('No WaveSurfer instance provided');
         }
 
-        if ('mediaSession' in navigator && typeof MediaMetadata === typeof Function)
-        {
+        if ('mediaSession' in navigator) {
             this.metadata = this.params.metadata;
             console.log('metadata', this.metadata);
 
             // update metadata
-            self.update();
+            this.update();
 
             // set playback action handlers
             navigator.mediaSession.setActionHandler('play', wavesurfer.play);
@@ -25,16 +24,18 @@ WaveSurfer.MediaSession = {
             navigator.mediaSession.setActionHandler('seekforward', wavesurfer.skipForward);
 
             var here = this;
-	    wavesurfer.on('play', function () {
-	        here.update();
-	    });
+            wavesurfer.on('play', function () {
+                here.update();
+            });
         }
     },
 
     update: function()
     {
-        // set metadata
-        navigator.mediaSession.metadata = new MediaMetadata(this.metadata);
+        if (typeof MediaMetadata === typeof Function) {
+            // set metadata
+            navigator.mediaSession.metadata = new MediaMetadata(this.metadata);
+        }
     }
 
 };
