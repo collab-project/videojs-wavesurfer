@@ -12,18 +12,29 @@ WaveSurfer.MediaSession = {
 
         if ('mediaSession' in navigator && typeof MediaMetadata === typeof Function)
         {
-            var metadata = this.params.metadata;
-            console.log('metadata', metadata);
+            this.metadata = this.params.metadata;
+            console.log('metadata', this.metadata);
 
-            // set metadata
-            navigator.mediaSession.metadata = new MediaMetadata(metadata);
+            // update metadata
+            self.update();
 
             // set playback action handlers
             navigator.mediaSession.setActionHandler('play', wavesurfer.play);
             navigator.mediaSession.setActionHandler('pause', wavesurfer.playPause);
             navigator.mediaSession.setActionHandler('seekbackward', wavesurfer.skipBackward);
             navigator.mediaSession.setActionHandler('seekforward', wavesurfer.skipForward);
+
+            var here = this;
+	    wavesurfer.on('play', function () {
+	        here.update();
+	    });
         }
+    },
+
+    update: function()
+    {
+        // set metadata
+        navigator.mediaSession.metadata = new MediaMetadata(this.metadata);
     }
 
 };
