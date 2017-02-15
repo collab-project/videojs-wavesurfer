@@ -31,12 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
     msPlugin.init({
         wavesurfer: wavesurfer
     });
-    msPlugin.on('deviceReady', function() {
-        console.info('Device ready!');
-    });
-    msPlugin.on('deviceError', function(code) {
-        console.warn('Device error: ' + code);
-    });
 
     wavesurfer.on('ready', function() {
         wavesurfer.play();
@@ -45,4 +39,4 @@ document.addEventListener('DOMContentLoaded', function () {
     // Load audio from URL
     wavesurfer.load('../examples/media/hal.wav');
 
-
+});
