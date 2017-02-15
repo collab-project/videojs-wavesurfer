@@ -38,6 +38,11 @@ document.addEventListener('DOMContentLoaded', function () {
         console.warn('Device error: ' + code);
     });
 
+    wavesurfer.on('ready', function() {
+        wavesurfer.play();
+    });
+
     // Load audio from URL
     wavesurfer.load('../examples/media/hal.wav');
-});
+
+
