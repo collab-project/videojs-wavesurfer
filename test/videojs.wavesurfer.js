@@ -225,15 +225,14 @@
 
             if (options.src !== undefined)
             {
-                if (this.microphone === undefined)
+                if (this.mediaSession !== undefined)
                 {
-                    // show loading spinner
-                    this.player().loadingSpinner.show();
-
-                    // start loading file
-                    this.load(options.src);
+                    // connect microphone input to our waveform
+                    options.wavesurfer = this.surfer;
+                    this.mediaSession.init(options);
                 }
-                else
+
+                if (this.microphone !== undefined)
                 {
                     // hide loading spinner
                     this.player().loadingSpinner.hide();
@@ -241,6 +240,14 @@
                     // connect microphone input to our waveform
                     options.wavesurfer = this.surfer;
                     this.microphone.init(options);
+                }
+                else
+                {
+                    // show loading spinner
+                    this.player().loadingSpinner.show();
+
+                    // start loading file
+                    this.load(options.src);
                 }
             }
             else
