@@ -28,9 +28,20 @@
 
             <div id="demo">
                 <div id="waveform"></div>
-            </div>
 
-            <audio src='../examples/media/hal.wav' controls />
+	            <div class="controls">
+	                <button class="btn btn-primary" data-action="play">
+	                    <i class="glyphicon glyphicon-play"></i>
+	                    Play
+	                    /
+	                    <i class="glyphicon glyphicon-pause"></i>
+	                    Pause
+	                </button>
+	            </div>
+	
+	            <audio src='../examples/media/hal.wav' controls />
+
+            </div>
 
             <div class="row marketing">
                 <div class="col-lg-4">
@@ -40,7 +51,7 @@
                     by providing metadata for the media your web app is playing. It also allows you to handle media related events such as
                     seeking or playback which may come from notifications or media keys.</p>
                     
-                    <p><strong>Note</strong>: this plugin only works in Chrome 57 and newer.</p>
+                    <p><strong>Note</strong>: this plugin only works in Chrome 57 and newer (Firefox is <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=1112032' target='blank'>working on it</a>).</p>
 
                     <h4>Installation</h4>
 

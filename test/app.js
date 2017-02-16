@@ -33,9 +33,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    wavesurfer.on('ready', function() {
-        wavesurfer.play();
-    });
+    // controls
+    document.querySelector(
+        '[data-action="play"]'
+    ).addEventListener('click', wavesurfer.playPause.bind(wavesurfer));
 
     // load audio from existing media element
     var mediaElt = document.querySelector('audio');
