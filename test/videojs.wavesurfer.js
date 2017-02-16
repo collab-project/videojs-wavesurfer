@@ -542,7 +542,16 @@
             // auto-play when ready (if enabled)
             if (this.player().options_.autoplay)
             {
-                this.play();
+                // On Android, using the MediaElement wavesurfer.js backend,
+                // autoplay will throw an exception:
+                // 'play() can only be initiated by a user gesture.'
+                try
+                {
+                    this.play();
+                }
+                catch (error)
+                {
+                }
             }
         },
 
