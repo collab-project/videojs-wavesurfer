@@ -15,6 +15,12 @@ WaveSurfer.MediaSession = {
             this.metadata = this.params.metadata;
             this.update();
 
+            // update metadata when playback starts
+            var here = this;
+            wavesurfer.on('play', function() {
+                here.update();
+            });
+
             // set playback action handlers
             navigator.mediaSession.setActionHandler('play', function() {
                 wavesurfer.play();
