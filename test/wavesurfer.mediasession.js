@@ -18,6 +18,7 @@ WaveSurfer.MediaSession = {
             // update metadata when playback starts
             var here = this;
             wavesurfer.on('play', function() {
+                console.log('plaayyyyy');
                 here.update();
             });
 
