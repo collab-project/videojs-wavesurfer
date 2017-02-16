@@ -7,7 +7,8 @@ var wavesurfer = Object.create(WaveSurfer);
 document.addEventListener('DOMContentLoaded', function () {
     var options = {
         container     : '#waveform',
-        waveColor     : 'black'
+        waveColor     : 'black',
+        backend       : 'MediaElement'
     };
 
     // Init wavesurfer
@@ -36,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         wavesurfer.play();
     });
 
-    // Load audio from URL
-    wavesurfer.load('../examples/media/hal.wav');
-
+    // load audio from existing media element
+    var mediaElt = document.querySelector('audio');
+    wavesurfer.load(mediaElt);
 });

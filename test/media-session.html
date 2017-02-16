@@ -30,6 +30,8 @@
                 <div id="waveform"></div>
             </div>
 
+            <audio src='../media/demo.wav' controls />
+
             <div class="row marketing">
                 <div class="col-lg-4">
                     <h4>wavesurfer.js Media Session Plugin</h4>
@@ -64,6 +66,7 @@
 wavesurfer.init({
   container     : '#waveform',
   waveColor     : 'black',
+  backend       : 'MediaElement'
 });
 
 var msPlugin = Object.create(WaveSurfer.MediaSession);
@@ -84,6 +87,10 @@ msPlugin.init({
       ]
     }
 });
+
+// load audio from existing media element
+var mediaElt = document.querySelector('audio');
+wavesurfer.load(mediaElt);
 </code></pre>
                     </p></noindex>
 
