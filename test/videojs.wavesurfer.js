@@ -227,8 +227,8 @@
             {
                 if (this.mediaSession !== undefined)
                 {
-                    // connect microphone input to our waveform
                     options.wavesurfer = this.surfer;
+                    console.log(options);
                     this.mediaSession.init(options);
                 }
 
@@ -239,7 +239,6 @@
 
                     // connect microphone input to our waveform
                     options.wavesurfer = this.surfer;
-                    console.log(options);
                     this.microphone.init(options);
                 }
                 else
