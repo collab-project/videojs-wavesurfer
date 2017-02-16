@@ -28,6 +28,12 @@ WaveSurfer.MediaSession = {
             navigator.mediaSession.setActionHandler('seekforward', function() {
                 wavesurfer.skipForward();
             });
+
+            // update metadata when playback starts
+            var here = this;
+            wavesurfer.on('play', function() {
+                here.update();
+            });
         }
     },
 
