@@ -11,22 +11,28 @@ WaveSurfer.MediaSession = {
         }
 
         if ('mediaSession' in navigator) {
-            this.metadata = this.params.metadata;
-            console.log('metadata', this.metadata);
-
             // update metadata
+            this.metadata = this.params.metadata;
             this.update();
 
             // set playback action handlers
-            navigator.mediaSession.setActionHandler('play', wavesurfer.play);
-            navigator.mediaSession.setActionHandler('pause', wavesurfer.playPause);
-            navigator.mediaSession.setActionHandler('seekbackward', wavesurfer.skipBackward);
-            navigator.mediaSession.setActionHandler('seekforward', wavesurfer.skipForward);
+            navigator.mediaSession.setActionHandler('play', function() {
+                wavesurfer.play();
+            });
+            navigator.mediaSession.setActionHandler('pause', function() {
+                wavesurfer.playPause();
+            });
+            navigator.mediaSession.setActionHandler('seekbackward', function() {
+                wavesurfer.skipBackward();
+            });
+            navigator.mediaSession.setActionHandler('seekforward', function() {
+                wavesurfer.skipForward();
+            });
 
-            var here = this;
+            /*var here = this;
             wavesurfer.on('play', function () {
                 here.update();
-            });
+            });*/
         }
     },
 
