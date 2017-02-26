@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+1.3.1 - unreleased
+------------------
+
+- Added `getDuration` and `getCurrentTime` methods
+
+
 1.3.0 - 2017/02/13
 ------------------
 
