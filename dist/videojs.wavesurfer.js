@@ -1,4 +1,4 @@
-/*! videojs-wavesurfer v1.3.0
+/*! videojs-wavesurfer v1.3.1
 * https://github.com/collab-project/videojs-wavesurfer
 * Copyright (c) Collab 2014-2017 - Licensed MIT */
 (function (root, factory)
@@ -437,6 +437,20 @@
         },
 
         /**
+         * Get the current time (in seconds) of the stream during playback.
+         *
+         * Returns 0 if no stream is available (yet).
+         */
+        getCurrentTime: function()
+        {
+            var currentTime = this.surfer.getCurrentTime();
+
+            currentTime = isNaN(currentTime) ? 0 : currentTime;
+
+            return currentTime;
+        },
+
+        /**
          * Updates the player's element displaying the current time.
          *
          * @param {number} [currentTime] - Current position of the playhead
@@ -463,6 +477,20 @@
             // update control
             this.player().controlBar.currentTimeDisplay.contentEl(
                 ).innerHTML = this.formatTime(time, duration);
+        },
+
+        /**
+         * Get the duration of the stream in seconds.
+         *
+         * Returns 0 if no stream is available (yet).
+         */
+        getDuration: function()
+        {
+            var duration = this.surfer.getDuration();
+
+            duration = isNaN(duration) ? 0 : duration;
+
+            return duration;
         },
 
         /**
