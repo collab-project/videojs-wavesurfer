@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+1.3.2 - unreleased
+------------------
+
+- Use `videojs.registerPlugin` in video.js 6.0.0 and newer (#27)
+
+
 1.3.1 - 2017/02/26
 ------------------
 
