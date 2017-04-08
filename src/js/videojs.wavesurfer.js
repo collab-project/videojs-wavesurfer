@@ -820,7 +820,13 @@
     };
 
     // register the plugin
-    videojs.plugin('wavesurfer', wavesurferPlugin);
+    var registerPlugin = videojs.plugin;
+    if (typeof videojs.registerPlugin === 'function')
+    {
+        // video.js >= 6.0.0
+        registerPlugin = videojs.registerPlugin;
+    }
+    registerPlugin('wavesurfer', wavesurferPlugin);
 
     // return a function to define the module export
     return wavesurferPlugin;
