@@ -115,6 +115,13 @@ cd videojs-wavesurfer
 npm install
 ```
 
+Start the local webserver for the examples:
+```
+grunt serve
+```
+
+And open http://localhost:9000/examples/index.html in a browser.
+
 Methods
 -------
 

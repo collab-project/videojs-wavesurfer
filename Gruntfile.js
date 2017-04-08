@@ -42,7 +42,7 @@ module.exports = function(grunt) {
       options: {
         config: '.jscsrc',
         fix: false, // Autofix code style violations when possible.
-        requireCurlyBraces: [ "if" ]
+        requireCurlyBraces: ['if']
       }
     },
     watch: {
@@ -54,6 +54,11 @@ module.exports = function(grunt) {
         files: '<%= jshint.src.src %>',
         tasks: ['jshint:src', 'jscs']
       }
+    },
+    serve: {
+      options: {
+        port: 9000
+      }
     }
   });
 
@@ -63,6 +68,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-jscs');
+  grunt.loadNpmTasks('grunt-serve');
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'jscs', 'concat', 'uglify']);

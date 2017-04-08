@@ -32,7 +32,8 @@
     "grunt-contrib-jshint": ">=0.10.0",
     "grunt-contrib-uglify": ">=0.5.0",
     "grunt-contrib-watch": ">=0.6.1",
-    "grunt-jscs": "^3.0.1"
+    "grunt-jscs": "^3.0.1",
+    "grunt-serve": "^0.1.6"
   },
   "author": "Collab",
   "license": "MIT",
