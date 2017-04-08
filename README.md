@@ -90,9 +90,6 @@ var player = videojs('myClip',
 });
 ```
 
-See the full audio example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/index.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/index.html)) and
-the video example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/video.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/video.html)).
-
 The additional options for this plugin are:
 
 | option | type | default | description |
@@ -100,6 +97,23 @@ The additional options for this plugin are:
 | `src` | string | `null` | The URL of the audio/video file or `'live'` when [using the microphone plugin](#microphone-plugin).|
 | `debug` | boolean | `false` | Display internal log messages using the `videojs.log` method. |
 | `msDisplayMax` | float | `3` | Indicates the number of seconds that is considered the boundary value for displaying milliseconds in the time controls. An audio clip with a total length of 2 seconds and a `msDisplayMax` of 3 will use the format `M:SS:MMM`. Clips with a duration that is longer than `msDisplayMax` will be displayed as `M:SS` or `HH:MM:SS`.|
+
+Examples
+--------
+
+See the full audio example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/index.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/index.html)) and
+the video example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/video.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/video.html)).
+
+To try out the examples locally, checkout the repository using Git:
+```
+git clone https://github.com/collab-project/videojs-wavesurfer.git
+```
+
+And install the dependencies using npm:
+```
+cd videojs-wavesurfer
+npm install
+```
 
 Methods
 -------
