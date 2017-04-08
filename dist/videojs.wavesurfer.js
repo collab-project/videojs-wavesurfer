@@ -1,4 +1,4 @@
-/*! videojs-wavesurfer v1.3.1
+/*! videojs-wavesurfer v1.3.2
 * https://github.com/collab-project/videojs-wavesurfer
 * Copyright (c) Collab 2014-2017 - Licensed MIT */
 (function (root, factory)
@@ -823,7 +823,13 @@
     };
 
     // register the plugin
-    videojs.plugin('wavesurfer', wavesurferPlugin);
+    var registerPlugin = videojs.plugin;
+    if (typeof videojs.registerPlugin === 'function')
+    {
+        // video.js >= 6.0.0
+        registerPlugin = videojs.registerPlugin;
+    }
+    registerPlugin('wavesurfer', wavesurferPlugin);
 
     // return a function to define the module export
     return wavesurferPlugin;
