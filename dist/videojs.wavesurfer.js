@@ -1,4 +1,4 @@
-/*! videojs-wavesurfer v1.3.2
+/*! videojs-wavesurfer v1.3.3
 * https://github.com/collab-project/videojs-wavesurfer
 * Copyright (c) Collab 2014-2017 - Licensed MIT */
 (function (root, factory)
@@ -6,7 +6,7 @@
     if (typeof define === 'function' && define.amd)
     {
         // AMD. Register as an anonymous module.
-        define(['videojs', 'wavesurfer'], factory);
+        define(['video.js', 'wavesurfer'], factory);
     }
     else if (typeof module === 'object' && module.exports)
     {
