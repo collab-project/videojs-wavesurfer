@@ -1,7 +1,7 @@
 videojs-wavesurfer changelog
 ============================
 
-1.3.3 - unreleased
+1.3.3 - 2017/05/27
 ------------------
 
 - Use `video.js` AMD module name (#30)
