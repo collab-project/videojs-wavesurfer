@@ -117,13 +117,14 @@
                 });
 
                 // make sure time display is visible
+                var element;
                 var uiElements = [this.player().controlBar.currentTimeDisplay,
                                   this.player().controlBar.timeDivider,
                                   this.player().controlBar.durationDisplay];
-                for (var element in uiElements)
+                for (element in uiElements)
                 {
                     // ignore when elements have been disabled by user
-                    if (uiElements[element] !== undefined)
+                    if (uiElements.hasOwnProperty(element))
                     {
                         uiElements[element].el().style.display = 'block';
                         uiElements[element].show();
