@@ -16,8 +16,8 @@ class Advanced extends Plugin {
 
         // Whenever the player emits a playing or paused event, we update the
         // state if necessary.
-        this.on(player, ['playing', 'paused'], this.updateState);
         this.on('statechanged', this.logState);
+        this.on(player, ['playing', 'paused'], this.updateState);
     }
 
     dispose() {
@@ -34,15 +34,15 @@ class Advanced extends Plugin {
     }
 }
 
-videojs.Advanced = Advanced;
+/*videojs.Advanced = Advanced;
 if (!videojs.use) {
     videojs.registerComponent('Advanced', Advanced);
-}
+}*/
 
 if (videojs.registerPlugin) {
-    videojs.registerPlugin('advanced', Advanced);
+    videojs.registerPlugin('wavesurfer', Advanced);
 } else {
-    videojs.plugin('advanced', Advanced);
+    videojs.plugin('wavesurfer', Advanced);
 }
 
 module.exports = {

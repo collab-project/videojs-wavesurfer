@@ -17,7 +17,7 @@ portscanner.findAPortNotInUse(PORT, MAX_PORT, HOST, (error, port) => {
     throw error;
   }
 
-  process.stdout.write(`Serving on ${HOST}:${port}` + '\n\n');
+  process.stdout.write(`Serving on http://${HOST}:${port}` + '\n\n');
 
   app.listen(port);
 });
