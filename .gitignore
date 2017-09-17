@@ -4,7 +4,17 @@
 .DS_Store
 
 examples/media/test
+
+# Dependency-related directories
 node_modules
 bower_components
-dist
-doc
+
+# Build-related directories
+dist/
+dist-test/
+docs/
+es5/
+tmp
+test/test-manifests.js
+test/test-expected.js
+coverage/

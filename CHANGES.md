@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+2.0.0 - unreleased
+------------------
+
+- Rewrite plugin using ES6 (#29)
+
+
 1.3.3 - 2017/05/27
 ------------------
 
