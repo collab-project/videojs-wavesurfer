@@ -117,7 +117,7 @@ npm install
 
 Start the local webserver for the examples:
 ```
-grunt serve
+npm run start
 ```
 
 And open http://localhost:9000/examples/index.html in a browser.
@@ -245,12 +245,6 @@ tested with `videojs-wavesurfer`:
 Contributing
 ------------
 
-Install `grunt-cli`:
-
-```
-sudo npm install -g grunt-cli
-```
-
 Install dependencies using npm:
 
 ```
@@ -260,7 +254,7 @@ npm install
 Build a minified version:
 
 ```
-grunt
+npm run build
 ```
 
 Generated files are placed in the `dist` directory.
