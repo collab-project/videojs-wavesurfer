@@ -37,16 +37,9 @@ class Waveform extends Plugin {
         if (options.options.src === 'live') {
             // check if the wavesurfer.js microphone plugin can be enabled
             if (WaveSurfer.microphone !== undefined) {
-                // this.microphone = Object.create(WaveSurfer.Microphone);
-
-                // listen for microphone events
-                // this.microphone.on('deviceError', this.onWaveError.bind(this));
-
                 // enable audio input from a microphone
                 this.liveMode = true;
                 this.waveReady = true;
-
-                // this.log('wavesurfer.js microphone plugin enabled.');
             } else {
                 this.onWaveError('Could not find wavesurfer.js ' +
                     'microphone plugin!');
@@ -102,7 +95,7 @@ class Waveform extends Plugin {
                 this.player.controlBar.timeDivider.el_.style.width = '2em';
             }
 
-            // handle play toggle
+            // handle play toggle interaction
             this.player.controlBar.playToggle.on(['tap', 'click'],
                 this.onPlayToggle.bind(this));
 
@@ -181,9 +174,6 @@ class Waveform extends Plugin {
             opts.height /= 2;
         }
 
-        // OLD: customize waveform appearance
-        // this.surfer.init(opts);
-
         // enable microphone plugin
         if (this.liveMode === true) {
             opts.plugins = [
@@ -202,10 +192,6 @@ class Waveform extends Plugin {
      */
     startPlayers() {
         let options = this.player.options_.plugins.wavesurfer;
-
-        // OLD: init waveform
-        // this.initialize(options);
-
         if (options.src !== undefined) {
             if (this.surfer.microphone === undefined) {
                 // show loading spinner
@@ -219,7 +205,6 @@ class Waveform extends Plugin {
 
                 // connect microphone input to our waveform
                 options.wavesurfer = this.surfer;
-                // OLD: this.microphone.init(options);
             }
         } else {
             // no valid src found, hide loading spinner
@@ -329,6 +314,7 @@ class Waveform extends Plugin {
             this.surfer.microphone.destroy();
         }
 
+        // destroy wavesurfer instance
         this.surfer.destroy();
 
         this.log('Destroyed plugin');
@@ -632,9 +618,6 @@ const wavesurferPlugin = function(options) {
         'el': createWaveform(),
         'options': settings
     });
-
-    // OLD: add waveform to dom
-    // player.el_.appendChild(player.waveform.el_);
 };
 
 if (videojs.registerPlugin) {
