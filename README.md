@@ -147,11 +147,11 @@ Other wavesurfer.js methods
 ---------------------------
 
 You can access the wavesurfer instance, for example to call the
-`zoom` method, by using the `waveform.surfer` property on the `player`
-instance:
+wavesurfer.js `seekTo` method, by using the `waveform.surfer` property on the
+`player` instance:
 
 ```javascript
-player.waveform.surfer.zoom(2);
+player.waveform.surfer.seekTo(1);
 ```
 
 Events
@@ -160,7 +160,7 @@ Events
 Plugin events that are available on the video.js player instance. For example:
 
 ```javascript
-player.on('waveReady', function()
+player.on('waveReady', function(event)
 {
     console.log('waveform is ready!');
 });
@@ -170,6 +170,7 @@ player.on('waveReady', function()
 | --- | --- |
 | `waveReady` | Audio is loaded, decoded and the waveform is drawn. |
 | `playbackFinish` | Audio playback finished. |
+| `error` | Error occurred. |
 
 Customizing controls
 --------------------
