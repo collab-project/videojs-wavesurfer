@@ -259,10 +259,21 @@ npm run build
 
 Generated files are placed in the `dist` directory.
 
+During development:
+
+```
+npm run start
+```
+
+This will watch the source directory and rebuild when any changes
+are detected. It will also serve the files on http://127.0.0.1:9999.
+
+
 License
 -------
 
 This work is licensed under the [MIT License](LICENSE).
+
 
 Donate
 ------
