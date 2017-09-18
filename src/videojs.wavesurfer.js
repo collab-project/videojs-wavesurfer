@@ -318,16 +318,10 @@ class Waveform extends Plugin {
         }
     }
 
-    dispose() {
-        super.dispose();
-    }
-
     /**
      * Remove the player and waveform.
      */
-    destroy() {
-        this.log('Destroying plugin');
-
+    dispose() {
         if (this.liveMode && this.surfer.microphone) {
             // destroy microphone plugin
             this.log('Destroying microphone plugin');
@@ -335,6 +329,14 @@ class Waveform extends Plugin {
         }
 
         this.surfer.destroy();
+
+        this.log('Destroyed plugin');
+    }
+
+    /**
+     * Remove the player and waveform.
+     */
+    destroy() {
         this.player.dispose();
     }
 
