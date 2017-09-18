@@ -33,12 +33,13 @@ class Waveform extends Plugin {
         this.debug = (options.options.debug.toString() === 'true');
         this.msDisplayMax = parseFloat(options.options.msDisplayMax);
 
+        // microphone plugin
         if (options.options.src === 'live') {
             // check if the wavesurfer.js microphone plugin can be enabled
             if (WaveSurfer.microphone !== undefined) {
                 // this.microphone = Object.create(WaveSurfer.Microphone);
 
-                // listen for events
+                // listen for microphone events
                 // this.microphone.on('deviceError', this.onWaveError.bind(this));
 
                 // enable audio input from a microphone
@@ -53,43 +54,14 @@ class Waveform extends Plugin {
             }
         }
 
-        let mergedOptions = this.initialize(this.player.options_.plugins.wavesurfer);
-
-        // waveform events
-        this.surfer = WaveSurfer.create(mergedOptions);
-        this.surfer.on('error', this.onWaveError.bind(this));
-        this.surfer.on('finish', this.onWaveFinish.bind(this));
-        if (this.liveMode === true) {
-            this.surfer.microphone.on('deviceError', this.onWaveError.bind(this));
-        }
-
-        this.surferReady = this.onWaveReady.bind(this);
-        this.surferProgress = this.onWaveProgress.bind(this);
-        this.surferSeek = this.onWaveSeek.bind(this);
-
-        // only listen to these events when we're not in live mode
-        if (!this.liveMode) {
-            this.setupPlaybackEvents(true);
-        }
-
-        // player events
-        this.player.on('play', this.onPlay.bind(this));
-        this.player.on('pause', this.onPause.bind(this));
-        this.player.on('volumechange', this.onVolumeChange.bind(this));
-        this.player.on('fullscreenchange', this.onScreenChange.bind(this));
-
-        // kick things off
-        this.startPlayers();
+        // wait until player ui is ready
+        this.player.one('ready', this.initialize.bind(this));
     }
 
-    dispose() {
-        super.dispose();
-        videojs.log('the advanced plugin is being disposed');
-    }
-
-    setupUI() {
-        console.log('setupUI', this.player);
-
+    /**
+     * Player UI is ready.
+     */
+    initialize() {
         // customize controls
         this.player.bigPlayButton.hide();
 
@@ -110,50 +82,75 @@ class Waveform extends Plugin {
             this.player.controlBar.progressControl.hide();
 
             // make sure time display is visible
-            var element;
-            var uiElements = [this.player.controlBar.currentTimeDisplay,
+            let element;
+            let uiElements = [this.player.controlBar.currentTimeDisplay,
                               this.player.controlBar.timeDivider,
                               this.player.controlBar.durationDisplay];
-            for (element in uiElements) {
+            for (var d=0; d<uiElements.length; d++) {
+                element = uiElements[d];
                 // ignore when elements have been disabled by user
-                if (uiElements.hasOwnProperty(element)) {
-                    uiElements[element].el().style.display = 'block';
-                    uiElements[element].show();
+                if (element !== undefined) {
+                    element.el_.style.display = 'block';
+                    element.show();
                 }
             }
             if (this.player.controlBar.remainingTimeDisplay !== undefined) {
                 this.player.controlBar.remainingTimeDisplay.hide();
             }
             if (this.player.controlBar.timeDivider !== undefined) {
-                this.player.controlBar.timeDivider.el().style.textAlign = 'center';
-                this.player.controlBar.timeDivider.el().style.width = '2em';
+                this.player.controlBar.timeDivider.el_.style.textAlign = 'center';
+                this.player.controlBar.timeDivider.el_.style.width = '2em';
             }
 
-            // XXX
-            this.player.controlBar.playToggle.on('click', function() {
-                console.log('foo', this.state);
-            });
+            // handle play toggle
+            this.player.controlBar.playToggle.on('click', this.onPlayToggle.bind(this));
 
             // disable play button until waveform is ready
             // (except when in live mode)
             if (!this.liveMode) {
-                console.log('playToggle', this.player.controlBar.playToggle);
                 this.player.controlBar.playToggle.hide();
             }
         }
+
+        // wavesurfer.js setup
+        let mergedOptions = this.parseOptions(this.player.options_.plugins.wavesurfer);
+        this.surfer = WaveSurfer.create(mergedOptions);
+        this.surfer.on('error', this.onWaveError.bind(this));
+        this.surfer.on('finish', this.onWaveFinish.bind(this));
+        if (this.liveMode === true) {
+            // listen for wavesurfer.js microphone plugin events
+            this.surfer.microphone.on('deviceError', this.onWaveError.bind(this));
+        }
+        this.surferReady = this.onWaveReady.bind(this);
+        this.surferProgress = this.onWaveProgress.bind(this);
+        this.surferSeek = this.onWaveSeek.bind(this);
+
+        // only listen to these wavesurfer.js playback events when we're not
+        // in live mode
+        if (!this.liveMode) {
+            this.setupPlaybackEvents(true);
+        }
+
+        // video.js events
+        this.player.on('volumechange', this.onVolumeChange.bind(this));
+        this.player.on('fullscreenchange', this.onScreenChange.bind(this));
+
+        // kick things off
+        this.startPlayers();
     }
 
     /**
-     * Initializes the waveform.
+     * Initializes the waveform options.
      *
      * @param {Object} opts - Plugin options.
      * @private
      */
-    initialize(opts) {
+    parseOptions(opts) {
         this.originalHeight = this.player.options_.height;
-        //let controlBarHeight = this.player.controlBar.height();
-        let controlBarHeight;
-        if (this.player.options_.controls === true) { // && controlBarHeight === 0)
+
+        // controlbar
+        let controlBarHeight = this.player.controlBar.height();
+        if (this.player.options_.controls === true && controlBarHeight === 0) {
             // the dimensions of the controlbar are not known yet, but we
             // need it now, so we can calculate the height of the waveform.
             // The default height is 30px, so use that instead.
@@ -173,7 +170,7 @@ class Waveform extends Plugin {
         // from options. If height of waveform need to be customized then use
         // option below. For example: waveformHeight: 30
         if (opts.waveformHeight === undefined) {
-            opts.height = this.player.height_ - controlBarHeight;
+            opts.height = this.player.height() - controlBarHeight;
         } else {
             opts.height = opts.waveformHeight;
         }
@@ -183,11 +180,11 @@ class Waveform extends Plugin {
             opts.height /= 2;
         }
 
-        // customize waveform appearance
+        // OLD: customize waveform appearance
         // this.surfer.init(opts);
 
+        // enable microphone plugin
         if (this.liveMode === true) {
-            // enable microphone plugin
             opts.plugins = [
                 WaveSurfer.microphone.create(opts)
             ];
@@ -205,27 +202,27 @@ class Waveform extends Plugin {
     startPlayers() {
         let options = this.player.options_.plugins.wavesurfer;
 
-        // init waveform
+        // OLD: init waveform
         // this.initialize(options);
 
         if (options.src !== undefined) {
             if (this.surfer.microphone === undefined) {
                 // show loading spinner
-                // this.player.loadingSpinner.show();
+                this.player.loadingSpinner.show();
 
                 // start loading file
                 this.load(options.src);
             } else {
                 // hide loading spinner
-                // this.player().loadingSpinner.hide();
+                this.player.loadingSpinner.hide();
 
                 // connect microphone input to our waveform
                 options.wavesurfer = this.surfer;
-                // this.microphone.init(options);
+                // OLD: this.microphone.init(options);
             }
         } else {
             // no valid src found, hide loading spinner
-            // this.player().loadingSpinner.hide();
+            this.player.loadingSpinner.hide();
         }
     }
 
@@ -234,7 +231,6 @@ class Waveform extends Plugin {
      *
      * @param {boolean} enable - Start or stop listening to playback
      *     related events.
-     * @private
      */
     setupPlaybackEvents(enable) {
         if (enable === false) {
@@ -268,6 +264,9 @@ class Waveform extends Plugin {
      * Start/resume playback or microphone.
      */
     play() {
+        // show pause button
+        this.player.controlBar.playToggle.handlePlay();
+
         if (this.liveMode) {
             // start/resume microphone visualization
             if (!this.surfer.microphone.active)
@@ -275,15 +274,18 @@ class Waveform extends Plugin {
                 this.log('Start microphone');
                 this.surfer.microphone.start();
             } else {
-                this.log('Resume microphone');
-                this.surfer.microphone.play();
+                // toggle paused
+                let paused = !this.surfer.microphone.paused;
+
+                if (paused) {
+                    this.pause();
+                } else {
+                    this.log('Resume microphone');
+                    this.surfer.microphone.play();
+                }
             }
         } else {
             this.log('Start playback');
-
-            // put video.js player UI in playback mode
-            //this.player.play();
-            this.player.controlBar.playToggle.handlePlay();
 
             // start surfer playback
             this.surfer.play();
@@ -294,6 +296,9 @@ class Waveform extends Plugin {
      * Pauses playback or microphone visualization.
      */
     pause() {
+        // show play button
+        this.player.controlBar.playToggle.handlePause();
+
         if (this.liveMode) {
             // pause microphone visualization
             this.log('Pause microphone');
@@ -301,7 +306,9 @@ class Waveform extends Plugin {
         } else {
             // pause playback
             this.log('Pause playback');
+
             if (!this.waveFinished) {
+                // pause wavesurfer playback
                 this.surfer.pause();
             } else {
                 this.waveFinished = false;
@@ -309,6 +316,10 @@ class Waveform extends Plugin {
 
             this.setCurrentTime();
         }
+    }
+
+    dispose() {
+        super.dispose();
     }
 
     /**
@@ -319,7 +330,7 @@ class Waveform extends Plugin {
 
         if (this.liveMode && this.surfer.microphone) {
             // destroy microphone plugin
-            this.log('Destroying microphone');
+            this.log('Destroying microphone plugin');
             this.surfer.microphone.destroy();
         }
 
@@ -442,9 +453,6 @@ class Waveform extends Plugin {
         this.setCurrentTime();
         this.setDuration();
 
-        // wait until player ui is ready
-        this.setupUI();
-
         // enable and show play button
         this.player.controlBar.playToggle.show();
 
@@ -466,20 +474,17 @@ class Waveform extends Plugin {
 
         this.player.trigger('playbackFinish');
 
-        // check if player isn't paused already
-        if (!this.player.paused()) {
-            // check if loop is enabled
-            if (this.player.options_.loop) {
-                // reset waveform
-                this.surfer.stop();
-                this.play();
-            } else {
-                // finished
-                this.waveFinished = true;
+        // check if loop is enabled
+        if (this.player.options_.loop) {
+            // reset waveform
+            this.surfer.stop();
+            this.play();
+        } else {
+            // finished
+            this.waveFinished = true;
 
-                // pause player
-                this.player.pause();
-            }
+            // pause player
+            this.pause();
         }
     }
 
@@ -508,28 +513,21 @@ class Waveform extends Plugin {
      * @private
      */
     onWaveError(error) {
-        this.log(error, ERROR);
-
         this.player.trigger('error', error);
+
+        this.log(error, 'error');
     }
 
     /**
-     * Fired whenever the media in the player begins or resumes playback.
+     * Fired when the play toggle is clicked.
      * @private
      */
-    onPlay() {
-        // don't start playing until waveform's ready
-        if (this.waveReady) {
+    onPlayToggle() {
+        if (this.surfer.isPlaying()) {
+            this.pause();
+        } else {
             this.play();
         }
-    }
-
-    /**
-     * Fired whenever the media in the player has been paused.
-     * @private
-     */
-    onPause() {
-        this.pause();
     }
 
     /**
@@ -584,6 +582,9 @@ class Waveform extends Plugin {
         }
     }
 
+    /**
+     * @private
+     */
     log(args, logType) {
         log(args, logType, this.debug);
     }
@@ -617,8 +618,8 @@ let defaults = {
  * @private
  */
 const wavesurferPlugin = function(options) {
-    var settings = videojs.mergeOptions(defaults, options);
-    var player = this;
+    let settings = videojs.mergeOptions(defaults, options);
+    let player = this;
 
     // create new waveform
     player.waveform = new Waveform(player, {
@@ -626,7 +627,7 @@ const wavesurferPlugin = function(options) {
         'options': settings
     });
 
-    // add waveform to dom
+    // OLD: add waveform to dom
     // player.el_.appendChild(player.waveform.el_);
 };
 
