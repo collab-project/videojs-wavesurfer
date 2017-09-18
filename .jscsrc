@@ -7,6 +7,5 @@
     "validateIndentation": 4,
     "requireSpacesInForStatement": true,
     "requireSpacesInConditionalExpression": true,
-    "requireSpaceAfterLineComment": true,
     "requireBlocksOnNewline": true
 }

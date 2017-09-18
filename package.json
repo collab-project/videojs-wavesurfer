@@ -71,7 +71,8 @@
   "browserify-shim": {
     "qunit": "global:QUnit",
     "sinon": "global:sinon",
-    "video.js": "global:videojs"
+    "video.js": "global:videojs",
+    "wavesurfer.js": "global:WaveSurfer"
   },
   "dependencies": {
     "video.js": ">=6.0.0",

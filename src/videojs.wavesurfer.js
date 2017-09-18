@@ -5,9 +5,10 @@
  * License: https://github.com/collab-project/videojs-wavesurfer/blob/master/LICENSE
  */
 
+import formatTime from './format-time';
+
 import videojs from 'video.js';
 import WaveSurfer from 'wavesurfer.js';
-import formatTime from './format-time';
 
 const Plugin = videojs.getPlugin('plugin');
 const Component = videojs.getComponent('Component');
@@ -21,8 +22,6 @@ const WARN = 'warn';
  *
  * @class Waveform
  * @extends videojs.Plugin
- * @param {Object} source the source object
- * @param {Object} options optional and required options
  */
 class Waveform extends Plugin {
 
@@ -36,26 +35,23 @@ class Waveform extends Plugin {
         this.debug = (options.options.debug.toString() === 'true');
         this.msDisplayMax = parseFloat(options.options.msDisplayMax);
 
-        if (options.options.src === 'live')
-        {
+        if (options.options.src === 'live') {
             // check if the wavesurfer.js microphone plugin can be enabled
-            try
-            {
-                this.microphone = Object.create(WaveSurfer.Microphone);
+            if (WaveSurfer.microphone !== undefined) {
+                // this.microphone = Object.create(WaveSurfer.Microphone);
 
                 // listen for events
-                this.microphone.on('deviceError', this.onWaveError.bind(this));
+                // this.microphone.on('deviceError', this.onWaveError.bind(this));
 
                 // enable audio input from a microphone
                 this.liveMode = true;
                 this.waveReady = true;
 
-                this.log('wavesurfer.js microphone plugin enabled.');
-            }
-            catch (TypeError)
-            {
+                // this.log('wavesurfer.js microphone plugin enabled.');
+            } else {
                 this.onWaveError('Could not find wavesurfer.js ' +
                     'microphone plugin!');
+                return;
             }
         }
 
@@ -65,7 +61,9 @@ class Waveform extends Plugin {
         this.surfer = WaveSurfer.create(mergedOptions);
         this.surfer.on('error', this.onWaveError.bind(this));
         this.surfer.on('finish', this.onWaveFinish.bind(this));
-
+        if (this.liveMode === true) {
+            this.surfer.microphone.on('deviceError', this.onWaveError.bind(this));
+        }
         this.surferReady = this.onWaveReady.bind(this);
         this.surferProgress = this.onWaveProgress.bind(this);
         this.surferSeek = this.onWaveSeek.bind(this);
@@ -198,6 +196,14 @@ class Waveform extends Plugin {
         // customize waveform appearance
         // this.surfer.init(opts);
 
+        if (this.liveMode === true) {
+            opts.plugins = [
+                WaveSurfer.microphone.create(opts)
+            ];
+
+            this.log('wavesurfer.js microphone plugin enabled.');
+        }
+
         return opts;
     }
 
@@ -206,29 +212,29 @@ class Waveform extends Plugin {
      * @private
      */
     startPlayers() {
-        var options = this.player.options_.plugins.wavesurfer;
+        let options = this.player.options_.plugins.wavesurfer;
 
         // init waveform
-        //this.initialize(options);
+        // this.initialize(options);
 
         if (options.src !== undefined) {
-            if (this.microphone === undefined) {
+            if (this.surfer.microphone === undefined) {
                 // show loading spinner
-                //this.player.loadingSpinner.show();
+                // this.player.loadingSpinner.show();
 
                 // start loading file
                 this.load(options.src);
             } else {
                 // hide loading spinner
-                //this.player().loadingSpinner.hide();
+                // this.player().loadingSpinner.hide();
 
                 // connect microphone input to our waveform
                 options.wavesurfer = this.surfer;
-                this.microphone.init(options);
+                // this.microphone.init(options);
             }
         } else {
             // no valid src found, hide loading spinner
-            //this.player().loadingSpinner.hide();
+            // this.player().loadingSpinner.hide();
         }
     }
 
@@ -273,13 +279,13 @@ class Waveform extends Plugin {
     play() {
         if (this.liveMode) {
             // start/resume microphone visualization
-            if (!this.microphone.active)
+            if (!this.surfer.microphone.active)
             {
                 this.log('Start microphone');
-                this.microphone.start();
+                this.surfer.microphone.start();
             } else {
                 this.log('Resume microphone');
-                this.microphone.play();
+                this.surfer.microphone.play();
             }
         } else {
             this.log('Start playback');
@@ -300,7 +306,7 @@ class Waveform extends Plugin {
         if (this.liveMode) {
             // pause microphone visualization
             this.log('Pause microphone');
-            this.microphone.pause();
+            this.surfer.microphone.pause();
         } else {
             // pause playback
             this.log('Pause playback');
@@ -320,14 +326,14 @@ class Waveform extends Plugin {
     destroy() {
         this.log('Destroying plugin');
 
-        if (this.liveMode && this.microphone) {
+        if (this.liveMode && this.surfer.microphone) {
             // destroy microphone plugin
             this.log('Destroying microphone');
-            this.microphone.destroy();
+            this.surfer.microphone.destroy();
         }
 
         this.surfer.destroy();
-        this.player().dispose();
+        this.player.dispose();
     }
 
     /**
@@ -402,7 +408,7 @@ class Waveform extends Plugin {
      * Returns 0 if no stream is available (yet).
      */
     getDuration() {
-        var duration = this.surfer.getDuration();
+        let duration = this.surfer.getDuration();
 
         duration = isNaN(duration) ? 0 : duration;
 
@@ -439,7 +445,7 @@ class Waveform extends Plugin {
         this.liveMode = false;
 
         this.log('Waveform is ready');
-        this.trigger('waveReady');
+        this.player.trigger('waveReady');
 
         // update time display
         this.setCurrentTime();
@@ -513,7 +519,7 @@ class Waveform extends Plugin {
     onWaveError(error) {
         this.log(error, ERROR);
 
-        this.player().trigger('error', error);
+        this.player.trigger('error', error);
     }
 
     /**
@@ -540,7 +546,7 @@ class Waveform extends Plugin {
      * @private
      */
     onVolumeChange() {
-        var volume = this.player.volume();
+        let volume = this.player.volume();
         if (this.player.muted()) {
             // muted volume
             volume = 0;
@@ -554,8 +560,8 @@ class Waveform extends Plugin {
      * @private
      */
     onScreenChange() {
-        var isFullscreen = this.player.isFullscreen();
-        var newHeight;
+        let isFullscreen = this.player.isFullscreen();
+        let newHeight;
 
         if (!isFullscreen) {
             // restore original height
@@ -566,7 +572,7 @@ class Waveform extends Plugin {
         }
 
         if (this.waveReady) {
-            if (this.liveMode && !this.microphone.active) {
+            if (this.liveMode && !this.surfer.microphone.active) {
                 // we're in live mode but the microphone hasn't been
                 // started yet
                 return;
@@ -605,7 +611,7 @@ class Waveform extends Plugin {
     }
 }
 
-function createWaveform() {
+const createWaveform = function() {
     let props = {
         className: 'vjs-waveform',
         tabIndex: 0
@@ -632,7 +638,7 @@ let defaults = {
  * @param {Object} [options] - Configuration for the plugin.
  * @private
  */
-var wavesurferPlugin = function(options) {
+const wavesurferPlugin = function(options) {
     var settings = videojs.mergeOptions(defaults, options);
     var player = this;
 

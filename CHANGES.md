@@ -5,6 +5,8 @@ videojs-wavesurfer changelog
 ------------------
 
 - Rewrite plugin using ES6 (#29)
+- Wavesurfer.js version 2.0.0 or newer is now required: older versions are no
+  longer supported (#32)
 
 
 1.3.3 - 2017/05/27
