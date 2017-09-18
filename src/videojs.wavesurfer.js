@@ -341,14 +341,16 @@ class Waveform extends Plugin {
     }
 
     /**
-     * Set the current volume.
+     * Set the volume level.
      *
      * @param {number} volume - The new volume level.
      */
     setVolume(volume) {
         if (volume !== undefined) {
             this.log('Changing volume to: ' + volume);
-            this.surfer.setVolume(volume);
+
+            // update player volume
+            this.player.volume(volume);
         }
     }
 
@@ -543,7 +545,8 @@ class Waveform extends Plugin {
             volume = 0;
         }
 
-        this.setVolume(volume);
+        // update wavesurfer.js volume
+        this.surfer.setVolume(volume);
     }
 
     /**

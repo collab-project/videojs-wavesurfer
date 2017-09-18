@@ -136,7 +136,7 @@ player.waveform.destroy();
 | --- | --- |
 | `destroy` | Destroys the wavesurfer instance and children (including the video.js player). |
 | `load(url)` | Load the clip at `url`. Also supports loading [File](https://developer.mozilla.org/nl/docs/Web/API/File) or [Blob](https://developer.mozilla.org/nl/docs/Web/API/Blob) objects. |
-| `setVolume(level)` | Set the volume level. |
+| `setVolume(level)` | Set the volume level (value between 0.0 and 1.0). |
 | `play` | Start playback. |
 | `pause` | Pause playback. |
 | `getDuration` | Get the length of the stream in seconds. Returns 0 if no stream is available (yet). |
