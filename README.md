@@ -120,7 +120,7 @@ Start the local webserver for the examples:
 npm run start
 ```
 
-And open http://localhost:9000/examples/index.html in a browser.
+And open http://localhost:9999/examples/index.html in a browser.
 
 Methods
 -------
