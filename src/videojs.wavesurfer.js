@@ -5,6 +5,7 @@
  * License: https://github.com/collab-project/videojs-wavesurfer/blob/master/LICENSE
  */
 
+import log from './log';
 import formatTime from './format-time';
 
 import videojs from 'video.js';
@@ -12,9 +13,6 @@ import WaveSurfer from 'wavesurfer.js';
 
 const Plugin = videojs.getPlugin('plugin');
 const Component = videojs.getComponent('Component');
-
-const ERROR = 'error';
-const WARN = 'warn';
 
 
 /**
@@ -64,13 +62,13 @@ class Waveform extends Plugin {
         if (this.liveMode === true) {
             this.surfer.microphone.on('deviceError', this.onWaveError.bind(this));
         }
+
         this.surferReady = this.onWaveReady.bind(this);
         this.surferProgress = this.onWaveProgress.bind(this);
         this.surferSeek = this.onWaveSeek.bind(this);
 
         // only listen to these events when we're not in live mode
-        if (!this.liveMode)
-        {
+        if (!this.liveMode) {
             this.setupPlaybackEvents(true);
         }
 
@@ -97,16 +95,13 @@ class Waveform extends Plugin {
 
         // the native controls don't work for this UI so disable
         // them no matter what
-        if (this.player.usingNativeControls_ === true)
-        {
-            if (this.player.tech_.el_ !== undefined)
-            {
+        if (this.player.usingNativeControls_ === true) {
+            if (this.player.tech_.el_ !== undefined) {
                 this.player.tech_.el_.controls = false;
             }
         }
 
-        if (this.player.options_.controls)
-        {
+        if (this.player.options_.controls) {
             // make sure controlBar is showing
             this.player.controlBar.show();
             this.player.controlBar.el_.style.display = 'flex';
@@ -119,34 +114,29 @@ class Waveform extends Plugin {
             var uiElements = [this.player.controlBar.currentTimeDisplay,
                               this.player.controlBar.timeDivider,
                               this.player.controlBar.durationDisplay];
-            for (element in uiElements)
-            {
+            for (element in uiElements) {
                 // ignore when elements have been disabled by user
-                if (uiElements.hasOwnProperty(element))
-                {
+                if (uiElements.hasOwnProperty(element)) {
                     uiElements[element].el().style.display = 'block';
                     uiElements[element].show();
                 }
             }
-            if (this.player.controlBar.remainingTimeDisplay !== undefined)
-            {
+            if (this.player.controlBar.remainingTimeDisplay !== undefined) {
                 this.player.controlBar.remainingTimeDisplay.hide();
             }
-            if (this.player.controlBar.timeDivider !== undefined)
-            {
+            if (this.player.controlBar.timeDivider !== undefined) {
                 this.player.controlBar.timeDivider.el().style.textAlign = 'center';
                 this.player.controlBar.timeDivider.el().style.width = '2em';
             }
 
             // XXX
-            this.player.controlBar.playToggle.on('click', function(){
+            this.player.controlBar.playToggle.on('click', function() {
                 console.log('foo', this.state);
             });
 
             // disable play button until waveform is ready
             // (except when in live mode)
-            if (!this.liveMode)
-            {
+            if (!this.liveMode) {
                 console.log('playToggle', this.player.controlBar.playToggle);
                 this.player.controlBar.playToggle.hide();
             }
@@ -197,6 +187,7 @@ class Waveform extends Plugin {
         // this.surfer.init(opts);
 
         if (this.liveMode === true) {
+            // enable microphone plugin
             opts.plugins = [
                 WaveSurfer.microphone.create(opts)
             ];
@@ -593,21 +584,8 @@ class Waveform extends Plugin {
         }
     }
 
-    /**
-     * Log message (if the debug option is enabled).
-     * @private
-     */
-    log(args, logType)
-    {
-        if (this.debug === true) {
-            if (logType === ERROR) {
-                videojs.log.error(args);
-            } else if (logType === WARN) {
-                videojs.log.warn(args);
-            } else {
-                videojs.log(args);
-            }
-        }
+    log(args, logType) {
+        log(args, logType, this.debug);
     }
 }
 
