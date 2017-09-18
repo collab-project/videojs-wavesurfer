@@ -21,10 +21,10 @@ You can use [bower](http://bower.io) (`bower install videojs-wavesurfer`) or
 plugin, or
 [download it here](https://github.com/collab-project/videojs-wavesurfer/releases).
 
-Since v1.0 this plugin is compatible with video.js 5.0 and newer. If you want to use
-this plugin with an older video.js 4.x version, check the
-[archived releases](https://github.com/collab-project/videojs-wavesurfer/releases?after=1.0.0)
-for a 0.9.x or older release of this plugin.
+Since v2.0 this plugin is compatible with video.js 6.0 and wavesurfer.js 2.0 and
+newer. If you want to use this plugin with an older video.js or wavesurfer.js version,
+check the [archived releases](https://github.com/collab-project/videojs-wavesurfer/releases?after=1.3.0)
+for a 1.3.x or older release of this plugin.
 
 Take a look at the [changelog](./CHANGES.md) when upgrading from a previous
 version of videojs-wavesurfer.
