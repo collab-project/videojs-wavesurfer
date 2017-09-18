@@ -90,14 +90,6 @@ class Waveform extends Plugin {
         videojs.log('the advanced plugin is being disposed');
     }
 
-    updateState() {
-        //this.setState({playing: !this.paused()});
-    }
-
-    logState(changed) {
-        videojs.log(`the player is now ${this.state.playing ? 'playing' : 'paused'}`);
-    }
-    
     setupUI() {
         console.log('setupUI', this.player);
 
@@ -147,10 +139,16 @@ class Waveform extends Plugin {
                 this.player.controlBar.timeDivider.el().style.width = '2em';
             }
 
+            // XXX
+            this.player.controlBar.playToggle.on('click', function(){
+                console.log('foo', this.state);
+            });
+
             // disable play button until waveform is ready
             // (except when in live mode)
             if (!this.liveMode)
             {
+                console.log('playToggle', this.player.controlBar.playToggle);
                 this.player.controlBar.playToggle.hide();
             }
         }
@@ -300,6 +298,7 @@ class Waveform extends Plugin {
 
             // put video.js player UI in playback mode
             this.player.play();
+            this.player.controlBar.playToggle.handlePlay();
 
             // start surfer playback
             this.surfer.play();
