@@ -103,7 +103,8 @@ class Waveform extends Plugin {
             }
 
             // handle play toggle
-            this.player.controlBar.playToggle.on('click', this.onPlayToggle.bind(this));
+            this.player.controlBar.playToggle.on(['tap', 'click'],
+                this.onPlayToggle.bind(this));
 
             // disable play button until waveform is ready
             // (except when in live mode)
