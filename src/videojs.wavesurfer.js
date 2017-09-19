@@ -14,7 +14,6 @@ import WaveSurfer from 'wavesurfer.js';
 const Plugin = videojs.getPlugin('plugin');
 const Component = videojs.getComponent('Component');
 
-
 /**
  * Draw a waveform for audio and video files in a video.js player.
  *
@@ -360,7 +359,6 @@ class Waveform extends Plugin {
      */
     getCurrentTime() {
         let currentTime = this.surfer.getCurrentTime();
-
         currentTime = isNaN(currentTime) ? 0 : currentTime;
 
         return currentTime;
@@ -399,7 +397,6 @@ class Waveform extends Plugin {
      */
     getDuration() {
         let duration = this.surfer.getDuration();
-
         duration = isNaN(duration) ? 0 : duration;
 
         return duration;
@@ -415,7 +412,6 @@ class Waveform extends Plugin {
         if (duration === undefined) {
             duration = this.surfer.getDuration();
         }
-
         duration = isNaN(duration) ? 0 : duration;
 
         // update control
@@ -501,6 +497,7 @@ class Waveform extends Plugin {
      * @private
      */
     onWaveError(error) {
+        // notify listeners
         this.player.trigger('error', error);
 
         this.log(error, 'error');
