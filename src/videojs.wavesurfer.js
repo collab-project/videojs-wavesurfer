@@ -578,6 +578,11 @@ class Waveform extends Plugin {
     }
 }
 
+/**
+ * Create HTML element for plugin.
+ *
+ * @private
+ */
 const createWaveform = function() {
     let props = {
         className: 'vjs-waveform',
@@ -603,6 +608,7 @@ const wavesurferPlugin = function(options) {
     });
 };
 
+// register plugin
 if (videojs.registerPlugin) {
     videojs.registerPlugin('wavesurfer', wavesurferPlugin);
 } else {
