@@ -7,6 +7,7 @@
 
 import log from './log';
 import formatTime from './format-time';
+import pluginDefaultOptions from './defaults';
 
 import videojs from 'video.js';
 import WaveSurfer from 'wavesurfer.js';
@@ -73,14 +74,15 @@ class Waveform extends Plugin {
             // progress control isn't used by this plugin
             this.player.controlBar.progressControl.hide();
 
-            // make sure time display is visible
+            // make sure time displays are visible
             let element;
             let uiElements = [this.player.controlBar.currentTimeDisplay,
                               this.player.controlBar.timeDivider,
                               this.player.controlBar.durationDisplay];
             for (var d=0; d<uiElements.length; d++) {
                 element = uiElements[d];
-                // ignore when elements have been disabled by user
+                // ignore and show when essential elements have been disabled
+                // by user
                 if (element !== undefined) {
                     element.el_.style.display = 'block';
                     element.show();
@@ -584,19 +586,6 @@ const createWaveform = function() {
     return Component.prototype.createEl('div', props);
 };
 
-// plugin defaults
-let defaults = {
-    // Display console log messages.
-    debug: false,
-    // msDisplayMax indicates the number of seconds that is
-    // considered the boundary value for displaying milliseconds
-    // in the time controls. An audio clip with a total length of
-    // 2 seconds and a msDisplayMax of 3 will use the format
-    // M:SS:MMM. Clips longer than msDisplayMax will be displayed
-    // as M:SS or HH:MM:SS.
-    msDisplayMax: 3
-};
-
 /**
  * Initialize the plugin.
  *
@@ -604,7 +593,7 @@ let defaults = {
  * @private
  */
 const wavesurferPlugin = function(options) {
-    let settings = videojs.mergeOptions(defaults, options);
+    let settings = videojs.mergeOptions(pluginDefaultOptions, options);
     let player = this;
 
     // create new waveform
