@@ -90,10 +90,6 @@ class Waveform extends Plugin {
             if (this.player.controlBar.remainingTimeDisplay !== undefined) {
                 this.player.controlBar.remainingTimeDisplay.hide();
             }
-            if (this.player.controlBar.timeDivider !== undefined) {
-                this.player.controlBar.timeDivider.el_.style.textAlign = 'center';
-                this.player.controlBar.timeDivider.el_.style.width = '2em';
-            }
 
             // handle play toggle interaction
             this.player.controlBar.playToggle.on(['tap', 'click'],
@@ -217,6 +213,7 @@ class Waveform extends Plugin {
      *
      * @param {boolean} enable - Start or stop listening to playback
      *     related events.
+     * @private
      */
     setupPlaybackEvents(enable) {
         if (enable === false) {
@@ -305,7 +302,7 @@ class Waveform extends Plugin {
     }
 
     /**
-     * Remove the player and waveform.
+     * @private
      */
     dispose() {
         if (this.liveMode && this.surfer.microphone) {
