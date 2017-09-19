@@ -3,7 +3,7 @@
   "version": "1.3.3",
   "homepage": "https://github.com/collab-project/videojs-wavesurfer",
   "description": "video.js plugin that adds a navigable waveform for audio and video files.",
-  "main": "src/js/videojs.wavesurfer.js",
+  "main": "es5/videojs.wavesurfer.js",
   "keywords": [
     "waveform",
     "audio",
@@ -18,11 +18,10 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "Gruntfile.js",
     "examples"
   ],
   "dependencies": {
-    "video.js": ">=5.0.0",
-    "wavesurfer.js": ">=1.2.0"
+    "video.js": ">=6.0.0",
+    "wavesurfer.js": "^2.0.0-beta01"
   }
 }
