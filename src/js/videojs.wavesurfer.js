@@ -121,7 +121,7 @@
                 var uiElements = [this.player().controlBar.currentTimeDisplay,
                                   this.player().controlBar.timeDivider,
                                   this.player().controlBar.durationDisplay];
-                for (var d=0;d<uiElements.length; d++)
+                for (var d=0; d<uiElements.length; d++)
                 {
                     element = uiElements[d];
                     // ignore when elements have been disabled by user
