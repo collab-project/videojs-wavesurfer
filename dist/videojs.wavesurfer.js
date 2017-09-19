@@ -1,4 +1,4 @@
-/*! videojs-wavesurfer v1.3.3
+/*! videojs-wavesurfer v1.3.4
 * https://github.com/collab-project/videojs-wavesurfer
 * Copyright (c) Collab 2014-2017 - Licensed MIT */
 (function (root, factory)
@@ -120,13 +120,14 @@
                 });
 
                 // make sure time display is visible
+                var element;
                 var uiElements = [this.player().controlBar.currentTimeDisplay,
                                   this.player().controlBar.timeDivider,
                                   this.player().controlBar.durationDisplay];
-                for (var element in uiElements)
+                for (element in uiElements)
                 {
                     // ignore when elements have been disabled by user
-                    if (uiElements[element] !== undefined)
+                    if (uiElements.hasOwnProperty(element))
                     {
                         uiElements[element].el().style.display = 'block';
                         uiElements[element].show();
