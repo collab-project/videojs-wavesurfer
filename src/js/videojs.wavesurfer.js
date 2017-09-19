@@ -121,13 +121,14 @@
                 var uiElements = [this.player().controlBar.currentTimeDisplay,
                                   this.player().controlBar.timeDivider,
                                   this.player().controlBar.durationDisplay];
-                for (element in uiElements)
+                for (var d=0;d<uiElements.length; d++)
                 {
+                    element = uiElements[d];
                     // ignore when elements have been disabled by user
-                    if (uiElements.hasOwnProperty(element))
+                    if (element !== undefined)
                     {
-                        uiElements[element].el().style.display = 'block';
-                        uiElements[element].show();
+                        element.el().style.display = 'block';
+                        element.show();
                     }
                 }
                 if (this.player().controlBar.remainingTimeDisplay !== undefined)
