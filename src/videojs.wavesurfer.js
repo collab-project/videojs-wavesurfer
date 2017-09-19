@@ -116,7 +116,7 @@ class Waveform extends Plugin {
         this.surferProgress = this.onWaveProgress.bind(this);
         this.surferSeek = this.onWaveSeek.bind(this);
 
-        // only listen to these wavesurfer.js playback events when we're not
+        // only listen to these wavesurfer.js playback events when not
         // in live mode
         if (!this.liveMode) {
             this.setupPlaybackEvents(true);
