@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+1.3.4 - 2017/09/19
+------------------
+
+- Restricted required wavesurfer.js version to < 2.0.0
+
+
 1.3.3 - 2017/05/27
 ------------------
 
