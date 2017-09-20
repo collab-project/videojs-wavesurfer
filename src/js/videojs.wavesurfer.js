@@ -473,9 +473,10 @@
             duration = isNaN(duration) ? 0 : duration;
             var time = Math.min(currentTime, duration);
 
-            // update control
-            this.player().controlBar.currentTimeDisplay.contentEl(
-                ).innerHTML = this.formatTime(time, duration);
+            // update current time display component
+            this.player().controlBar.currentTimeDisplay.formattedTime_ = this.player(
+                ).controlBar.currentTimeDisplay.contentEl(
+                ).lastChild.textContent = this.formatTime(time, duration);
         },
 
         /**
@@ -507,9 +508,10 @@
 
             duration = isNaN(duration) ? 0 : duration;
 
-            // update control
-            this.player().controlBar.durationDisplay.contentEl(
-                ).innerHTML = this.formatTime(duration, duration);
+            // update duration display component
+            this.player().controlBar.durationDisplay.formattedTime_ = this.player(
+                ).controlBar.durationDisplay.contentEl(
+                ).lastChild.textContent = this.formatTime(duration, duration);
         },
 
         /**
