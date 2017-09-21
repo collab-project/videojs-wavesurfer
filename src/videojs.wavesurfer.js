@@ -126,6 +126,13 @@ class Waveform extends Plugin {
         this.player.on('volumechange', this.onVolumeChange.bind(this));
         this.player.on('fullscreenchange', this.onScreenChange.bind(this));
 
+        // resize
+        this.surfer.drawer.wrapper.className = 'vjs-wavedisplay';
+        var responsiveWave = WaveSurfer.util.debounce(
+            this.onResizeChange.bind(this), 15);
+
+        window.addEventListener('resize', responsiveWave);
+
         // kick things off
         this.startPlayers();
     }
@@ -161,7 +168,8 @@ class Waveform extends Plugin {
         // from options. If height of waveform need to be customized then use
         // option below. For example: waveformHeight: 30
         if (opts.waveformHeight === undefined) {
-            opts.height = this.player.height() - controlBarHeight;
+            let waveWrapHeight = this.player.el_.getBoundingClientRect().height;
+            opts.height = waveWrapHeight - controlBarHeight;
         } else {
             opts.height = opts.waveformHeight;
         }
@@ -568,6 +576,64 @@ class Waveform extends Plugin {
             // make sure playhead is restored at right position
             this.surfer.drawer.progress(this.surfer.backend.getPlayedPercents());
         }
+    }
+
+    /**
+     * Resize occured.
+     *
+     * @private
+     */
+    onResizeChange()
+    {
+        console.log('resize', this.player.height());
+
+        /*if (!this.player().paused())
+        {
+            // put video.js player UI in pause mode
+            this.pause();
+            this.player().pause();
+        }*/
+
+        if (this.surfer !== undefined)
+        {
+            // redraw waveform
+            this.redrawWaveform();
+            // XXX: old
+            //this.surfer.empty();
+            //this.surfer.drawBuffer();
+        }
+    }
+
+    /**
+     * Redraw waveform.
+     *
+     * @param {string} error - The wavesurfer error.
+     * @private
+     */
+    redrawWaveform(newHeight)
+    {
+        console.log('redrawWaveform', newHeight);
+        console.log(this.player.height());
+
+        let waveWrapHeight = this.player.el_.getBoundingClientRect().height;
+
+        // destroy old drawing
+        this.surfer.drawer.destroy();
+
+        // set new height
+        console.log("1:",this.surfer.params.height)
+        console.log('cb height', this.player.controlBar.height())
+        this.surfer.params.height = waveWrapHeight - this.player.controlBar.height();
+        console.log("2: ",this.surfer.params.height)
+
+        this.surfer.createDrawer();
+        this.surfer.drawer.wrapper.className = 'vjs-wavedisplay';
+
+        // redraw
+        this.surfer.drawBuffer();
+
+        // make sure playhead is restored at right position
+        this.surfer.drawer.progress(this.surfer.backend.getPlayedPercents());
     }
 
     /**
