@@ -7,19 +7,19 @@ videojs-wavesurfer changelog
 - Rewrite plugin using ES6 (#29)
 - Wavesurfer.js version 2.0.0 or newer is now required: older versions are no
   longer supported (#32)
+- Added support for the video.js `fluid` option (#28)
 
 
-1.4.0 - unreleased
+1.3.6 - unreleased
 ------------------
 
-- Added support for the video.js `fluid` option (#28)
 - Bugfix: properly update current time and duration display components (#34)
 
 
 1.3.5 - 2017/09/19
 ------------------
 
-- Fix uiElements check (#26)
+- Bugfix: correct the uiElements check (#26)
 
 
 1.3.4 - 2017/09/19
