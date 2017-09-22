@@ -1,10 +1,10 @@
 videojs-wavesurfer changelog
 ============================
 
-1.3.6 - unreleased
+1.4.0 - unreleased
 ------------------
 
-- Properly update current time and duration display components (#34)
+- Bugfix: properly update current time and duration display components (#34)
 
 
 1.3.5 - 2017/09/19
