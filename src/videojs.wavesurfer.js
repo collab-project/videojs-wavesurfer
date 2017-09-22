@@ -2,7 +2,7 @@
  * @file videojs.wavesurfer.js
  *
  * The main file for the videojs-wavesurfer project.
- * License: https://github.com/collab-project/videojs-wavesurfer/blob/master/LICENSE
+ * MIT license: https://github.com/collab-project/videojs-wavesurfer/blob/master/LICENSE
  */
 
 import log from './log';
@@ -395,9 +395,10 @@ class Waveform extends Plugin {
         duration = isNaN(duration) ? 0 : duration;
         let time = Math.min(currentTime, duration);
 
-        // update control
-        this.player.controlBar.currentTimeDisplay.contentEl(
-            ).innerHTML = formatTime(time, duration, this.msDisplayMax);
+        // update current time display component
+        this.player.controlBar.currentTimeDisplay.formattedTime_ =
+            this.player.controlBar.currentTimeDisplay.contentEl().lastChild.textContent =
+                formatTime(time, duration, this.msDisplayMax);
     }
 
     /**
@@ -425,8 +426,12 @@ class Waveform extends Plugin {
         duration = isNaN(duration) ? 0 : duration;
 
         // update control
-        this.player.controlBar.durationDisplay.contentEl(
-            ).innerHTML = formatTime(duration, duration, this.msDisplayMax);
+        //this.player.controlBar.durationDisplay.contentEl(
+        //    ).innerHTML = formatTime(duration, duration, this.msDisplayMax);
+        // update duration display component
+        this.player.controlBar.durationDisplay.formattedTime_ =
+            this.player.controlBar.durationDisplay.contentEl().lastChild.textContent =
+                formatTime(duration, duration, this.msDisplayMax);
     }
 
     /**
