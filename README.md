@@ -66,7 +66,7 @@ Plugin Options
 Configure the player using the video.js
 [options](https://github.com/videojs/video.js/blob/master/docs/guides/options.md),
 and enable the plugin by adding a `wavesurfer` entry with the related wavesurfer.js
-[options](http://wavesurfer-js.org/docs/options.html):
+[options](https://wavesurfer-js.org/docs/options.html):
 
 ```javascript
 var player = videojs('myClip',
@@ -74,6 +74,7 @@ var player = videojs('myClip',
     controls: true,
     autoplay: true,
     loop: false,
+    fluid: false,
     width: 600,
     height: 300,
     plugins: {
@@ -184,6 +185,37 @@ controlBar: {
 },
 ```
 
+Responsive layout
+-----------------
+
+The `fluid` option for video.js will resize the player according to the size
+of the window.
+
+Configure the player: set the video.js `'fluid'` option to `true`:
+
+```javascript
+fluid: true
+});
+```
+
+And include the following style:
+
+```css
+.vjs-fluid wave.vjs-wavedisplay {
+    top: 0;
+    position: absolute!important;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 100%;
+}
+```
+
+See the full fluid example
+([demo](https://collab-project.github.io/videojs-wavesurfer/examples/fluid.html) or
+[source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/fluid.html)).
+
+
 Microphone plugin
 -----------------
 
@@ -268,6 +300,13 @@ npm run start
 
 This will watch the source directory and rebuild when any changes
 are detected. It will also serve the files on http://127.0.0.1:9999.
+
+All commands for development are listed in the `package.json` file and
+are run using:
+
+```
+npm run <command>
+```
 
 
 License

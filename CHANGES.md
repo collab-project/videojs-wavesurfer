@@ -7,7 +7,7 @@ videojs-wavesurfer changelog
 - Rewrite plugin using ES6 (#29)
 - Wavesurfer.js version 2.0.0 or newer is now required: older versions are no
   longer supported (#32)
-- Added support for the video.js `fluid` option (#28)
+- Added support for the video.js `fluid` option (#28 by @ikbensiep)
 
 
 1.3.6 - unreleased
