@@ -540,7 +540,7 @@ class Waveform extends Plugin {
      * Fired when the volume in the video.js player changes.
      * @private
      */
-    onVolumeChange(event) {
+    onVolumeChange() {
         let volume = this.player.volume();
         if (this.player.muted()) {
             // muted volume
@@ -555,26 +555,32 @@ class Waveform extends Plugin {
      * Fired when the video.js player switches in or out of fullscreen mode.
      * @private
      */
-    onScreenChange(event) {
-        let isFullscreen = this.player.isFullscreen();
-        let newWidth, newHeight;
-
-        if (!isFullscreen) {
-            // restore original height
-            newWidth = this.originalWidth;
-            newHeight = this.originalHeight;
-        }
-
-        if (this.waveReady) {
-            if (this.liveMode && !this.surfer.microphone.active) {
-                // we're in live mode but the microphone hasn't been
-                // started yet
-                return;
+    onScreenChange() {
+        // execute with tiny delay so the browser element completes
+        // rendering and correct dimensions are reported
+        var fullscreenDelay = this.player.setInterval(function() {
+            let isFullscreen = this.player.isFullscreen();
+            let newWidth, newHeight;
+            if (!isFullscreen) {
+                // restore original dimensions
+                newWidth = this.originalWidth;
+                newHeight = this.originalHeight;
             }
 
-            // redraw
-            this.redrawWaveform(newWidth, newHeight);
-        }
+            if (this.waveReady) {
+                if (this.liveMode && !this.surfer.microphone.active) {
+                    // we're in live mode but the microphone hasn't been
+                    // started yet
+                    return;
+                }
+                // redraw
+                this.redrawWaveform(newWidth, newHeight);
+            }
+
+            // stop fullscreenDelay interval
+            this.player.clearInterval(fullscreenDelay);
+
+        }.bind(this), 100);
     }
 
     /**
@@ -582,7 +588,7 @@ class Waveform extends Plugin {
      *
      * @private
      */
-    onResizeChange(event) {
+    onResizeChange() {
         if (this.surfer !== undefined) {
             // redraw waveform
             this.redrawWaveform();
@@ -610,7 +616,7 @@ class Waveform extends Plugin {
         // destroy old drawing
         this.surfer.drawer.destroy();
 
-        // set new height
+        // set new dimensions
         this.surfer.params.width = newWidth;
         this.surfer.params.height = newHeight - this.player.controlBar.height();
 
