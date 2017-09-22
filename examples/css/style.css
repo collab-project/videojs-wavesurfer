@@ -25,7 +25,3 @@ button.vjs-play-control.vjs-control.vjs-button {
     max-width: 100%;
     height: 100%;
 }
-
-.video-js.vjs-fluid .vjs-control-bar {
-    z-index: 100;
-}
