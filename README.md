@@ -66,7 +66,7 @@ Plugin Options
 Configure the player using the video.js
 [options](https://github.com/videojs/video.js/blob/master/docs/guides/options.md),
 and enable the plugin by adding a `wavesurfer` entry with the related wavesurfer.js
-[options](http://wavesurfer-js.org/docs/options.html):
+[options](https://wavesurfer-js.org/docs/options.html):
 
 ```javascript
 var player = videojs('myClip',
