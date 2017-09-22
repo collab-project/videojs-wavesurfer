@@ -8,12 +8,16 @@
 import log from './log';
 import formatTime from './format-time';
 import pluginDefaultOptions from './defaults';
+import window from 'global/window';
 
 import videojs from 'video.js';
 import WaveSurfer from 'wavesurfer.js';
 
 const Plugin = videojs.getPlugin('plugin');
 const Component = videojs.getComponent('Component');
+
+const wavesurferClassName = 'vjs-wavedisplay';
+
 
 /**
  * Draw a waveform for audio and video files in a video.js player.
@@ -52,10 +56,9 @@ class Waveform extends Plugin {
     }
 
     /**
-     * Player UI is ready.
+     * Player UI is ready: customize controls.
      */
     initialize() {
-        // customize controls
         this.player.bigPlayButton.hide();
 
         // the native controls don't work for this UI so disable
@@ -66,6 +69,7 @@ class Waveform extends Plugin {
             }
         }
 
+        // controls
         if (this.player.options_.controls) {
             // make sure controlBar is showing
             this.player.controlBar.show();
@@ -126,12 +130,15 @@ class Waveform extends Plugin {
         this.player.on('volumechange', this.onVolumeChange.bind(this));
         this.player.on('fullscreenchange', this.onScreenChange.bind(this));
 
-        // resize
-        this.surfer.drawer.wrapper.className = 'vjs-wavedisplay';
-        var responsiveWave = WaveSurfer.util.debounce(
-            this.onResizeChange.bind(this), 15);
-
-        window.addEventListener('resize', responsiveWave);
+        // fluid option
+        if (this.player.options_.fluid === true) {
+            // give wave element a classname so it can be styled
+            this.surfer.drawer.wrapper.className = wavesurferClassName;
+            // listen for window resize events
+            this.responsiveWave = WaveSurfer.util.debounce(
+                this.onResizeChange.bind(this), 150);
+            window.addEventListener('resize', this.responsiveWave);
+        }
 
         // kick things off
         this.startPlayers();
@@ -144,7 +151,9 @@ class Waveform extends Plugin {
      * @private
      */
     parseOptions(opts) {
-        this.originalHeight = this.player.options_.height;
+        let rect = this.player.el_.getBoundingClientRect();
+        this.originalWidth = this.player.options_.width || rect.width;
+        this.originalHeight = this.player.options_.height || rect.height;
 
         // controlbar
         let controlBarHeight = this.player.controlBar.height();
@@ -168,8 +177,8 @@ class Waveform extends Plugin {
         // from options. If height of waveform need to be customized then use
         // option below. For example: waveformHeight: 30
         if (opts.waveformHeight === undefined) {
-            let waveWrapHeight = this.player.el_.getBoundingClientRect().height;
-            opts.height = waveWrapHeight - controlBarHeight;
+            let playerHeight = rect.height;
+            opts.height = playerHeight - controlBarHeight;
         } else {
             opts.height = opts.waveformHeight;
         }
@@ -184,7 +193,6 @@ class Waveform extends Plugin {
             opts.plugins = [
                 WaveSurfer.microphone.create(opts)
             ];
-
             this.log('wavesurfer.js microphone plugin enabled.');
         }
 
@@ -425,9 +433,6 @@ class Waveform extends Plugin {
         }
         duration = isNaN(duration) ? 0 : duration;
 
-        // update control
-        //this.player.controlBar.durationDisplay.contentEl(
-        //    ).innerHTML = formatTime(duration, duration, this.msDisplayMax);
         // update duration display component
         this.player.controlBar.durationDisplay.formattedTime_ =
             this.player.controlBar.durationDisplay.contentEl().lastChild.textContent =
@@ -471,6 +476,7 @@ class Waveform extends Plugin {
     onWaveFinish() {
         this.log('Finished playback');
 
+        // notify listeners
         this.player.trigger('playbackFinish');
 
         // check if loop is enabled
@@ -531,10 +537,10 @@ class Waveform extends Plugin {
     }
 
     /**
-     * Fired when the volume in the player changes.
+     * Fired when the volume in the video.js player changes.
      * @private
      */
-    onVolumeChange() {
+    onVolumeChange(event) {
         let volume = this.player.volume();
         if (this.player.muted()) {
             // muted volume
@@ -546,19 +552,17 @@ class Waveform extends Plugin {
     }
 
     /**
-     * Fired when the player switches in or out of fullscreen mode.
+     * Fired when the video.js player switches in or out of fullscreen mode.
      * @private
      */
-    onScreenChange() {
+    onScreenChange(event) {
         let isFullscreen = this.player.isFullscreen();
-        let newHeight;
+        let newWidth, newHeight;
 
         if (!isFullscreen) {
             // restore original height
+            newWidth = this.originalWidth;
             newHeight = this.originalHeight;
-        } else {
-            // fullscreen height
-            newHeight = window.outerHeight;
         }
 
         if (this.waveReady) {
@@ -568,73 +572,51 @@ class Waveform extends Plugin {
                 return;
             }
 
-            // destroy old drawing
-            this.surfer.drawer.destroy();
-
-            // set new height
-            this.surfer.params.height = newHeight - this.player.controlBar.height();
-            this.surfer.createDrawer();
-
             // redraw
-            this.surfer.drawBuffer();
-
-            // make sure playhead is restored at right position
-            this.surfer.drawer.progress(this.surfer.backend.getPlayedPercents());
+            this.redrawWaveform(newWidth, newHeight);
         }
     }
 
     /**
-     * Resize occured.
+     * Fired when the video.js player is resized.
      *
      * @private
      */
-    onResizeChange()
-    {
-        console.log('resize', this.player.height());
-
-        /*if (!this.player().paused())
-        {
-            // put video.js player UI in pause mode
-            this.pause();
-            this.player().pause();
-        }*/
-
-        if (this.surfer !== undefined)
-        {
+    onResizeChange(event) {
+        if (this.surfer !== undefined) {
             // redraw waveform
             this.redrawWaveform();
-            // XXX: old
-            //this.surfer.empty();
-            //this.surfer.drawBuffer();
         }
     }
 
     /**
      * Redraw waveform.
      *
-     * @param {string} error - The wavesurfer error.
+     * @param {number} [newWidth] - New width for the waveform.
+     * @param {number} [newHeight] - New height for the waveform.
      * @private
      */
-    redrawWaveform(newHeight)
-    {
-        console.log('redrawWaveform', newHeight);
-        console.log(this.player.height());
-
-        let waveWrapHeight = this.player.el_.getBoundingClientRect().height;
+    redrawWaveform(newWidth, newHeight) {
+        let rect = this.player.el_.getBoundingClientRect();
+        if (newWidth === undefined) {
+            // get player width
+            newWidth = rect.width;
+        }
+        if (newHeight === undefined) {
+            // get player height
+            newHeight = rect.height;
+        }
 
         // destroy old drawing
         this.surfer.drawer.destroy();
 
         // set new height
-        console.log("1:",this.surfer.params.height)
-        console.log('cb height', this.player.controlBar.height())
-        this.surfer.params.height = waveWrapHeight - this.player.controlBar.height();
-        console.log("2: ",this.surfer.params.height)
+        this.surfer.params.width = newWidth;
+        this.surfer.params.height = newHeight - this.player.controlBar.height();
 
+        // redraw waveform
         this.surfer.createDrawer();
-        this.surfer.drawer.wrapper.className = 'vjs-wavedisplay';
-
-        // redraw
+        this.surfer.drawer.wrapper.className = wavesurferClassName;
         this.surfer.drawBuffer();
 
         // make sure playhead is restored at right position

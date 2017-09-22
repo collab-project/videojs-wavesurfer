@@ -27,6 +27,7 @@
 <script>
 var player = videojs('myLiveAudio', {
     controls: true,
+    fluid: false,
     width: 600,
     height: 300,
     controlBar: {
@@ -42,7 +43,8 @@ var player = videojs('myLiveAudio', {
             waveColor: 'black',
             debug: true,
             cursorWidth: 0,
-            interact: false
+            interact: false,
+            hideScrollbar: true
         }
     }
 });

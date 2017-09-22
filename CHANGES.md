@@ -12,6 +12,7 @@ videojs-wavesurfer changelog
 1.4.0 - unreleased
 ------------------
 
+- Added support for the video.js `fluid` option (#28)
 - Bugfix: properly update current time and duration display components (#34)
 
 
