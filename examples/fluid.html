@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Wavesurfer Plugin for Video.js Fluid Example</title>
+
+  <link href="../node_modules/video.js/dist/video-js.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+  <script src="../node_modules/video.js/dist/video.min.js"></script>
+  <script src="../node_modules/wavesurfer.js/dist/wavesurfer.min.js"></script>
+
+  <script src="../dist/videojs.wavesurfer.js"></script>
+
+  <style>
+  /* change player background color */
+  #myAudio {
+      background-color: #F26868;
+  }
+  </style>
+
+</head>
+<body>
+
+<audio id="myAudio" class="video-js vjs-default-skin"></audio>
+
+<script>
+var player = videojs('myAudio', {
+    controls: true,
+    autoplay: false,
+    fluid: true,
+    plugins: {
+        wavesurfer: {
+            src: 'media/hal.wav',
+            msDisplayMax: 10,
+            debug: true,
+            waveColor: 'yellow',
+            progressColor: '#FCF990',
+            cursorColor: '#FCFC42',
+            hideScrollbar: true
+        }
+    }
+});
+
+// error handling
+player.on('error', function(error) {
+    console.warn('ERROR:', error);
+});
+</script>
+
+</body>
+</html>
