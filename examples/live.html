@@ -44,7 +44,10 @@ var player = videojs("myLiveAudio",
         timeDivider: false,
         durationDisplay: false,
         remainingTimeDisplay: false,
-        volumeMenuButton: false
+        // video.js 5
+        volumeMenuButton: false,
+        // video.js 6
+        volumePanel: false
     },
     plugins: {
         wavesurfer: {
@@ -52,7 +55,8 @@ var player = videojs("myLiveAudio",
             waveColor: "black",
             debug: true,
             cursorWidth: 0,
-            interact: false
+            interact: false,
+            hideScrollbar: true
         }
     }
 });
