@@ -126,11 +126,11 @@ class Waveform extends Plugin {
             this.setupPlaybackEvents(true);
         }
 
-        // video.js events
+        // video.js player events
         this.player.on('volumechange', this.onVolumeChange.bind(this));
         this.player.on('fullscreenchange', this.onScreenChange.bind(this));
 
-        // fluid option
+        // video.js fluid option
         if (this.player.options_.fluid === true) {
             // give wave element a classname so it can be styled
             this.surfer.drawer.wrapper.className = wavesurferClassName;
@@ -147,10 +147,10 @@ class Waveform extends Plugin {
     /**
      * Initializes the waveform options.
      *
-     * @param {Object} opts - Plugin options.
+     * @param {Object} surferOpts - Plugin options.
      * @private
      */
-    parseOptions(opts) {
+    parseOptions(surferOpts) {
         let rect = this.player.el_.getBoundingClientRect();
         this.originalWidth = this.player.options_.width || rect.width;
         this.originalHeight = this.player.options_.height || rect.height;
@@ -169,34 +169,34 @@ class Waveform extends Plugin {
         // not provided. If a waveform needs to be appended to your custom
         // element, then use below option. For example:
         // container: document.querySelector("#vjs-waveform")
-        if (opts.container === undefined) {
-            opts.container = this.player.el_;
+        if (surferOpts.container === undefined) {
+            surferOpts.container = this.player.el_;
         }
 
         // set the height of generated waveform if user has provided height
         // from options. If height of waveform need to be customized then use
         // option below. For example: waveformHeight: 30
-        if (opts.waveformHeight === undefined) {
+        if (surferOpts.waveformHeight === undefined) {
             let playerHeight = rect.height;
-            opts.height = playerHeight - controlBarHeight;
+            surferOpts.height = playerHeight - controlBarHeight;
         } else {
-            opts.height = opts.waveformHeight;
+            surferOpts.height = opts.waveformHeight;
         }
 
         // split channels
-        if (opts.splitChannels && opts.splitChannels === true) {
-            opts.height /= 2;
+        if (surferOpts.splitChannels && surferOpts.splitChannels === true) {
+            surferOpts.height /= 2;
         }
 
-        // enable microphone plugin
+        // enable wavesurfer.js microphone plugin
         if (this.liveMode === true) {
-            opts.plugins = [
-                WaveSurfer.microphone.create(opts)
+            surferOpts.plugins = [
+                WaveSurfer.microphone.create(surferOpts)
             ];
             this.log('wavesurfer.js microphone plugin enabled.');
         }
 
-        return opts;
+        return surferOpts;
     }
 
     /**
@@ -324,8 +324,8 @@ class Waveform extends Plugin {
     dispose() {
         if (this.liveMode && this.surfer.microphone) {
             // destroy microphone plugin
-            this.log('Destroying microphone plugin');
             this.surfer.microphone.destroy();
+            this.log('Destroyed microphone plugin');
         }
 
         // destroy wavesurfer instance
@@ -471,6 +471,8 @@ class Waveform extends Plugin {
 
     /**
      * Fires when audio playback completed.
+     *
+     * @fires playbackFinish
      * @private
      */
     onWaveFinish() {
@@ -556,7 +558,7 @@ class Waveform extends Plugin {
      * @private
      */
     onScreenChange() {
-        // execute with tiny delay so the browser element completes
+        // execute with tiny delay so the player element completes
         // rendering and correct dimensions are reported
         var fullscreenDelay = this.player.setInterval(function() {
             let isFullscreen = this.player.isFullscreen();
@@ -660,7 +662,7 @@ const wavesurferPlugin = function(options) {
     let settings = videojs.mergeOptions(pluginDefaultOptions, options);
     let player = this;
 
-    // create new waveform
+    // create new plugin instance
     player.waveform = new Waveform(player, {
         'el': createWaveform(),
         'options': settings
