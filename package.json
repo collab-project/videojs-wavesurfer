@@ -49,6 +49,8 @@
     "prepublish": "not-in-install && npm run build || in-install"
   },
   "files": [
+    ".babelrc",
+    ".jscsrc",
     "dist/",
     "docs/",
     "es5/",
