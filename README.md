@@ -102,8 +102,8 @@ The additional options for this plugin are:
 Examples
 --------
 
-See the full audio example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/index.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/index.html)) and
-the video example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/video.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/video.html)).
+See the full `audio` example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/index.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/index.html)) and
+the `video` example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/video.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/video.html)).
 
 To try out the examples locally, checkout the repository using Git:
 ```
@@ -191,11 +191,10 @@ Responsive layout
 The `fluid` option for video.js will resize the player according to the size
 of the window.
 
-Configure the player: set the video.js `'fluid'` option to `true`:
+Configure the player; enable the video.js `'fluid'` option:
 
 ```javascript
 fluid: true
-});
 ```
 
 And include the following style:
@@ -211,7 +210,7 @@ And include the following style:
 }
 ```
 
-See the full fluid example
+See the full `fluid` example
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/fluid.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/fluid.html)).
 
@@ -258,7 +257,7 @@ var player = videojs('myLiveAudio',
 The microphone plugin has additional configuration
 [options](https://wavesurfer-js.org/plugins/microphone.html).
 
-See the full live example
+See the full `live` example
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/live.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/live.html)).
 
