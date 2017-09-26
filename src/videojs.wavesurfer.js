@@ -70,7 +70,7 @@ class Waveform extends Plugin {
         }
 
         // controls
-        if (this.player.options_.controls) {
+        if (this.player.options_.controls === true) {
             // make sure controlBar is showing
             this.player.controlBar.show();
             this.player.controlBar.el_.style.display = 'flex';
@@ -252,7 +252,7 @@ class Waveform extends Plugin {
      */
     load(url) {
         if (url instanceof Blob || url instanceof File) {
-            this.log('Loading object: ' + url);
+            this.log('Loading object: ' + JSON.stringify(url));
             this.surfer.loadBlob(url);
         } else {
             this.log('Loading URL: ' + url);
@@ -286,6 +286,9 @@ class Waveform extends Plugin {
             }
         } else {
             this.log('Start playback');
+
+            // put video.js player UI in playback mode
+            this.player.play();
 
             // start surfer playback
             this.surfer.play();
@@ -464,7 +467,7 @@ class Waveform extends Plugin {
         this.player.loadingSpinner.hide();
 
         // auto-play when ready (if enabled)
-        if (this.player.options_.autoplay) {
+        if (this.player.options_.autoplay === true) {
             this.play();
         }
     }
@@ -482,7 +485,7 @@ class Waveform extends Plugin {
         this.player.trigger('playbackFinish');
 
         // check if loop is enabled
-        if (this.player.options_.loop) {
+        if (this.player.options_.loop === true) {
             // reset waveform
             this.surfer.stop();
             this.play();
