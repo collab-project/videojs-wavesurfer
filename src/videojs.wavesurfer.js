@@ -495,6 +495,16 @@ class Waveform extends Plugin {
 
             // pause player
             this.pause();
+
+            // show the replay state of play toggle
+            this.player.trigger('ended');
+
+            // this gets called once after the clip has ended and the user
+            // seeks so that we can change the replay button back to a play
+            // button
+            this.surfer.once('seek', function() {
+                this.player.controlBar.playToggle.removeClass('vjs-ended');
+            }.bind(this));
         }
     }
 
