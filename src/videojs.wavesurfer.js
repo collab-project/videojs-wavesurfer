@@ -673,6 +673,8 @@ const wavesurferPlugin = function(options) {
 };
 
 // register plugin
+videojs.Waveform = Waveform;
+
 if (videojs.registerPlugin) {
     videojs.registerPlugin('wavesurfer', wavesurferPlugin);
 } else {
@@ -680,5 +682,5 @@ if (videojs.registerPlugin) {
 }
 
 module.exports = {
-    wavesurferPlugin
+    Waveform
 };
