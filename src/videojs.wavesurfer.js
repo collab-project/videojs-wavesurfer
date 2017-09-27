@@ -5,8 +5,8 @@
  * MIT license: https://github.com/collab-project/videojs-wavesurfer/blob/master/LICENSE
  */
 
-import log from './log';
-import formatTime from './format-time';
+import log from './utils/log';
+import formatTime from './utils/format-time';
 import pluginDefaultOptions from './defaults';
 import window from 'global/window';
 
