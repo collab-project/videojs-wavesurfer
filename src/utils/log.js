@@ -1,5 +1,6 @@
 /**
  * @file log.js
+ * @since 2.0.0
  */
 
 const ERROR = 'error';
