@@ -274,8 +274,8 @@ tested with `videojs-wavesurfer`:
   support for recording audio/video/image files.
 
 
-Contributing
-------------
+Development
+-----------
 
 Install dependencies using npm:
 
