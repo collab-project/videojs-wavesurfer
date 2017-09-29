@@ -504,6 +504,7 @@ class Waveform extends Plugin {
             // button
             this.surfer.once('seek', function() {
                 this.player.controlBar.playToggle.removeClass('vjs-ended');
+                this.player.trigger('pause');
             }.bind(this));
         }
     }
