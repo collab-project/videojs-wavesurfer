@@ -14,7 +14,6 @@ import videojs from 'video.js';
 import WaveSurfer from 'wavesurfer.js';
 
 const Plugin = videojs.getPlugin('plugin');
-const Component = videojs.getComponent('Component');
 
 const wavesurferClassName = 'vjs-wavedisplay';
 
@@ -22,23 +21,29 @@ const wavesurferClassName = 'vjs-wavedisplay';
 /**
  * Draw a waveform for audio and video files in a video.js player.
  *
- * @class Waveform
+ * @class Wavesurfer
  * @extends videojs.Plugin
  */
-class Waveform extends Plugin {
-
+class Wavesurfer extends Plugin {
+    /**
+     * The constructor function for the class.
+     *
+     * @param {(videojs.Player|Object)} player
+     * @param {Object} options - Player options.
+     */
     constructor(player, options) {
         super(player, options);
 
         // parse options
+        options = videojs.mergeOptions(pluginDefaultOptions, options);
         this.waveReady = false;
         this.waveFinished = false;
         this.liveMode = false;
-        this.debug = (options.options.debug.toString() === 'true');
-        this.msDisplayMax = parseFloat(options.options.msDisplayMax);
+        this.debug = (options.debug.toString() === 'true');
+        this.msDisplayMax = parseFloat(options.msDisplayMax);
 
         // microphone plugin
-        if (options.options.src === 'live') {
+        if (options.src === 'live') {
             // check if the wavesurfer.js microphone plugin can be enabled
             if (WaveSurfer.microphone !== undefined) {
                 // enable audio input from a microphone
@@ -653,45 +658,10 @@ class Waveform extends Plugin {
     }
 }
 
-/**
- * Create HTML element for plugin.
- *
- * @private
- */
-const createWaveform = function() {
-    let props = {
-        className: 'vjs-waveform',
-        tabIndex: 0
-    };
-    return Component.prototype.createEl('div', props);
-};
-
-/**
- * Initialize the plugin.
- *
- * @param {Object} [options] - Configuration for the plugin.
- * @private
- */
-const wavesurferPlugin = function(options) {
-    let settings = videojs.mergeOptions(pluginDefaultOptions, options);
-    let player = this;
-
-    // create new plugin instance
-    player.waveform = new Waveform(player, {
-        'el': createWaveform(),
-        'options': settings
-    });
-};
-
 // register plugin
-videojs.Waveform = Waveform;
-
-if (videojs.registerPlugin) {
-    videojs.registerPlugin('wavesurfer', wavesurferPlugin);
-} else {
-    videojs.plugin('wavesurfer', wavesurferPlugin);
-}
+videojs.Wavesurfer = Wavesurfer;
+videojs.registerPlugin('wavesurfer', Wavesurfer);
 
 module.exports = {
-    Waveform
+    Wavesurfer
 };
