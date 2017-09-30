@@ -10,8 +10,8 @@ var pjson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 var version = pjson.version;
 
 replace({
-    regex: "Record.VERSION = 'dev';",
-    replacement: "Record.VERSION = '" + version + "';",
+    regex: "Wavesurfer.VERSION = 'dev';",
+    replacement: "Wavesurfer.VERSION = '" + version + "';",
     paths: ['./dist/videojs.wavesurfer.js'],
     silent: true
 });
