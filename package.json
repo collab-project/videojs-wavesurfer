@@ -20,8 +20,9 @@
   "scripts": {
     "prebuild": "npm run clean",
     "build": "npm-run-all -s build:*",
-    "build:js": "npm-run-all build:js:babel build:js:browserify build:js:bannerize build:js:collapse build:js:uglify",
+    "build:js": "npm-run-all build:js:babel build:js:browserify build:js:version build:js:bannerize build:js:collapse build:js:uglify",
     "build:js:babel": "babel src --out-dir es5",
+    "build:js:version": "node scripts/update-version.js",
     "build:js:bannerize": "bannerize dist/videojs.wavesurfer.js --banner=scripts/banner.ejs",
     "build:js:browserify": "browserify . --standalone videojs.wavesurfer --global-transform=browserify-shim --debug --outfile dist/videojs.wavesurfer.js",
     "build:js:collapse": "bundle-collapser dist/videojs.wavesurfer.js -o dist/videojs.wavesurfer.min.js",
@@ -42,9 +43,10 @@
     "version": "npm run build",
     "watch": "npm-run-all -p watch:docs watch:js",
     "watch:docs": "nodemon --watch src/ --exec npm run docs",
-    "watch:js": "npm-run-all -p watch:js:babel watch:js:browserify",
+    "watch:js": "npm-run-all -p watch:js:babel watch:js:browserify watch:js:version",
     "watch:js:babel": "npm run build:js:babel -- --watch",
     "watch:js:browserify": "watchify . -v -g browserify-shim --debug -o dist/videojs.wavesurfer.js",
+    "watch:js:version": "nodemon --watch dist/videojs.wavesurfer.js --exec npm run build:js:version",
     "prepublish": "not-in-install && npm run build || in-install"
   },
   "files": [
@@ -105,6 +107,7 @@
     "npm-run-all": "^4.1.1",
     "portscanner": "^2.1.1",
     "qunitjs": "^2.0.1",
+    "replace": "^0.3.0",
     "serve-static": "^1.12.6",
     "shelljs": "^0.7.8",
     "sinon": "3.3.0",
