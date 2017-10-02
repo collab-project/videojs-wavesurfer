@@ -10,6 +10,12 @@ videojs-wavesurfer changelog
 - Added support for the video.js `fluid` option (#28 by @ikbensiep)
 - Added default CSS styles (that previsouly were only included in the examples):
   `dist/css/videojs.wavesurfer.css`
+- Added React example (#33)
+
+Backwards-incompatible changes (when upgrading from a previous version):
+
+- Use `player.wavesurfer()` instead of `player.waveform` to interact with the
+  plugin
 
 
 1.3.6 - 2017/09/23

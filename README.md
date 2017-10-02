@@ -249,6 +249,14 @@ See the full `live` example
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/live.html)).
 
 
+Using with React
+----------------
+
+The `react` example shows how to integrate this plugin in a [React](https://reactjs.org) component
+([demo](https://collab-project.github.io/videojs-wavesurfer/examples/react/index.html) or
+[source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/react/index.html)).
+
+
 More features using other plugins
 ---------------------------------
 
