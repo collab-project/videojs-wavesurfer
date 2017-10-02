@@ -36,6 +36,7 @@ The plugin depends on the video.js and wavesurfer.js libraries:
 
 ```html
 <link href="video-js.min.css" rel="stylesheet">
+<link href="videojs.wavesurfer.css" rel="stylesheet">
 <script src="video.min.js"></script>
 
 <script src="wavesurfer.min.js"></script>
@@ -126,11 +127,11 @@ And open http://localhost:9999/examples/index.html in a browser.
 Methods
 -------
 
-Methods for this plugin documented below are available on the `waveform` object
+Methods for this plugin documented below are available on the `wavesurfer` method
 of the video.js player instance. For example:
 
 ```javascript
-player.waveform.destroy();
+player.wavesurfer().destroy();
 ```
 
 | Method | Description |
@@ -148,11 +149,11 @@ Other wavesurfer.js methods
 ---------------------------
 
 You can access the wavesurfer instance, for example to call the
-wavesurfer.js `seekTo` method, by using the `waveform.surfer` property on the
-`player` instance:
+wavesurfer.js `seekTo` method, by using the `surfer` property of the
+`wavesurfer` plugin instance:
 
 ```javascript
-player.waveform.surfer.seekTo(1);
+player.wavesurfer().surfer.seekTo(1);
 ```
 
 Events
@@ -161,8 +162,7 @@ Events
 Plugin events that are available on the video.js player instance. For example:
 
 ```javascript
-player.on('waveReady', function(event)
-{
+player.on('waveReady', function(event) {
     console.log('waveform is ready!');
 });
 ```
@@ -197,19 +197,6 @@ Configure the player; enable the video.js `'fluid'` option:
 fluid: true
 ```
 
-And include the following style:
-
-```css
-.vjs-fluid wave.vjs-wavedisplay {
-    top: 0;
-    position: absolute!important;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    height: 100%;
-}
-```
-
 See the full `fluid` example
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/fluid.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/fluid.html)).
@@ -237,8 +224,7 @@ Add an `audio` element:
 Configure the player: use the value `'live'` for the `src` option:
 
 ```javascript
-var player = videojs('myLiveAudio',
-{
+var player = videojs('myLiveAudio', {
     controls: true,
     width: 600,
     height: 300,
@@ -248,7 +234,8 @@ var player = videojs('myLiveAudio',
             debug: true,
             waveColor: 'black',
             cursorWidth: 0,
-            interact: false
+            interact: false,
+            hideScrollbar: true
         }
     }
 });
