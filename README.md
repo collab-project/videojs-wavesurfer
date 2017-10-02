@@ -21,10 +21,10 @@ You can use [bower](http://bower.io) (`bower install videojs-wavesurfer`) or
 plugin, or
 [download it here](https://github.com/collab-project/videojs-wavesurfer/releases).
 
-Since v1.0 this plugin is compatible with video.js 5.0 and newer. If you want to use
-this plugin with an older video.js 4.x version, check the
-[archived releases](https://github.com/collab-project/videojs-wavesurfer/releases?after=1.0.0)
-for a 0.9.x or older release of this plugin.
+Since v2.0 this plugin is compatible with video.js 6.0 and wavesurfer.js 2.0 and
+newer. If you want to use this plugin with an older video.js or wavesurfer.js version,
+check the [archived releases](https://github.com/collab-project/videojs-wavesurfer/releases?after=1.3.7)
+for a 1.3.x or older release of this plugin.
 
 Take a look at the [changelog](./CHANGES.md) when upgrading from a previous
 version of videojs-wavesurfer.
@@ -36,6 +36,7 @@ The plugin depends on the video.js and wavesurfer.js libraries:
 
 ```html
 <link href="video-js.min.css" rel="stylesheet">
+<link href="videojs.wavesurfer.css" rel="stylesheet">
 <script src="video.min.js"></script>
 
 <script src="wavesurfer.min.js"></script>
@@ -74,6 +75,7 @@ var player = videojs('myClip',
     controls: true,
     autoplay: true,
     loop: false,
+    fluid: false,
     width: 600,
     height: 300,
     plugins: {
@@ -101,8 +103,8 @@ The additional options for this plugin are:
 Examples
 --------
 
-See the full audio example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/index.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/index.html)) and
-the video example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/video.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/video.html)).
+See the full `audio` example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/index.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/index.html)) and
+the `video` example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/video.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/video.html)).
 
 To try out the examples locally, checkout the repository using Git:
 ```
@@ -117,26 +119,26 @@ npm install
 
 Start the local webserver for the examples:
 ```
-grunt serve
+npm run start
 ```
 
-And open http://localhost:9000/examples/index.html in a browser.
+And open http://localhost:9999/examples/index.html in a browser.
 
 Methods
 -------
 
-Methods for this plugin documented below are available on the `waveform` object
+Methods for this plugin documented below are available on the `wavesurfer` method
 of the video.js player instance. For example:
 
 ```javascript
-player.waveform.destroy();
+player.wavesurfer().destroy();
 ```
 
 | Method | Description |
 | --- | --- |
 | `destroy` | Destroys the wavesurfer instance and children (including the video.js player). |
 | `load(url)` | Load the clip at `url`. Also supports loading [File](https://developer.mozilla.org/nl/docs/Web/API/File) or [Blob](https://developer.mozilla.org/nl/docs/Web/API/Blob) objects. |
-| `setVolume(level)` | Set the volume level. |
+| `setVolume(level)` | Set the volume level (value between 0.0 and 1.0). |
 | `play` | Start playback. |
 | `pause` | Pause playback. |
 | `getDuration` | Get the length of the stream in seconds. Returns 0 if no stream is available (yet). |
@@ -147,11 +149,11 @@ Other wavesurfer.js methods
 ---------------------------
 
 You can access the wavesurfer instance, for example to call the
-`zoom` method, by using the `waveform.surfer` property on the `player`
-instance:
+wavesurfer.js `seekTo` method, by using the `surfer` property of the
+`wavesurfer` plugin instance:
 
 ```javascript
-player.waveform.surfer.zoom(2);
+player.wavesurfer().surfer.seekTo(1);
 ```
 
 Events
@@ -160,8 +162,7 @@ Events
 Plugin events that are available on the video.js player instance. For example:
 
 ```javascript
-player.on('waveReady', function()
-{
+player.on('waveReady', function(event) {
     console.log('waveform is ready!');
 });
 ```
@@ -170,6 +171,7 @@ player.on('waveReady', function()
 | --- | --- |
 | `waveReady` | Audio is loaded, decoded and the waveform is drawn. |
 | `playbackFinish` | Audio playback finished. |
+| `error` | Error occurred. |
 
 Customizing controls
 --------------------
@@ -182,6 +184,23 @@ controlBar: {
     fullscreenToggle: false
 },
 ```
+
+Responsive layout
+-----------------
+
+The `fluid` option for video.js will resize the player according to the size
+of the window.
+
+Configure the player; enable the video.js `'fluid'` option:
+
+```javascript
+fluid: true
+```
+
+See the full `fluid` example
+([demo](https://collab-project.github.io/videojs-wavesurfer/examples/fluid.html) or
+[source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/fluid.html)).
+
 
 Microphone plugin
 -----------------
@@ -205,8 +224,7 @@ Add an `audio` element:
 Configure the player: use the value `'live'` for the `src` option:
 
 ```javascript
-var player = videojs('myLiveAudio',
-{
+var player = videojs('myLiveAudio', {
     controls: true,
     width: 600,
     height: 300,
@@ -216,7 +234,8 @@ var player = videojs('myLiveAudio',
             debug: true,
             waveColor: 'black',
             cursorWidth: 0,
-            interact: false
+            interact: false,
+            hideScrollbar: true
         }
     }
 });
@@ -225,9 +244,17 @@ var player = videojs('myLiveAudio',
 The microphone plugin has additional configuration
 [options](https://wavesurfer-js.org/plugins/microphone.html).
 
-See the full live example
+See the full `live` example
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/live.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/live.html)).
+
+
+Using with React
+----------------
+
+The `react` example shows how to integrate this plugin in a [React](https://reactjs.org) component
+([demo](https://collab-project.github.io/videojs-wavesurfer/examples/react/index.html) or
+[source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/react/index.html)).
 
 
 More features using other plugins
@@ -242,14 +269,8 @@ tested with `videojs-wavesurfer`:
   support for recording audio/video/image files.
 
 
-Contributing
-------------
-
-Install `grunt-cli`:
-
-```
-sudo npm install -g grunt-cli
-```
+Development
+-----------
 
 Install dependencies using npm:
 
@@ -260,15 +281,33 @@ npm install
 Build a minified version:
 
 ```
-grunt
+npm run build
 ```
 
 Generated files are placed in the `dist` directory.
+
+During development:
+
+```
+npm run start
+```
+
+This will watch the source directory and rebuild when any changes
+are detected. It will also serve the files on http://127.0.0.1:9999.
+
+All commands for development are listed in the `package.json` file and
+are run using:
+
+```
+npm run <command>
+```
+
 
 License
 -------
 
 This work is licensed under the [MIT License](LICENSE).
+
 
 Donate
 ------
