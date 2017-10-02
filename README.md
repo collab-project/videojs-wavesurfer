@@ -23,7 +23,7 @@ plugin, or
 
 Since v2.0 this plugin is compatible with video.js 6.0 and wavesurfer.js 2.0 and
 newer. If you want to use this plugin with an older video.js or wavesurfer.js version,
-check the [archived releases](https://github.com/collab-project/videojs-wavesurfer/releases?after=1.3.0)
+check the [archived releases](https://github.com/collab-project/videojs-wavesurfer/releases?after=1.3.7)
 for a 1.3.x or older release of this plugin.
 
 Take a look at the [changelog](./CHANGES.md) when upgrading from a previous

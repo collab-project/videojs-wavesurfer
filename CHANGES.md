@@ -15,7 +15,7 @@ videojs-wavesurfer changelog
 Backwards-incompatible changes (when upgrading from a previous version):
 
 - Use `player.wavesurfer()` instead of `player.waveform` to interact with the
-  plugin
+  plugin, e.g. `player.wavesurfer().getDuration()`
 
 
 1.3.6 - 2017/09/23
