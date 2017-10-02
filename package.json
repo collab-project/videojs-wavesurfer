@@ -64,6 +64,7 @@
     ".babelrc",
     ".jscsrc",
     "dist/",
+    "es5",
     "src/",
     "test/",
     "scripts/"
