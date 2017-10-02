@@ -505,10 +505,10 @@ class Wavesurfer extends Plugin {
             // this gets called once after the clip has ended and the user
             // seeks so that we can change the replay button back to a play
             // button
-            this.surfer.once('seek', function() {
+            this.surfer.once('seek', () => {
                 this.player.controlBar.playToggle.removeClass('vjs-ended');
                 this.player.trigger('pause');
-            }.bind(this));
+            });
         }
     }
 
@@ -577,7 +577,7 @@ class Wavesurfer extends Plugin {
     onScreenChange() {
         // execute with tiny delay so the player element completes
         // rendering and correct dimensions are reported
-        var fullscreenDelay = this.player.setInterval(function() {
+        var fullscreenDelay = this.player.setInterval(() => {
             let isFullscreen = this.player.isFullscreen();
             let newWidth, newHeight;
             if (!isFullscreen) {
@@ -599,7 +599,7 @@ class Wavesurfer extends Plugin {
             // stop fullscreenDelay interval
             this.player.clearInterval(fullscreenDelay);
 
-        }.bind(this), 100);
+        }, 100);
     }
 
     /**
