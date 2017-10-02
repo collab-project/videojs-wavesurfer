@@ -1,0 +1,23 @@
+/* Position fullscreen control on right side of the player.
+--------------------------------------------------------------------------------
+*/
+.video-js .vjs-control.vjs-fullscreen-control {
+    position: absolute;
+    right: 0;
+}
+
+/* Ensure custom controls are always visible because
+   the plugin hides and replace the video.js native mobile
+   controls.
+--------------------------------------------------------------------------------
+*/
+.vjs-using-native-controls .vjs-control-bar {
+    display: flex !important;
+}
+
+/* Ensure playToggle has pointer cursor.
+--------------------------------------------------------------------------------
+*/
+button.vjs-play-control.vjs-control.vjs-button {
+    cursor: pointer;
+}

@@ -5,7 +5,10 @@
   "description": "video.js plugin that adds a navigable waveform for audio and video files.",
   "license": "MIT",
   "authors": ["Collab"],
-  "main": "src/videojs.wavesurfer.js",
+  "main": [
+      "src/js/videojs.wavesurfer.js",
+      "src/css/videojs.wavesurfer.scss"
+  ],
   "keywords": [
     "waveform",
     "audio",
