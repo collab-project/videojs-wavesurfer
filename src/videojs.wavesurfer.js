@@ -84,19 +84,17 @@ class Wavesurfer extends Plugin {
             this.player.controlBar.progressControl.hide();
 
             // make sure time displays are visible
-            let element;
             let uiElements = [this.player.controlBar.currentTimeDisplay,
                               this.player.controlBar.timeDivider,
                               this.player.controlBar.durationDisplay];
-            for (var d=0; d<uiElements.length; d++) {
-                element = uiElements[d];
+            uiElements.forEach((element) => {
                 // ignore and show when essential elements have been disabled
                 // by user
                 if (element !== undefined) {
                     element.el_.style.display = 'block';
                     element.show();
                 }
-            }
+            });
             if (this.player.controlBar.remainingTimeDisplay !== undefined) {
                 this.player.controlBar.remainingTimeDisplay.hide();
             }
