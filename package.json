@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "videojs-wavesurfer github pages",
-  "homepage": "https://github.com/collab-project/videojs-wavesurfer",
+  "homepage": "https://collab-project.github.io/videojs-wavesurfer",
   "author": "Collab",
   "license": "MIT",
   "bugs": {
@@ -11,8 +11,7 @@
   },
   "main": "index.js",
   "directories": {
-    "example": "examples",
-    "test": "test"
+    "example": "examples"
   },
   "scripts": {
     "test": "echo 'No tests yet!'"
@@ -29,24 +28,18 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0",
-    "blueimp-file-upload": ">=9.19.1",
     "connect": "^3.6.5",
     "copy": "^0.3.1",
-    "fine-uploader": "^5.15.0",
     "glob": "^7.1.2",
     "htmlhint": "^0.9.13",
     "in-publish": "^2.0.0",
     "isparta": "^4.0.0",
-    "lamejs": ">=1.2.0",
-    "libvorbis.js": ">=1.1.2",
     "lodash": "^4.17.4",
     "lodash-compat": "^3.10.2",
     "minimist": "^1.2.0",
     "nodemon": "^1.12.1",
     "npm-run-all": "^4.1.1",
-    "opus-recorder": "^1.2.0",
     "portscanner": "^2.1.1",
-    "recorderjs": "git+https://github.com/mattdiamond/Recorderjs.git",
     "replace": "^0.3.0",
     "serve-static": "^1.13.1",
     "shelljs": "^0.7.8"
