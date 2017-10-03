@@ -5,6 +5,7 @@
   <title>Wavesurfer Microphone Plugin for Video.js Example</title>
 
   <link href="//vjs.zencdn.net/6.2.8/video-js.min.css" rel="stylesheet">
+  <link href="../dist/css/videojs.wavesurfer.min.css" rel="stylesheet">
 
   <script src="//vjs.zencdn.net/6.2.8/video.min.js"></script>
   <script src="../dist/wavesurfer.min.js"></script>
@@ -12,24 +13,9 @@
   <script src="../dist/videojs.wavesurfer.min.js"></script>
 
   <style>
-  /* place fullscreen control on right side of the player */
-  .video-js .vjs-control.vjs-fullscreen-control {
-      position: absolute;
-      right: 0;
-  }
   /* change player background color */
   #myLiveAudio {
       background-color: #ADD3FF;
-  }
-  /* make sure the custom controls are always visible because
-     the plugin hides and replace the video.js native mobile
-     controls */
-  .vjs-using-native-controls .vjs-control-bar {
-      display: flex !important;
-  }
-  /* make sure playToggle has pointer cursor */
-  button.vjs-play-control.vjs-control.vjs-button {
-      cursor: pointer;
   }
   </style>
 </head>
@@ -38,8 +24,7 @@
 <audio id="myLiveAudio" class="video-js vjs-default-skin"></audio>
 
 <script>
-var player = videojs("myLiveAudio",
-{
+var player = videojs("myLiveAudio", {
     controls: true,
     width: 600,
     height: 300,
@@ -48,9 +33,6 @@ var player = videojs("myLiveAudio",
         timeDivider: false,
         durationDisplay: false,
         remainingTimeDisplay: false,
-        // video.js 5
-        volumeMenuButton: false,
-        // video.js 6
         volumePanel: false
     },
     plugins: {
@@ -64,6 +46,12 @@ var player = videojs("myLiveAudio",
         }
     }
 });
+
+// error handling
+player.on('error', function(error) {
+    console.warn(error);
+});
+
 </script>
 
 </body>

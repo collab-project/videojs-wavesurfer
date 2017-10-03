@@ -5,6 +5,7 @@
   <title>Wavesurfer Media Session Plugin for Video.js Example</title>
 
   <link href="//vjs.zencdn.net/6.2.8/video-js.min.css" rel="stylesheet">
+  <link href="../dist/css/videojs.wavesurfer.min.css" rel="stylesheet">
 
   <script src="//vjs.zencdn.net/6.2.8/video.min.js"></script>
   <script src="../dist/wavesurfer.min.js"></script>
@@ -16,10 +17,6 @@
   #myAudio {
       background-color: #FFEEFF;
   }
-  /* make sure playToggle has pointer cursor */
-  button.vjs-play-control.vjs-control.vjs-button {
-      cursor: pointer;
-  }
   </style>
 
 </head>
@@ -28,8 +25,7 @@
 <audio id="myAudio" class="video-js vjs-default-skin"></audio>
 
 <script>
-var player = videojs('myAudio',
-{
+var player = videojs('myAudio', {
     controls: true,
     autoplay: false,
     width: 600,
@@ -61,8 +57,7 @@ var player = videojs('myAudio',
 });
 
 // error handling
-player.on('error', function(error)
-{
+player.on('error', function(error) {
     console.warn(error);
 });
 </script>
