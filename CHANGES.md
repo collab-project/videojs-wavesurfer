@@ -8,11 +8,11 @@ videojs-wavesurfer changelog
 - Wavesurfer.js version 2.0.0 or newer is now required: older versions are no
   longer supported (#32)
 - Added support for the video.js `fluid` option (#28 by @ikbensiep)
-- Added default CSS styles (that previsouly were only included in the examples):
+- Added default CSS styles (that previously were only included in the examples):
   `dist/css/videojs.wavesurfer.css`
 - Added React example (#33)
 
-Backwards-incompatible changes (when upgrading from a previous version):
+**Backwards-incompatible change** (when upgrading from a previous version):
 
 - Use `player.wavesurfer()` instead of `player.waveform` to interact with the
   plugin, e.g. `player.wavesurfer().getDuration()`
