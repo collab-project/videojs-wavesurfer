@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+2.0.1 - unreleased
+------------------
+
+- Support for video.js 6.3.1
+
+
 2.0.0 - 2017/10/03
 ------------------
 

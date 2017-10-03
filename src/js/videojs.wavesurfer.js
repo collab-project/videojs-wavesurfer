@@ -548,6 +548,10 @@ class Wavesurfer extends Plugin {
      * @private
      */
     onPlayToggle() {
+        // workaround for video.js 6.3.1 and newer
+        if (this.player.controlBar.playToggle.hasClass('vjs-ended')) {
+            this.player.controlBar.playToggle.removeClass('vjs-ended');
+        }
         if (this.surfer.isPlaying()) {
             this.pause();
         } else {
