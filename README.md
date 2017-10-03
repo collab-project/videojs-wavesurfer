@@ -1,13 +1,23 @@
 This is the branch for the website at https://collab-project.github.io/videojs-wavesurfer
 
-Development
------------
+Install
+-------
 
 Install dependencies using npm:
 
 ```
 npm install
 ```
+
+Update Libraries
+----------------
+
+```
+npm run update
+```
+
+Development Server
+------------------
 
 During development:
 
