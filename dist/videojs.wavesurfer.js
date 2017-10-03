@@ -1,6 +1,6 @@
 /**
  * videojs-wavesurfer
- * @version 2.0.0
+ * @version 2.0.1
  * @see https://github.com/collab-project/videojs-wavesurfer
  * @copyright 2014-2017 Collab
  * @license MIT
@@ -789,6 +789,10 @@ var Wavesurfer = function (_Plugin) {
     }, {
         key: 'onPlayToggle',
         value: function onPlayToggle() {
+            // workaround for video.js 6.3.1 and newer
+            if (this.player.controlBar.playToggle.hasClass('vjs-ended')) {
+                this.player.controlBar.playToggle.removeClass('vjs-ended');
+            }
             if (this.surfer.isPlaying()) {
                 this.pause();
             } else {
@@ -920,7 +924,7 @@ var Wavesurfer = function (_Plugin) {
 // version nr gets replaced during build
 
 
-Wavesurfer.VERSION = '2.0.0';
+Wavesurfer.VERSION = '2.0.1';
 
 // register plugin
 _video2.default.Wavesurfer = Wavesurfer;

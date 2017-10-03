@@ -12,6 +12,22 @@ npm install
 Update Libraries
 ----------------
 
+Check if there are updates using
+[npm-check-updates](https://www.npmjs.com/package/npm-check-updates):
+
+```
+ncu
+```
+
+Verify available updates and then upgrade everything in `package.json`:
+
+```
+ncu -a
+npm update
+```
+
+Copy updated libraries into repository:
+
 ```
 npm run update
 ```
