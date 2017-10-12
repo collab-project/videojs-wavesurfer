@@ -13,17 +13,14 @@
   "directories": {
     "example": "examples"
   },
-  "scripts": {
-    "test": "echo 'No tests yet!'"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/collab-project/videojs-wavesurfer.git"
   },
   "dependencies": {
-    "video.js": "^6.2.7",
+    "video.js": "^6.2.8",
     "videojs-wavesurfer": "^2.0.1",
-    "webrtc-adapter": "^5.0.4"
+    "webrtc-adapter": "^5.0.6"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
