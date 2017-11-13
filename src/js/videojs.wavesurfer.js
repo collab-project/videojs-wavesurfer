@@ -252,31 +252,33 @@ class Wavesurfer extends Plugin {
      *
      * @param {string|blob|file} url - Either the URL of the audio file,
      *     a Blob or a File object.
+     *
+     * @param {string} peakUrl - The URL of peak data for the audio file.
      */
-    load(audioUrl, peakUrl) {
-        let player = this;
-        if (audioUrl instanceof Blob || audioUrl instanceof File) {
-            player.log('Loading object: ' + JSON.stringify(audioUrl));
-            player.surfer.loadBlob(audioUrl);
+    load(url, peakUrl) {
+        if (url instanceof Blob || url instanceof File) {
+            this.log('Loading object: ' + JSON.stringify(url));
+            this.surfer.loadBlob(url);
         } else {
-            player.log('Loading URL: ' + audioUrl + '\nLoading Peak Data URL: ' + peakUrl);
+            this.log('Loading URL: ' + url + '\nLoading Peak Data URL: ' + peakUrl);
             // Load peak data from file
             if (peakUrl !== undefined) {
-                let request = new XMLHttpRequest();
-                request.onload = function() {
-                    if (request.status == 200) {
-                        player.surfer.load(audioUrl, JSON.parse(request.responseText).data);
+                let ajax = WaveSurfer.util.ajax({
+                    url: peakUrl,
+                    responseType: 'json'
+                });
+
+                ajax.on('success', (data, e) => {
+                    if (e.target.status == 200) {
+                        this.surfer.load(url, data.data);
                     } else {
-                        player.log("Unable to retrieve peak data. Status code: " + request.status);
-                        player.surfer.load(audioUrl);
+                        this.log("Unable to retrieve peak data. Status code: " + e.target.status);
+                        this.surfer.load(url);
                     }
-                };
-                request.open('GET', peakUrl, true);
-                request.send(null);
-            }
-            else {
-                player.log('Loading URL: ' + audioUrl);
-                player.surfer.load(audioUrl);
+                });
+            } else {
+                this.log('Loading URL: ' + url);
+                this.surfer.load(url);
             }
         }
     }
