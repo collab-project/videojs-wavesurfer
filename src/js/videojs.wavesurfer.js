@@ -252,7 +252,6 @@ class Wavesurfer extends Plugin {
      *
      * @param {string|blob|file} url - Either the URL of the audio file,
      *     a Blob or a File object.
-     *
      * @param {string} peakUrl - The URL of peak data for the audio file.
      */
     load(url, peakUrl) {
@@ -260,7 +259,7 @@ class Wavesurfer extends Plugin {
             this.log('Loading object: ' + JSON.stringify(url));
             this.surfer.loadBlob(url);
         } else {
-            // Load peak data from file
+            // load peak data from file
             if (peakUrl !== undefined) {
                 let ajax = WaveSurfer.util.ajax({
                     url: peakUrl,
@@ -269,10 +268,12 @@ class Wavesurfer extends Plugin {
 
                 ajax.on('success', (data, e) => {
                     if (e.target.status == 200) {
-                        this.log('Loading URL: ' + url + '\nLoading Peak Data URL: ' + peakUrl);
+                        this.log('Loading URL: ' + url +
+                            '\nLoading Peak Data URL: ' + peakUrl);
                         this.surfer.load(url, data.data);
                     } else {
-                        this.log("Unable to retrieve peak data from" + peakUrl + ". Status code: " + e.target.status);
+                        this.log('Unable to retrieve peak data from ' + peakUrl +
+                            '. Status code: ' + e.target.status);
                         this.log('Loading URL: ' + url);
                         this.surfer.load(url);
                     }
