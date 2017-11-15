@@ -81,6 +81,7 @@ var player = videojs('myClip',
     plugins: {
         wavesurfer: {
             src: 'media/hal.wav',
+            peaks: 'media/hal.json',
             msDisplayMax: 10,
             debug: true,
             waveColor: 'grey',
@@ -97,6 +98,7 @@ The additional options for this plugin are:
 | option | type | default | description |
 | --- | --- | --- | --- |
 | `src` | string | `null` | The URL of the audio/video file or `'live'` when [using the microphone plugin](#microphone-plugin).|
+| `peaks` | string | `null` | The URL of the JSON file with peak data corresponding to the source audio/video file. This allows the waveform to be created from pre-rendered peak data. This file can be generated using the [bbc/audiowaveform](https://github.com/bbc/audiowaveform) utility. Note that no peak data file is provided in the examples/media directory as the audio file hal.wav is not long enough to justify the use of pre-rendered peak data. |
 | `debug` | boolean | `false` | Display internal log messages using the `videojs.log` method. |
 | `msDisplayMax` | float | `3` | Indicates the number of seconds that is considered the boundary value for displaying milliseconds in the time controls. An audio clip with a total length of 2 seconds and a `msDisplayMax` of 3 will use the format `M:SS:MMM`. Clips with a duration that is longer than `msDisplayMax` will be displayed as `M:SS` or `HH:MM:SS`.|
 

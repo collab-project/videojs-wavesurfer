@@ -260,7 +260,6 @@ class Wavesurfer extends Plugin {
             this.log('Loading object: ' + JSON.stringify(url));
             this.surfer.loadBlob(url);
         } else {
-            this.log('Loading URL: ' + url + '\nLoading Peak Data URL: ' + peakUrl);
             // Load peak data from file
             if (peakUrl !== undefined) {
                 let ajax = WaveSurfer.util.ajax({
@@ -270,9 +269,11 @@ class Wavesurfer extends Plugin {
 
                 ajax.on('success', (data, e) => {
                     if (e.target.status == 200) {
+                        this.log('Loading URL: ' + url + '\nLoading Peak Data URL: ' + peakUrl);
                         this.surfer.load(url, data.data);
                     } else {
-                        this.log("Unable to retrieve peak data. Status code: " + e.target.status);
+                        this.log("Unable to retrieve peak data from" + peakUrl + ". Status code: " + e.target.status);
+                        this.log('Loading URL: ' + url);
                         this.surfer.load(url);
                     }
                 });
