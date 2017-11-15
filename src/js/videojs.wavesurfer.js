@@ -214,7 +214,7 @@ class Wavesurfer extends Plugin {
                 this.player.loadingSpinner.show();
 
                 // start loading file
-                this.load(options.src);
+                this.load(options.src, options.peaks);
             } else {
                 // hide loading spinner
                 this.player.loadingSpinner.hide();
@@ -252,14 +252,35 @@ class Wavesurfer extends Plugin {
      *
      * @param {string|blob|file} url - Either the URL of the audio file,
      *     a Blob or a File object.
+     *
+     * @param {string} peakUrl - The URL of peak data for the audio file.
      */
-    load(url) {
+    load(url, peakUrl) {
         if (url instanceof Blob || url instanceof File) {
             this.log('Loading object: ' + JSON.stringify(url));
             this.surfer.loadBlob(url);
         } else {
-            this.log('Loading URL: ' + url);
-            this.surfer.load(url);
+            // Load peak data from file
+            if (peakUrl !== undefined) {
+                let ajax = WaveSurfer.util.ajax({
+                    url: peakUrl,
+                    responseType: 'json'
+                });
+
+                ajax.on('success', (data, e) => {
+                    if (e.target.status == 200) {
+                        this.log('Loading URL: ' + url + '\nLoading Peak Data URL: ' + peakUrl);
+                        this.surfer.load(url, data.data);
+                    } else {
+                        this.log("Unable to retrieve peak data from" + peakUrl + ". Status code: " + e.target.status);
+                        this.log('Loading URL: ' + url);
+                        this.surfer.load(url);
+                    }
+                });
+            } else {
+                this.log('Loading URL: ' + url);
+                this.surfer.load(url);
+            }
         }
     }
 
