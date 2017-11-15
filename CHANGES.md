@@ -1,7 +1,7 @@
 videojs-wavesurfer changelog
 ============================
 
-2.0.2 - unreleased
+2.0.2 - 2017/11/15
 ------------------
 
 - Updated `load` function to optionally load an array of pre-rendered
