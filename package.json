@@ -121,7 +121,7 @@
     "lodash-compat": "^3.10.2",
     "minimist": "^1.2.0",
     "mv": "^2.1.1",
-    "node-sass": "^4.6.0",
+    "node-sass": "^4.6.1",
     "nodemon": "^1.12.1",
     "npm-run-all": "^4.1.2",
     "portscanner": "^2.1.1",
@@ -130,7 +130,7 @@
     "serve-static": "^1.13.1",
     "shelljs": "^0.7.8",
     "sinon": "4.1.2",
-    "uglify-js": "^3.1.8",
+    "uglify-js": "^3.1.9",
     "watchify": "^3.9.0",
     "webpack": "^3.8.1",
     "zip-dir": "^1.0.2"

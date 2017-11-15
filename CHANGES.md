@@ -1,6 +1,13 @@
 videojs-wavesurfer changelog
 ============================
 
+2.0.2 - unreleased
+------------------
+
+- Updated `load` function to optionally load an array of pre-rendered
+  peak data (#38 by @rbwest)
+
+
 2.0.1 - 2017/10/03
 ------------------
 
