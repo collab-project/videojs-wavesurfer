@@ -27,7 +27,7 @@
     "build:css:sass": "node-sass --include-path src/css src/css/videojs.wavesurfer.scss dist/css/videojs.wavesurfer.css",
     "build:css:comb": "csscomb dist/css/videojs.wavesurfer.css",
     "build:css:compress": "cleancss -o dist/css/videojs.wavesurfer.min.css dist/css/videojs.wavesurfer.css",
-    "build:css:banner": "node scripts/add-banner.js dist/css/videojs.wavesurfer*.css",
+    "build:css:banner": "node scripts/add-banner.js 'dist/css/videojs.wavesurfer*.css'",
     "build:js": "npm-run-all build:js:babel build:js:browserify build:js:version build:js:collapse build:js:uglify build:js:banner",
     "build:js:babel": "babel src/js --out-dir es5",
     "build:js:version": "node scripts/update-version.js",

@@ -95,4 +95,3 @@ del([targetDirUnpacked, targetDirRenamed], {force: true, dryRun: false}).then(pa
     });
 
 });
-

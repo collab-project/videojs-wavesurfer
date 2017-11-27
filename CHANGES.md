@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+2.0.3 - unreleased
+------------------
+
+- Fix Windows build
+
+
 2.0.2 - 2017/11/15
 ------------------
 
