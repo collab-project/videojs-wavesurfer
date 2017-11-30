@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "video.js": "^6.4.0",
-    "videojs-wavesurfer": "^2.0.2",
-    "webrtc-adapter": "^6.0.1"
+    "videojs-wavesurfer": "^2.0.3",
+    "webrtc-adapter": "^6.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
