@@ -118,7 +118,13 @@ cd videojs-wavesurfer
 npm install
 ```
 
-Start the local webserver for the examples:
+Build the library and assets once:
+
+```
+npm run build
+```
+
+And start the local webserver for the examples:
 ```
 npm run start
 ```
