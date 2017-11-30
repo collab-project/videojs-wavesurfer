@@ -128,6 +128,7 @@
     "uglify-js": "^3.1.9",
     "watchify": "^3.9.0",
     "webpack": "^3.8.1",
+    "webrtc-adapter": "^6.0.2",
     "zip-dir": "^1.0.2"
   }
 }
