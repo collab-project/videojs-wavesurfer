@@ -14,6 +14,8 @@ import videojs from 'video.js';
 import WaveSurfer from 'wavesurfer.js';
 
 const Plugin = videojs.getPlugin('plugin');
+const Tech = videojs.getComponent('Tech');
+const Html5 = videojs.getTech('Html5');
 
 const wavesurferClassName = 'vjs-wavedisplay';
 
@@ -41,6 +43,9 @@ class Wavesurfer extends Plugin {
         this.liveMode = false;
         this.debug = (options.debug.toString() === 'true');
         this.msDisplayMax = parseFloat(options.msDisplayMax);
+
+        //Attach this instance to the current player so that the tech can access it.
+        this.player.activeWavesurferPlugin = this;
 
         // microphone plugin
         if (options.src === 'live') {
@@ -419,6 +424,9 @@ class Wavesurfer extends Plugin {
      * @private
      */
     setCurrentTime(currentTime, duration) {
+        //Emit the timeupdate event so that the tech knows about the time change
+        this.trigger('timeupdate');
+
         if (currentTime === undefined) {
             currentTime = this.surfer.getCurrentTime();
         }
@@ -682,12 +690,82 @@ class Wavesurfer extends Plugin {
     }
 }
 
+class WavesurferTech extends Html5 {
+    /**
+     * Create an instance of this Tech.
+     *
+     * @param {Object} [options]
+     *        The key/value store of player options.
+     *
+     * @param {Component~ReadyCallback} ready
+     *        Callback function to call when the `Flash` Tech is ready.
+     */
+    constructor(options, ready) {
+        super(options, ready);
+
+        //We need the player instance so that we can access the current wavesurfer plugin attached to that player.
+        this.activePlayer = videojs(options.playerId);
+        this.waveready = false;
+
+        //Track when wavesurfer is fully initialized (ready)
+        this.activePlayer.on('waveReady', function() {
+            this.waveready = true;
+        }.bind(this));
+
+        //Proxy timeupdate events so that the tech emits them too. This will allow the rest of videoJS to work (including text tracks).
+        this.activePlayer.activeWavesurferPlugin.on('timeupdate', function() {
+            this.trigger('timeupdate');
+        }.bind(this));
+    }
+
+    play() {
+        return this.activePlayer.activeWavesurferPlugin.play();
+    }
+
+    pause() {
+        return this.activePlayer.activeWavesurferPlugin.pause();
+    }
+
+    /**
+     * Get the current time
+     * @return {number}
+     */
+    currentTime() {
+        if (!this.waveready) {
+            return 0;
+        }
+
+        return this.activePlayer.activeWavesurferPlugin.getCurrentTime();
+    }
+
+    /**
+     * Get the current duration
+     *
+     * @return {number}
+     *         The duration of the media or 0 if there is no duration.
+     */
+    duration() {
+        if (!this.waveready) {
+            return 0;
+        }
+
+        return this.activePlayer.activeWavesurferPlugin.getDuration();
+    }
+}
+
+WavesurferTech.isSupported = function() {
+    return true;
+};
+
 // version nr gets replaced during build
 Wavesurfer.VERSION = 'dev';
 
 // register plugin
 videojs.Wavesurfer = Wavesurfer;
 videojs.registerPlugin('wavesurfer', Wavesurfer);
+
+//Register Tech
+videojs.registerTech('wavesurferTech', WavesurferTech);
 
 module.exports = {
     Wavesurfer
