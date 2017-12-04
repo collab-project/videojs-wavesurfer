@@ -40,6 +40,10 @@ var player = videojs("myVideo", {
             hideScrollbar: true
         }
     }
+}, function(){
+    // print version information at startup
+    videojs.log('Using video.js', videojs.VERSION,
+        'with videojs-wavesurfer', videojs.getPluginVersion('wavesurfer'));
 });
 </script>
 
