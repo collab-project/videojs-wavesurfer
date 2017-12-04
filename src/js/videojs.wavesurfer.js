@@ -8,14 +8,13 @@
 import log from './utils/log';
 import formatTime from './utils/format-time';
 import pluginDefaultOptions from './defaults';
+import WavesurferTech from './tech';
 import window from 'global/window';
 
 import videojs from 'video.js';
 import WaveSurfer from 'wavesurfer.js';
 
 const Plugin = videojs.getPlugin('plugin');
-const Tech = videojs.getComponent('Tech');
-const Html5 = videojs.getTech('Html5');
 
 const wavesurferClassName = 'vjs-wavedisplay';
 
@@ -43,7 +42,8 @@ class Wavesurfer extends Plugin {
         this.debug = (options.debug.toString() === 'true');
         this.msDisplayMax = parseFloat(options.msDisplayMax);
 
-        //Attach this instance to the current player so that the tech can access it.
+        // attach this instance to the current player so that the tech can
+        // access it
         this.player.activeWavesurferPlugin = this;
 
         // microphone plugin
@@ -423,7 +423,7 @@ class Wavesurfer extends Plugin {
      * @private
      */
     setCurrentTime(currentTime, duration) {
-        //Emit the timeupdate event so that the tech knows about the time change
+        // emit the timeupdate event so that the tech knows about the time change
         this.trigger('timeupdate');
 
         if (currentTime === undefined) {
@@ -689,76 +689,6 @@ class Wavesurfer extends Plugin {
     }
 }
 
-class WavesurferTech extends Html5 {
-    /**
-     * Create an instance of this Tech.
-     *
-     * @param {Object} [options]
-     *        The key/value store of player options.
-     *
-     * @param {Component~ReadyCallback} ready
-     *        Callback function to call when the `Flash` Tech is ready.
-     */
-    constructor(options, ready) {
-        //Never allow for native text tracks, because this isn't actually html5 audio. Native tracks fail because we are using wavesurfer.
-        options.nativeTextTracks = false;
-
-        super(options, ready);
-
-        //We need the player instance so that we can access the current wavesurfer plugin attached to that player.
-        this.activePlayer = videojs(options.playerId);
-        this.waveready = false;
-
-        //Track when wavesurfer is fully initialized (ready)
-        this.activePlayer.on('waveReady', function() {
-            this.waveready = true;
-        }.bind(this));
-
-        //Proxy timeupdate events so that the tech emits them too. This will allow the rest of videoJS to work (including text tracks).
-        this.activePlayer.activeWavesurferPlugin.on('timeupdate', function() {
-            this.trigger('timeupdate');
-        }.bind(this));
-    }
-
-    play() {
-        return this.activePlayer.activeWavesurferPlugin.play();
-    }
-
-    pause() {
-        return this.activePlayer.activeWavesurferPlugin.pause();
-    }
-
-    /**
-     * Get the current time
-     * @return {number}
-     */
-    currentTime() {
-        if (!this.waveready) {
-            return 0;
-        }
-
-        return this.activePlayer.activeWavesurferPlugin.getCurrentTime();
-    }
-
-    /**
-     * Get the current duration
-     *
-     * @return {number}
-     *         The duration of the media or 0 if there is no duration.
-     */
-    duration() {
-        if (!this.waveready) {
-            return 0;
-        }
-
-        return this.activePlayer.activeWavesurferPlugin.getDuration();
-    }
-}
-
-WavesurferTech.isSupported = function() {
-    return true;
-};
-
 // version nr gets replaced during build
 Wavesurfer.VERSION = 'dev';
 
@@ -766,10 +696,9 @@ Wavesurfer.VERSION = 'dev';
 videojs.Wavesurfer = Wavesurfer;
 videojs.registerPlugin('wavesurfer', Wavesurfer);
 
-/*
- Register the WavesurferTech as 'Html5' to override the default html5 tech. If we register it as anything
- other then 'Html5', the <audio> element will be removed by VJS and caption tracks will be lost in safari.
- */
+// register the WavesurferTech as 'Html5' to override the default html5 tech.
+// If we register it as anything other then 'Html5', the <audio> element will
+// be removed by VJS and caption tracks will be lost in the Safari browser.
 videojs.registerTech('Html5', WavesurferTech);
 
 module.exports = {

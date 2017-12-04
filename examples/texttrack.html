@@ -23,34 +23,33 @@
 <body>
 
 <audio id="myAudio" class="video-js vjs-default-skin">
-    <track kind="captions" src="media/hal.vtt" srclang="en-US"/>
+    <track kind="captions" src="media/hal.vtt" srclang="en-US" default />
 </audio>
 
 <script>
-    var player = videojs(document.querySelector('audio'), {
-        controls: true,
-        autoplay: true,
-        fluid: false,
-        loop: false,
-        width: 600,
-        height: 300,
-        plugins: {
-            wavesurfer: {
-                src: 'media/hal.wav',
-                msDisplayMax: 10,
-                debug: true,
-                waveColor: 'grey',
-                progressColor: 'black',
-                cursorColor: 'black',
-                hideScrollbar: true
-            }
+var player = videojs('myAudio', {
+    controls: true,
+    autoplay: true,
+    fluid: false,
+    width: 600,
+    height: 300,
+    plugins: {
+        wavesurfer: {
+            src: 'media/hal.wav',
+            msDisplayMax: 10,
+            debug: true,
+            waveColor: '#086280',
+            progressColor: 'black',
+            cursorColor: 'black',
+            hideScrollbar: true
         }
-    });
+    }
+});
 
-    // error handling
-    player.on('error', function(error) {
-        console.warn('ERROR:', error);
-    });
+// error handling
+player.on('error', function(error) {
+    console.warn('ERROR:', error);
+});
 </script>
 
 </body>
