@@ -19,7 +19,6 @@ const Html5 = videojs.getTech('Html5');
 
 const wavesurferClassName = 'vjs-wavedisplay';
 
-
 /**
  * Draw a waveform for audio and video files in a video.js player.
  *
@@ -701,6 +700,9 @@ class WavesurferTech extends Html5 {
      *        Callback function to call when the `Flash` Tech is ready.
      */
     constructor(options, ready) {
+        //Never allow for native text tracks, because this isn't actually html5 audio. Native tracks fail because we are using wavesurfer.
+        options.nativeTextTracks = false;
+
         super(options, ready);
 
         //We need the player instance so that we can access the current wavesurfer plugin attached to that player.
@@ -764,8 +766,11 @@ Wavesurfer.VERSION = 'dev';
 videojs.Wavesurfer = Wavesurfer;
 videojs.registerPlugin('wavesurfer', Wavesurfer);
 
-//Register Tech
-videojs.registerTech('wavesurferTech', WavesurferTech);
+/*
+ Register the WavesurferTech as 'Html5' to override the default html5 tech. If we register it as anything
+ other then 'Html5', the <audio> element will be removed by VJS and caption tracks will be lost in safari.
+ */
+videojs.registerTech('Html5', WavesurferTech);
 
 module.exports = {
     Wavesurfer
