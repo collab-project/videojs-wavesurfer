@@ -22,8 +22,8 @@
 </head>
 <body>
 
-<audio id="myAudio" class="video-js vjs-default-skin">
-    <track type="caption" src="sample.vtt" srclang="en-US" />
+<audio id="myAudio" src="media/hal.wav" class="video-js vjs-default-skin">
+    <track kind="captions" src="sample.vtt" srclang="en-US"/>
 </audio>
 
 <script>
@@ -44,8 +44,7 @@
                 cursorColor: 'black',
                 hideScrollbar: true
             }
-        },
-        techOrder: ["wavesurferTech", "other supported tech"]
+        }
     });
 
     // error handling
