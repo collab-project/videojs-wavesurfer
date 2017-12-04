@@ -3,7 +3,6 @@
  * @since 2.1.0
  */
 
-const Tech = videojs.getComponent('Tech');
 const Html5 = videojs.getTech('Html5');
 
 class WavesurferTech extends Html5 {
