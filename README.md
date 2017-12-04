@@ -216,6 +216,8 @@ time-triggered text to the user. Video.js offers a cross-browser implementation
 of text tracks. For more information, check the
 [documentation](https://github.com/videojs/video.js/blob/master/docs/guides/text-tracks.md).
 
+![Text tracks screenshot](examples/img/text-tracks.png?raw=true "Text tracks screenshot")
+
 See the full `texttrack` example
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/texttrack.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/texttrack.html)).
