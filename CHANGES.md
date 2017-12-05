@@ -1,7 +1,7 @@
 videojs-wavesurfer changelog
 ============================
 
-2.1.0 - unreleased
+2.1.0 - 2017/12/05
 ------------------
 
 - Caption/subtitle support (#36 by @mfairchild365)
