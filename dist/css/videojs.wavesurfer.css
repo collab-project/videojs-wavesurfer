@@ -1,5 +1,5 @@
 /*!
-Default styles for videojs-wavesurfer v2.0.3
+Default styles for videojs-wavesurfer v2.1.0
 */
 .video-js .vjs-control.vjs-fullscreen-control {
   position: absolute;
@@ -18,6 +18,16 @@ Default styles for videojs-wavesurfer v2.0.3
 */
 button.vjs-play-control.vjs-control.vjs-button {
   cursor: pointer; }
+
+/* Ensure that vjs menus and interfaces can be interacted with (such as the
+   closed captions button).
+--------------------------------------------------------------------------------
+*/
+.vjs-menu-content {
+  z-index: 1; }
+
+.vjs-modal-dialog, .vjs-text-track-display {
+  z-index: 4; }
 
 /* Handle responsive / fluid view.
 --------------------------------------------------------------------------------
