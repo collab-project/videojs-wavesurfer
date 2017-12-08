@@ -107,6 +107,23 @@ class WavesurferTech extends Html5 {
 
         return this.activePlayer.activeWavesurferPlugin.getDuration();
     }
+
+    /**
+     * Sets the current playback rate. A playback rate of
+     * 1.0 represents normal speed and 0.5 would indicate half-speed
+     * playback, for instance.
+     *
+     * @param {number} [rate]
+     *       New playback rate to set.
+     *
+     * @return {number}
+     *         The current playback rate when getting or 1.0
+     */
+    setPlaybackRate(rate) {
+        this.activePlayer.activeWavesurferPlugin.surfer.setPlaybackRate(rate);
+
+        return super.setPlaybackRate(rate);
+    }
 }
 
 WavesurferTech.isSupported = function() {

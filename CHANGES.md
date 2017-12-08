@@ -4,6 +4,7 @@ videojs-wavesurfer changelog
 2.1.1 - unreleased
 ------------------
 
+- Added support for changing the playback rate (#43)
 - Fix issue with overriding the HTML5 tech which caused an error on video.js
   players on the same page that don't use the videojs-wavesurfer plugin (#41
   by @mfairchild365)
