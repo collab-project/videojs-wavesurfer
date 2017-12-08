@@ -7,5 +7,7 @@
     "validateIndentation": 4,
     "requireSpacesInForStatement": true,
     "requireSpacesInConditionalExpression": true,
-    "requireBlocksOnNewline": true
+    "requireBlocksOnNewline": true,
+    "disallowCapitalizedComments": true,
+    "requireSpaceAfterLineComment": { "allExcept": ["#", "="] }
 }
