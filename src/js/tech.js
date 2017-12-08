@@ -33,7 +33,8 @@ class WavesurferTech extends Html5 {
         }.bind(this));
 
         if (!this.playerIsUsingWavesurfer()) {
-            //The plugin hasn't been initialized for this player, so it likely doesn't need our html5 tech modifications
+            // the plugin hasn't been initialized for this player, so it
+            // likely doesn't need our html5 tech modifications
             return;
         }
 
@@ -55,7 +56,7 @@ class WavesurferTech extends Html5 {
 
     play() {
         if (!this.playerIsUsingWavesurfer()) {
-            //fall back to html5 tech functionality
+            // fall back to html5 tech functionality
             return super.play();
         }
 
@@ -77,7 +78,7 @@ class WavesurferTech extends Html5 {
      */
     currentTime() {
         if (!this.playerIsUsingWavesurfer()) {
-            //fall back to html5 tech functionality
+            // fall back to html5 tech functionality
             return super.currentTime();
         }
 
@@ -96,7 +97,7 @@ class WavesurferTech extends Html5 {
      */
     duration() {
         if (!this.playerIsUsingWavesurfer()) {
-            //fall back to html5 tech functionality
+            // fall back to html5 tech functionality
             return super.duration();
         }
 
