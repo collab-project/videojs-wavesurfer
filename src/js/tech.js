@@ -120,7 +120,9 @@ class WavesurferTech extends Html5 {
      *         The current playback rate when getting or 1.0
      */
     setPlaybackRate(rate) {
-        this.activePlayer.activeWavesurferPlugin.surfer.setPlaybackRate(rate);
+        if (this.playerIsUsingWavesurfer()) {
+            this.activePlayer.activeWavesurferPlugin.surfer.setPlaybackRate(rate);
+        }
 
         return super.setPlaybackRate(rate);
     }
