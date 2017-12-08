@@ -9,7 +9,6 @@
     "requireSpacesInConditionalExpression": true,
     "requireSpaceAfterComma": {"allExcept": ["trailing"]},
     "requireBlocksOnNewline": true,
-    "disallowCapitalizedComments": true,
     "requireArrowFunctions": true,
     "requirePaddingNewLinesBeforeExport": true
 }
