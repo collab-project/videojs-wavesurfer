@@ -8,7 +8,7 @@
     "requireSpacesInForStatement": true,
     "requireSpacesInConditionalExpression": true,
     "requireSpaceAfterComma": {"allExcept": ["trailing"]},
-    "requireSpaceAfterLineComment": { "allExcept": ["#", "=", "*", "**"] },
+    "requireSpaceAfterLineComment": { "allExcept": ["#", "=", "*", "**", "/**"] },
     "requireBlocksOnNewline": true,
     "disallowCapitalizedComments": true,
     "requireArrowFunctions": true,
