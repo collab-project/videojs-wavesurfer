@@ -9,5 +9,6 @@
     "requireSpacesInConditionalExpression": true,
     "requireBlocksOnNewline": true,
     "disallowCapitalizedComments": true,
-    "requireSpaceAfterLineComment": { "allExcept": ["#", "=", "**"] }
+    "requireArrowFunctions": true,
+    "requireSpaceAfterLineComment": { "allExcept": ["#", "=", "*", "**"] }
 }
