@@ -7,5 +7,8 @@
     "validateIndentation": 4,
     "requireSpacesInForStatement": true,
     "requireSpacesInConditionalExpression": true,
-    "requireBlocksOnNewline": true
+    "requireSpaceAfterComma": {"allExcept": ["trailing"]},
+    "requireBlocksOnNewline": true,
+    "requireArrowFunctions": true,
+    "requirePaddingNewLinesBeforeExport": true
 }
