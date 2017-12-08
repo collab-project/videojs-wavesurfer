@@ -28,9 +28,9 @@ class WavesurferTech extends Html5 {
         this.waveready = false;
 
         // track when wavesurfer is fully initialized (ready)
-        this.activePlayer.on('waveReady', function() {
+        this.activePlayer.on('waveReady', () => {
             this.waveready = true;
-        }.bind(this));
+        });
 
         if (!this.playerIsUsingWavesurfer()) {
             // the plugin hasn't been initialized for this player, so it
@@ -40,9 +40,9 @@ class WavesurferTech extends Html5 {
 
         // proxy timeupdate events so that the tech emits them too. This will
         // allow the rest of videoJS to work (including text tracks)
-        this.activePlayer.activeWavesurferPlugin.on('timeupdate', function() {
+        this.activePlayer.activeWavesurferPlugin.on('timeupdate', () => {
             this.trigger('timeupdate');
-        }.bind(this));
+        });
     }
 
     /**
