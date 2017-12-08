@@ -110,7 +110,7 @@
     "moment": "^2.19.3",
     "mv": "^2.1.1",
     "node-sass": "^4.6.1",
-    "nodemon": "^1.12.2",
+    "nodemon": "^1.12.5",
     "npm-run-all": "^4.1.2",
     "portscanner": "^2.1.1",
     "qunit": "^2.4.1",
@@ -119,7 +119,7 @@
     "shelljs": "^0.7.8",
     "uglify-js": "^3.2.1",
     "webpack": "^3.10.0",
-    "webrtc-adapter": "^6.0.2",
+    "webrtc-adapter": "^6.0.3",
     "zip-dir": "^1.0.2"
   }
 }
