@@ -46,6 +46,11 @@ class Wavesurfer extends Plugin {
         // access it
         this.player.activeWavesurferPlugin = this;
 
+        // check that wavesurfer is initialized in options, and add class to activate videojs-wavesurfer specific styles
+        if (this.player.options_.plugins.wavesurfer !== undefined) {
+            this.player.addClass('videojs-wavesurfer');
+        }
+        
         // microphone plugin
         if (options.src === 'live') {
             // check if the wavesurfer.js microphone plugin can be enabled
