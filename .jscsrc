@@ -8,6 +8,8 @@
     "requireSpacesInForStatement": true,
     "requireSpacesInConditionalExpression": true,
     "requireSpaceAfterComma": {"allExcept": ["trailing"]},
+    "requireSpaceBeforeBinaryOperators": true,
+    "requireSpaceAfterBinaryOperators": true,
     "requireBlocksOnNewline": true,
     "requireArrowFunctions": true,
     "requirePaddingNewLinesBeforeExport": true

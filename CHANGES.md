@@ -8,6 +8,8 @@ videojs-wavesurfer changelog
 - Fix issue with overriding the HTML5 tech which caused an error on video.js
   players on the same page that don't use the videojs-wavesurfer plugin (#41
   by @mfairchild365)
+- Support setting time using `player.currentTime([seconds])` (#45 by
+  @mfairchild365)
 
 
 2.1.0 - 2017/12/05

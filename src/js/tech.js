@@ -116,7 +116,7 @@ class WavesurferTech extends Html5 {
      */
     setCurrentTime(time) {
         if (!this.playerIsUsingWavesurfer()) {
-            //fall back to html5 tech functionality
+            // fall back to html5 tech functionality
             return super.currentTime(time);
         }
 
@@ -124,7 +124,8 @@ class WavesurferTech extends Html5 {
             return 0;
         }
 
-        return this.activePlayer.activeWavesurferPlugin.surfer.seekTo(time/this.activePlayer.activeWavesurferPlugin.surfer.getDuration());
+        return this.activePlayer.activeWavesurferPlugin.surfer.seekTo(
+            time / this.activePlayer.activeWavesurferPlugin.surfer.getDuration());
     }
 
     /**
