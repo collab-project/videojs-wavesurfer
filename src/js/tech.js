@@ -111,6 +111,7 @@ class WavesurferTech extends Html5 {
     /**
      * Set the current time
      *
+     * @since 2.1.1
      * @param {number} time
      * @returns {*}
      */
@@ -133,6 +134,7 @@ class WavesurferTech extends Html5 {
      * 1.0 represents normal speed and 0.5 would indicate half-speed
      * playback, for instance.
      *
+     * @since 2.1.1
      * @param {number} [rate]
      *       New playback rate to set.
      *

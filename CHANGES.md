@@ -1,7 +1,7 @@
 videojs-wavesurfer changelog
 ============================
 
-2.1.1 - unreleased
+2.1.1 - 2017/12/12
 ------------------
 
 - Added support for changing the playback rate (#43)
