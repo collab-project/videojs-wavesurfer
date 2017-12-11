@@ -107,7 +107,7 @@
     "in-publish": "^2.0.0",
     "jscs": "^3.0.7",
     "jsdoc": "^3.5.5",
-    "moment": "^2.19.3",
+    "moment": "^2.19.4",
     "mv": "^2.1.1",
     "node-sass": "^4.6.1",
     "nodemon": "^1.12.5",
@@ -117,7 +117,7 @@
     "replace": "^0.3.0",
     "serve-static": "^1.13.1",
     "shelljs": "^0.7.8",
-    "uglify-js": "^3.2.1",
+    "uglify-js": "^3.2.2",
     "webpack": "^3.10.0",
     "webrtc-adapter": "^6.0.3",
     "zip-dir": "^1.0.2"

@@ -5,6 +5,7 @@ videojs-wavesurfer changelog
 ------------------
 
 - Added support for changing the playback rate (#43)
+- Added `.videojs-wavesurfer` CSS class (#44 by @eiennosihaisya)
 - Fix issue with overriding the HTML5 tech which caused an error on video.js
   players on the same page that don't use the videojs-wavesurfer plugin (#41
   by @mfairchild365)
