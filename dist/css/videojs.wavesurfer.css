@@ -1,7 +1,7 @@
 /*!
-Default styles for videojs-wavesurfer v2.1.0
+Default styles for videojs-wavesurfer v2.1.1
 */
-.video-js .vjs-control.vjs-fullscreen-control {
+.video-js.videojs-wavesurfer .vjs-control.vjs-fullscreen-control {
   position: absolute;
   right: 0; }
 
@@ -10,29 +10,29 @@ Default styles for videojs-wavesurfer v2.1.0
    controls.
 --------------------------------------------------------------------------------
 */
-.vjs-using-native-controls .vjs-control-bar {
+.videojs-wavesurfer .vjs-using-native-controls .vjs-control-bar {
   display: flex !important; }
 
 /* Ensure playToggle has pointer cursor.
 --------------------------------------------------------------------------------
 */
-button.vjs-play-control.vjs-control.vjs-button {
+.videojs-wavesurfer button.vjs-play-control.vjs-control.vjs-button {
   cursor: pointer; }
 
 /* Ensure that vjs menus and interfaces can be interacted with (such as the
    closed captions button).
 --------------------------------------------------------------------------------
 */
-.vjs-menu-content {
+.videojs-wavesurfer .vjs-menu-content {
   z-index: 1; }
 
-.vjs-modal-dialog, .vjs-text-track-display {
+.videojs-wavesurfer .vjs-modal-dialog, .vjs-text-track-display {
   z-index: 4; }
 
 /* Handle responsive / fluid view.
 --------------------------------------------------------------------------------
 */
-.vjs-fluid wave.vjs-wavedisplay {
+.videojs-wavesurfer.vjs-fluid wave.vjs-wavedisplay {
   top: 0;
   position: absolute !important;
   width: 100%;
