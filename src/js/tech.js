@@ -46,14 +46,21 @@ class WavesurferTech extends Html5 {
     }
 
     /**
-     * Determine whether or not the player is trying use wavesurfer
+     * Determine whether or not the player is trying use the wavesurfer plugin
      * @returns {boolean}
      */
     playerIsUsingWavesurfer()
     {
-        return this.activePlayer.activeWavesurferPlugin !== undefined;
+        let availablePlugins = videojs.getPlugins();
+        let usingWavesurferPlugin = 'wavesurfer' in availablePlugins;
+        let usingRecordPlugin = 'record' in availablePlugins;
+
+        return usingWavesurferPlugin && !usingRecordPlugin;
     }
 
+    /**
+     * Start playback.
+     */
     play() {
         if (!this.playerIsUsingWavesurfer()) {
             // fall back to html5 tech functionality
@@ -63,6 +70,9 @@ class WavesurferTech extends Html5 {
         return this.activePlayer.activeWavesurferPlugin.play();
     }
 
+    /**
+     * Pause playback.
+     */
     pause() {
         if (!this.playerIsUsingWavesurfer()) {
             //fall back to html5 tech functionality

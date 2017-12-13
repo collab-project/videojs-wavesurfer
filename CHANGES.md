@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+2.1.2 - unreleased
+------------------
+
+- Fix compatibility issue with videojs-record plugin (#46)
+
+
 2.1.1 - 2017/12/12
 ------------------
 
