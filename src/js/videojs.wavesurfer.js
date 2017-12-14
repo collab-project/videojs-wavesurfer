@@ -277,16 +277,15 @@ class Wavesurfer extends Plugin {
                 });
 
                 ajax.on('success', (data, e) => {
-                    if (e.target.status == 200) {
-                        this.log('Loading URL: ' + url +
-                            '\nLoading Peak Data URL: ' + peakUrl);
-                        this.surfer.load(url, data.data);
-                    } else {
-                        this.log('Unable to retrieve peak data from ' + peakUrl +
-                            '. Status code: ' + e.target.status);
-                        this.log('Loading URL: ' + url);
-                        this.surfer.load(url);
-                    }
+                    this.log('Loading URL: ' + url +
+                        '\nLoading Peak Data URL: ' + peakUrl);
+                    this.surfer.load(url, data.data);
+                });
+                ajax.on('error', (e) => {
+                    this.log('Unable to retrieve peak data from ' + peakUrl +
+                        '. Status code: ' + e.target.status, 'warn');
+                    this.log('Loading URL: ' + url);
+                    this.surfer.load(url);
                 });
             } else {
                 this.log('Loading URL: ' + url);
