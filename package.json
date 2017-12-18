@@ -86,7 +86,7 @@
   },
   "dependencies": {
     "video.js": ">=6.0.0",
-    "wavesurfer.js": "^2.0.0"
+    "wavesurfer.js": ">=2.0.1"
   },
   "devDependencies": {
     "add-banner": "^0.1.0",
@@ -107,7 +107,7 @@
     "in-publish": "^2.0.0",
     "jscs": "^3.0.7",
     "jsdoc": "^3.5.5",
-    "moment": "^2.19.4",
+    "moment": "^2.20.0",
     "mv": "^2.1.1",
     "node-sass": "^4.6.1",
     "nodemon": "^1.13.3",

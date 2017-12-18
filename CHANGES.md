@@ -4,7 +4,7 @@ videojs-wavesurfer changelog
 2.1.3 - unreleased
 ------------------
 
-- Bump wavesurfer.js version from 2.0.0-beta2 to 2.0.0
+- Bump required wavesurfer.js version to 2.0.1
 
 
 2.1.2 - 2017/12/13
