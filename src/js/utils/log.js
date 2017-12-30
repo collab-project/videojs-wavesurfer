@@ -20,6 +20,6 @@ const log = function(args, logType, debug)
             videojs.log(args);
         }
     }
-}
+};
 
 export default log;
