@@ -1,7 +1,7 @@
 videojs-wavesurfer changelog
 ============================
 
-2.1.4 - unreleased
+2.1.4 - 2018/01/14
 ------------------
 
 - Bump required wavesurfer.js version to 2.0.2 for Chrome volume
