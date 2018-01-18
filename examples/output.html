@@ -6,7 +6,6 @@
 
   <link href="../node_modules/video.js/dist/video-js.min.css" rel="stylesheet">
   <link href="../dist/css/videojs.wavesurfer.css" rel="stylesheet">
-  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
 
   <script src="../node_modules/video.js/dist/video.min.js"></script>
   <script src="../node_modules/wavesurfer.js/dist/wavesurfer.min.js"></script>
@@ -15,7 +14,6 @@
 
   <style>
   body {
-      font-family: 'Roboto', sans-serif;
       font-weight: 300;
   }
 
@@ -80,11 +78,12 @@ player.on('ready', function() {
     if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
         throw new Error('enumerateDevices not supported in this browser.');
     }
-    navigator.mediaDevices.enumerateDevices(this).then(function(d) {
-        devices = d;
+    navigator.mediaDevices.enumerateDevices(this).then(function(result) {
+        devices = result;
 
+        // handle selection changes
         var outputSelector = document.getElementById('selector');
-        outputSelector.addEventListener('change', changeAudioDestination);
+        outputSelector.addEventListener('change', changeAudioOutput);
 
         // populate select options
         var deviceInfo, option;
@@ -122,7 +121,7 @@ player.on('audioOutputReady', function() {
 });
 
 var deviceId;
-function changeAudioDestination(event) {
+function changeAudioOutput(event) {
     deviceId = event.target.value;
     var outputSelector = event.target;
 
