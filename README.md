@@ -138,7 +138,9 @@ Methods for this plugin documented below are available on the `wavesurfer` metho
 of the video.js player instance. For example:
 
 ```javascript
-player.wavesurfer().destroy();
+player.on('ready', function() {
+    player.wavesurfer().destroy();
+});
 ```
 
 | Method | Description |
