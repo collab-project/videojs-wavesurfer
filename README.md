@@ -16,10 +16,9 @@ input](#microphone-plugin).
 Installation
 ------------
 
-You can use [bower](http://bower.io) (`bower install videojs-wavesurfer`) or
-[npm](https://www.npmjs.org) (`npm install videojs-wavesurfer`) to install the
-plugin, or
-[download it here](https://github.com/collab-project/videojs-wavesurfer/releases).
+You can use [npm](https://www.npmjs.org) (`npm install videojs-wavesurfer`) to install the
+plugin, or [download it here](https://github.com/collab-project/videojs-wavesurfer/releases).
+If you want to try the examples, check [these instructions below](#examples).
 
 Since v2.0 this plugin is compatible with video.js 6.0 and wavesurfer.js 2.0 and
 newer. If you want to use this plugin with an older video.js or wavesurfer.js version,
