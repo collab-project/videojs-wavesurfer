@@ -121,7 +121,7 @@ player.on('ready', function() {
 });
 
 player.on('audioOutputReady', function() {
-    console.log('Changed audio output to deviceId', deviceId);
+    console.log('Changed audio output to deviceId:', deviceId);
 });
 
 var deviceId;
@@ -131,7 +131,7 @@ function changeAudioDestination(event) {
 
     try {
         // change audio output device
-        player.wavesurfer().setAudioOutput('123');
+        player.wavesurfer().setAudioOutput(deviceId);
     } catch (error) {
         console.warn(error)
 

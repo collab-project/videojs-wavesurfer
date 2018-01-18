@@ -420,7 +420,7 @@ class Wavesurfer extends Plugin {
             }).catch((err) => {
                 // notify listeners
                 this.player.trigger('error', err);
-    
+
                 this.log(err, 'error');
             });
         }
