@@ -109,7 +109,7 @@ player.on('ready', function() {
             outputSelector.disabled = true;
             console.warn(option.text);
         } else {
-            console.log('Total devices found:', devices.length);
+            console.log('Total output devices found:', outputSelector.length);
         }
     }).catch(function(err) {
         console.error(err);
@@ -134,7 +134,7 @@ function changeAudioOutput(event) {
         // jump back to first output device in the list as it's the default.
         outputSelector.selectedIndex = 0;
     }
-}
+};
 
 // error handling
 player.on('error', function(error) {

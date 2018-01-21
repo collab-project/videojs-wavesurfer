@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Audio Input Example - Wavesurfer Plugin for Video.js</title>
+
+  <link href="../node_modules/video.js/dist/video-js.min.css" rel="stylesheet">
+  <link href="../dist/css/videojs.wavesurfer.css" rel="stylesheet">
+
+  <script src="../node_modules/video.js/dist/video.min.js"></script>
+  <script src="../node_modules/webrtc-adapter/out/adapter.js"></script>
+  <script src="../node_modules/wavesurfer.js/dist/wavesurfer.min.js"></script>
+  <script src="../node_modules/wavesurfer.js/dist/plugin/wavesurfer.microphone.min.js"></script>
+
+  <script src="../dist/videojs.wavesurfer.js"></script>
+
+  <style>
+  body {
+      font-weight: 300;
+  }
+
+  /* change player background color */
+  #myAudio {
+      background-color: #F2E68A;
+  }
+
+  select {
+      margin: 0 0 0.5em 0;
+  }
+
+  .inputSelector {
+      margin-top: 30px;
+  }
+  </style>
+
+</head>
+<body>
+
+<div id="main">
+  <audio id="myAudio" class="video-js vjs-default-skin"></audio>
+
+  <div class="inputSelector">
+    <label>Select audio input: </label>
+    <select id="selector"></select>
+  </div>
+</div>
+
+<hr>
+
+<div>
+    <p>This demo must be run in Chrome 49 or later, Firefox is not supported yet.</p>
+</div>
+
+<script>
+var player, inputSelector;
+var devices = [];
+// fetch input/output devices
+if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+    throw new Error('enumerateDevices not supported in this browser.');
+}
+navigator.mediaDevices.enumerateDevices(this).then(function(result) {
+    devices = result;
+
+    // handle selection changes
+    inputSelector = document.getElementById('selector');
+    inputSelector.addEventListener('change', changeAudioInput);
+
+    // populate select options
+    var deviceInfo, option, i;
+    for (i = 0; i < devices.length; i++) {
+        deviceInfo = devices[i];
+        option = document.createElement('option');
+        option.value = deviceInfo.deviceId;
+
+        if (deviceInfo.kind === 'audioinput') {
+            console.info('Found audio input device: ', deviceInfo.label);
+            option.text = deviceInfo.label || 'speaker ' +
+                (inputSelector.length + 1);
+            inputSelector.appendChild(option);
+        }
+    }
+
+    if (inputSelector.length == 0) {
+        // no input devices found, disable select
+        option = document.createElement('option');
+        option.text = 'No audio input devices found';
+        option.value = undefined;
+        inputSelector.appendChild(option);
+        inputSelector.disabled = true;
+        console.warn(option.text);
+    } else {
+        console.log('Total input devices found:', inputSelector.length);
+    }
+}).catch(function(err) {
+    console.error(err);
+});
+
+var deviceId, constraints;
+var destroyed = false;
+function changeAudioInput(event) {
+    deviceId = event.target.value;
+
+    // hide input select
+    event.target.parentElement.style.visibility = 'hidden';
+
+    // set audio device
+    constraints = {
+        audio: {
+          deviceId: {exact: deviceId}
+        }
+    };
+
+    // instantiate player
+    player = videojs('myAudio', {
+        controls: true,
+        width: 600,
+        height: 300,
+        fluid: false,
+        controlBar: {
+            currentTimeDisplay: false,
+            timeDivider: false,
+            durationDisplay: false,
+            remainingTimeDisplay: false,
+            volumePanel: false
+        },
+        plugins: {
+            wavesurfer: {
+                src: 'live',
+                msDisplayMax: 10,
+                debug: true,
+                waveColor: '#3F4D4B',
+                progressColor: 'black',
+                cursorWidth: 0,
+                interact: false,
+                hideScrollbar: true
+            }
+        }
+    }, function() {
+        // print version information at startup
+        videojs.log('Using video.js', videojs.VERSION,
+            'with videojs-wavesurfer', videojs.getPluginVersion('wavesurfer'));
+    });
+
+    // error handling
+    player.on('error', function(error) {
+        console.log('error:', error);
+    });
+};
+</script>
+
+</body>
+</html>
