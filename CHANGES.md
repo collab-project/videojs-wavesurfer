@@ -4,7 +4,8 @@ videojs-wavesurfer changelog
 2.2.0 - unreleased
 ------------------
 
-- Support for changing audio output device
+- Support for changing audio output device using `setAudioOutput(deviceId)`
+- Added example that shows how to select an audio input device
 
 
 2.1.4 - 2018/01/14
