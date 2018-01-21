@@ -19,13 +19,13 @@
 
   /* change player background color */
   #myAudio {
-      background-color: #8EE8DD;
+      background-color: #AE57B3;
   }
-  
+
   select {
       margin: 0 0 0.5em 0;
   }
-  
+
   .outputSelector {
       margin-top: 30px;
   }
@@ -60,7 +60,7 @@ var player = videojs("myAudio", {
             src: 'media/hal.wav',
             msDisplayMax: 10,
             debug: true,
-            waveColor: '#3F4D4B',
+            waveColor: '#F2E68A',
             progressColor: 'black',
             cursorColor: 'black',
             hideScrollbar: true
@@ -99,7 +99,7 @@ player.on('ready', function() {
                 outputSelector.appendChild(option);
             }
         }
-        
+
         if (outputSelector.length == 0) {
             // no output devices found, disable select
             option = document.createElement('option');
