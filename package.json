@@ -86,7 +86,7 @@
   },
   "dependencies": {
     "video.js": ">=6.0.0",
-    "wavesurfer.js": ">=2.0.2"
+    "wavesurfer.js": ">=2.0.3"
   },
   "devDependencies": {
     "add-banner": "^0.1.0",
@@ -117,7 +117,7 @@
     "replace": "^0.3.0",
     "serve-static": "^1.13.1",
     "shelljs": "^0.8.1",
-    "uglify-js": "^3.3.7",
+    "uglify-js": "^3.3.8",
     "webpack": "^3.10.0",
     "webrtc-adapter": "^6.1.0",
     "zip-dir": "^1.0.2"

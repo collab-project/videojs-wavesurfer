@@ -6,6 +6,7 @@ videojs-wavesurfer changelog
 
 - Support for changing audio output device using `setAudioOutput(deviceId)`
 - Added example that shows how to select an audio input device
+- Bump required wavesurfer.js version to 2.0.3 for setSinkId feature
 
 
 2.1.4 - 2018/01/14
