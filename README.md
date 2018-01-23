@@ -16,10 +16,9 @@ input](#microphone-plugin).
 Installation
 ------------
 
-You can use [bower](http://bower.io) (`bower install videojs-wavesurfer`) or
-[npm](https://www.npmjs.org) (`npm install videojs-wavesurfer`) to install the
-plugin, or
-[download it here](https://github.com/collab-project/videojs-wavesurfer/releases).
+You can use [npm](https://www.npmjs.org) (`npm install videojs-wavesurfer`) to install the
+plugin, or [download it here](https://github.com/collab-project/videojs-wavesurfer/releases).
+If you want to try the examples, check [these instructions below](#examples).
 
 Since v2.0 this plugin is compatible with video.js 6.0 and wavesurfer.js 2.0 and
 newer. If you want to use this plugin with an older video.js or wavesurfer.js version,
@@ -138,7 +137,9 @@ Methods for this plugin documented below are available on the `wavesurfer` metho
 of the video.js player instance. For example:
 
 ```javascript
-player.wavesurfer().destroy();
+player.on('ready', function() {
+    player.wavesurfer().destroy();
+});
 ```
 
 | Method | Description |
@@ -151,6 +152,7 @@ player.wavesurfer().destroy();
 | `getDuration` | Get the length of the stream in seconds. Returns 0 if no stream is available (yet). |
 | `getCurrentTime` | Get the current time (in seconds) of the stream during playback. Returns 0 if no stream is available (yet). |
 | `exportImage(format, quality)` | Save waveform image as data URI. Default format is `'image/png'`. |
+| `setAudioOutput(deviceId)` | Change the audio output device using its [deviceId](https://developer.mozilla.org/en-US/docs/Web/API/MediaDeviceInfo/deviceId). |
 
 Other wavesurfer.js methods
 ---------------------------
@@ -178,6 +180,7 @@ player.on('waveReady', function(event) {
 | --- | --- |
 | `waveReady` | Audio is loaded, decoded and the waveform is drawn. |
 | `playbackFinish` | Audio playback finished. |
+| `audioOutputReady` | Audio output was changed and is now active. |
 | `error` | Error occurred. |
 
 Customizing controls
@@ -267,6 +270,28 @@ The microphone plugin has additional configuration
 See the full `live` example
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/live.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/live.html)).
+
+
+Change audio output or input device
+-----------------------------------
+
+If your device has multiple audio output devices, use `setAudioOutput(deviceId)` to change
+the active audio output device, and listen for the `audioOutputReady` event to be notified
+when the new output device is active.
+
+```javascript
+// change audio output device
+player.wavesurfer().setAudioOutput(deviceId);
+```
+
+See the full `output` example
+([demo](https://collab-project.github.io/videojs-wavesurfer/examples/output.html) or
+[source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/output.html)).
+
+If your device has multiple audio input devices and you want to display
+these devices and allow the user to choose one, check out the the full `input` example
+([demo](https://collab-project.github.io/videojs-wavesurfer/examples/input.html) or
+[source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/input.html)).
 
 
 Using with React

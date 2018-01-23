@@ -408,6 +408,25 @@ class Wavesurfer extends Plugin {
     }
 
     /**
+     * Change the audio output device.
+     *
+     * @param {string} sinkId - Id of audio output device.
+     */
+    setAudioOutput(deviceId) {
+        if (deviceId) {
+            this.surfer.setSinkId(deviceId).then((result) => {
+                // notify listeners
+                this.player.trigger('audioOutputReady');
+            }).catch((err) => {
+                // notify listeners
+                this.player.trigger('error', err);
+
+                this.log(err, 'error');
+            });
+        }
+    }
+
+    /**
      * Get the current time (in seconds) of the stream during playback.
      *
      * Returns 0 if no stream is available (yet).
