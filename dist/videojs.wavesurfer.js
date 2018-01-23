@@ -1,6 +1,6 @@
 /**
  * videojs-wavesurfer
- * @version 2.1.4
+ * @version 2.2.0
  * @see https://github.com/collab-project/videojs-wavesurfer
  * @copyright 2014-2018 Collab
  * @license MIT
@@ -837,6 +837,30 @@ var Wavesurfer = function (_Plugin) {
         }
 
         /**
+         * Change the audio output device.
+         *
+         * @param {string} sinkId - Id of audio output device.
+         */
+
+    }, {
+        key: 'setAudioOutput',
+        value: function setAudioOutput(deviceId) {
+            var _this3 = this;
+
+            if (deviceId) {
+                this.surfer.setSinkId(deviceId).then(function (result) {
+                    // notify listeners
+                    _this3.player.trigger('audioOutputReady');
+                }).catch(function (err) {
+                    // notify listeners
+                    _this3.player.trigger('error', err);
+
+                    _this3.log(err, 'error');
+                });
+            }
+        }
+
+        /**
          * Get the current time (in seconds) of the stream during playback.
          *
          * Returns 0 if no stream is available (yet).
@@ -959,7 +983,7 @@ var Wavesurfer = function (_Plugin) {
     }, {
         key: 'onWaveFinish',
         value: function onWaveFinish() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.log('Finished playback');
 
@@ -985,8 +1009,8 @@ var Wavesurfer = function (_Plugin) {
                 // seeks so that we can change the replay button back to a play
                 // button
                 this.surfer.once('seek', function () {
-                    _this3.player.controlBar.playToggle.removeClass('vjs-ended');
-                    _this3.player.trigger('pause');
+                    _this4.player.controlBar.playToggle.removeClass('vjs-ended');
+                    _this4.player.trigger('pause');
                 });
             }
         }
@@ -1076,32 +1100,32 @@ var Wavesurfer = function (_Plugin) {
     }, {
         key: 'onScreenChange',
         value: function onScreenChange() {
-            var _this4 = this;
+            var _this5 = this;
 
             // execute with tiny delay so the player element completes
             // rendering and correct dimensions are reported
             var fullscreenDelay = this.player.setInterval(function () {
-                var isFullscreen = _this4.player.isFullscreen();
+                var isFullscreen = _this5.player.isFullscreen();
                 var newWidth = void 0,
                     newHeight = void 0;
                 if (!isFullscreen) {
                     // restore original dimensions
-                    newWidth = _this4.originalWidth;
-                    newHeight = _this4.originalHeight;
+                    newWidth = _this5.originalWidth;
+                    newHeight = _this5.originalHeight;
                 }
 
-                if (_this4.waveReady) {
-                    if (_this4.liveMode && !_this4.surfer.microphone.active) {
+                if (_this5.waveReady) {
+                    if (_this5.liveMode && !_this5.surfer.microphone.active) {
                         // we're in live mode but the microphone hasn't been
                         // started yet
                         return;
                     }
                     // redraw
-                    _this4.redrawWaveform(newWidth, newHeight);
+                    _this5.redrawWaveform(newWidth, newHeight);
                 }
 
                 // stop fullscreenDelay interval
-                _this4.player.clearInterval(fullscreenDelay);
+                _this5.player.clearInterval(fullscreenDelay);
             }, 100);
         }
 
@@ -1174,7 +1198,7 @@ var Wavesurfer = function (_Plugin) {
 // version nr gets replaced during build
 
 
-Wavesurfer.VERSION = '2.1.4';
+Wavesurfer.VERSION = '2.2.0';
 
 // register plugin
 _video2.default.Wavesurfer = Wavesurfer;
