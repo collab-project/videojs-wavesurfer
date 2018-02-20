@@ -74,6 +74,7 @@ class Wavesurfer extends Plugin {
      * Player UI is ready: customize controls.
      */
     initialize() {
+        this.player.tech_.setActivePlayer(this.player);
         this.player.bigPlayButton.hide();
 
         // the native controls don't work for this UI so disable

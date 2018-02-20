@@ -21,10 +21,12 @@ class WavesurferTech extends Html5 {
         options.nativeTextTracks = false;
 
         super(options, ready);
+    }
 
+    setActivePlayer(player) {
         // we need the player instance so that we can access the current
         // wavesurfer plugin attached to that player
-        this.activePlayer = videojs(options.playerId);
+        this.activePlayer = player;
         this.waveready = false;
 
         // track when wavesurfer is fully initialized (ready)
