@@ -8,6 +8,12 @@
       <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
       <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 
+      <script>
+      // disable analytics tracking (note: used in vjs.zencdn.net CDN-hosted version
+      // of video.js only, see https://github.com/videojs/video.js#quick-start)
+      window.HELP_IMPROVE_VIDEOJS = false;
+      </script>
+
       <link href="//vjs.zencdn.net/6.6.0/video-js.min.css" rel="stylesheet">
       <link href="../../dist/css/videojs.wavesurfer.css" rel="stylesheet">
 
