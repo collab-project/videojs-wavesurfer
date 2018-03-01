@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+2.2.2 - unreleased
+------------------
+
+- Add ability to pass array of peaks data to `load` (#52)
+
+
 2.2.1 - 2018/02/20
 ------------------
 
