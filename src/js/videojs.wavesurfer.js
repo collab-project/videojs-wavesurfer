@@ -272,10 +272,15 @@ class Wavesurfer extends Plugin {
         } else {
             // load peak data from file
             if (peakUrl !== undefined) {
-                let ajax = WaveSurfer.util.ajax({
+                let ajaxOptions = {
                     url: peakUrl,
                     responseType: 'json'
-                });
+                };
+                // supply xhr options, if any
+                if (this.player.options_.plugins.wavesurfer.xhr !== undefined) {
+                    ajaxOptions.xhr = this.player.options_.plugins.wavesurfer.xhr;
+                }
+                let ajax = WaveSurfer.util.ajax(ajaxOptions);
 
                 ajax.on('success', (data, e) => {
                     this.log('Loading URL: ' + url +
