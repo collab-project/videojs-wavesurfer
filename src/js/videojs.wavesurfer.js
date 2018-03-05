@@ -263,32 +263,46 @@ class Wavesurfer extends Plugin {
      *
      * @param {string|blob|file} url - Either the URL of the audio file,
      *     a Blob or a File object.
-     * @param {string} peakUrl - The URL of peak data for the audio file.
+     * @param {string|?number[]|number[][]} peaks - Either the URL of peaks
+     *     data for the audio file, or an array with peaks data.
      */
-    load(url, peakUrl) {
+    load(url, peaks) {
         if (url instanceof Blob || url instanceof File) {
             this.log('Loading object: ' + JSON.stringify(url));
             this.surfer.loadBlob(url);
         } else {
             // load peak data from file
-            if (peakUrl !== undefined) {
-                let ajax = WaveSurfer.util.ajax({
-                    url: peakUrl,
-                    responseType: 'json'
-                });
-
-                ajax.on('success', (data, e) => {
-                    this.log('Loading URL: ' + url +
-                        '\nLoading Peak Data URL: ' + peakUrl);
-                    this.surfer.load(url, data.data);
-                });
-                ajax.on('error', (e) => {
-                    this.log('Unable to retrieve peak data from ' + peakUrl +
-                        '. Status code: ' + e.target.status, 'warn');
+            if (peaks !== undefined) {
+                if (Array.isArray(peaks)) {
+                    // use supplied peaks data
                     this.log('Loading URL: ' + url);
-                    this.surfer.load(url);
-                });
+                    this.surfer.load(url, peaks);
+                } else {
+                    // load peak data from file
+                    let ajaxOptions = {
+                        url: peaks,
+                        responseType: 'json'
+                    };
+                    // supply xhr options, if any
+                    if (this.player.options_.plugins.wavesurfer.xhr !== undefined) {
+                        ajaxOptions.xhr = this.player.options_.plugins.wavesurfer.xhr;
+                    }
+                    let ajax = WaveSurfer.util.ajax(ajaxOptions);
+
+                    ajax.on('success', (data, e) => {
+                        this.log('Loading URL: ' + url +
+                            '\nLoading Peak Data URL: ' + peaks);
+                        this.surfer.load(url, data.data);
+                    });
+                    ajax.on('error', (e) => {
+                        this.log('Unable to retrieve peak data from ' + peaks +
+                            '. Status code: ' + e.target.status, 'warn');
+                        this.log('Loading URL: ' + url);
+                        this.surfer.load(url);
+                    });
+                }
             } else {
+                // no peaks
                 this.log('Loading URL: ' + url);
                 this.surfer.load(url);
             }
