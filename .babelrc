@@ -6,16 +6,16 @@
       },
       "debug": false
     }]
-  ]
+  ],
   "env": {
       "test": {
         "plugins": [
           ["istanbul", {
             "exclude": [
-            "test/spec/**/*.spec.js"
+              "test/spec/**/*.spec.js"
           ]
         }]
-      ]    
+      ]
     }
   }
 }

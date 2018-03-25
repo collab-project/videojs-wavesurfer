@@ -1,5 +1,3 @@
-/* eslint-env jasmine */
-
 import pluginDefaultOptions from '../../es5/defaults.js';
 
 /** @test {defaults} */
