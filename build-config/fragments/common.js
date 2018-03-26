@@ -14,6 +14,9 @@ var bannerPlugin = new webpack.BannerPlugin(
 ${pckg.homepage}
 @license ${pckg.license}`
 );
+var replaceVersionPlugin = new webpack.DefinePlugin({
+  '__VERSION__': JSON.stringify(pckg.version)
+});
 
 module.exports = {
     context: path.resolve(__dirname, '../', '../'),
@@ -42,5 +45,5 @@ module.exports = {
             }
         ]
     },
-    plugins: [bannerPlugin]
+    plugins: [bannerPlugin, replaceVersionPlugin]
 };

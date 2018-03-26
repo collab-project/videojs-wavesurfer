@@ -728,8 +728,8 @@ class Wavesurfer extends Plugin {
     }
 }
 
-// version nr gets replaced during build
-Wavesurfer.VERSION = 'dev';
+// version nr is injected during build
+Wavesurfer.VERSION = __VERSION__;
 
 // register plugin
 videojs.Wavesurfer = Wavesurfer;
