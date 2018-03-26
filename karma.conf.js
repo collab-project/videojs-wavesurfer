@@ -12,9 +12,13 @@ module.exports = function(config) {
         frameworks: ['jasmine', 'jasmine-matchers'],
         hostname: 'localhost',
         port: 9876,
+        logLevel: 'WARN',
         singleRun: true,
         autoWatch: false,
         files: [
+            // source
+            'src/js/**/*.js',
+
             // demo audio file
             {
                 pattern: 'test/spec/support/demo.wav',
