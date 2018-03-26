@@ -22,6 +22,11 @@ module.exports = function(config) {
                 served: true
             },
 
+            // dependencies
+            'node_modules/video.js/dist/video.js',
+            'node_modules/video.js/dist/video-js.css',
+            'node_modules/wavesurfer.js/dist/wavesurfer.js',
+
             // specs
             'test/**/*.spec.js'
         ],
