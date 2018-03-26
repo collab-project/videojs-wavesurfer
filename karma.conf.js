@@ -4,6 +4,7 @@ process.env.BABEL_ENV = 'test';
 
 require('babel-register');
 //var webpackConfig = require('./build-config/webpack.prod.main.js');
+var webpackConfig = require('./webpack_config.js');
 
 module.exports = function(config) {
     var configuration = {
@@ -51,7 +52,7 @@ module.exports = function(config) {
             type: 'html',
             dir: 'coverage/'
         },
-        //webpack: webpackConfig,
+        webpack: webpackConfig,
         customLaunchers: {
             Chrome_travis_ci: {
                 base: 'Chrome',
