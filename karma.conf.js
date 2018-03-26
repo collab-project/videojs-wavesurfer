@@ -3,8 +3,7 @@
 process.env.BABEL_ENV = 'test';
 
 require('babel-register');
-//var webpackConfig = require('./build-config/webpack.prod.main.js');
-var webpackConfig = require('./webpack_config.js');
+var webpackConfig = require('./build-config/webpack.prod.main.js');
 
 module.exports = function(config) {
     var configuration = {
@@ -12,13 +11,9 @@ module.exports = function(config) {
         frameworks: ['jasmine', 'jasmine-matchers'],
         hostname: 'localhost',
         port: 9876,
-        logLevel: 'WARN',
         singleRun: true,
         autoWatch: false,
         files: [
-            // source
-            'src/js/**/*.js',
-
             // demo audio file
             {
                 pattern: 'test/spec/support/demo.wav',
@@ -32,8 +27,8 @@ module.exports = function(config) {
             'test/spec/utils.spec.js'
         ],
         preprocessors: {
-            'test/spec/defaults.spec.js': ['webpack'],
-            'test/spec/utils.spec.js': ['webpack'],
+            'test/spec/*.spec.js': ['webpack'],
+
             // source files, that you want to generate coverage for
             // do not include tests or libraries
             'src/js/**/*.js': ['coverage']

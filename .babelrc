@@ -7,6 +7,7 @@
       "debug": false
     }]
   ],
+  "plugins": ["add-module-exports"],
   "env": {
       "test": {
         "plugins": [
