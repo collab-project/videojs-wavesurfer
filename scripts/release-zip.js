@@ -1,5 +1,5 @@
 /**
- * Update version in file.
+ * Build zip file from latest Github release.
  *
  * @file release-zip.js
  * @since 2.0.1
@@ -53,36 +53,28 @@ del([targetDirUnpacked, targetDirRenamed], {force: true, dryRun: false}).then(pa
                 console.log('Copied dist to release target directory.');
                 console.log();
 
-                copydir('es5', path.join(targetDirUnpacked, 'es5'), function(err) {
+                // copy docs
+                copydir('docs', path.join(targetDirUnpacked, 'docs'), function(err) {
                     if (err){
                         console.log(err);
                     } else {
-                        console.log('Copied es5 to release target directory.');
+                        console.log('Copied docs to release target directory.');
                         console.log();
 
-                        copydir('docs', path.join(targetDirUnpacked, 'docs'), function(err) {
-                            if (err){
-                                console.log(err);
-                            } else {
-                                console.log('Copied docs to release target directory.');
+                        // remove version nr from dir
+                        mv(targetDirUnpacked, targetDirRenamed, function(err) {
+                            // done. it tried fs.rename first, and then falls back to
+                            // piping the source file to the dest file and then unlinking
+                            // the source file.
+                            console.log('Renamed directory to', targetDirRenamed);
+                            console.log();
+
+                            zipdir(targetDirRenamed, { saveTo: zipName }, function (err, buffer) {
+                                console.log('Zipped directory to', zipName);
                                 console.log();
 
-                                // remove version nr from dir
-                                mv(targetDirUnpacked, targetDirRenamed, function(err) {
-                                    // done. it tried fs.rename first, and then falls back to
-                                    // piping the source file to the dest file and then unlinking
-                                    // the source file.
-                                    console.log('Renamed directory to', targetDirRenamed);
-                                    console.log();
-
-                                    zipdir(targetDirRenamed, { saveTo: zipName }, function (err, buffer) {
-                                        console.log('Zipped directory to', zipName);
-                                        console.log();
-
-                                        console.log('Done!');
-                                    });
-                                });
-                            }
+                                console.log('Done!');
+                            });
                         });
                     }
                 });
