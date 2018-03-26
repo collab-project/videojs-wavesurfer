@@ -23,10 +23,12 @@ module.exports = function(config) {
             },
 
             // specs
-            'test/spec/util.spec.js',
+            'test/spec/defaults.spec.js',
+            'test/spec/utils.spec.js'
         ],
         preprocessors: {
-            'test/spec/util.spec.js': ['webpack'],
+            'test/spec/defaults.spec.js': ['webpack'],
+            'test/spec/utils.spec.js': ['webpack'],
             // source files, that you want to generate coverage for
             // do not include tests or libraries
             'src/js/**/*.js': ['coverage']

@@ -1,4 +1,4 @@
-import pluginDefaultOptions from '../../es5/defaults.js';
+import pluginDefaultOptions from '../../src/js/defaults.js';
 
 /** @test {defaults} */
 describe('defaults:', function() {
