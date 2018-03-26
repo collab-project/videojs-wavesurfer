@@ -16,18 +16,17 @@ module.exports = function(config) {
         files: [
             // demo audio file
             {
-                pattern: 'test/spec/support/demo.wav',
+                pattern: 'test/support/demo.wav',
                 included: false,
                 watched: false,
                 served: true
             },
 
             // specs
-            'test/spec/defaults.spec.js',
-            'test/spec/utils.spec.js'
+            'test/**/*.spec.js',
         ],
         preprocessors: {
-            'test/spec/*.spec.js': ['webpack'],
+            'test/**/*.spec.js': ['webpack'],
 
             // source files, that you want to generate coverage for
             // do not include tests or libraries
