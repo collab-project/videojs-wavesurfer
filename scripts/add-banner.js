@@ -12,7 +12,6 @@ var banner = require('add-banner');
 var argvAutoGlob = require('argv-auto-glob');
 
 var CSS = '.css';
-var JS = '.js';
 var infile, fpath, result;
 var pjson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 
@@ -34,14 +33,6 @@ process.argv.slice(2).forEach(function(fpath) {
         });
         fs.writeFile(fpath, result);
 
-    } else if (fpath.endsWith(JS)) {
-        // javascript
-        result = banner(infile, {
-            banner: path.resolve('scripts', 'banner.ejs'),
-            pkg: pjson,
-            moment: moment
-        });
-        fs.writeFile(fpath, result);
     }
     console.info('Added banner to ' + fpath + ' with version ' + pjson.version);
 });
