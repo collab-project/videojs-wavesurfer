@@ -1,6 +1,5 @@
 import formatTime from '../src/js/utils/format-time.js';
-
-import Wavesurfer from '../src/js/videojs.wavesurfer.js';
+import log from '../src/js/utils/log.js';
 
 /** @test {format-time} */
 describe('format-time:', function() {
@@ -44,5 +43,27 @@ describe('format-time:', function() {
         let time = formatTime(-2);
 
         expect(time).toEqual('0:00');
+    });
+});
+
+/** @test {log} */
+describe('log:', function() {
+
+    /** @test {log} */
+    it('log does not work when debug is false', function() {
+        let test = log('foo', 'error', false);
+        expect(test).toBeUndefined();
+    });
+
+    /** @test {log} */
+    it('log only works when debug is true', function() {
+        let test = log('foo', 'error', true);
+        expect(test).toBeUndefined();
+        
+        test = log('foo', 'warn', true);
+        expect(test).toBeUndefined();
+        
+        test = log('foo', 'bar', true);
+        expect(test).toBeUndefined();
     });
 });
