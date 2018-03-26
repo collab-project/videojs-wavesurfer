@@ -23,7 +23,7 @@ module.exports = function(config) {
             },
 
             // specs
-            'test/**/*.spec.js',
+            'test/**/*.spec.js'
         ],
         preprocessors: {
             'test/**/*.spec.js': ['webpack'],
