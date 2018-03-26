@@ -1,3 +1,7 @@
+/**
+ * @since 2.3.0
+ */
+
 import formatTime from '../src/js/utils/format-time.js';
 import log from '../src/js/utils/log.js';
 

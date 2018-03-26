@@ -1,3 +1,7 @@
+/**
+ * @since 2.3.0
+ */
+
 import pluginDefaultOptions from '../src/js/defaults.js';
 
 /** @test {defaults} */

@@ -1,4 +1,7 @@
-/* eslint-env node */
+/**
+ * @file dev.js
+ * @since 2.3.0
+ */
 
 const path = require('path');
 

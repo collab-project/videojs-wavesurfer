@@ -1,4 +1,6 @@
-/* eslint-env node */
+/**
+ * @since 2.3.0
+ */
 
 const path = require('path');
 const webpack = require('webpack');

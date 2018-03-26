@@ -22,6 +22,9 @@ module.exports = function(config) {
                 served: true
             },
 
+            // style
+            'dist/css/videojs.wavesurfer.css',
+
             // dependencies
             'node_modules/video.js/dist/video.js',
             'node_modules/video.js/dist/video-js.css',
