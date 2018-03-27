@@ -37,6 +37,7 @@ describe('Wavesurfer', function() {
     };
 
     beforeEach(function() {
+        // cleanup all players
         for (const playerId in Player.players) {
             if (Player.players[playerId] !== null) {
               Player.players[playerId].dispose();
@@ -87,13 +88,76 @@ describe('Wavesurfer', function() {
         });
     });
 
-    /** @test {Wavesurfer#getDuration} */
-    it('should return duration', function(done) {
+    /** @test {Wavesurfer#getCurrentTime} */
+    it('should get current time', function(done) {
+        player.on('playbackFinish', function() {
+            expect(player.wavesurfer().getCurrentTime()).toEqual(WAVE_DURATION);
 
+            done();
+        });
+        player.on('waveReady', function() {
+            // initially 0
+            expect(player.wavesurfer().getCurrentTime()).toEqual(0);
+
+            // start playback until end
+            player.wavesurfer().play();
+        });
+    });
+
+    /** @test {Wavesurfer#setCurrentTime} */
+    it('should set current time', function(done) {
         player.on('waveReady', function() {
 
-            expect(player.wavesurfer().getDuration()).toBe(WAVE_DURATION);
-            
+            expect(player.wavesurfer().getCurrentTime()).toEqual(0);
+            player.wavesurfer().setCurrentTime(0.21);
+
+            // only updates player visually
+            expect(player.controlBar.currentTimeDisplay.formattedTime_).toEqual('0:00:210');
+
+            done();
+        });
+    });
+
+    /** @test {Wavesurfer#getDuration} */
+    it('should get duration', function(done) {
+        player.on('waveReady', function() {
+
+            expect(player.wavesurfer().getDuration()).toEqual(WAVE_DURATION);
+
+            done();
+        });
+    });
+
+    /** @test {Wavesurfer#setDuration} */
+    it('should set duration', function(done) {
+        player.on('waveReady', function() {
+
+            expect(player.wavesurfer().getDuration()).toEqual(WAVE_DURATION);
+            player.wavesurfer().setDuration(0.1);
+
+            // only updates player visually
+            expect(player.controlBar.durationDisplay.formattedTime_).toEqual('0:00:100');
+
+            done();
+        });
+    });
+
+    /** @test {Wavesurfer#exportImage} */
+    it('should export image', function(done) {
+        player.on('waveReady', function() {
+
+            // default to png
+            let data = player.wavesurfer().exportImage();
+            expect(data).toStartWith('data:image/png;base64,');
+
+            // webp
+            data = player.wavesurfer().exportImage('image/webp');
+            expect(data).toStartWith('data:image/webp;base64,');
+
+            // jpeg
+            data = player.wavesurfer().exportImage('image/jpeg');
+            expect(data).toStartWith('data:image/jpeg;base64,');
+
             done();
         });
     });
