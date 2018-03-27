@@ -48,12 +48,13 @@ module.exports = function(config) {
             'karma-jasmine',
             'karma-jasmine-matchers',
             'karma-chrome-launcher',
-            'karma-coverage'
+            'karma-coverage',
+            'karma-verbose-reporter'
         ],
         browsers: ['Chrome'],
         captureConsole: true,
         colors: true,
-        reporters: ['progress', 'coverage'],
+        reporters: ['verbose', 'progress', 'coverage'],
         coverageReporter: {
             type: 'html',
             dir: 'coverage/'
