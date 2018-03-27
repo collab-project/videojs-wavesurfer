@@ -22,6 +22,14 @@ module.exports = function(config) {
                 served: true
             },
 
+            // demo vtt file
+            {
+                pattern: 'test/support/demo.vtt',
+                included: false,
+                watched: false,
+                served: true
+            },
+
             // style
             'dist/css/videojs.wavesurfer.css',
 

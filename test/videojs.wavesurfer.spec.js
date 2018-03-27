@@ -4,8 +4,7 @@
 
 import TestHelpers from './test-helpers.js';
 
-import Player from 'video.js';
-
+// registers the plugin
 import Wavesurfer from '../src/js/videojs.wavesurfer.js';
 
 
@@ -16,37 +15,12 @@ describe('Wavesurfer', function() {
     var player;
     var WAVE_DURATION = 0.782312925170068;
 
-    var defaultOptions = {
-        controls: true,
-        autoplay: false,
-        fluid: false,
-        loop: false,
-        width: 600,
-        height: 300,
-        plugins: {
-            wavesurfer: {
-                src: '/base/test/support/demo.wav',
-                msDisplayMax: 10,
-                debug: true,
-                waveColor: 'grey',
-                progressColor: 'black',
-                cursorColor: 'black',
-                hideScrollbar: true
-            }
-        }
-    };
-
     beforeEach(function() {
         // cleanup all players
-        for (const playerId in Player.players) {
-            if (Player.players[playerId] !== null) {
-              Player.players[playerId].dispose();
-            }
-            delete Player.players[playerId];
-        }
+        TestHelpers.cleanup();
 
         // create new player
-        player = TestHelpers.makePlayer(defaultOptions);
+        player = TestHelpers.makePlayer();
     });
 
     /** @test {Wavesurfer} */
