@@ -5,10 +5,10 @@
 import pluginDefaultOptions from '../src/js/defaults.js';
 
 /** @test {defaults} */
-describe('defaults:', function() {
+describe('pluginDefaultOptions', function() {
 
     /** @test {pluginDefaultOptions} */
-    it('pluginDefaultOptions returns a non-empty object', function() {
+    it('returns a non-empty object', function() {
         expect(pluginDefaultOptions).toBeNonEmptyObject();
     });
 });

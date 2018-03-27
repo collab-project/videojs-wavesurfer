@@ -8,6 +8,7 @@ const TestHelpers = {
     makeTag() {
         const audioTag = document.createElement('audio');
         audioTag.id = 'myAudio';
+        audioTag.muted = true;
         audioTag.className = 'video-js vjs-default-skin';
         audioTag.style = 'background-color: #F2E68A;';
 
@@ -20,7 +21,17 @@ const TestHelpers = {
         // add to dom
         document.getElementsByTagName('body')[0].appendChild(audioTag);
 
+        playerOptions = playerOptions || {};
+
         return videojs(audioTag.id, playerOptions);
+    },
+
+    getComputedStyle(el, rule) {
+        if (document.defaultView && document.defaultView.getComputedStyle) {
+          return document.defaultView.getComputedStyle(el, null).getPropertyValue(rule);
+        }
+
+        return '';
     }
 };
 
