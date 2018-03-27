@@ -64,11 +64,11 @@
   "devDependencies": {
     "add-banner": "^0.1.0",
     "argv-auto-glob": "^1.0.1",
-    "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-istanbul": "^4.1.5",
     "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
     "clean-css-cli": "^4.1.11",
     "copy-dir": "^0.3.0",
     "del": "^3.0.0",
