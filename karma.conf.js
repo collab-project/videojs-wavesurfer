@@ -29,6 +29,7 @@ module.exports = function(config) {
             'node_modules/video.js/dist/video.js',
             'node_modules/video.js/dist/video-js.css',
             'node_modules/wavesurfer.js/dist/wavesurfer.js',
+            'node_modules/wavesurfer.js/dist/plugin/wavesurfer.microphone.js',
 
             // specs
             'test/**/*.spec.js'

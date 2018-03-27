@@ -44,6 +44,8 @@ describe('Wavesurfer', function() {
             }
             delete Player.players[playerId];
         }
+
+        // create new player
         player = TestHelpers.makePlayer(defaultOptions);
     });
 
@@ -55,8 +57,11 @@ describe('Wavesurfer', function() {
             expect(player.on).toBeFunction();
             expect(player.hasClass('videojs-wavesurfer')).toBeTrue();
 
-            let version = require('../package.json').version;
+            // plugin exists
             expect(videojs.getPlugin('wavesurfer')).toBeFunction();
+
+            // plugin version number is correct
+            let version = require('../package.json').version;
             expect(videojs.getPluginVersion('wavesurfer')).toEqual(version);
 
             done();
@@ -109,12 +114,12 @@ describe('Wavesurfer', function() {
         player.one('waveReady', function() {
 
             expect(player.wavesurfer().getCurrentTime()).toEqual(0);
-            player.wavesurfer().setCurrentTime(0.21);
+            player.wavesurfer().setCurrentTime(0.123);
 
             // only updates player visually
-            expect(player.controlBar.currentTimeDisplay.formattedTime_).toEqual('0:00:210');
+            expect(player.controlBar.currentTimeDisplay.formattedTime_).toEqual('0:00:123');
 
-            // invalid values results in 0
+            // invalid values result in 0
             player.wavesurfer().setCurrentTime('foo', 'bar');
             expect(player.controlBar.currentTimeDisplay.formattedTime_).toEqual('0:00');
 
@@ -142,9 +147,26 @@ describe('Wavesurfer', function() {
             // only updates player visually
             expect(player.controlBar.durationDisplay.formattedTime_).toEqual('0:00:100');
 
-            // invalid values results in 0
+            // invalid values result in 0
             player.wavesurfer().setDuration('foo');
             expect(player.controlBar.durationDisplay.formattedTime_).toEqual('0:00');
+
+            done();
+        });
+    });
+    
+    /** @test {Wavesurfer#setVolume} */
+    it('should set volume', function(done) {
+        player.one('waveReady', function() {
+
+            expect(player.volume()).toEqual(0);
+            
+            // invalid values are ignored
+            player.wavesurfer().setVolume();
+            expect(player.volume()).toEqual(0);
+
+            player.wavesurfer().setVolume(0.1);
+            expect(player.volume()).toEqual(0.1);
 
             done();
         });
@@ -194,6 +216,37 @@ describe('Wavesurfer', function() {
 
             // start playback until end
             player.wavesurfer().play();
+        });
+    });
+
+    /** @test {Wavesurfer#onWaveSeek} */
+    it('should seek', function(done) {
+
+        player.one('waveReady', function() {
+            expect(player.wavesurfer().getCurrentTime()).toEqual(0);
+
+            // seek
+            player.wavesurfer().surfer.seekTo(0.5);
+            expect(player.wavesurfer().getCurrentTime()).toBeGreaterThan(0);
+
+            done();
+        });
+    });
+
+    /** @test {Wavesurfer#onPlayToggle} */
+    it('should toggle play', function(done) {
+
+        player.one('waveReady', function() {
+            // pause button initially
+            expect(player.controlBar.playToggle.hasClass('vjs-playing')).toBeFalse();
+
+            // trigger click event
+            TestHelpers.triggerDomEvent(player.controlBar.playToggle.el(), 'click');
+
+            // now play button
+            expect(player.controlBar.playToggle.hasClass('vjs-playing')).toBeTrue();
+
+            done();
         });
     });
 });

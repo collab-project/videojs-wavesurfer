@@ -26,12 +26,30 @@ const TestHelpers = {
         return videojs(audioTag.id, playerOptions);
     },
 
-    getComputedStyle(el, rule) {
-        if (document.defaultView && document.defaultView.getComputedStyle) {
-          return document.defaultView.getComputedStyle(el, null).getPropertyValue(rule);
+    /**
+     * Triggers an event on a DOM node natively.
+     *
+     * @param  {Element} element
+     * @param  {string} eventType
+     */
+    triggerDomEvent(element, eventType) {
+        let event;
+
+        if (document.createEvent) {
+            event = document.createEvent('HTMLEvents');
+            event.initEvent(eventType, true, true);
+        } else {
+            event = document.createEventObject();
+            event.eventType = eventType;
         }
 
-        return '';
+        event.eventName = eventType;
+
+        if (document.createEvent) {
+            element.dispatchEvent(event);
+        } else {
+            element.fireEvent('on' + event.eventType, event);
+        }
     }
 };
 
