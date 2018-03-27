@@ -4,6 +4,7 @@
 
 import TestHelpers from './test-helpers.js';
 
+
 /** @test {WavesurferTech} */
 describe('WavesurferTech', function() {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
@@ -15,12 +16,8 @@ describe('WavesurferTech', function() {
         // cleanup all players
         TestHelpers.cleanup();
 
-        const tag = document.createElement('audio');
-        tag.id = 'myAudioTextTracks';
-        tag.muted = true;
-        tag.className = 'video-js vjs-default-skin';
-        tag.style = 'background-color: #F2E68A;';
-        
+        // create audio element with text track
+        const tag = TestHelpers.makeTag('audio', 'myAudioTextTracks');
         const track = document.createElement('track');
         track.kind = 'captions';
         track.src = '/base/test/support/demo.vtt';
@@ -33,11 +30,40 @@ describe('WavesurferTech', function() {
     });
 
     /** @test {WavesurferTech} */
-    it('should display text tracks UI', function(done) {
+    it('works', function(done) {
 
         player.one('waveReady', function() {
+            // initially 0
+            expect(player.tech_.currentTime()).toEqual(0);
+            expect(player.tech_.duration()).toEqual(0);
+
+            // override waveready for test
+            expect(player.tech_.waveready).toBeFalse();
+            player.tech_.waveready = true;
+
+            // native text tracks are not allowed
+            expect(player.tech_.options_.nativeTextTracks).toBeFalse();
+
             // text tracks UI is visible
             expect(player.controlBar.subsCapsButton.hasClass('vjs-hidden')).toBeFalse();
+
+            // active player is available
+            expect(player.tech_.activePlayer).toBeDefined();
+            expect(player.tech_.activePlayer).toEqual(player);
+
+            // change current time
+            player.tech_.setCurrentTime(0.4);
+            expect(player.tech_.currentTime()).toEqual(0.4);
+
+            // duration
+            expect(player.tech_.duration()).toEqual(WAVE_DURATION);
+
+            // switch playback
+            player.tech_.play();
+            player.tech_.pause();
+
+            // text track is present
+            expect(player.textTracks().length).toEqual(1);
 
             done();
         });

@@ -1,8 +1,11 @@
-/* eslint-env node */
+/**
+ * @since 2.3.0
+ */
 
 process.env.BABEL_ENV = 'test';
 
 require('babel-register');
+
 var webpackConfig = require('./build-config/webpack.prod.main.js');
 
 module.exports = function(config) {
@@ -14,17 +17,9 @@ module.exports = function(config) {
         singleRun: true,
         autoWatch: false,
         files: [
-            // demo audio file
+            // demo files
             {
-                pattern: 'test/support/demo.wav',
-                included: false,
-                watched: false,
-                served: true
-            },
-
-            // demo vtt file
-            {
-                pattern: 'test/support/demo.vtt',
+                pattern: 'test/support/*',
                 included: false,
                 watched: false,
                 served: true

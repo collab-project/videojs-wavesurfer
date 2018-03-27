@@ -54,6 +54,9 @@ const TestHelpers = {
         return videojs(elementTag.id, playerOptions);
     },
 
+    /**
+     * Dispose all players.
+     */
     cleanup() {
         for (const playerId in Player.players) {
             if (Player.players[playerId] !== null) {
