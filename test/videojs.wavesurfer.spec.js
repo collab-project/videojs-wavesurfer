@@ -49,8 +49,8 @@ describe('Wavesurfer', function() {
 
     /** @test {Wavesurfer} */
     it('should be an advanced plugin instance', function(done) {
-        player.on('ready', function() {
 
+        player.one('ready', function() {
             expect(player.el().nodeName).toEqual('DIV');
             expect(player.on).toBeFunction();
             expect(player.hasClass('videojs-wavesurfer')).toBeTrue();
@@ -66,8 +66,8 @@ describe('Wavesurfer', function() {
     /** @test {Wavesurfer#play} */
     it('should play', function(done) {
 
-        player.on('playbackFinish', done);
-        player.on('waveReady', function() {
+        player.one('playbackFinish', done);
+        player.one('waveReady', function() {
             // start playback
             player.wavesurfer().play();
         });
@@ -76,7 +76,7 @@ describe('Wavesurfer', function() {
     /** @test {Wavesurfer#pause} */
     it('should pause', function(done) {
 
-        player.on('waveReady', function() {
+        player.one('waveReady', function() {
             // start playback
             player.wavesurfer().play();
 
@@ -90,12 +90,12 @@ describe('Wavesurfer', function() {
 
     /** @test {Wavesurfer#getCurrentTime} */
     it('should get current time', function(done) {
-        player.on('playbackFinish', function() {
+        player.one('playbackFinish', function() {
             expect(player.wavesurfer().getCurrentTime()).toEqual(WAVE_DURATION);
 
             done();
         });
-        player.on('waveReady', function() {
+        player.one('waveReady', function() {
             // initially 0
             expect(player.wavesurfer().getCurrentTime()).toEqual(0);
 
@@ -106,7 +106,7 @@ describe('Wavesurfer', function() {
 
     /** @test {Wavesurfer#setCurrentTime} */
     it('should set current time', function(done) {
-        player.on('waveReady', function() {
+        player.one('waveReady', function() {
 
             expect(player.wavesurfer().getCurrentTime()).toEqual(0);
             player.wavesurfer().setCurrentTime(0.21);
@@ -114,13 +114,17 @@ describe('Wavesurfer', function() {
             // only updates player visually
             expect(player.controlBar.currentTimeDisplay.formattedTime_).toEqual('0:00:210');
 
+            // invalid values results in 0
+            player.wavesurfer().setCurrentTime('foo', 'bar');
+            expect(player.controlBar.currentTimeDisplay.formattedTime_).toEqual('0:00');
+
             done();
         });
     });
 
     /** @test {Wavesurfer#getDuration} */
     it('should get duration', function(done) {
-        player.on('waveReady', function() {
+        player.one('waveReady', function() {
 
             expect(player.wavesurfer().getDuration()).toEqual(WAVE_DURATION);
 
@@ -130,7 +134,7 @@ describe('Wavesurfer', function() {
 
     /** @test {Wavesurfer#setDuration} */
     it('should set duration', function(done) {
-        player.on('waveReady', function() {
+        player.one('waveReady', function() {
 
             expect(player.wavesurfer().getDuration()).toEqual(WAVE_DURATION);
             player.wavesurfer().setDuration(0.1);
@@ -138,13 +142,17 @@ describe('Wavesurfer', function() {
             // only updates player visually
             expect(player.controlBar.durationDisplay.formattedTime_).toEqual('0:00:100');
 
+            // invalid values results in 0
+            player.wavesurfer().setDuration('foo');
+            expect(player.controlBar.durationDisplay.formattedTime_).toEqual('0:00');
+
             done();
         });
     });
 
     /** @test {Wavesurfer#exportImage} */
     it('should export image', function(done) {
-        player.on('waveReady', function() {
+        player.one('waveReady', function() {
 
             // default to png
             let data = player.wavesurfer().exportImage();
@@ -159,6 +167,33 @@ describe('Wavesurfer', function() {
             expect(data).toStartWith('data:image/jpeg;base64,');
 
             done();
+        });
+    });
+
+    /** @test {Wavesurfer#onWaveReady} */
+    it('should fire waveReady event', function(done) {
+
+        player.one('waveReady', function() {
+            // play button is initially hidden
+            expect(player.controlBar.playToggle.hasClass('vjs-hidden')).toBeTrue();
+
+            expect(player.wavesurfer().waveReady).toBeTrue();
+            expect(player.wavesurfer().waveFinished).toBeFalse();
+            expect(player.wavesurfer().liveMode).toBeFalse();
+
+            done();
+        });
+    });
+
+    /** @test {Wavesurfer#onWaveFinish} */
+    it('should fire playbackFinish event', function(done) {
+
+        player.one('playbackFinish', done);
+        player.one('waveReady', function() {
+            expect(player.wavesurfer().waveFinished).toBeFalse();
+
+            // start playback until end
+            player.wavesurfer().play();
         });
     });
 });
