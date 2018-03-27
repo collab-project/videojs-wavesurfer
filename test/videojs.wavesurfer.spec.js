@@ -197,6 +197,7 @@ describe('Wavesurfer', function() {
     it('should seek', function(done) {
 
         player.one('waveReady', function() {
+            // initially 0
             expect(player.wavesurfer().getCurrentTime()).toEqual(0);
 
             // seek
@@ -211,13 +212,16 @@ describe('Wavesurfer', function() {
     it('should toggle play', function(done) {
 
         player.one('waveReady', function() {
-            // pause button initially
+            // display end of clip icon
+            player.controlBar.playToggle.addClass('vjs-ended');
+
+            // pause button initially visible
             expect(player.controlBar.playToggle.hasClass('vjs-playing')).toBeFalse();
 
-            // trigger click event
+            // trigger click event on playToggle button
             TestHelpers.triggerDomEvent(player.controlBar.playToggle.el(), 'click');
 
-            // now play button
+            // enabled the vjs-playing class
             expect(player.controlBar.playToggle.hasClass('vjs-playing')).toBeTrue();
 
             done();
