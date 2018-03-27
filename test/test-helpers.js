@@ -8,6 +8,9 @@ import Player from 'video.js';
 
 
 const TestHelpers = {
+    /**
+     * Create DOM element.
+     */
     makeTag(tag_type, id_name) {
         if (tag_type === undefined) {
             tag_type = 'audio';
@@ -24,6 +27,9 @@ const TestHelpers = {
         return tag;
     },
 
+    /**
+     * Create a test player containing the videojs-wavesurfer plugin.
+     */
     makePlayer(elementTag, playerOptions) {
         elementTag = elementTag || TestHelpers.makeTag();
 
