@@ -144,6 +144,11 @@ class Wavesurfer extends Plugin {
         this.player.on('volumechange', this.onVolumeChange.bind(this));
         this.player.on('fullscreenchange', this.onScreenChange.bind(this));
 
+        // make sure volume is muted when requested
+        if (this.player.muted()) {
+            this.setVolume(0);
+        }
+
         // video.js fluid option
         if (this.player.options_.fluid === true) {
             // give wave element a classname so it can be styled
