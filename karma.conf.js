@@ -14,6 +14,7 @@ module.exports = function(config) {
         frameworks: ['jasmine', 'jasmine-matchers'],
         hostname: 'localhost',
         port: 9876,
+        logLevel: config.LOG_INFO,
         singleRun: true,
         autoWatch: false,
         files: [
@@ -55,7 +56,7 @@ module.exports = function(config) {
             'karma-coverage',
             'karma-verbose-reporter'
         ],
-        browsers: ['Chrome'],
+        browsers: ['ChromeHeadless'],
         captureConsole: true,
         colors: true,
         reporters: ['verbose', 'progress', 'coverage'],
@@ -67,7 +68,9 @@ module.exports = function(config) {
         customLaunchers: {
             Chrome_travis_ci: {
                 base: 'Chrome',
-                flags: ['--no-sandbox']
+                flags: [
+                    '--no-sandbox'
+                ]
             }
         }
     };
