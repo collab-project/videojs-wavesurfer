@@ -8,6 +8,10 @@ import Player from 'video.js';
 
 
 const TestHelpers = {
+
+    /** Length of test audio clip */
+    WAVE_DURATION: 0.782312925170068,
+
     /**
      * Create DOM element.
      */

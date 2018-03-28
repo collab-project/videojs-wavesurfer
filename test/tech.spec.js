@@ -10,7 +10,6 @@ describe('WavesurferTech', function() {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
     var player;
-    var WAVE_DURATION = 0.782312925170068;
 
     beforeEach(function() {
         // cleanup all players
@@ -30,13 +29,9 @@ describe('WavesurferTech', function() {
     });
 
     /** @test {WavesurferTech} */
-    it('works', function(done) {
+    it('should display interface elements', function(done) {
 
         player.one('waveReady', function() {
-            // initially 0
-            expect(player.tech_.currentTime()).toEqual(0);
-            expect(player.tech_.duration()).toEqual(0);
-
             // override waveready for test
             expect(player.tech_.waveready).toBeFalse();
             player.tech_.waveready = true;
@@ -51,19 +46,76 @@ describe('WavesurferTech', function() {
             expect(player.tech_.activePlayer).toBeDefined();
             expect(player.tech_.activePlayer).toEqual(player);
 
+            // text track is present
+            expect(player.textTracks().length).toEqual(1);
+
+            done();
+        });
+    });
+
+    /** @test {WavesurferTech#setCurrentTime} */
+    it('should get and set current time', function(done) {
+
+        player.one('waveReady', function() {
+            let newTime = 0.4;
+            // initially 0
+            expect(player.tech_.currentTime()).toEqual(0);
+            
+            // as long as waveready is false, setting it will return 0
+            expect(player.tech_.setCurrentTime(newTime)).toEqual(0);
+
+            // override waveready for test
+            player.tech_.waveready = true;
+
             // change current time
-            player.tech_.setCurrentTime(0.4);
-            expect(player.tech_.currentTime()).toEqual(0.4);
+            player.tech_.setCurrentTime(newTime);
+            expect(player.tech_.currentTime()).toEqual(newTime);
+
+            done();
+        });
+    });
+
+    /** @test {WavesurferTech#duration} */
+    it('should get and set duration', function(done) {
+
+        player.one('waveReady', function() {
+            // initially 0
+            expect(player.tech_.duration()).toEqual(0);
+
+            // override waveready for test
+            player.tech_.waveready = true;
 
             // duration
-            expect(player.tech_.duration()).toEqual(WAVE_DURATION);
+            expect(player.tech_.duration()).toEqual(TestHelpers.WAVE_DURATION);
+
+            done();
+        });
+    });
+
+    /** @test {WavesurferTech#duration} */
+    it('should play and pause', function(done) {
+
+        player.one('waveReady', function() {
+            // override waveready for test
+            player.tech_.waveready = true;
 
             // switch playback
             player.tech_.play();
             player.tech_.pause();
 
-            // text track is present
-            expect(player.textTracks().length).toEqual(1);
+            done();
+        });
+    });
+
+    /** @test {WavesurferTech#setPlaybackRate} */
+    it('should set playbackrate', function(done) {
+
+        player.one('waveReady', function() {
+            let rate = 0.5;
+            player.tech_.setPlaybackRate(rate);
+            expect(
+                player.tech_.activePlayer.activeWavesurferPlugin.surfer.getPlaybackRate()
+            ).toEqual(rate);
 
             done();
         });

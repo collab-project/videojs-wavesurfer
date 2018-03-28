@@ -13,7 +13,6 @@ describe('Wavesurfer', function() {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
     var player;
-    var WAVE_DURATION = 0.782312925170068;
 
     beforeEach(function() {
         // cleanup all players
@@ -70,7 +69,7 @@ describe('Wavesurfer', function() {
     /** @test {Wavesurfer#getCurrentTime} */
     it('should get current time', function(done) {
         player.one('playbackFinish', function() {
-            expect(player.wavesurfer().getCurrentTime()).toEqual(WAVE_DURATION);
+            expect(player.wavesurfer().getCurrentTime()).toEqual(TestHelpers.WAVE_DURATION);
 
             done();
         });
@@ -105,7 +104,7 @@ describe('Wavesurfer', function() {
     it('should get duration', function(done) {
         player.one('waveReady', function() {
 
-            expect(player.wavesurfer().getDuration()).toEqual(WAVE_DURATION);
+            expect(player.wavesurfer().getDuration()).toEqual(TestHelpers.WAVE_DURATION);
 
             done();
         });
@@ -115,7 +114,7 @@ describe('Wavesurfer', function() {
     it('should set duration', function(done) {
         player.one('waveReady', function() {
 
-            expect(player.wavesurfer().getDuration()).toEqual(WAVE_DURATION);
+            expect(player.wavesurfer().getDuration()).toEqual(TestHelpers.WAVE_DURATION);
             player.wavesurfer().setDuration(0.1);
 
             // only updates player visually

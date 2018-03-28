@@ -1,6 +1,13 @@
 videojs-wavesurfer changelog
 ============================
 
+2.3.0 - unreleased
+------------------
+
+- Package library using webpack (#55)
+- Add unit tests using karma/webpack/jasmine (#55)
+
+
 2.2.2 - 2018/03/06
 ------------------
 
