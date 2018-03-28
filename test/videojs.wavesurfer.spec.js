@@ -67,7 +67,8 @@ describe('Wavesurfer', function() {
     /** @test {Wavesurfer#getCurrentTime} */
     it('should get current time', function(done) {
         player.one('playbackFinish', function() {
-            expect(player.wavesurfer().getCurrentTime()).toEqual(TestHelpers.WAVE_DURATION);
+            expect(player.wavesurfer().getCurrentTime()).toEqual(
+                TestHelpers.EXAMPLE_AUDIO_DURATION);
 
             done();
         });
@@ -102,7 +103,8 @@ describe('Wavesurfer', function() {
     it('should get duration', function(done) {
         player.one('waveReady', function() {
 
-            expect(player.wavesurfer().getDuration()).toEqual(TestHelpers.WAVE_DURATION);
+            expect(player.wavesurfer().getDuration()).toEqual(
+                TestHelpers.EXAMPLE_AUDIO_DURATION);
 
             done();
         });
@@ -112,7 +114,8 @@ describe('Wavesurfer', function() {
     it('should set duration', function(done) {
         player.one('waveReady', function() {
 
-            expect(player.wavesurfer().getDuration()).toEqual(TestHelpers.WAVE_DURATION);
+            expect(player.wavesurfer().getDuration()).toEqual(
+                TestHelpers.EXAMPLE_AUDIO_DURATION);
             player.wavesurfer().setDuration(0.1);
 
             // only updates player visually
@@ -224,4 +227,15 @@ describe('Wavesurfer', function() {
             done();
         });
     });
+
+    /** @test {Wavesurfer#setupPlaybackEvents} */
+    it('should setup playback events', function(done) {
+
+        player.one('waveReady', function() {
+            player.wavesurfer().setupPlaybackEvents(false);
+
+            done();
+        });
+    });
+
 });

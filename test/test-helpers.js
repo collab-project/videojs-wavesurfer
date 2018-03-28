@@ -9,8 +9,11 @@ import Player from 'video.js';
 
 const TestHelpers = {
 
-    /** Length of test audio clip */
-    WAVE_DURATION: 0.782312925170068,
+    /** Example audio clip */
+    EXAMPLE_AUDIO_FILE: '/base/test/support/demo.wav',
+
+    /** Length of example audio clip */
+    EXAMPLE_AUDIO_DURATION: 0.782312925170068,
 
     /**
      * Create DOM element.
@@ -53,7 +56,7 @@ const TestHelpers = {
             height: 300,
             plugins: {
                 wavesurfer: {
-                    src: '/base/test/support/demo.wav',
+                    src: this.EXAMPLE_AUDIO_FILE,
                     msDisplayMax: 10,
                     debug: false,
                     waveColor: 'blue',
@@ -73,7 +76,7 @@ const TestHelpers = {
     cleanup() {
         for (const playerId in Player.players) {
             if (Player.players[playerId] !== null) {
-              Player.players[playerId].dispose();
+                Player.players[playerId].dispose();
             }
             delete Player.players[playerId];
         }
