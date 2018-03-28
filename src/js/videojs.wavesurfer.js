@@ -74,7 +74,10 @@ class Wavesurfer extends Plugin {
      * Player UI is ready: customize controls.
      */
     initialize() {
+        // setup tech
         this.player.tech_.setActivePlayer(this.player);
+
+        // hide big play button
         this.player.bigPlayButton.hide();
 
         // the native controls don't work for this UI so disable
@@ -143,6 +146,11 @@ class Wavesurfer extends Plugin {
         // video.js player events
         this.player.on('volumechange', this.onVolumeChange.bind(this));
         this.player.on('fullscreenchange', this.onScreenChange.bind(this));
+
+        // make sure volume is muted when requested
+        if (this.player.muted()) {
+            this.setVolume(0);
+        }
 
         // video.js fluid option
         if (this.player.options_.fluid === true) {
@@ -728,8 +736,8 @@ class Wavesurfer extends Plugin {
     }
 }
 
-// version nr gets replaced during build
-Wavesurfer.VERSION = 'dev';
+// version nr is injected during build
+Wavesurfer.VERSION = __VERSION__;
 
 // register plugin
 videojs.Wavesurfer = Wavesurfer;
