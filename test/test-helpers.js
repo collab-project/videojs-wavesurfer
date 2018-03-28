@@ -33,6 +33,9 @@ const TestHelpers = {
 
     /**
      * Create a test player containing the videojs-wavesurfer plugin.
+     * 
+     * @param  {Element|String} elementTag
+     * @param  {Object} playerOptions
      */
     makePlayer(elementTag, playerOptions) {
         elementTag = elementTag || TestHelpers.makeTag();
@@ -52,7 +55,7 @@ const TestHelpers = {
                 wavesurfer: {
                     src: '/base/test/support/demo.wav',
                     msDisplayMax: 10,
-                    debug: true,
+                    debug: false,
                     waveColor: 'blue',
                     progressColor: 'black',
                     cursorColor: 'black',

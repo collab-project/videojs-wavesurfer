@@ -7,8 +7,6 @@ import TestHelpers from './test-helpers.js';
 
 /** @test {WavesurferTech} */
 describe('WavesurferTech', function() {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
-
     var player;
 
     beforeEach(function() {

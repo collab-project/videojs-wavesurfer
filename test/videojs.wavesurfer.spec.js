@@ -10,8 +10,6 @@ import Wavesurfer from '../src/js/videojs.wavesurfer.js';
 
 /** @test {Wavesurfer} */
 describe('Wavesurfer', function() {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
-
     var player;
 
     beforeEach(function() {
