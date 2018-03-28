@@ -28,7 +28,7 @@ process.argv.slice(2).forEach(function(fpath) {
     if (fpath.endsWith(CSS)) {
         // CSS
         result = banner(infile, {
-            banner: path.resolve('scripts', 'banner.css'),
+            banner: path.resolve(__dirname, 'banner.css'),
             pkg: pjson
         });
         fs.writeFile(fpath, result);

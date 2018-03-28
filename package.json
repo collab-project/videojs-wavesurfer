@@ -29,7 +29,7 @@
     "build:css": "npm-run-all -s build:css:sass build:css:compress build:css:banner",
     "build:css:sass": "node-sass --include-path src/css src/css/videojs.wavesurfer.scss dist/css/videojs.wavesurfer.css",
     "build:css:compress": "cleancss -o dist/css/videojs.wavesurfer.min.css dist/css/videojs.wavesurfer.css",
-    "build:css:banner": "node scripts/add-banner.js dist/css/*.css",
+    "build:css:banner": "node build-config/scripts/add-banner.js dist/css/*.css",
     "docs": "npm-run-all docs:*",
     "docs:api": "jsdoc src/js -r -d docs/api",
     "lint": "npm-run-all lint:*",
@@ -45,7 +45,7 @@
     "dist/",
     "src/",
     "test/",
-    "scripts/"
+    "build-config/"
   ],
   "keywords": [
     "waveform",
