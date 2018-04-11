@@ -382,15 +382,15 @@ class Wavesurfer extends Plugin {
      * @private
      */
     dispose() {
-        if (this.liveMode && this.surfer.microphone) {
-            // destroy microphone plugin
-            this.surfer.microphone.destroy();
-            this.log('Destroyed microphone plugin');
+        if (this.surfer) {
+            if (this.liveMode && this.surfer.microphone) {
+                // destroy microphone plugin
+                this.surfer.microphone.destroy();
+                this.log('Destroyed microphone plugin');
+            }
+            // destroy wavesurfer instance
+            this.surfer.destroy();
         }
-
-        // destroy wavesurfer instance
-        this.surfer.destroy();
-
         this.log('Destroyed plugin');
     }
 
