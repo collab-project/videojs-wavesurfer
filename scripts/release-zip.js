@@ -12,7 +12,7 @@ var path = require('path');
 var zipdir = require('zip-dir');
 var copydir = require('copy-dir');
 var download = require('download-tarball');
-var pjson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+var pjson = JSON.parse(fs.readFileSync(path.resolve('node_modules', 'videojs-wavesurfer', 'package.json'), 'utf8'));
 
 var version = pjson.version;
 var url = 'https://github.com/collab-project/videojs-wavesurfer/archive/' + version + '.tar.gz';
@@ -22,6 +22,9 @@ var dirNameWithVersion = dirName + '-' + version;
 var targetDirRenamed = path.join(targetDir, dirName);
 var targetDirUnpacked = path.join(targetDir, dirNameWithVersion);
 var zipName = dirNameWithVersion + '.zip';
+
+console.log('Version:', version);
+console.log();
 
 // clean old dir
 del([targetDirUnpacked, targetDirRenamed], {force: true, dryRun: false}).then(paths => {
@@ -46,37 +49,27 @@ del([targetDirUnpacked, targetDirRenamed], {force: true, dryRun: false}).then(pa
         console.log();
 
         // copy dist
-        copydir('dist', path.join(targetDirUnpacked, 'dist'), function(err) {
+        copydir('node_modules/videojs-wavesurfer/dist', path.join(targetDirUnpacked, 'dist'), function(err) {
             if (err){
                 console.log(err);
             } else {
                 console.log('Copied dist to release target directory.');
                 console.log();
 
-                // copy docs
-                copydir('docs', path.join(targetDirUnpacked, 'docs'), function(err) {
-                    if (err){
-                        console.log(err);
-                    } else {
-                        console.log('Copied docs to release target directory.');
+                // remove version nr from dir
+                mv(targetDirUnpacked, targetDirRenamed, function(err) {
+                    // done. it tried fs.rename first, and then falls back to
+                    // piping the source file to the dest file and then unlinking
+                    // the source file.
+                    console.log('Renamed directory to', targetDirRenamed);
+                    console.log();
+
+                    zipdir(targetDirRenamed, { saveTo: zipName }, function (err, buffer) {
+                        console.log('Zipped directory to', zipName);
                         console.log();
 
-                        // remove version nr from dir
-                        mv(targetDirUnpacked, targetDirRenamed, function(err) {
-                            // done. it tried fs.rename first, and then falls back to
-                            // piping the source file to the dest file and then unlinking
-                            // the source file.
-                            console.log('Renamed directory to', targetDirRenamed);
-                            console.log();
-
-                            zipdir(targetDirRenamed, { saveTo: zipName }, function (err, buffer) {
-                                console.log('Zipped directory to', zipName);
-                                console.log();
-
-                                console.log('Done!');
-                            });
-                        });
-                    }
+                        console.log('Done!');
+                    });
                 });
             }
         });
