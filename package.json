@@ -18,9 +18,9 @@
     "url": "git+https://github.com/collab-project/videojs-wavesurfer.git"
   },
   "dependencies": {
-    "video.js": "^6.6.3",
-    "videojs-wavesurfer": "^2.2.2",
-    "webrtc-adapter": "^6.1.1"
+    "video.js": "^6.8.0",
+    "videojs-wavesurfer": "^2.3.0",
+    "webrtc-adapter": "^6.1.5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -33,7 +33,7 @@
     "htmlhint": "^0.9.13",
     "in-publish": "^2.0.0",
     "mv": "^2.1.1",
-    "nodemon": "^1.17.1",
+    "nodemon": "^1.17.3",
     "npm-run-all": "^4.1.2",
     "portscanner": "^2.1.1",
     "serve-static": "^1.13.2",
