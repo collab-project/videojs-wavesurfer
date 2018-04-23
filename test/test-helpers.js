@@ -58,7 +58,7 @@ const TestHelpers = {
                 wavesurfer: {
                     src: this.EXAMPLE_AUDIO_FILE,
                     msDisplayMax: 10,
-                    debug: false,
+                    debug: true,
                     waveColor: 'blue',
                     progressColor: 'black',
                     cursorColor: 'black',

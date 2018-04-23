@@ -8,6 +8,11 @@ require('babel-register');
 
 var webpackConfig = require('./build-config/webpack.prod.main.js');
 
+var chromeFlags = [
+    '--no-sandbox',
+    '--use-fake-ui-for-media-stream'
+];
+
 module.exports = function(config) {
     var configuration = {
         basePath: '',
@@ -15,7 +20,7 @@ module.exports = function(config) {
         hostname: 'localhost',
         port: 9876,
         logLevel: config.LOG_INFO,
-        singleRun: true,
+        singleRun: true,  // enable for headless testing
         autoWatch: false,
         files: [
             // demo files
@@ -27,11 +32,11 @@ module.exports = function(config) {
             },
 
             // style
+            'node_modules/video.js/dist/video-js.css',
             'dist/css/videojs.wavesurfer.css',
 
             // dependencies
             'node_modules/video.js/dist/video.js',
-            'node_modules/video.js/dist/video-js.css',
             'node_modules/wavesurfer.js/dist/wavesurfer.js',
             'node_modules/wavesurfer.js/dist/plugin/wavesurfer.microphone.js',
 
@@ -56,7 +61,7 @@ module.exports = function(config) {
             'karma-coverage',
             'karma-verbose-reporter'
         ],
-        browsers: ['ChromeHeadless'],
+        browsers: ['Chrome_dev'],
         captureConsole: true,
         colors: true,
         reporters: ['verbose', 'progress', 'coverage'],
@@ -66,11 +71,13 @@ module.exports = function(config) {
         },
         webpack: webpackConfig,
         customLaunchers: {
-            Chrome_travis_ci: {
+            Chrome_dev: {
                 base: 'Chrome',
-                flags: [
-                    '--no-sandbox'
-                ]
+                flags: chromeFlags
+            },
+            Chrome_travis_ci: {
+                base: 'ChromeHeadless',
+                flags: chromeFlags
             }
         }
     };
