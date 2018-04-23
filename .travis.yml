@@ -8,7 +8,6 @@ node_js:
 install:
   - npm prune
   - npm install
-  - npm update
 script:
   - npm run lint
   - npm run build
