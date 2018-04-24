@@ -15,6 +15,10 @@ var chromeFlags = [
     '--use-file-for-fake-audio-capture=test/support/demo.wav',
     '--autoplay-policy=no-user-gesture-required'
 ];
+var firefoxFlags = {
+    'media.navigator.permission.disabled': true,
+    'media.navigator.streams.fake': true
+};
 
 module.exports = function(config) {
     var configuration = {
@@ -86,16 +90,17 @@ module.exports = function(config) {
             },
             Firefox_dev: {
                 base: 'Firefox',
-                prefs: {
-                    'media.navigator.permission.disabled': true,
-                    'media.navigator.streams.fake': true
-                }
-            }
+                prefs: firefoxFlags
+            },
+            Firefox_travis_ci: {
+                base: 'FirefoxNightly',
+                prefs: firefoxFlags
+            },
         }
     };
 
     if (process.env.TRAVIS) {
-        configuration.browsers = ['Firefox_dev', 'Chrome_travis_ci'];
+        configuration.browsers = ['Firefox_travis_ci', 'Chrome_travis_ci'];
         configuration.singleRun = true;
 
         // enable coveralls
