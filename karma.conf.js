@@ -66,7 +66,7 @@ module.exports = function(config) {
             'karma-coveralls',
             'karma-verbose-reporter'
         ],
-        browsers: ['Chrome_dev'],
+        browsers: ['Firefox_dev', 'Chrome_dev'],
         captureConsole: true,
         colors: true,
         reporters: ['verbose', 'progress', 'coverage'],
@@ -86,9 +86,9 @@ module.exports = function(config) {
             },
             Firefox_dev: {
                 base: 'Firefox',
-                /*flags: [
+                flags: [
                     '-headless'
-                ],*/
+                ],
                 prefs: {
                     'media.navigator.permission.disabled': true
                 }
