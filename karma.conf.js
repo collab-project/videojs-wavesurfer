@@ -86,9 +86,6 @@ module.exports = function(config) {
             },
             Firefox_dev: {
                 base: 'Firefox',
-                flags: [
-                    '-headless'
-                ],
                 prefs: {
                     'media.navigator.permission.disabled': true,
                     'media.navigator.streams.fake': true
