@@ -70,7 +70,7 @@
     "jasmine-core": "^3.1.0",
     "jscs": "^3.0.7",
     "jsdoc": "^3.5.5",
-    "karma": "^2.0.0",
+    "karma": "^2.0.2",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.1",
     "karma-coveralls": "^1.1.2",
