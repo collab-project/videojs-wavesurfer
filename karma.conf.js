@@ -90,7 +90,8 @@ module.exports = function(config) {
                     '-headless'
                 ],
                 prefs: {
-                    'media.navigator.permission.disabled': true
+                    'media.navigator.permission.disabled': true,
+                    'media.navigator.streams.fake': true
                 }
             }
         }
