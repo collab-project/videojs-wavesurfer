@@ -4,7 +4,7 @@ env:
   - MOZ_HEADLESS=1
 addons:
   chrome: stable
-  firefox: latest
+  firefox: latest-nightly
 language: node_js
 node_js:
   - 'node'
