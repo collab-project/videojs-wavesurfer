@@ -91,16 +91,12 @@ module.exports = function(config) {
             Firefox_dev: {
                 base: 'Firefox',
                 prefs: firefoxFlags
-            },
-            Firefox_travis_ci: {
-                base: 'FirefoxNightly',
-                prefs: firefoxFlags
-            },
+            }
         }
     };
 
     if (process.env.TRAVIS) {
-        configuration.browsers = ['Firefox_travis_ci', 'Chrome_travis_ci'];
+        configuration.browsers = ['Chrome_travis_ci'];
         configuration.singleRun = true;
 
         // enable coveralls
