@@ -164,7 +164,7 @@ describe('Wavesurfer', function() {
 
             // webp
             data = player.wavesurfer().exportImage('image/webp');
-            expect(data).toStartWith('data:image/webp;base64,');
+            expect(data).toStartWith('data:image');
 
             // jpeg
             data = player.wavesurfer().exportImage('image/jpeg');

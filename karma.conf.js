@@ -61,6 +61,7 @@ module.exports = function(config) {
             'karma-jasmine',
             'karma-jasmine-matchers',
             'karma-chrome-launcher',
+            'karma-firefox-launcher',
             'karma-coverage',
             'karma-coveralls',
             'karma-verbose-reporter'
@@ -82,12 +83,21 @@ module.exports = function(config) {
             Chrome_travis_ci: {
                 base: 'ChromeHeadless',
                 flags: chromeFlags
+            },
+            Firefox_dev: {
+                base: 'Firefox',
+                flags: [
+                    '-headless'
+                ],
+                prefs: {
+                    'media.navigator.permission.disabled': true
+                }
             }
         }
     };
 
     if (process.env.TRAVIS) {
-        configuration.browsers = ['Chrome_travis_ci'];
+        configuration.browsers = ['Firefox_dev', 'Chrome_travis_ci'];
         configuration.singleRun = true;
 
         // enable coveralls
