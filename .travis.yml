@@ -2,7 +2,7 @@ sudo: false
 dist: trusty
 addons:
   chrome: stable
-  firefox: stable
+  firefox: latest
 language: node_js
 node_js:
   - 'node'
