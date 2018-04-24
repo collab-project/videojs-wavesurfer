@@ -6,15 +6,11 @@ import window from 'global/window';
 
 import TestHelpers from './test-helpers.js';
 
-
 /** @test {Wavesurfer} */
 describe('Wavesurfer Fluid', function() {
     var player;
 
     beforeEach(function() {
-        // cleanup all players
-        TestHelpers.cleanup();
-
         // create new player
         let options = {
             controls: true,
@@ -32,13 +28,20 @@ describe('Wavesurfer Fluid', function() {
                 }
             }
         };
-        player = TestHelpers.makePlayer(undefined, options);
+        var tag = TestHelpers.makeTag('audio', 'fluidAudio');
+        player = TestHelpers.makePlayer(tag, options);
+    });
+
+    afterEach(function() {
+        // delete player
+        player.dispose();
     });
 
     /** @test {Wavesurfer#redrawWaveform} */
     it('should redraw waveform', function(done) {
         player.one('waveReady', function() {
             player.wavesurfer().redrawWaveform(100, 200);
+
             done();
         });
     });

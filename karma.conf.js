@@ -10,7 +10,10 @@ var webpackConfig = require('./build-config/webpack.prod.main.js');
 
 var chromeFlags = [
     '--no-sandbox',
-    '--use-fake-ui-for-media-stream'
+    '--use-fake-device-for-media-stream',
+    '--use-fake-ui-for-media-stream',
+    '--use-file-for-fake-audio-capture=test/support/demo.wav',
+    '--autoplay-policy=no-user-gesture-required'
 ];
 
 module.exports = function(config) {
@@ -20,7 +23,7 @@ module.exports = function(config) {
         hostname: 'localhost',
         port: 9876,
         logLevel: config.LOG_INFO,
-        singleRun: true,  // enable for headless testing
+        singleRun: true,
         autoWatch: false,
         files: [
             // demo files

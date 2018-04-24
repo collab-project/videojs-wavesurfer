@@ -70,6 +70,28 @@ const TestHelpers = {
         return videojs(elementTag.id, playerOptions);
     },
 
+    makeLivePlayer() {
+        var tag = TestHelpers.makeTag('audio', 'liveAudio');
+        return this.makePlayer(tag, {
+            controls: true,
+            autoplay: false,
+            fluid: false,
+            loop: false,
+            width: 600,
+            height: 300,
+            plugins: {
+                wavesurfer: {
+                    src: 'live',
+                    waveColor: 'black',
+                    debug: true,
+                    cursorWidth: 0,
+                    interact: false,
+                    hideScrollbar: true
+                }
+            }
+        });
+    },
+
     /**
      * Dispose all players.
      */

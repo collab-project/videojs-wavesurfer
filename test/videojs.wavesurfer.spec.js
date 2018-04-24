@@ -4,7 +4,7 @@
 
 import TestHelpers from './test-helpers.js';
 
-// registers the plugin
+// registers the plugin (once)
 import Wavesurfer from '../src/js/videojs.wavesurfer.js';
 
 
@@ -13,11 +13,13 @@ describe('Wavesurfer', function() {
     var player;
 
     beforeEach(function() {
-        // cleanup all players
-        TestHelpers.cleanup();
-
         // create new player
         player = TestHelpers.makePlayer();
+    });
+
+    afterEach(function() {
+        // delete player
+        player.dispose();
     });
 
     /** @test {Wavesurfer} */
@@ -66,12 +68,13 @@ describe('Wavesurfer', function() {
 
     /** @test {Wavesurfer#getCurrentTime} */
     it('should get current time', function(done) {
+
         player.one('playbackFinish', function() {
             expect(player.wavesurfer().getCurrentTime()).toEqual(
                 TestHelpers.EXAMPLE_AUDIO_DURATION);
-
             done();
         });
+
         player.one('waveReady', function() {
             // initially 0
             expect(player.wavesurfer().getCurrentTime()).toEqual(0);
@@ -83,6 +86,7 @@ describe('Wavesurfer', function() {
 
     /** @test {Wavesurfer#setCurrentTime} */
     it('should set current time', function(done) {
+
         player.one('waveReady', function() {
 
             expect(player.wavesurfer().getCurrentTime()).toEqual(0);
@@ -101,6 +105,7 @@ describe('Wavesurfer', function() {
 
     /** @test {Wavesurfer#getDuration} */
     it('should get duration', function(done) {
+
         player.one('waveReady', function() {
 
             expect(player.wavesurfer().getDuration()).toEqual(
@@ -112,6 +117,7 @@ describe('Wavesurfer', function() {
 
     /** @test {Wavesurfer#setDuration} */
     it('should set duration', function(done) {
+
         player.one('waveReady', function() {
 
             expect(player.wavesurfer().getDuration()).toEqual(
@@ -131,6 +137,7 @@ describe('Wavesurfer', function() {
     
     /** @test {Wavesurfer#setVolume} */
     it('should set volume', function(done) {
+
         player.one('waveReady', function() {
 
             expect(player.volume()).toEqual(0);
@@ -148,6 +155,7 @@ describe('Wavesurfer', function() {
 
     /** @test {Wavesurfer#exportImage} */
     it('should export image', function(done) {
+
         player.one('waveReady', function() {
 
             // default to png
