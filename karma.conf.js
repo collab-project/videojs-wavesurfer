@@ -84,7 +84,7 @@ module.exports = function(config) {
                 base: 'Chrome',
                 flags: chromeFlags
             },
-            Chrome_travis_ci: {
+            Chrome_ci: {
                 base: 'ChromeHeadless',
                 flags: chromeFlags
             },
@@ -95,14 +95,16 @@ module.exports = function(config) {
         }
     };
 
-    if (process.env.TRAVIS) {
-        configuration.browsers = ['Chrome_travis_ci'];
+    if (process.env.TRAVIS || process.env.APPVEYOR) {
+        configuration.browsers = ['Chrome_ci'];
         configuration.singleRun = true;
 
-        // enable coveralls
-        configuration.reporters.push('coveralls');
-        // lcov or lcovonly are required for generating lcov.info files
-        configuration.coverageReporter.type = 'lcov';
+        if (process.env.TRAVIS) {
+            // enable coveralls
+            configuration.reporters.push('coveralls');
+            // lcov or lcovonly are required for generating lcov.info files
+            configuration.coverageReporter.type = 'lcov';
+        }
     }
 
     config.set(configuration);
