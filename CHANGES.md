@@ -1,6 +1,14 @@
 videojs-wavesurfer changelog
 ============================
 
+2.3.1 - unreleased
+------------------
+
+- Make sure plugin is only registered once
+- Add `isDestroyed` method
+- Add more tests
+
+
 2.3.0 - 2018/04/16
 ------------------
 

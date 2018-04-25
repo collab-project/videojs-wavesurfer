@@ -40,12 +40,8 @@
     "prepublish": "not-in-install && npm run build || in-install"
   },
   "files": [
-    ".babelrc",
-    ".jscsrc",
     "dist/",
-    "src/",
-    "test/",
-    "build-config/"
+    "src/"
   ],
   "keywords": [
     "waveform",
@@ -74,9 +70,11 @@
     "jasmine-core": "^3.1.0",
     "jscs": "^3.0.7",
     "jsdoc": "^3.5.5",
-    "karma": "^2.0.0",
+    "karma": "^2.0.2",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.1",
+    "karma-coveralls": "^1.1.2",
+    "karma-firefox-launcher": "^1.1.0",
     "karma-jasmine": "^1.1.1",
     "karma-jasmine-matchers": "^3.7.0",
     "karma-verbose-reporter": "0.0.6",
@@ -87,6 +85,6 @@
     "webpack": "3",
     "webpack-dev-server": "^2.11.1",
     "webpack-merge": "^4.1.2",
-    "webrtc-adapter": "^6.1.4"
+    "webrtc-adapter": "^6.1.5"
   }
 }

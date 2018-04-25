@@ -10,9 +10,6 @@ describe('WavesurferTech', function() {
     var player;
 
     beforeEach(function() {
-        // cleanup all players
-        TestHelpers.cleanup();
-
         // create audio element with text track
         const tag = TestHelpers.makeTag('audio', 'myAudioTextTracks');
         const track = document.createElement('track');
@@ -24,6 +21,11 @@ describe('WavesurferTech', function() {
 
         // create new player
         player = TestHelpers.makePlayer(tag);
+    });
+
+    afterEach(function() {
+        // delete player
+        player.dispose();
     });
 
     /** @test {WavesurferTech} */
@@ -91,7 +93,7 @@ describe('WavesurferTech', function() {
         });
     });
 
-    /** @test {WavesurferTech#duration} */
+    /** @test {WavesurferTech#waveready} */
     it('should play and pause', function(done) {
 
         player.one('waveReady', function() {

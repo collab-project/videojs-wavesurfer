@@ -8,6 +8,18 @@ require('babel-register');
 
 var webpackConfig = require('./build-config/webpack.prod.main.js');
 
+var chromeFlags = [
+    '--no-sandbox',
+    '--use-fake-device-for-media-stream',
+    '--use-fake-ui-for-media-stream',
+    '--use-file-for-fake-audio-capture=test/support/demo.wav',
+    '--autoplay-policy=no-user-gesture-required'
+];
+var firefoxFlags = {
+    'media.navigator.permission.disabled': true,
+    'media.navigator.streams.fake': true
+};
+
 module.exports = function(config) {
     var configuration = {
         basePath: '',
@@ -27,11 +39,11 @@ module.exports = function(config) {
             },
 
             // style
+            'node_modules/video.js/dist/video-js.css',
             'dist/css/videojs.wavesurfer.css',
 
             // dependencies
             'node_modules/video.js/dist/video.js',
-            'node_modules/video.js/dist/video-js.css',
             'node_modules/wavesurfer.js/dist/wavesurfer.js',
             'node_modules/wavesurfer.js/dist/plugin/wavesurfer.microphone.js',
 
@@ -53,10 +65,12 @@ module.exports = function(config) {
             'karma-jasmine',
             'karma-jasmine-matchers',
             'karma-chrome-launcher',
+            'karma-firefox-launcher',
             'karma-coverage',
+            'karma-coveralls',
             'karma-verbose-reporter'
         ],
-        browsers: ['ChromeHeadless'],
+        browsers: ['Firefox_dev', 'Chrome_dev'],
         captureConsole: true,
         colors: true,
         reporters: ['verbose', 'progress', 'coverage'],
@@ -66,17 +80,31 @@ module.exports = function(config) {
         },
         webpack: webpackConfig,
         customLaunchers: {
-            Chrome_travis_ci: {
+            Chrome_dev: {
                 base: 'Chrome',
-                flags: [
-                    '--no-sandbox'
-                ]
+                flags: chromeFlags
+            },
+            Chrome_ci: {
+                base: 'ChromeHeadless',
+                flags: chromeFlags
+            },
+            Firefox_dev: {
+                base: 'Firefox',
+                prefs: firefoxFlags
             }
         }
     };
 
-    if (process.env.TRAVIS) {
-        configuration.browsers = ['Chrome_travis_ci'];
+    if (process.env.TRAVIS || process.env.APPVEYOR) {
+        configuration.browsers = ['Chrome_ci'];
+        configuration.singleRun = true;
+
+        if (process.env.TRAVIS) {
+            // enable coveralls
+            configuration.reporters.push('coveralls');
+            // lcov or lcovonly are required for generating lcov.info files
+            configuration.coverageReporter.type = 'lcov';
+        }
     }
 
     config.set(configuration);
