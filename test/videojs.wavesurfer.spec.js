@@ -66,6 +66,17 @@ describe('Wavesurfer', function() {
         });
     });
 
+    /** @test {Wavesurfer#destroy} */
+    it('should destroy', function(done) {
+
+        player.one('waveReady', function() {
+            // die
+            player.wavesurfer().destroy();
+
+            done();
+        });
+    });
+
     /** @test {Wavesurfer#getCurrentTime} */
     it('should get current time', function(done) {
 
