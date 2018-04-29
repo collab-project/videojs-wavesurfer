@@ -1,6 +1,6 @@
 /*!
  * videojs-wavesurfer
- * @version 2.3.0
+ * @version 2.3.1
  * @see https://github.com/collab-project/videojs-wavesurfer
  * @copyright 2014-2018 Collab
  * @license MIT
@@ -431,7 +431,7 @@ var Wavesurfer = function (_Plugin) {
                         var ajax = _wavesurfer2.default.util.ajax(ajaxOptions);
 
                         ajax.on('success', function (data, e) {
-                            _this2.log('Loading URL: ' + url + '\nLoading Peak Data URL: ' + peaks);
+                            _this2.log('Loaded Peak Data URL: ' + peaks);
                             _this2.surfer.load(url, data.data);
                         });
                         ajax.on('error', function (e) {
@@ -493,7 +493,9 @@ var Wavesurfer = function (_Plugin) {
         key: 'pause',
         value: function pause() {
             // show play button
-            this.player.controlBar.playToggle.handlePause();
+            if (this.player.controlBar.playToggle.contentEl()) {
+                this.player.controlBar.playToggle.handlePause();
+            }
 
             if (this.liveMode) {
                 // pause microphone visualization
@@ -531,6 +533,18 @@ var Wavesurfer = function (_Plugin) {
                 this.surfer.destroy();
             }
             this.log('Destroyed plugin');
+        }
+
+        /**
+         * Indicates whether the plugin is destroyed or not.
+         *
+         * @return {boolean} Plugin destroyed or not.
+         */
+
+    }, {
+        key: 'isDestroyed',
+        value: function isDestroyed() {
+            return this.player && this.player.children() === null;
         }
 
         /**
@@ -645,7 +659,9 @@ var Wavesurfer = function (_Plugin) {
             var time = Math.min(currentTime, duration);
 
             // update current time display component
-            this.player.controlBar.currentTimeDisplay.formattedTime_ = this.player.controlBar.currentTimeDisplay.contentEl().lastChild.textContent = (0, _formatTime2.default)(time, duration, this.msDisplayMax);
+            if (this.player.controlBar.currentTimeDisplay.contentEl()) {
+                this.player.controlBar.currentTimeDisplay.formattedTime_ = this.player.controlBar.currentTimeDisplay.contentEl().lastChild.textContent = (0, _formatTime2.default)(time, duration, this.msDisplayMax);
+            }
         }
 
         /**
@@ -679,7 +695,9 @@ var Wavesurfer = function (_Plugin) {
             duration = isNaN(duration) ? 0 : duration;
 
             // update duration display component
-            this.player.controlBar.durationDisplay.formattedTime_ = this.player.controlBar.durationDisplay.contentEl().lastChild.textContent = (0, _formatTime2.default)(duration, duration, this.msDisplayMax);
+            if (this.player.controlBar.durationDisplay.contentEl()) {
+                this.player.controlBar.durationDisplay.formattedTime_ = this.player.controlBar.durationDisplay.contentEl().lastChild.textContent = (0, _formatTime2.default)(duration, duration, this.msDisplayMax);
+            }
         }
 
         /**
@@ -704,10 +722,14 @@ var Wavesurfer = function (_Plugin) {
             this.setDuration();
 
             // enable and show play button
-            this.player.controlBar.playToggle.show();
+            if (this.player.controlBar.playToggle.contentEl()) {
+                this.player.controlBar.playToggle.show();
+            }
 
             // hide loading spinner
-            this.player.loadingSpinner.hide();
+            if (this.player.loadingSpinner.contentEl()) {
+                this.player.loadingSpinner.hide();
+            }
 
             // auto-play when ready (if enabled)
             if (this.player.options_.autoplay === true) {
@@ -897,30 +919,34 @@ var Wavesurfer = function (_Plugin) {
     }, {
         key: 'redrawWaveform',
         value: function redrawWaveform(newWidth, newHeight) {
-            var rect = this.player.el_.getBoundingClientRect();
-            if (newWidth === undefined) {
-                // get player width
-                newWidth = rect.width;
+            if (!this.isDestroyed()) {
+                if (this.player.el_) {
+                    var rect = this.player.el_.getBoundingClientRect();
+                    if (newWidth === undefined) {
+                        // get player width
+                        newWidth = rect.width;
+                    }
+                    if (newHeight === undefined) {
+                        // get player height
+                        newHeight = rect.height;
+                    }
+                }
+
+                // destroy old drawing
+                this.surfer.drawer.destroy();
+
+                // set new dimensions
+                this.surfer.params.width = newWidth;
+                this.surfer.params.height = newHeight - this.player.controlBar.height();
+
+                // redraw waveform
+                this.surfer.createDrawer();
+                this.surfer.drawer.wrapper.className = wavesurferClassName;
+                this.surfer.drawBuffer();
+
+                // make sure playhead is restored at right position
+                this.surfer.drawer.progress(this.surfer.backend.getPlayedPercents());
             }
-            if (newHeight === undefined) {
-                // get player height
-                newHeight = rect.height;
-            }
-
-            // destroy old drawing
-            this.surfer.drawer.destroy();
-
-            // set new dimensions
-            this.surfer.params.width = newWidth;
-            this.surfer.params.height = newHeight - this.player.controlBar.height();
-
-            // redraw waveform
-            this.surfer.createDrawer();
-            this.surfer.drawer.wrapper.className = wavesurferClassName;
-            this.surfer.drawBuffer();
-
-            // make sure playhead is restored at right position
-            this.surfer.drawer.progress(this.surfer.backend.getPlayedPercents());
         }
 
         /**
@@ -940,11 +966,13 @@ var Wavesurfer = function (_Plugin) {
 // version nr is injected during build
 
 
-Wavesurfer.VERSION = "2.3.0";
+Wavesurfer.VERSION = "2.3.1";
 
-// register plugin
+// register plugin once
 _video2.default.Wavesurfer = Wavesurfer;
-_video2.default.registerPlugin('wavesurfer', Wavesurfer);
+if (_video2.default.getPlugin('wavesurfer') === undefined) {
+    _video2.default.registerPlugin('wavesurfer', Wavesurfer);
+}
 
 // register the WavesurferTech as 'Html5' to override the default html5 tech.
 // If we register it as anything other then 'Html5', the <audio> element will
