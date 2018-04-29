@@ -307,7 +307,7 @@ describe('Wavesurfer', function() {
             );
         });
     });
-    
+
     /** @test {Wavesurfer#load} */
     it('should ignore peaks if file cannot be found', function(done) {
 
@@ -320,6 +320,19 @@ describe('Wavesurfer', function() {
                 TestHelpers.EXAMPLE_AUDIO_FILE,
                 'broken_file.json'
             );
+        });
+    });
+
+    /** @test {Wavesurfer#setAudioOutput} */
+    it('should throw error for non-existing device', function(done) {
+
+        player.one('error', function(e) {
+            done();
+        });
+
+        player.one('waveReady', function() {
+            // set to non-existing device
+            player.wavesurfer().setAudioOutput('foo');
         });
     });
 });
