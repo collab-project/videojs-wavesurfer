@@ -1,7 +1,7 @@
 videojs-wavesurfer changelog
 ============================
 
-2.3.1 - unreleased
+2.3.1 - 2018/04/30
 ------------------
 
 - Make sure plugin is only registered once
