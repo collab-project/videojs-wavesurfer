@@ -15,6 +15,9 @@ const TestHelpers = {
     /** Length of example audio clip */
     EXAMPLE_AUDIO_DURATION: 0.782312925170068,
 
+    /** Peaks data for example audio clip */
+    EXAMPLE_AUDIO_PEAKS_FILE: '/base/test/support/demo-peaks.json',
+
     /**
      * Create DOM element.
      */
@@ -62,7 +65,8 @@ const TestHelpers = {
                     waveColor: 'blue',
                     progressColor: 'black',
                     cursorColor: 'black',
-                    hideScrollbar: true
+                    hideScrollbar: true,
+                    xhr: {}
                 }
             }
         };

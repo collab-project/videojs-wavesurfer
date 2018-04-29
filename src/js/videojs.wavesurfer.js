@@ -298,8 +298,7 @@ class Wavesurfer extends Plugin {
                     let ajax = WaveSurfer.util.ajax(ajaxOptions);
 
                     ajax.on('success', (data, e) => {
-                        this.log('Loading URL: ' + url +
-                            '\nLoading Peak Data URL: ' + peaks);
+                        this.log('Loaded Peak Data URL: ' + peaks);
                         this.surfer.load(url, data.data);
                     });
                     ajax.on('error', (e) => {
