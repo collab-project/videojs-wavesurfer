@@ -248,13 +248,14 @@ describe('Wavesurfer', function() {
 
     /** @test {Wavesurfer#load} */
     it('should load Blob', function(done) {
-        // fetch blob
+
+        // fetch blob version of example audio file
         fetch(TestHelpers.EXAMPLE_AUDIO_FILE)
         .then(function(response) {
             return response.blob();
         })
         .then(function(blob) {
-            player.one('waveReady', function(){
+            player.one('waveReady', function() {
                 done();
             });
             // load blob
@@ -262,4 +263,52 @@ describe('Wavesurfer', function() {
         });
     });
 
+    /** @test {Wavesurfer#load} */
+    it('should load peaks from array', function(done) {
+
+        player.one('waveReady', function() {
+            player.wavesurfer().surfer.once('redraw', function() {
+                done();
+            });
+            // load with peaks data
+            player.wavesurfer().load(
+                TestHelpers.EXAMPLE_AUDIO_FILE,
+                [-0.007874015748031496, 0.0, -0.007874015748031496,
+                 0.0, -0.007874015748031496, 0.0, -0.007874015748031496,
+                 0.0, -0.007874015748031496, 0.0, -0.007874015748031496,
+                 0.0, -0.007874015748031496, 0.0, -0.007874015748031496,
+                 0.0, -0.007874015748031496, 0.0, -0.007874015748031496]
+            );
+        });
+    });
+
+    /** @test {Wavesurfer#load} */
+    it('should load peaks from file', function(done) {
+
+        player.one('waveReady', function() {
+            player.wavesurfer().surfer.once('redraw', function() {
+                done();
+            });
+            // load from peaks file
+            player.wavesurfer().load(
+                TestHelpers.EXAMPLE_AUDIO_FILE,
+                TestHelpers.EXAMPLE_AUDIO_PEAKS_FILE
+            );
+        });
+    });
+    
+    /** @test {Wavesurfer#load} */
+    it('should ignore peaks if file cannot be found', function(done) {
+
+        player.one('waveReady', function() {
+            player.wavesurfer().surfer.once('redraw', function() {
+                done();
+            });
+            // try loading from non-existing peaks file
+            player.wavesurfer().load(
+                TestHelpers.EXAMPLE_AUDIO_FILE,
+                'broken_file.json'
+            );
+        });
+    });
 });
