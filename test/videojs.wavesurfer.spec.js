@@ -246,4 +246,20 @@ describe('Wavesurfer', function() {
         });
     });
 
+    /** @test {Wavesurfer#load} */
+    it('should load Blob', function(done) {
+        // fetch blob
+        fetch(TestHelpers.EXAMPLE_AUDIO_FILE)
+        .then(function(response) {
+            return response.blob();
+        })
+        .then(function(blob) {
+            player.one('waveReady', function(){
+                done();
+            });
+            // load blob
+            player.wavesurfer().load(blob);
+        });
+    });
+
 });
