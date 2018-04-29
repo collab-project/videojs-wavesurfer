@@ -8,12 +8,23 @@ require('babel-register');
 
 var webpackConfig = require('./build-config/webpack.prod.main.js');
 
+// Chrome CLI options
+// http://peter.sh/experiments/chromium-command-line-switches/
 var chromeFlags = [
     '--no-sandbox',
+    '--no-first-run',
+    '--noerrdialogs',
+    '--no-default-browser-check',
     '--use-fake-device-for-media-stream',
     '--use-fake-ui-for-media-stream',
     '--use-file-for-fake-audio-capture=test/support/demo.wav',
-    '--autoplay-policy=no-user-gesture-required'
+    '--autoplay-policy=no-user-gesture-required',
+    '--user-data-dir=.chrome',
+    '--disable-translate',
+    '--disable-extensions',
+    '--disable-infobars',
+    '--ignore-certificate-errors',
+    '--allow-insecure-localhost'
 ];
 var firefoxFlags = {
     'media.navigator.permission.disabled': true,
