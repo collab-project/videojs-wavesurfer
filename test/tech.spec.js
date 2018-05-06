@@ -86,8 +86,8 @@ describe('WavesurferTech', function() {
             player.tech_.waveready = true;
 
             // duration
-            expect(player.tech_.duration()).toEqual(
-                TestHelpers.EXAMPLE_AUDIO_DURATION);
+            expect(player.tech_.duration()).toBeNear(
+                TestHelpers.EXAMPLE_AUDIO_DURATION, 0.01);
 
             done();
         });

@@ -81,8 +81,8 @@ describe('Wavesurfer', function() {
     it('should get current time', function(done) {
 
         player.one('playbackFinish', function() {
-            expect(player.wavesurfer().getCurrentTime()).toEqual(
-                TestHelpers.EXAMPLE_AUDIO_DURATION);
+            expect(player.wavesurfer().getCurrentTime()).toBeNear(
+                TestHelpers.EXAMPLE_AUDIO_DURATION, 0.01);
             done();
         });
 
@@ -119,8 +119,8 @@ describe('Wavesurfer', function() {
 
         player.one('waveReady', function() {
 
-            expect(player.wavesurfer().getDuration()).toEqual(
-                TestHelpers.EXAMPLE_AUDIO_DURATION);
+            expect(player.wavesurfer().getDuration()).toBeNear(
+                TestHelpers.EXAMPLE_AUDIO_DURATION, 0.01);
 
             done();
         });
@@ -131,8 +131,8 @@ describe('Wavesurfer', function() {
 
         player.one('waveReady', function() {
 
-            expect(player.wavesurfer().getDuration()).toEqual(
-                TestHelpers.EXAMPLE_AUDIO_DURATION);
+            expect(player.wavesurfer().getDuration()).toBeNear(
+                TestHelpers.EXAMPLE_AUDIO_DURATION, 0.01);
             player.wavesurfer().setDuration(0.1);
 
             // only updates player visually

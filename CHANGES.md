@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+2.3.2 - unreleased
+------------------
+
+- Package library using webpack 4
+
+
 2.3.1 - 2018/04/30
 ------------------
 

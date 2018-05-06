@@ -11,4 +11,12 @@ describe('pluginDefaultOptions', function() {
     it('returns a non-empty object', function() {
         expect(pluginDefaultOptions).toBeNonEmptyObject();
     });
+
+    /** @test {pluginDefaultOptions} */
+    it('should have correct default values', function() {
+        expect(pluginDefaultOptions).toEqual({
+            debug: false,
+            msDisplayMax: 3
+        });
+    });
 });
