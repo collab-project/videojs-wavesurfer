@@ -2,11 +2,15 @@
  * @since 2.3.0
  */
 
+process.traceDeprecation = true;
 process.env.BABEL_ENV = 'test';
 
+const path = require('path');
 require('babel-register');
 
 var webpackConfig = require('./build-config/webpack.prod.main.js');
+var support_dir = path.resolve(__dirname, 'test', 'support');
+var fakeAudioStream = path.join(support_dir, 'demo.wav');
 
 // Chrome CLI options
 // http://peter.sh/experiments/chromium-command-line-switches/
@@ -17,7 +21,7 @@ var chromeFlags = [
     '--no-default-browser-check',
     '--use-fake-device-for-media-stream',
     '--use-fake-ui-for-media-stream',
-    '--use-file-for-fake-audio-capture=test/support/demo.wav',
+    '--use-file-for-fake-audio-capture=' + fakeAudioStream,
     '--autoplay-policy=no-user-gesture-required',
     '--user-data-dir=.chrome',
     '--disable-translate',
@@ -53,7 +57,7 @@ module.exports = function(config) {
             'node_modules/video.js/dist/video-js.css',
             'dist/css/videojs.wavesurfer.css',
 
-            // dependencies
+            // library dependencies
             'node_modules/video.js/dist/video.js',
             'node_modules/wavesurfer.js/dist/wavesurfer.js',
             'node_modules/wavesurfer.js/dist/plugin/wavesurfer.microphone.js',
@@ -83,6 +87,7 @@ module.exports = function(config) {
         ],
         browsers: ['Firefox_dev', 'Chrome_dev'],
         captureConsole: true,
+        browserNoActivityTimeout: 50000,
         colors: true,
         reporters: ['verbose', 'progress', 'coverage'],
         coverageReporter: {
