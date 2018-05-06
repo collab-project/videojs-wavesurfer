@@ -9,11 +9,11 @@ module.exports = {
     entry: {
         'videojs.wavesurfer': path.resolve(
             __dirname,
-            '../', '../', 'src', 'js', 'videojs.wavesurfer.js'
+            '..', '..', 'src', 'js', 'videojs.wavesurfer.js'
         )
     },
     output: {
-        path: path.resolve(__dirname, '../', '../', 'dist'),
+        path: path.resolve(__dirname, '..', '..', 'dist'),
         filename: '[name].js',
         library: 'VideojsWavesurfer'
     }
