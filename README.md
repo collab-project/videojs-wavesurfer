@@ -177,7 +177,7 @@ player.on('ready', function() {
 | `setAudioOutput(deviceId)` | Change the audio output device using its [deviceId](https://developer.mozilla.org/en-US/docs/Web/API/MediaDeviceInfo/deviceId). |
 
 Other wavesurfer.js methods
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------
 
 You can access the wavesurfer instance, for example to call the
 wavesurfer.js `seekTo` method, by using the `surfer` property of the
