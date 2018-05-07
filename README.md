@@ -14,6 +14,27 @@ input](#microphone-plugin).
 [![Build Status](https://travis-ci.org/collab-project/videojs-wavesurfer.svg?branch=master)](https://travis-ci.org/collab-project/videojs-wavesurfer)
 [![Coverage Status](https://coveralls.io/repos/github/collab-project/videojs-wavesurfer/badge.svg?branch=master)](https://coveralls.io/github/collab-project/videojs-wavesurfer?branch=master)
 
+Table of Contents
+-----------------
+
+- [Installation](#installation)
+- [Using the Plugin](#using-the-plugin)
+- [Plugin Options](#plugin-options)
+- [Examples](#examples)
+- [Methods](#methods)
+  - [Other wavesurfer.js methods](#other-wavesurferjs-methods)
+- [Events](#events)
+- [Customizing controls](#customizing-controls)
+- [Responsive layout](#responsive-layout)
+- [Text Tracks](#text-tracks)
+- [Microphone plugin](#microphone-plugin)
+- [Change audio output or input device](#change-audio-output-or-input-device)
+- [Using with React](#using-with-react)
+- [More features using other plugins](#more-features-using-other-plugins)
+- [Development](#development)
+- [License](#license)
+- [Donate](#donate)
+
 Installation
 ------------
 
@@ -156,7 +177,7 @@ player.on('ready', function() {
 | `setAudioOutput(deviceId)` | Change the audio output device using its [deviceId](https://developer.mozilla.org/en-US/docs/Web/API/MediaDeviceInfo/deviceId). |
 
 Other wavesurfer.js methods
----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You can access the wavesurfer instance, for example to call the
 wavesurfer.js `seekTo` method, by using the `surfer` property of the
