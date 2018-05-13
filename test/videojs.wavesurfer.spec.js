@@ -28,7 +28,7 @@ describe('Wavesurfer', function() {
         player.one('ready', function() {
             expect(player.el().nodeName).toEqual('DIV');
             expect(player.on).toBeFunction();
-            expect(player.hasClass('videojs-wavesurfer')).toBeTrue();
+            expect(player.hasClass('vjs-wavesurfer')).toBeTrue();
 
             // plugin exists
             expect(videojs.getPlugin('wavesurfer')).toBeFunction();
