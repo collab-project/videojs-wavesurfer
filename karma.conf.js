@@ -92,7 +92,7 @@ module.exports = function(config) {
         reporters: ['verbose', 'progress', 'coverage'],
         coverageReporter: {
             type: 'html',
-            dir: 'coverage/'
+            dir: 'coverage'
         },
         webpack: webpackConfig,
         customLaunchers: {
