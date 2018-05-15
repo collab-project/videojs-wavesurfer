@@ -8,8 +8,8 @@
 import log from './utils/log';
 import formatTime from './utils/format-time';
 import pluginDefaultOptions from './defaults';
-import WavesurferTech from './tech';
 import window from 'global/window';
+import WavesurferTech from './tech';
 
 import videojs from 'video.js';
 import WaveSurfer from 'wavesurfer.js';
@@ -34,6 +34,9 @@ class Wavesurfer extends Plugin {
     constructor(player, options) {
         super(player, options);
 
+        // add plugin style
+        player.addClass('vjs-wavesurfer');
+
         // parse options
         options = videojs.mergeOptions(pluginDefaultOptions, options);
         this.waveReady = false;
@@ -45,12 +48,6 @@ class Wavesurfer extends Plugin {
         // attach this instance to the current player so that the tech can
         // access it
         this.player.activeWavesurferPlugin = this;
-
-        // check that wavesurfer is initialized in options, and add class to
-        // activate videojs-wavesurfer specific styles
-        if (this.player.options_.plugins.wavesurfer !== undefined) {
-            this.player.addClass('videojs-wavesurfer');
-        }
 
         // microphone plugin
         if (options.src === 'live') {

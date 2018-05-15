@@ -11,13 +11,19 @@ import Wavesurfer from '../src/js/videojs.wavesurfer.js';
 /** @test {Wavesurfer} */
 describe('Wavesurfer', function() {
     var player;
+    var originalTimeout;
 
     beforeEach(function() {
+        originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
+
         // create new player
         player = TestHelpers.makePlayer();
     });
 
     afterEach(function() {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+
         // delete player
         player.dispose();
     });
@@ -28,7 +34,7 @@ describe('Wavesurfer', function() {
         player.one('ready', function() {
             expect(player.el().nodeName).toEqual('DIV');
             expect(player.on).toBeFunction();
-            expect(player.hasClass('videojs-wavesurfer')).toBeTrue();
+            expect(player.hasClass('vjs-wavesurfer')).toBeTrue();
 
             // plugin exists
             expect(videojs.getPlugin('wavesurfer')).toBeFunction();

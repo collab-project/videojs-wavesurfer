@@ -18,7 +18,6 @@ shallow_clone: true
 test_script:
   - node --version
   - npm --version
-  - npm run lint
   - npm run build
   - npm run test
 cache:

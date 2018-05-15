@@ -6,23 +6,38 @@
 const path = require('path');
 const webpack = require('webpack');
 const moment = require('moment');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const time = moment().format('YYYY');
 const pckg = require(path.join(__dirname, '..', '..', 'package.json'));
 
-// add banner with copyright and version info
-var bannerPlugin = new webpack.BannerPlugin(
-`${pckg.name}
+// add JS banner with copyright and version info
+var jsBanner = `${pckg.name}
 @version ${pckg.version}
 @see ${pckg.homepage}
 @copyright 2014-${time} ${pckg.author}
-@license ${pckg.license}`
-);
-// inject version number
-var replaceVersionPlugin = new webpack.DefinePlugin({
+@license ${pckg.license}`;
+var jsBannerPlugin = new webpack.BannerPlugin({
+    banner: jsBanner,
+    test: /\.js$/
+});
+
+// add CSS banner with version info
+var cssBanner = `/*!
+Default styles for ${pckg.name} ${pckg.version}
+*/`;
+var cssBannerPlugin = new webpack.BannerPlugin({
+    banner: cssBanner,
+    raw: true,
+    test: /\.css$/
+});
+
+// inject JS version number
+var jsVersionPlugin = new webpack.DefinePlugin({
   '__VERSION__': JSON.stringify(pckg.version)
 });
-let rootDir = path.resolve(__dirname, '..', '..');
+
+var rootDir = path.resolve(__dirname, '..', '..');
 
 module.exports = {
     context: rootDir,
@@ -49,11 +64,21 @@ module.exports = {
                 use: {
                     loader: 'babel-loader'
                 }
+            },
+            {
+                test: /\.scss$/,
+                include: path.resolve(rootDir, 'src', 'css'),
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader'
+                ]
             }
         ]
     },
     plugins: [
-        bannerPlugin,
-        replaceVersionPlugin
+        jsBannerPlugin,
+        jsVersionPlugin,
+        cssBannerPlugin
     ]
 };

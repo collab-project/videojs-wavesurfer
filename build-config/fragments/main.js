@@ -4,13 +4,16 @@
  */
 
 const path = require('path');
+const sourceDir = path.resolve(__dirname, '..', '..', 'src');
 
 module.exports = {
     entry: {
-        'videojs.wavesurfer': path.resolve(
-            __dirname,
-            '..', '..', 'src', 'js', 'videojs.wavesurfer.js'
-        )
+        'videojs.wavesurfer': [
+            // JS
+            path.resolve(sourceDir, 'js', 'videojs.wavesurfer.js'),
+            // SCSS
+            path.resolve(sourceDir, 'css', 'videojs.wavesurfer.scss')
+        ]
     },
     output: {
         path: path.resolve(__dirname, '..', '..', 'dist'),
