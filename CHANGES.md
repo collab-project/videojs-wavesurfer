@@ -7,6 +7,7 @@ videojs-wavesurfer changelog
 - Add plugin style `vjs-wavesurfer` and prefix all custom plugin styles with
   this selector. This should prevent clashes with regular video.js players
   loaded on the same page
+- Compile SCSS into CSS using webpack
 
 
 2.3.2 - 2018/05/07
