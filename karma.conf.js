@@ -105,6 +105,10 @@ module.exports = function(config) {
                     if (fd > -1) {
                         availableBrowsers[fd] = 'Firefox_dev';
                     }
+                    let ch = availableBrowsers.indexOf('ChromiumHeadless');
+                    if (ch > -1) {
+                        availableBrowsers[ch] = 'Chromium_dev';
+                    }
                     return result;
                 }
             }
@@ -112,6 +116,10 @@ module.exports = function(config) {
         customLaunchers: {
             Chrome_dev: {
                 base: 'ChromeHeadless',
+                flags: chromeFlags
+            },
+            Chromium_dev: {
+                base: 'ChromiumHeadless',
                 flags: chromeFlags
             },
             Firefox_dev: {
