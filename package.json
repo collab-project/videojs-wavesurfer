@@ -23,10 +23,8 @@
   "scripts": {
     "clean": "rimraf dist docs",
     "build": "npm run clean && npm run lint && npm run build:dev && npm run build:min",
-    "build:main": "webpack --config ./build-config/webpack.dev.main.js",
-    "build:main:min": "webpack --config ./build-config/webpack.prod.main.js",
-    "build:dev": "npm run build:main",
-    "build:min": "npm run build:main:min",
+    "build:dev": "webpack --config ./build-config/webpack.dev.main.js",
+    "build:min": "webpack --config ./build-config/webpack.prod.main.js",
     "docs": "npm-run-all docs:*",
     "docs:api": "jsdoc src/js -r -d docs/api",
     "lint": "npm-run-all lint:*",
