@@ -96,6 +96,7 @@ module.exports = function(config) {
 
             postDetection: function(availableBrowsers) {
                 if (availableBrowsers.length > 1) {
+                    // use custom browser launchers
                     var result = availableBrowsers;
                     let cd = availableBrowsers.indexOf('ChromeHeadless');
                     if (cd > -1) {
@@ -104,6 +105,10 @@ module.exports = function(config) {
                     let fd = availableBrowsers.indexOf('FirefoxHeadless');
                     if (fd > -1) {
                         availableBrowsers[fd] = 'Firefox_dev';
+                    }
+                    let fh = availableBrowsers.indexOf('Firefox');
+                    if (fh > -1) {
+                        availableBrowsers[fh] = 'Firefox_dev';
                     }
                     let ch = availableBrowsers.indexOf('ChromiumHeadless');
                     if (ch > -1) {
