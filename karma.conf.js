@@ -34,6 +34,7 @@ var firefoxFlags = {
     'media.navigator.permission.disabled': true,
     'media.navigator.streams.fake': true
 };
+var ci = process.env.TRAVIS || process.env.APPVEYOR;
 
 module.exports = function(config) {
     var configuration = {
@@ -89,21 +90,23 @@ module.exports = function(config) {
             'karma-detect-browsers'
         ],
         detectBrowsers: {
-            enabled: true,
+            enabled: ci,
             usePhantomJS: false,
             preferHeadless: true,
 
             postDetection: function(availableBrowsers) {
-                var result = availableBrowsers;
-                let cd = availableBrowsers.indexOf('ChromeHeadless');
-                if (cd > -1) {
-                    availableBrowsers[cd] = 'Chrome_dev';
+                if (availableBrowsers.length > 1) {
+                    var result = availableBrowsers;
+                    let cd = availableBrowsers.indexOf('ChromeHeadless');
+                    if (cd > -1) {
+                        availableBrowsers[cd] = 'Chrome_dev';
+                    }
+                    let fd = availableBrowsers.indexOf('FirefoxHeadless');
+                    if (fd > -1) {
+                        availableBrowsers[fd] = 'Firefox_dev';
+                    }
+                    return result;
                 }
-                let fd = availableBrowsers.indexOf('FirefoxHeadless');
-                if (fd > -1) {
-                    availableBrowsers[fd] = 'Firefox_dev';
-                }
-                return result;
             }
         },
         customLaunchers: {
@@ -127,7 +130,7 @@ module.exports = function(config) {
         webpack: webpackConfig
     };
 
-    if (process.env.TRAVIS || process.env.APPVEYOR) {
+    if (ci) {
         configuration.browsers = ['Chrome_dev'];
         configuration.singleRun = true;
 
