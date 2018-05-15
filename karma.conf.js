@@ -38,7 +38,7 @@ var firefoxFlags = {
 module.exports = function(config) {
     var configuration = {
         basePath: '',
-        frameworks: ['jasmine', 'jasmine-matchers'],
+        frameworks: ['jasmine', 'jasmine-matchers', 'detectBrowsers'],
         hostname: 'localhost',
         port: 9876,
         logLevel: config.LOG_INFO,
@@ -81,11 +81,41 @@ module.exports = function(config) {
             'karma-jasmine-matchers',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
+            'karma-safari-launcher',
+            'karma-edge-launcher',
             'karma-coverage',
             'karma-coveralls',
-            'karma-verbose-reporter'
+            'karma-verbose-reporter',
+            'karma-detect-browsers'
         ],
-        browsers: ['Firefox_dev', 'Chrome_dev'],
+        detectBrowsers: {
+            enabled: true,
+            usePhantomJS: false,
+            preferHeadless: true,
+
+            postDetection: function(availableBrowsers) {
+                var result = availableBrowsers;
+                let cd = availableBrowsers.indexOf('ChromeHeadless');
+                if (cd > -1) {
+                    availableBrowsers[cd] = 'Chrome_dev';
+                }
+                let fd = availableBrowsers.indexOf('FirefoxHeadless');
+                if (fd > -1) {
+                    availableBrowsers[fd] = 'Firefox_dev';
+                }
+                return result;
+            }
+        },
+        customLaunchers: {
+            Chrome_dev: {
+                base: 'ChromeHeadless',
+                flags: chromeFlags
+            },
+            Firefox_dev: {
+                base: 'FirefoxHeadless',
+                prefs: firefoxFlags
+            }
+        },
         captureConsole: true,
         browserNoActivityTimeout: 50000,
         colors: true,
@@ -94,21 +124,7 @@ module.exports = function(config) {
             type: 'html',
             dir: 'coverage'
         },
-        webpack: webpackConfig,
-        customLaunchers: {
-            Chrome_dev: {
-                base: 'Chrome',
-                flags: chromeFlags
-            },
-            Chrome_ci: {
-                base: 'ChromeHeadless',
-                flags: chromeFlags
-            },
-            Firefox_dev: {
-                base: 'Firefox',
-                prefs: firefoxFlags
-            }
-        }
+        webpack: webpackConfig
     };
 
     if (process.env.TRAVIS || process.env.APPVEYOR) {
