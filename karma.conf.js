@@ -90,7 +90,7 @@ module.exports = function(config) {
             'karma-detect-browsers'
         ],
         detectBrowsers: {
-            enabled: ci,
+            enabled: true,
             usePhantomJS: false,
             preferHeadless: true,
 
