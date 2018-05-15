@@ -11,13 +11,19 @@ import Wavesurfer from '../src/js/videojs.wavesurfer.js';
 /** @test {Wavesurfer} */
 describe('Wavesurfer', function() {
     var player;
+    var originalTimeout;
 
     beforeEach(function() {
+        originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
+
         // create new player
         player = TestHelpers.makePlayer();
     });
 
     afterEach(function() {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+
         // delete player
         player.dispose();
     });
