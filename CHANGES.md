@@ -1,12 +1,13 @@
 videojs-wavesurfer changelog
 ============================
 
-2.4.0 - unreleased
+2.4.0 - 2018/05/15
 ------------------
 
 - Add plugin style `vjs-wavesurfer` and prefix all custom plugin styles with
   this selector. This should prevent clashes with regular video.js players
-  loaded on the same page
+  loaded on the same page. If you were using the old `videojs-wavesurfer` CSS
+  class, rename any references to `vjs-wavesurfer`
 - Compile SCSS into CSS using webpack
 
 
