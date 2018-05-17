@@ -39,6 +39,7 @@ class Wavesurfer extends Plugin {
 
         // parse options
         options = videojs.mergeOptions(pluginDefaultOptions, options);
+        this.progressCounter = 0;
         this.waveReady = false;
         this.waveFinished = false;
         this.liveMode = false;
@@ -476,27 +477,34 @@ class Wavesurfer extends Plugin {
      * @param {number} [duration] - Duration of the waveform (in seconds).
      * @private
      */
-    setCurrentTime(currentTime, duration) {
-        // emit the timeupdate event so that the tech knows about the time change
-        this.trigger('timeupdate');
+    setCurrentTime(currentTime, duration, force = false) {
+        if ((this.progressCounter > 49) || (force)){
 
-        if (currentTime === undefined) {
-            currentTime = this.surfer.getCurrentTime();
-        }
+            console.log("setCurrentTime");
+            this.progressCounter = 0;
+            // emit the timeupdate event so that the tech knows about the time change
+            this.trigger('timeupdate');
 
-        if (duration === undefined) {
-            duration = this.surfer.getDuration();
-        }
+            if (currentTime === undefined) {
+                currentTime = this.surfer.getCurrentTime();
+            }
 
-        currentTime = isNaN(currentTime) ? 0 : currentTime;
-        duration = isNaN(duration) ? 0 : duration;
-        let time = Math.min(currentTime, duration);
+            if (duration === undefined) {
+                duration = this.surfer.getDuration();
+            }
 
-        // update current time display component
-        if (this.player.controlBar.currentTimeDisplay.contentEl()) {
-            this.player.controlBar.currentTimeDisplay.formattedTime_ =
-                this.player.controlBar.currentTimeDisplay.contentEl().lastChild.textContent =
-                    formatTime(time, duration, this.msDisplayMax);
+            currentTime = isNaN(currentTime) ? 0 : currentTime;
+            duration = isNaN(duration) ? 0 : duration;
+            let time = Math.min(currentTime, duration);
+
+            // update current time display component
+            if (this.player.controlBar.currentTimeDisplay.contentEl()) {
+                this.player.controlBar.currentTimeDisplay.formattedTime_ =
+                    this.player.controlBar.currentTimeDisplay.contentEl().lastChild.textContent =
+                        formatTime(time, duration, this.msDisplayMax);
+            }
+        } else {
+            this.progressCounter++;
         }
     }
 
@@ -547,6 +555,7 @@ class Wavesurfer extends Plugin {
         this.player.trigger('waveReady');
 
         // update time display
+        this.progressCounter = 50;
         this.setCurrentTime();
         this.setDuration();
 
@@ -574,6 +583,8 @@ class Wavesurfer extends Plugin {
      */
     onWaveFinish() {
         this.log('Finished playback');
+        this.progressCounter = 50;
+        this.setCurrentTime();
 
         // notify listeners
         this.player.trigger('playbackFinish');
@@ -618,6 +629,7 @@ class Wavesurfer extends Plugin {
      * @private
      */
     onWaveSeek() {
+        this.progressCounter = 50;
         this.setCurrentTime();
     }
 
@@ -717,6 +729,7 @@ class Wavesurfer extends Plugin {
      * @private
      */
     redrawWaveform(newWidth, newHeight) {
+        console.log("redraw");
         if (!this.isDestroyed()) {
             if (this.player.el_) {
                 let rect = this.player.el_.getBoundingClientRect();
