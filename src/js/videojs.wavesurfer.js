@@ -480,7 +480,6 @@ class Wavesurfer extends Plugin {
     setCurrentTime(currentTime, duration, force = false) {
         if ((this.progressCounter > 49) || (force)){
 
-            console.log("setCurrentTime");
             this.progressCounter = 0;
             // emit the timeupdate event so that the tech knows about the time change
             this.trigger('timeupdate');
@@ -527,6 +526,7 @@ class Wavesurfer extends Plugin {
      * @private
      */
     setDuration(duration) {
+
         if (duration === undefined) {
             duration = this.surfer.getDuration();
         }
@@ -729,7 +729,6 @@ class Wavesurfer extends Plugin {
      * @private
      */
     redrawWaveform(newWidth, newHeight) {
-        console.log("redraw");
         if (!this.isDestroyed()) {
             if (this.player.el_) {
                 let rect = this.player.el_.getBoundingClientRect();
