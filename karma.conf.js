@@ -144,8 +144,8 @@ module.exports = function(config) {
     };
 
     if (ci) {
-        configuration.browsers = ['Chrome_dev'];
-        configuration.detectBrowsers.enabled = false;
+        //configuration.browsers = ['Chrome_dev'];
+        //configuration.detectBrowsers.enabled = false;
         configuration.singleRun = true;
 
         if (process.env.TRAVIS) {
