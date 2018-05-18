@@ -1,5 +1,9 @@
-sudo: false
-dist: trusty
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: false
+    - os: osx
 addons:
   chrome: stable
   firefox: latest
