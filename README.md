@@ -29,6 +29,7 @@ Table of Contents
 - [Text Tracks](#text-tracks)
 - [Microphone plugin](#microphone-plugin)
 - [Change audio output or input device](#change-audio-output-or-input-device)
+- [Webpack](#webpack)
 - [Using with React](#using-with-react)
 - [More features using other plugins](#more-features-using-other-plugins)
 - [Development](#development)
@@ -332,6 +333,11 @@ these devices and allow the user to choose one, check out the the full `input` e
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/input.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/input.html)).
 
+
+Webpack
+-------
+
+The [webpack](https://github.com/collab-project/videojs-wavesurfer/wiki/Webpack) wiki page shows how to configure webpack for videojs-wavesurfer.
 
 Using with React
 ----------------
