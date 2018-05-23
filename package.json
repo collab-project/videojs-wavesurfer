@@ -48,8 +48,8 @@
     "player"
   ],
   "dependencies": {
-    "video.js": ">=6.8.0",
-    "wavesurfer.js": ">=2.0.5"
+    "video.js": ">=6.0.0",
+    "wavesurfer.js": ">=2.0.3"
   },
   "devDependencies": {
     "babel-loader": "^7.1.4",

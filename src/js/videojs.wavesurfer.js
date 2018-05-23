@@ -39,7 +39,6 @@ class Wavesurfer extends Plugin {
 
         // parse options
         options = videojs.mergeOptions(pluginDefaultOptions, options);
-        this.progressCounter = 0;
         this.waveReady = false;
         this.waveFinished = false;
         this.liveMode = false;
@@ -73,7 +72,7 @@ class Wavesurfer extends Plugin {
      */
     initialize() {
         // setup tech
-        this.player.tech_.setActivePlayer(this.player);
+        // this.player.tech_.setActivePlayer(this.player);
 
         // hide big play button
         this.player.bigPlayButton.hide();
@@ -478,32 +477,27 @@ class Wavesurfer extends Plugin {
      * @private
      */
     setCurrentTime(currentTime, duration, force = false) {
-        if ((this.progressCounter > 49) || (force)){
 
-            this.progressCounter = 0;
-            // emit the timeupdate event so that the tech knows about the time change
-            this.trigger('timeupdate');
+        this.progressCounter = 0;
+        // emit the timeupdate event so that the tech knows about the time change
+        // this.trigger('timeupdate');
+        if (currentTime === undefined) {
+            currentTime = this.surfer.getCurrentTime();
+        }
 
-            if (currentTime === undefined) {
-                currentTime = this.surfer.getCurrentTime();
-            }
+        if (duration === undefined) {
+            duration = this.surfer.getDuration();
+        }
 
-            if (duration === undefined) {
-                duration = this.surfer.getDuration();
-            }
+        currentTime = isNaN(currentTime) ? 0 : currentTime;
+        duration = isNaN(duration) ? 0 : duration;
+        let time = Math.min(currentTime, duration);
 
-            currentTime = isNaN(currentTime) ? 0 : currentTime;
-            duration = isNaN(duration) ? 0 : duration;
-            let time = Math.min(currentTime, duration);
-
-            // update current time display component
-            if (this.player.controlBar.currentTimeDisplay.contentEl()) {
-                this.player.controlBar.currentTimeDisplay.formattedTime_ =
-                    this.player.controlBar.currentTimeDisplay.contentEl().lastChild.textContent =
-                        formatTime(time, duration, this.msDisplayMax);
-            }
-        } else {
-            this.progressCounter++;
+        // update current time display component
+        if (this.player.controlBar.currentTimeDisplay.contentEl()) {
+            this.player.controlBar.currentTimeDisplay.formattedTime_ =
+                this.player.controlBar.currentTimeDisplay.contentEl().lastChild.textContent =
+                    formatTime(time, duration, this.msDisplayMax);
         }
     }
 
@@ -779,7 +773,7 @@ if (videojs.getPlugin('wavesurfer') === undefined) {
 // register the WavesurferTech as 'Html5' to override the default html5 tech.
 // If we register it as anything other then 'Html5', the <audio> element will
 // be removed by VJS and caption tracks will be lost in the Safari browser.
-videojs.registerTech('Html5', WavesurferTech);
+// videojs.registerTech('Html5', WavesurferTech);
 
 module.exports = {
     Wavesurfer
