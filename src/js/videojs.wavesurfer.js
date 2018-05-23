@@ -9,7 +9,6 @@ import log from './utils/log';
 import formatTime from './utils/format-time';
 import pluginDefaultOptions from './defaults';
 import window from 'global/window';
-import WavesurferTech from './tech';
 
 import videojs from 'video.js';
 import WaveSurfer from 'wavesurfer.js';
@@ -71,8 +70,6 @@ class Wavesurfer extends Plugin {
      * Player UI is ready: customize controls.
      */
     initialize() {
-        // setup tech
-        this.player.tech_.setActivePlayer(this.player);
 
         // hide big play button
         this.player.bigPlayButton.hide();
@@ -477,9 +474,6 @@ class Wavesurfer extends Plugin {
      * @private
      */
     setCurrentTime(currentTime, duration) {
-        // emit the timeupdate event so that the tech knows about the time change
-        this.trigger('timeupdate');
-
         if (currentTime === undefined) {
             currentTime = this.surfer.getCurrentTime();
         }
@@ -519,6 +513,7 @@ class Wavesurfer extends Plugin {
      * @private
      */
     setDuration(duration) {
+
         if (duration === undefined) {
             duration = this.surfer.getDuration();
         }
@@ -763,11 +758,6 @@ videojs.Wavesurfer = Wavesurfer;
 if (videojs.getPlugin('wavesurfer') === undefined) {
     videojs.registerPlugin('wavesurfer', Wavesurfer);
 }
-
-// register the WavesurferTech as 'Html5' to override the default html5 tech.
-// If we register it as anything other then 'Html5', the <audio> element will
-// be removed by VJS and caption tracks will be lost in the Safari browser.
-videojs.registerTech('Html5', WavesurferTech);
 
 module.exports = {
     Wavesurfer
