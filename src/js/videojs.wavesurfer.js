@@ -473,7 +473,7 @@ class Wavesurfer extends Plugin {
      * @param {number} [duration] - Duration of the waveform (in seconds).
      * @private
      */
-    setCurrentTime(currentTime, duration, force = false) {
+    setCurrentTime(currentTime, duration) {
         if (currentTime === undefined) {
             currentTime = this.surfer.getCurrentTime();
         }
