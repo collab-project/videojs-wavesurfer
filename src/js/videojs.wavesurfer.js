@@ -569,7 +569,6 @@ class Wavesurfer extends Plugin {
      */
     onWaveFinish() {
         this.log('Finished playback');
-        this.setCurrentTime();
 
         // notify listeners
         this.player.trigger('playbackFinish');
@@ -626,6 +625,7 @@ class Wavesurfer extends Plugin {
     onWaveError(error) {
         // notify listeners
         this.player.trigger('error', error);
+
         this.log(error, 'error');
     }
 
