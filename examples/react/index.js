@@ -7,8 +7,9 @@ class VideojsWavesurferPlayer extends React.Component {
         // instantiate Video.js
         this.player = videojs(this.videoNode, this.props, function onPlayerReady(){
             // print version information at startup
-            videojs.log('Using video.js', videojs.VERSION,
-                'with videojs-wavesurfer', videojs.getPluginVersion('wavesurfer'));
+            var msg = 'Using video.js ' + videojs.VERSION +
+                ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer');
+            videojs.log(msg);
         });
 
         // error handling
