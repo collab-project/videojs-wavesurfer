@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+2.5.0 - unreleased
+------------------
+
+- Bugfix: replace custom tech for text tracks to fix high CPU usage (#60, #62)
+
+
 2.4.0 - 2018/05/15
 ------------------
 

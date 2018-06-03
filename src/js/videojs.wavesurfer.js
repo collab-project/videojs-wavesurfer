@@ -43,6 +43,7 @@ class Wavesurfer extends Plugin {
         this.liveMode = false;
         this.debug = (options.debug.toString() === 'true');
         this.msDisplayMax = parseFloat(options.msDisplayMax);
+        this.textTracksEnabled = (this.player.options_.tracks.length > 0);
 
         // microphone plugin
         if (options.src === 'live') {
@@ -66,16 +67,6 @@ class Wavesurfer extends Plugin {
      * Player UI is ready: customize controls.
      */
     initialize() {
-        // disable timeupdates
-        this.player.controlBar.currentTimeDisplay.off(this.player, 'timeupdate',
-            this.player.controlBar.currentTimeDisplay.throttledUpdateContent);
-
-        // Sets up an interval function to track current time
-        // and trigger timeupdate every 250 milliseconds
-        // XXX: should start tracking on play and stop again on pause (and in
-        // texttrack mode only)
-        this.player.tech_.trackCurrentTime();
-
         // hide big play button
         this.player.bigPlayButton.hide();
 
@@ -159,6 +150,18 @@ class Wavesurfer extends Plugin {
             this.responsiveWave = WaveSurfer.util.debounce(
                 this.onResizeChange.bind(this), 150);
             window.addEventListener('resize', this.responsiveWave);
+        }
+
+        // text tracks
+        if (this.textTracksEnabled) {
+            // disable timeupdates
+            this.player.controlBar.currentTimeDisplay.off(this.player, 'timeupdate',
+                this.player.controlBar.currentTimeDisplay.throttledUpdateContent);
+
+            // sets up an interval function to track current time
+            // and trigger timeupdate every 250 milliseconds.
+            // needed for text tracks
+            this.player.tech_.trackCurrentTime();
         }
 
         // kick things off
@@ -498,8 +501,10 @@ class Wavesurfer extends Plugin {
                     formatTime(time, duration, this.msDisplayMax);
         }
 
-        // XXX: only needed for text-tracks
-        this.player.tech_.setCurrentTime(currentTime);
+        if (this.textTracksEnabled) {
+            // only needed for text tracks
+            this.player.tech_.setCurrentTime(currentTime);
+        }
     }
 
     /**
