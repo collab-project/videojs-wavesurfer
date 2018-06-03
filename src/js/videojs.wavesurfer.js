@@ -9,7 +9,6 @@ import log from './utils/log';
 import formatTime from './utils/format-time';
 import pluginDefaultOptions from './defaults';
 import window from 'global/window';
-//import WavesurferTech from './tech';
 
 import videojs from 'video.js';
 import WaveSurfer from 'wavesurfer.js';
@@ -45,10 +44,6 @@ class Wavesurfer extends Plugin {
         this.debug = (options.debug.toString() === 'true');
         this.msDisplayMax = parseFloat(options.msDisplayMax);
 
-        // attach this instance to the current player so that the tech can
-        // access it
-        //this.player.activeWavesurferPlugin = this;
-
         // microphone plugin
         if (options.src === 'live') {
             // check if the wavesurfer.js microphone plugin can be enabled
@@ -71,23 +66,6 @@ class Wavesurfer extends Plugin {
      * Player UI is ready: customize controls.
      */
     initialize() {
-        // setup tech
-        //this.player.tech_.setActivePlayer(this.player);
-
-        // define text track settings for testing
-        // XXX: should be pulled from settings
-        /*var captionOption = {
-            kind: 'captions',
-            srclang: 'en',
-            label: 'English',
-            src: 'media/hal.vtt',
-            mode: 'showing',
-            default: true
-        };
-        // add and show text track
-        this.player.addRemoteTextTrack(captionOption, true);
-        */
-
         // disable timeupdates
         this.player.controlBar.currentTimeDisplay.off(this.player, 'timeupdate',
             this.player.controlBar.currentTimeDisplay.throttledUpdateContent);
@@ -523,7 +501,7 @@ class Wavesurfer extends Plugin {
                     formatTime(time, duration, this.msDisplayMax);
         }
 
-        // only needed for text-tracks
+        // XXX: only needed for text-tracks
         this.player.tech_.setCurrentTime(currentTime);
     }
 
@@ -790,11 +768,6 @@ videojs.Wavesurfer = Wavesurfer;
 if (videojs.getPlugin('wavesurfer') === undefined) {
     videojs.registerPlugin('wavesurfer', Wavesurfer);
 }
-
-// register the WavesurferTech as 'Html5' to override the default html5 tech.
-// If we register it as anything other then 'Html5', the <audio> element will
-// be removed by VJS and caption tracks will be lost in the Safari browser.
-//videojs.registerTech('Html5', WavesurferTech);
 
 module.exports = {
     Wavesurfer
