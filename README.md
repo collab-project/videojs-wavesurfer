@@ -248,40 +248,6 @@ See the full `texttrack` example
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/texttrack.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/texttrack.html)).
 
-It's also possible to dynamically add text tracks by supplying them to the `tracks` option:
-
-```javascript
-var textTracks = [
-    {
-        kind: 'captions',
-        srclang: 'en',
-        label: 'English',
-        src: 'media/hal.vtt',
-        mode: 'showing',
-        default: true
-    }
-];
-
-var player = videojs('myClip', {
-    controls: true,
-    autoplay: true,
-    tracks: textTracks,
-    width: 600,
-    height: 300,
-    plugins: {
-        wavesurfer: {
-            src: 'media/hal.wav',
-            msDisplayMax: 10,
-            debug: true,
-            waveColor: 'grey',
-            progressColor: 'black',
-            cursorColor: 'black',
-            hideScrollbar: true
-        }
-    }
-});
-```
-
 Microphone plugin
 -----------------
 

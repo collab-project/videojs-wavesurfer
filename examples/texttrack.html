@@ -22,17 +22,26 @@
 </head>
 <body>
 
-<audio id="myAudio" class="video-js vjs-default-skin">
-    <track kind="captions" src="media/hal.vtt" srclang="en-US" default />
-</audio>
+<audio id="myAudio" class="video-js vjs-default-skin"></audio>
 
 <script>
+var textTracks = [
+    {
+        kind: 'captions',
+        srclang: 'en',
+        label: 'English',
+        src: 'media/hal.vtt',
+        mode: 'showing',
+        default: true
+    }
+];
 var player = videojs('myAudio', {
     controls: true,
     autoplay: true,
     fluid: false,
     width: 600,
     height: 300,
+    tracks: textTracks,
     plugins: {
         wavesurfer: {
             src: 'media/hal.wav',
@@ -46,8 +55,9 @@ var player = videojs('myAudio', {
     }
 }, function(){
     // print version information at startup
-    videojs.log('Using video.js', videojs.VERSION,
-        'with videojs-wavesurfer', videojs.getPluginVersion('wavesurfer'));
+    var msg = 'Using video.js '+ videojs.VERSION +
+        ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer');
+    videojs.log(msg);
 });
 
 // error handling
