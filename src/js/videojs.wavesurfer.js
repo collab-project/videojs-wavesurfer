@@ -394,6 +394,9 @@ class Wavesurfer extends Plugin {
             // destroy wavesurfer instance
             this.surfer.destroy();
         }
+        if (this.textTracksEnabled) {
+            this.player.tech_.stopTrackingCurrentTime();
+        }
         this.log('Destroyed plugin');
     }
 
