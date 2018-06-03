@@ -9,7 +9,7 @@ import log from './utils/log';
 import formatTime from './utils/format-time';
 import pluginDefaultOptions from './defaults';
 import window from 'global/window';
-import WavesurferTech from './tech';
+//import WavesurferTech from './tech';
 
 import videojs from 'video.js';
 import WaveSurfer from 'wavesurfer.js';
@@ -47,7 +47,7 @@ class Wavesurfer extends Plugin {
 
         // attach this instance to the current player so that the tech can
         // access it
-        this.player.activeWavesurferPlugin = this;
+        //this.player.activeWavesurferPlugin = this;
 
         // microphone plugin
         if (options.src === 'live') {
@@ -72,7 +72,31 @@ class Wavesurfer extends Plugin {
      */
     initialize() {
         // setup tech
-        this.player.tech_.setActivePlayer(this.player);
+        //this.player.tech_.setActivePlayer(this.player);
+
+        // define text track settings for testing
+        // XXX: should be pulled from settings
+        /*var captionOption = {
+            kind: 'captions',
+            srclang: 'en',
+            label: 'English',
+            src: 'media/hal.vtt',
+            mode: 'showing',
+            default: true
+        };
+        // add and show text track
+        this.player.addRemoteTextTrack(captionOption, true);
+        */
+
+        // disable timeupdates
+        this.player.controlBar.currentTimeDisplay.off(this.player, 'timeupdate',
+            this.player.controlBar.currentTimeDisplay.throttledUpdateContent);
+
+        // Sets up an interval function to track current time
+        // and trigger timeupdate every 250 milliseconds
+        // XXX: should start tracking on play and stop again on pause (and in
+        // texttrack mode only)
+        this.player.tech_.trackCurrentTime();
 
         // hide big play button
         this.player.bigPlayButton.hide();
@@ -478,7 +502,7 @@ class Wavesurfer extends Plugin {
      */
     setCurrentTime(currentTime, duration) {
         // emit the timeupdate event so that the tech knows about the time change
-        this.trigger('timeupdate');
+        //this.trigger('timeupdate');
 
         if (currentTime === undefined) {
             currentTime = this.surfer.getCurrentTime();
@@ -498,6 +522,9 @@ class Wavesurfer extends Plugin {
                 this.player.controlBar.currentTimeDisplay.contentEl().lastChild.textContent =
                     formatTime(time, duration, this.msDisplayMax);
         }
+
+        // only needed for text-tracks
+        this.player.tech_.setCurrentTime(currentTime);
     }
 
     /**
@@ -767,7 +794,7 @@ if (videojs.getPlugin('wavesurfer') === undefined) {
 // register the WavesurferTech as 'Html5' to override the default html5 tech.
 // If we register it as anything other then 'Html5', the <audio> element will
 // be removed by VJS and caption tracks will be lost in the Safari browser.
-videojs.registerTech('Html5', WavesurferTech);
+//videojs.registerTech('Html5', WavesurferTech);
 
 module.exports = {
     Wavesurfer
