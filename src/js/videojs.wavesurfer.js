@@ -479,9 +479,6 @@ class Wavesurfer extends Plugin {
      * @private
      */
     setCurrentTime(currentTime, duration) {
-        // emit the timeupdate event so that the tech knows about the time change
-        //this.trigger('timeupdate');
-
         if (currentTime === undefined) {
             currentTime = this.surfer.getCurrentTime();
         }
