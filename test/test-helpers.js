@@ -18,6 +18,9 @@ const TestHelpers = {
     /** Peaks data for example audio clip */
     EXAMPLE_AUDIO_PEAKS_FILE: '/base/test/support/demo-peaks.json',
 
+    /** Example VTT clip */
+    EXAMPLE_VTT_FILE: '/base/test/support/demo.vtt',
+
     /**
      * Create DOM element.
      */
