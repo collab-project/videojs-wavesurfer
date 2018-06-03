@@ -248,23 +248,6 @@ See the full `texttrack` example
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/texttrack.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/texttrack.html)).
 
-It's also possible to dynamically add text tracks, for example:
-
-```javascript
-player.on('ready', function() {
-    // define text track settings
-    var captionOption = {
-        kind: 'captions',
-        srclang: 'en',
-        label: 'English',
-        src: 'media/hal.vtt',
-        mode: 'showing'
-    };
-    // add and show text track
-    player.addRemoteTextTrack(captionOption, true);
-});
-```
-
 Microphone plugin
 -----------------
 
@@ -311,7 +294,6 @@ See the full `live` example
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/live.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/live.html)).
 
-
 Change audio output or input device
 -----------------------------------
 
@@ -333,7 +315,6 @@ these devices and allow the user to choose one, check out the the full `input` e
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/input.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/input.html)).
 
-
 Webpack
 -------
 
@@ -346,7 +327,6 @@ The `react` example shows how to integrate this plugin in a [React](https://reac
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/react/index.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/react/index.html)).
 
-
 More features using other plugins
 ---------------------------------
 
@@ -357,7 +337,6 @@ tested with `videojs-wavesurfer`:
 
 - [videojs-record](https://github.com/collab-project/videojs-record) - Adds
   support for recording audio/video/image files.
-
 
 Development
 -----------
@@ -392,12 +371,10 @@ are run using:
 npm run <command>
 ```
 
-
 License
 -------
 
 This work is licensed under the [MIT License](LICENSE).
-
 
 Donate
 ------
