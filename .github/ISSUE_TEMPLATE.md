@@ -14,12 +14,11 @@ Please describe what actually happened.
 ### Error output
 If there are any errors at all, please include them here.
 
-## Additional Information
-Please include any additional information necessary here. Including the following:
-### versions
-#### videojs/wavesurfer
-what version of video.js and wavesurfer.js does this occur with?
-#### browsers
+## Versions
+Make sure to include the following versions:
+### videojs/wavesurfer
+what version of video.js, videojs-wavesurfer and wavesurfer.js does this occur with?
+### Browsers
 what browser are affected?
-#### OSes
+### OSes
 what platforms (operating systems and devices) are affected?
