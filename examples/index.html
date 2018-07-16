@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <title>Wavesurfer Plugin for Video.js Example</title>
 
-  <link href="//vjs.zencdn.net/6.6.0/video-js.min.css" rel="stylesheet">
+  <link href="//vjs.zencdn.net/7.0.3/video-js.min.css" rel="stylesheet">
   <link href="../dist/css/videojs.wavesurfer.min.css" rel="stylesheet">
 
-  <script src="//vjs.zencdn.net/6.6.0/video.min.js"></script>
+  <script src="//vjs.zencdn.net/7.0.3/video.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/2.0.6/wavesurfer.min.js"></script>
 
   <script src="../dist/videojs.wavesurfer.min.js"></script>
@@ -51,8 +51,9 @@ var player = videojs("myAudio", {
     }
 }, function(){
     // print version information at startup
-    videojs.log('Using video.js', videojs.VERSION,
-        'with videojs-wavesurfer', videojs.getPluginVersion('wavesurfer'));
+    var msg = 'Using video.js ' + videojs.VERSION +
+        ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer');
+    videojs.log(msg);
 });
 
 // error handling
