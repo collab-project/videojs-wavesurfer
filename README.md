@@ -129,7 +129,8 @@ Examples
 See the full `audio` example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/index.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/index.html)) and
 the `video` example ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/video.html) or [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/video.html)).
 
-To try out the examples locally, checkout the repository using Git:
+To try out the examples locally, download the [zipfile](https://github.com/collab-project/videojs-wavesurfer/archive/master.zip)
+and unpack it, or checkout the repository using Git:
 ```
 git clone https://github.com/collab-project/videojs-wavesurfer.git
 ```
@@ -329,6 +330,10 @@ The `react` example shows how to integrate this plugin in a [React](https://reac
 
 More features using other plugins
 ---------------------------------
+
+Check the `plugin` example that extends the player with the wavesurfer.js cursor plugin
+([demo](https://collab-project.github.io/videojs-wavesurfer/examples/plugin.html) or
+[source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/plugin.html)).
 
 The Video.js community created
 [lots of plugins](https://github.com/videojs/video.js/wiki/Plugins)
