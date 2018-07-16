@@ -19,6 +19,6 @@ Make sure to include the following versions:
 ### videojs/wavesurfer
 what version of video.js, videojs-wavesurfer and wavesurfer.js does this occur with?
 ### Browsers
-what browser are affected?
+what browser(s) are affected? Make sure to test with all third-party browser **extensions disabled**.
 ### OSes
 what platforms (operating systems and devices) are affected?
