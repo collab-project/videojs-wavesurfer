@@ -63,10 +63,10 @@ describe('log', function() {
     it('only works when debug is true', function() {
         let test = log('foo', 'error', true);
         expect(test).toBeUndefined();
-        
+
         test = log('foo', 'warn', true);
         expect(test).toBeUndefined();
-        
+
         test = log('foo', 'bar', true);
         expect(test).toBeUndefined();
     });

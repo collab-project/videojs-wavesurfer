@@ -23,8 +23,8 @@ describe('Wavesurfer Live', function() {
             // trigger click event on playToggle button to start mic
             TestHelpers.triggerDomEvent(player.controlBar.playToggle.el(), 'click');
 
-            player.wavesurfer().play()
-            player.wavesurfer().pause()
+            player.wavesurfer().play();
+            player.wavesurfer().pause();
 
             // mic is active for a while
             setTimeout(done, 1000);

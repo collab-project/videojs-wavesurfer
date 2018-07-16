@@ -151,14 +151,14 @@ describe('Wavesurfer', function() {
             done();
         });
     });
-    
+
     /** @test {Wavesurfer#setVolume} */
     it('should set volume', function(done) {
 
         player.one('waveReady', function() {
 
             expect(player.volume()).toEqual(0);
-            
+
             // invalid values are ignored
             player.wavesurfer().setVolume();
             expect(player.volume()).toEqual(0);
@@ -267,12 +267,10 @@ describe('Wavesurfer', function() {
     it('should load Blob', function(done) {
 
         // fetch blob version of example audio file
-        fetch(TestHelpers.EXAMPLE_AUDIO_FILE)
-        .then(function(response) {
+        fetch(TestHelpers.EXAMPLE_AUDIO_FILE).then((response) => {
             return response.blob();
-        })
-        .then(function(blob) {
-            player.one('waveReady', function() {
+        }).then((blob) => {
+            player.one('waveReady', () => {
                 done();
             });
             // load blob
@@ -290,11 +288,13 @@ describe('Wavesurfer', function() {
             // load with peaks data
             player.wavesurfer().load(
                 TestHelpers.EXAMPLE_AUDIO_FILE,
-                [-0.007874015748031496, 0.0, -0.007874015748031496,
-                 0.0, -0.007874015748031496, 0.0, -0.007874015748031496,
-                 0.0, -0.007874015748031496, 0.0, -0.007874015748031496,
-                 0.0, -0.007874015748031496, 0.0, -0.007874015748031496,
-                 0.0, -0.007874015748031496, 0.0, -0.007874015748031496]
+                [
+                    -0.007874015748031496, 0.0, -0.007874015748031496,
+                    0.0, -0.007874015748031496, 0.0, -0.007874015748031496,
+                    0.0, -0.007874015748031496, 0.0, -0.007874015748031496,
+                    0.0, -0.007874015748031496, 0.0, -0.007874015748031496,
+                    0.0, -0.007874015748031496, 0.0, -0.007874015748031496
+                ]
             );
         });
     });
