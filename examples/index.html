@@ -50,6 +50,14 @@ var player = videojs('myAudio', {
     videojs.log(msg);
 });
 
+player.on('waveReady', function(event) {
+    console.log('waveform: ready!');
+});
+
+player.on('playbackFinish', function(event) {
+    console.log('playback finished.');
+});
+
 // error handling
 player.on('error', function(error) {
     console.warn('ERROR:', error);

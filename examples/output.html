@@ -137,6 +137,14 @@ function changeAudioOutput(event) {
     }
 };
 
+player.on('waveReady', function(event) {
+    console.log('waveform: ready!');
+});
+
+player.on('playbackFinish', function(event) {
+    console.log('playback finished.');
+});
+
 // error handling
 player.on('error', function(error) {
     console.log('error:', error);
