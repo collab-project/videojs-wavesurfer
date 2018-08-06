@@ -13,7 +13,7 @@ describe('pluginDefaultOptions', function() {
     });
 
     /** @test {pluginDefaultOptions} */
-    it('should have correct default values', function() {
+    it('contains correct default values', function() {
         expect(pluginDefaultOptions).toEqual({
             debug: false,
             msDisplayMax: 3

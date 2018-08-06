@@ -18,7 +18,7 @@ describe('Wavesurfer Live', function() {
     });
 
     /** @test {Wavesurfer} */
-    it('should start and pause microphone', function(done) {
+    it('starts and pauses the microphone', function(done) {
         player.one('ready', function() {
             // trigger click event on playToggle button to start mic
             TestHelpers.triggerDomEvent(player.controlBar.playToggle.el(), 'click');

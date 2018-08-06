@@ -38,7 +38,7 @@ describe('Wavesurfer Fluid', function() {
     });
 
     /** @test {Wavesurfer#redrawWaveform} */
-    it('should redraw waveform', function(done) {
+    it('redraws the waveform', function(done) {
         player.one('waveReady', function() {
             player.wavesurfer().redrawWaveform(100, 200);
 

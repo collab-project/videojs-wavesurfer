@@ -29,7 +29,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer} */
-    it('should be an advanced plugin instance', function(done) {
+    it('is an advanced plugin instance', function(done) {
 
         player.one('ready', function() {
             expect(player.el().nodeName).toEqual('DIV');
@@ -48,7 +48,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#play} */
-    it('should play', function(done) {
+    it('starts playback', function(done) {
 
         player.one('playbackFinish', done);
         player.one('waveReady', function() {
@@ -58,7 +58,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#pause} */
-    it('should pause', function(done) {
+    it('pauses playback', function(done) {
 
         player.one('waveReady', function() {
             // start playback
@@ -73,7 +73,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#destroy} */
-    it('should destroy', function(done) {
+    it('destroys player', function(done) {
 
         player.one('waveReady', function() {
             // die
@@ -84,7 +84,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#getCurrentTime} */
-    it('should get current time', function(done) {
+    it('get current time', function(done) {
 
         player.one('playbackFinish', function() {
             expect(player.wavesurfer().getCurrentTime()).toBeNear(
@@ -102,7 +102,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#setCurrentTime} */
-    it('should set current time', function(done) {
+    it('set current time', function(done) {
 
         player.one('waveReady', function() {
 
@@ -121,7 +121,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#getDuration} */
-    it('should get duration', function(done) {
+    it('get duration', function(done) {
 
         player.one('waveReady', function() {
 
@@ -133,7 +133,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#setDuration} */
-    it('should set duration', function(done) {
+    it('set duration', function(done) {
 
         player.one('waveReady', function() {
 
@@ -153,7 +153,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#setVolume} */
-    it('should set volume', function(done) {
+    it('set volume', function(done) {
 
         player.one('waveReady', function() {
 
@@ -171,7 +171,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#exportImage} */
-    it('should export image', function(done) {
+    it('exports image', function(done) {
 
         player.one('waveReady', function() {
 
@@ -192,7 +192,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#onWaveReady} */
-    it('should fire waveReady event', function(done) {
+    it('fires waveReady event', function(done) {
 
         player.one('waveReady', function() {
             // play button is initially hidden
@@ -207,7 +207,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#onWaveFinish} */
-    it('should fire playbackFinish event', function(done) {
+    it('fires playbackFinish event', function(done) {
 
         player.one('playbackFinish', done);
         player.one('waveReady', function() {
@@ -219,7 +219,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#onWaveSeek} */
-    it('should seek', function(done) {
+    it('seek', function(done) {
 
         player.one('waveReady', function() {
             // initially 0
@@ -234,7 +234,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#onPlayToggle} */
-    it('should toggle play', function(done) {
+    it('toggles play', function(done) {
 
         player.one('waveReady', function() {
             // display end of clip icon
@@ -254,7 +254,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#setupPlaybackEvents} */
-    it('should setup playback events', function(done) {
+    it('setup playback events', function(done) {
 
         player.one('waveReady', function() {
             player.wavesurfer().setupPlaybackEvents(false);
@@ -264,7 +264,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#load} */
-    it('should load Blob', function(done) {
+    it('loads Blob', function(done) {
 
         // fetch blob version of example audio file
         fetch(TestHelpers.EXAMPLE_AUDIO_FILE).then((response) => {
@@ -279,7 +279,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#load} */
-    it('should load peaks from array', function(done) {
+    it('loads peaks from array', function(done) {
 
         player.one('waveReady', function() {
             player.wavesurfer().surfer.once('redraw', function() {
@@ -300,7 +300,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#load} */
-    it('should load peaks from file', function(done) {
+    it('loads peaks from file', function(done) {
 
         player.one('waveReady', function() {
             player.wavesurfer().surfer.once('redraw', function() {
@@ -315,7 +315,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#load} */
-    it('should ignore peaks if file cannot be found', function(done) {
+    it('ignores peaks if file cannot be found', function(done) {
 
         player.one('waveReady', function() {
             player.wavesurfer().surfer.once('redraw', function() {
@@ -330,7 +330,7 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#setAudioOutput} */
-    it('should throw error for non-existing device', function(done) {
+    it('throws error for non-existing device', function(done) {
 
         player.one('error', function(e) {
             done();

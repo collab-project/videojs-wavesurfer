@@ -29,7 +29,7 @@ describe('Wavesurfer TextTracks', function() {
     });
 
     /** @test {Wavesurfer} */
-    it('should display interface elements', function(done) {
+    it('displays interface elements', function(done) {
 
         player.one('waveReady', function() {
             // text tracks UI is visible
