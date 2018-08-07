@@ -46,6 +46,7 @@
     "start:serve": "babel-node --presets=env scripts/server.js",
     "update": "npm-run-all -s update:*",
     "update:videojs-wavesurfer": "cpx -v 'node_modules/videojs-wavesurfer/dist/**/*' dist/",
+    "release:zip": "node scripts/release-zip.js",
     "test": "echo No tests yet!",
     "watch": "npm-run-all -p watch:lint",
     "watch:lint": "nodemon --watch examples --exec npm run lint"
