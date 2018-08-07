@@ -1,20 +1,20 @@
 /*!
  * videojs-wavesurfer
- * @version 2.5.0
+ * @version 2.5.1
  * @see https://github.com/collab-project/videojs-wavesurfer
  * @copyright 2014-2018 Collab
  * @license MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("WaveSurfer"), require("videojs"));
+		module.exports = factory(require("videojs"), require("WaveSurfer"));
 	else if(typeof define === 'function' && define.amd)
-		define("VideojsWavesurfer", ["WaveSurfer", "videojs"], factory);
+		define("VideojsWavesurfer", ["videojs", "WaveSurfer"], factory);
 	else if(typeof exports === 'object')
-		exports["VideojsWavesurfer"] = factory(require("WaveSurfer"), require("videojs"));
+		exports["VideojsWavesurfer"] = factory(require("videojs"), require("WaveSurfer"));
 	else
-		root["VideojsWavesurfer"] = factory(root["WaveSurfer"], root["videojs"]);
-})(window, function(__WEBPACK_EXTERNAL_MODULE_wavesurfer_js__, __WEBPACK_EXTERNAL_MODULE_video_js__) {
+		root["VideojsWavesurfer"] = factory(root["videojs"], root["WaveSurfer"]);
+})(window, function(__WEBPACK_EXTERNAL_MODULE_video_js__, __WEBPACK_EXTERNAL_MODULE_wavesurfer_js__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -1224,7 +1224,7 @@ var Wavesurfer = function (_Plugin) {
 // version nr is injected during build
 
 
-Wavesurfer.VERSION = "2.5.0";
+Wavesurfer.VERSION = "2.5.1";
 
 // register plugin once
 _video2.default.Wavesurfer = Wavesurfer;
@@ -1245,8 +1245,8 @@ module.exports = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/thijs/projects/videojs-wavesurfer/src/js/videojs.wavesurfer.js */"./src/js/videojs.wavesurfer.js");
-module.exports = __webpack_require__(/*! /home/thijs/projects/videojs-wavesurfer/src/css/videojs.wavesurfer.scss */"./src/css/videojs.wavesurfer.scss");
+__webpack_require__(/*! /Users/thijstriemstra/projects/videojs-wavesurfer/src/js/videojs.wavesurfer.js */"./src/js/videojs.wavesurfer.js");
+module.exports = __webpack_require__(/*! /Users/thijstriemstra/projects/videojs-wavesurfer/src/css/videojs.wavesurfer.scss */"./src/css/videojs.wavesurfer.scss");
 
 
 /***/ }),
