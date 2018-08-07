@@ -1,10 +1,11 @@
 videojs-wavesurfer changelog
 ============================
 
-2.5.1 - unreleased
+2.5.1 - 2018/08/08
 ------------------
 
 - Fix minified CSS file (#69)
+- Add example showing integration with wavesurfer.js cursor plugin (#67)
 
 
 2.5.0 - 2018/06/03
