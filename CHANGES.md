@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+2.5.1 - unreleased
+------------------
+
+- Fix minified CSS file (#69)
+
+
 2.5.0 - 2018/06/03
 ------------------
 
