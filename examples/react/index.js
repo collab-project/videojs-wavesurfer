@@ -5,15 +5,23 @@
 class VideojsWavesurferPlayer extends React.Component {
     componentDidMount() {
         // instantiate Video.js
-        this.player = videojs(this.videoNode, this.props, function onPlayerReady(){
+        this.player = videojs(this.videoNode, this.props, () => {
             // print version information at startup
-            var msg = 'Using video.js ' + videojs.VERSION +
+            var version_info = 'Using video.js ' + videojs.VERSION +
                 ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer');
-            videojs.log(msg);
+            videojs.log(version_info);
+        });
+
+        this.player.on('waveReady', (event) => {
+            console.log('waveform: ready!');
+        });
+
+        this.player.on('playbackFinish', (event) => {
+            console.log('playback finished.');
         });
 
         // error handling
-        this.player.on('error', function(error) {
+        this.player.on('error', (error) => {
             console.warn(error);
         });
     }
@@ -31,7 +39,7 @@ class VideojsWavesurferPlayer extends React.Component {
     render() {
         return (
             <div data-vjs-player>
-                <audio id="myAudio" ref={ node => this.videoNode = node } className="video-js"></audio>
+                <audio id="myAudio" ref={ node => this.videoNode = node } className="video-js vjs-default-skin"></audio>
             </div>
         )
     }

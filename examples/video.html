@@ -47,6 +47,19 @@ var player = videojs("myVideo", {
         ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer');
     videojs.log(msg);
 });
+
+player.on('waveReady', function(event) {
+    console.log('waveform: ready!');
+});
+
+player.on('playbackFinish', function(event) {
+    console.log('playback finished.');
+});
+
+// error handling
+player.on('error', function(error) {
+    console.warn('ERROR:', error);
+});
 </script>
 
 </body>
