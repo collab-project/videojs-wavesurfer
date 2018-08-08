@@ -324,7 +324,11 @@ The [webpack](https://github.com/collab-project/videojs-wavesurfer/wiki/Webpack)
 Using with React
 ----------------
 
-The `react` example shows how to integrate this plugin in a [React](https://reactjs.org) component
+The React [wiki page](https://github.com/collab-project/videojs-wavesurfer/wiki/React) wiki page
+shows how to get started with React and videojs-wavesurfer using the
+[create-react-app](https://github.com/facebook/create-react-app) tool.
+
+Alternatively, the `react` example shows how to integrate this plugin in a [React](https://reactjs.org) component
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/react/index.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/react/index.html)).
 
