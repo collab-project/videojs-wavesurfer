@@ -5,7 +5,7 @@
 class VideojsWavesurferPlayer extends React.Component {
     componentDidMount() {
         // instantiate Video.js
-        this.player = videojs(this.videoNode, this.props, () => {
+        this.player = videojs(this.audioNode, this.props, () => {
             // print version information at startup
             var version_info = 'Using video.js ' + videojs.VERSION +
                 ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer');
@@ -39,7 +39,7 @@ class VideojsWavesurferPlayer extends React.Component {
     render() {
         return (
             <div data-vjs-player>
-                <audio id="myAudio" ref={ node => this.videoNode = node } className="video-js vjs-default-skin"></audio>
+                <audio id="myAudio" ref={ node => this.audioNode = node } className="video-js vjs-default-skin"></audio>
             </div>
         )
     }
