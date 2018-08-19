@@ -9,11 +9,11 @@ import Wavesurfer from '../src/js/videojs.wavesurfer.js';
 
 
 /** @test {Wavesurfer} */
-describe('Wavesurfer', function() {
+describe('Wavesurfer', () => {
     var player;
     var originalTimeout;
 
-    beforeEach(function() {
+    beforeEach(() => {
         originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
 
@@ -21,7 +21,7 @@ describe('Wavesurfer', function() {
         player = TestHelpers.makePlayer();
     });
 
-    afterEach(function() {
+    afterEach(() => {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
 
         // delete player
@@ -29,9 +29,9 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer} */
-    it('is an advanced plugin instance', function(done) {
+    it('is an advanced plugin instance', (done) => {
 
-        player.one('ready', function() {
+        player.one('ready', () => {
             expect(player.el().nodeName).toEqual('DIV');
             expect(player.on).toBeFunction();
             expect(player.hasClass('vjs-wavesurfer')).toBeTrue();
@@ -48,19 +48,19 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#play} */
-    it('starts playback', function(done) {
+    it('starts playback', (done) => {
 
         player.one('playbackFinish', done);
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
             // start playback
             player.wavesurfer().play();
         });
     });
 
     /** @test {Wavesurfer#pause} */
-    it('pauses playback', function(done) {
+    it('pauses playback', (done) => {
 
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
             // start playback
             player.wavesurfer().play();
 
@@ -73,9 +73,9 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#destroy} */
-    it('destroys player', function(done) {
+    it('destroys player', (done) => {
 
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
             // die
             player.wavesurfer().destroy();
 
@@ -84,15 +84,15 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#getCurrentTime} */
-    it('get current time', function(done) {
+    it('get current time', (done) => {
 
-        player.one('playbackFinish', function() {
+        player.one('playbackFinish', () => {
             expect(player.wavesurfer().getCurrentTime()).toBeNear(
                 TestHelpers.EXAMPLE_AUDIO_DURATION, 0.01);
             done();
         });
 
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
             // initially 0
             expect(player.wavesurfer().getCurrentTime()).toEqual(0);
 
@@ -102,9 +102,9 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#setCurrentTime} */
-    it('set current time', function(done) {
+    it('set current time', (done) => {
 
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
 
             expect(player.wavesurfer().getCurrentTime()).toEqual(0);
             player.wavesurfer().setCurrentTime(0.123);
@@ -121,9 +121,9 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#getDuration} */
-    it('get duration', function(done) {
+    it('get duration', (done) => {
 
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
 
             expect(player.wavesurfer().getDuration()).toBeNear(
                 TestHelpers.EXAMPLE_AUDIO_DURATION, 0.01);
@@ -133,9 +133,9 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#setDuration} */
-    it('set duration', function(done) {
+    it('set duration', (done) => {
 
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
 
             expect(player.wavesurfer().getDuration()).toBeNear(
                 TestHelpers.EXAMPLE_AUDIO_DURATION, 0.01);
@@ -153,9 +153,9 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#setVolume} */
-    it('set volume', function(done) {
+    it('set volume', (done) => {
 
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
 
             expect(player.volume()).toEqual(0);
 
@@ -171,9 +171,9 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#exportImage} */
-    it('exports image', function(done) {
+    it('exports image', (done) => {
 
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
 
             // default to png
             let data = player.wavesurfer().exportImage();
@@ -192,9 +192,9 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#onWaveReady} */
-    it('fires waveReady event', function(done) {
+    it('fires waveReady event', (done) => {
 
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
             // play button is initially hidden
             expect(player.controlBar.playToggle.hasClass('vjs-hidden')).toBeTrue();
 
@@ -207,10 +207,10 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#onWaveFinish} */
-    it('fires playbackFinish event', function(done) {
+    it('fires playbackFinish event', (done) => {
 
         player.one('playbackFinish', done);
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
             expect(player.wavesurfer().waveFinished).toBeFalse();
 
             // start playback until end
@@ -219,9 +219,9 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#onWaveSeek} */
-    it('seek', function(done) {
+    it('seek', (done) => {
 
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
             // initially 0
             expect(player.wavesurfer().getCurrentTime()).toEqual(0);
 
@@ -234,9 +234,9 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#onPlayToggle} */
-    it('toggles play', function(done) {
+    it('toggles play', (done) => {
 
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
             // display end of clip icon
             player.controlBar.playToggle.addClass('vjs-ended');
 
@@ -254,9 +254,9 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#setupPlaybackEvents} */
-    it('setup playback events', function(done) {
+    it('setup playback events', (done) => {
 
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
             player.wavesurfer().setupPlaybackEvents(false);
 
             done();
@@ -264,25 +264,25 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#load} */
-    it('loads Blob', function(done) {
+    it('loads Blob', (done) => {
 
-        // fetch blob version of example audio file
-        fetch(TestHelpers.EXAMPLE_AUDIO_FILE).then((response) => {
-            return response.blob();
-        }).then((blob) => {
-            player.one('waveReady', () => {
-                done();
+        player.one('waveReady', () => {
+            // fetch blob version of example audio file
+            fetch(TestHelpers.EXAMPLE_AUDIO_FILE).then((response) => {
+                return response.blob();
+            }).then((blob) => {
+                // load blob
+                player.one('waveReady', done);
+                player.wavesurfer().load(blob);
             });
-            // load blob
-            player.wavesurfer().load(blob);
         });
     });
 
     /** @test {Wavesurfer#load} */
-    it('loads peaks from array', function(done) {
+    it('loads peaks from array', (done) => {
 
-        player.one('waveReady', function() {
-            player.wavesurfer().surfer.once('redraw', function() {
+        player.one('waveReady', () => {
+            player.wavesurfer().surfer.once('redraw', () => {
                 done();
             });
             // load with peaks data
@@ -300,10 +300,10 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#load} */
-    it('loads peaks from file', function(done) {
+    it('loads peaks from file', (done) => {
 
-        player.one('waveReady', function() {
-            player.wavesurfer().surfer.once('redraw', function() {
+        player.one('waveReady', () => {
+            player.wavesurfer().surfer.once('redraw', () => {
                 done();
             });
             // load from peaks file
@@ -315,10 +315,10 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#load} */
-    it('ignores peaks if file cannot be found', function(done) {
+    it('ignores peaks if file cannot be found', (done) => {
 
-        player.one('waveReady', function() {
-            player.wavesurfer().surfer.once('redraw', function() {
+        player.one('waveReady', () => {
+            player.wavesurfer().surfer.once('redraw', () => {
                 done();
             });
             // try loading from non-existing peaks file
@@ -330,13 +330,13 @@ describe('Wavesurfer', function() {
     });
 
     /** @test {Wavesurfer#setAudioOutput} */
-    it('throws error for non-existing device', function(done) {
+    it('throws error for non-existing device', (done) => {
 
-        player.one('error', function(e) {
+        player.one('error', (e) => {
             done();
         });
 
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
             // set to non-existing device
             player.wavesurfer().setAudioOutput('foo');
         });

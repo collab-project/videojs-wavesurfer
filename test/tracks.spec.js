@@ -6,10 +6,10 @@ import TestHelpers from './test-helpers.js';
 
 
 /** @test {Wavesurfer} */
-describe('Wavesurfer TextTracks', function() {
+describe('Wavesurfer TextTracks', () => {
     var player;
 
-    beforeEach(function() {
+    beforeEach(() => {
         // create audio element with nested text track element
         const tag = TestHelpers.makeTag('audio', 'myAudioTextTracks');
         const track = document.createElement('track');
@@ -23,15 +23,15 @@ describe('Wavesurfer TextTracks', function() {
         player = TestHelpers.makePlayer(tag);
     });
 
-    afterEach(function() {
+    afterEach(() => {
         // delete player
         player.dispose();
     });
 
     /** @test {Wavesurfer} */
-    it('displays interface elements', function(done) {
+    it('displays interface elements', (done) => {
 
-        player.one('waveReady', function() {
+        player.one('waveReady', () => {
             // text tracks UI is visible
             expect(player.controlBar.subsCapsButton.hasClass('vjs-hidden')).toBeFalse();
 

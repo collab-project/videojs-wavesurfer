@@ -5,21 +5,21 @@
 import TestHelpers from './test-helpers.js';
 
 /** @test {Wavesurfer} */
-describe('Wavesurfer Live', function() {
+describe('Wavesurfer Live', () => {
     var player;
 
-    beforeEach(function() {
+    beforeEach(() => {
         player = TestHelpers.makeLivePlayer();
     });
 
-    afterEach(function() {
+    afterEach(() => {
         // delete player
         player.dispose();
     });
 
     /** @test {Wavesurfer} */
-    it('starts and pauses the microphone', function(done) {
-        player.one('ready', function() {
+    it('starts and pauses the microphone', (done) => {
+        player.one('ready', () => {
             // trigger click event on playToggle button to start mic
             TestHelpers.triggerDomEvent(player.controlBar.playToggle.el(), 'click');
 

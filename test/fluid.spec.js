@@ -7,10 +7,10 @@ import window from 'global/window';
 import TestHelpers from './test-helpers.js';
 
 /** @test {Wavesurfer} */
-describe('Wavesurfer Fluid', function() {
+describe('Wavesurfer Fluid', () => {
     var player;
 
-    beforeEach(function() {
+    beforeEach(() => {
         // create new player
         let options = {
             controls: true,
@@ -32,14 +32,14 @@ describe('Wavesurfer Fluid', function() {
         player = TestHelpers.makePlayer(tag, options);
     });
 
-    afterEach(function() {
+    afterEach(() => {
         // delete player
         player.dispose();
     });
 
     /** @test {Wavesurfer#redrawWaveform} */
-    it('redraws the waveform', function(done) {
-        player.one('waveReady', function() {
+    it('redraws the waveform', (done) => {
+        player.one('waveReady', () => {
             player.wavesurfer().redrawWaveform(100, 200);
 
             done();

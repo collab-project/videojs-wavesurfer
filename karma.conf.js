@@ -100,19 +100,19 @@ module.exports = function(config) {
                     var result = availableBrowsers;
                     let cd = availableBrowsers.indexOf('ChromeHeadless');
                     if (cd > -1) {
-                        availableBrowsers[cd] = 'Chrome_dev';
+                        availableBrowsers[cd] = 'Chrome_headless';
                     }
                     let fd = availableBrowsers.indexOf('FirefoxHeadless');
                     if (fd > -1) {
-                        availableBrowsers[fd] = 'Firefox_dev';
+                        availableBrowsers[fd] = 'Firefox_headless';
                     }
                     let fh = availableBrowsers.indexOf('Firefox');
                     if (fh > -1) {
-                        availableBrowsers[fh] = 'Firefox_dev';
+                        availableBrowsers[fh] = 'Firefox_headless';
                     }
                     let ch = availableBrowsers.indexOf('ChromiumHeadless');
                     if (ch > -1) {
-                        availableBrowsers[ch] = 'Chromium_dev';
+                        availableBrowsers[ch] = 'Chromium_headless';
                     }
                     return result;
                 }
@@ -120,14 +120,18 @@ module.exports = function(config) {
         },
         customLaunchers: {
             Chrome_dev: {
+                base: 'Chrome',
+                flags: chromeFlags
+            },
+            Chrome_headless: {
                 base: 'ChromeHeadless',
                 flags: chromeFlags
             },
-            Chromium_dev: {
+            Chromium_headless: {
                 base: 'ChromiumHeadless',
                 flags: chromeFlags
             },
-            Firefox_dev: {
+            Firefox_headless: {
                 base: 'FirefoxHeadless',
                 prefs: firefoxFlags
             }
