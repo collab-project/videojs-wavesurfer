@@ -5,7 +5,7 @@ addons:
   firefox: latest
 language: node_js
 node_js:
-  - '9'
+  - node
 install:
   - npm prune
   - npm install
