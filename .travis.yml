@@ -3,8 +3,6 @@ dist: trusty
 addons:
   chrome: stable
   firefox: latest
-env:
-  - MOZ_HEADLESS=1
 language: node_js
 node_js:
   - '9'
