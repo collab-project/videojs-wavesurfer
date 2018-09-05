@@ -16,6 +16,7 @@ var fakeAudioStream = path.join(support_dir, 'demo.wav');
 // http://peter.sh/experiments/chromium-command-line-switches/
 var chromeFlags = [
     '--no-sandbox',
+    '--disable-setuid-sandbox',
     '--no-first-run',
     '--noerrdialogs',
     '--no-default-browser-check',
