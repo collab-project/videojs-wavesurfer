@@ -24,8 +24,9 @@ describe('Wavesurfer', () => {
     afterEach(() => {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
 
-        // delete player
-        player.dispose();
+        try {
+            player.dispose();
+        } catch (err) {}
     });
 
     /** @test {Wavesurfer} */
