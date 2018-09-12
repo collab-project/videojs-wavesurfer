@@ -50,8 +50,8 @@ describe('Wavesurfer', () => {
     /** @test {Wavesurfer#play} */
     it('starts playback', (done) => {
 
-        player.one('playbackFinish', done);
         player.one('waveReady', () => {
+            player.one('playbackFinish', done);
             // start playback
             player.wavesurfer().play();
         });
