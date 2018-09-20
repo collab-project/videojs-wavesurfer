@@ -6,7 +6,7 @@ process.traceDeprecation = true;
 process.env.BABEL_ENV = 'test';
 
 const path = require('path');
-require('babel-register');
+require('@babel/register');
 
 var webpackConfig = require('./build-config/webpack.prod.main.js');
 var support_dir = path.resolve(__dirname, 'test', 'support');
@@ -64,7 +64,7 @@ module.exports = function(config) {
             'node_modules/wavesurfer.js/dist/plugin/wavesurfer.microphone.js',
 
             // specs
-            'test/**/*.spec.js'
+            {pattern: 'test/**/*.spec.js', watched: false}
         ],
         preprocessors: {
             'test/**/*.spec.js': ['webpack'],
@@ -148,7 +148,7 @@ module.exports = function(config) {
     };
 
     if (ci) {
-        configuration.browsers = ['Chrome_dev'];
+        configuration.browsers = ['Chrome_headless'];
         configuration.detectBrowsers.enabled = false;
         configuration.singleRun = true;
 
