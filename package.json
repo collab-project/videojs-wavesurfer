@@ -28,7 +28,7 @@
     "docs": "npm-run-all docs:*",
     "docs:api": "jsdoc src/js -r -d docs/api",
     "lint": "npm-run-all lint:*",
-    "lint:js": "eslint src/js test",
+    "lint:js": "eslint src/js test build-config *.js",
     "lint:html": "htmlhint examples",
     "start": "npm run build && webpack-dev-server --config ./build-config/webpack.dev.main.js",
     "test": "karma start karma.conf.js",
@@ -68,7 +68,7 @@
     "karma": "^3.0.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.2",
-    "karma-coveralls": "^2.0.0",
+    "karma-coveralls": "^2.1.0",
     "karma-detect-browsers": "^2.3.3",
     "karma-edge-launcher": "^0.4.2",
     "karma-firefox-launcher": "^1.1.0",
@@ -88,8 +88,8 @@
     "style-loader": "^0.23.0",
     "terser-webpack-plugin": "^1.1.0",
     "webpack": "^4.19.1",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.8",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.9",
     "webpack-merge": "^4.1.4",
     "webrtc-adapter": "^6.4.0"
   }
