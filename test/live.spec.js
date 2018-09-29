@@ -8,10 +8,6 @@ import TestHelpers from './test-helpers.js';
 describe('Wavesurfer Live', () => {
     var player;
 
-    beforeEach(() => {
-        player = TestHelpers.makeLivePlayer();
-    });
-
     afterEach(() => {
         // delete player
         player.dispose();
@@ -19,6 +15,8 @@ describe('Wavesurfer Live', () => {
 
     /** @test {Wavesurfer} */
     it('starts and pauses the microphone', (done) => {
+        player = TestHelpers.makeLivePlayer();
+
         player.one('ready', () => {
             // trigger click event on playToggle button to start mic
             TestHelpers.triggerDomEvent(player.controlBar.playToggle.el(), 'click');
@@ -29,6 +27,16 @@ describe('Wavesurfer Live', () => {
             // mic is active for a while
             setTimeout(done, 1000);
         });
+    });
+
+    /** @test {Wavesurfer} */
+    it('throws error when microphone plugin is missing', () => {
+        var originalPlayer = WaveSurfer.microphone;
+        WaveSurfer.microphone = undefined;
+
+        player = TestHelpers.makeLivePlayer();
+
+        WaveSurfer.microphone = originalPlayer;
     });
 
 });
