@@ -75,4 +75,17 @@ describe('Wavesurfer options', () => {
         player.one('playbackFinish', done);
     });
 
+    /** @test {Wavesurfer} */
+    it('accepts loop option', (done) => {
+        player = TestHelpers.makePlayer({
+            autoplay: true,
+            loop: true
+        });
+
+        player.one('playbackFinish', () => {
+            // stop after it looped once
+            player.one('playbackFinish', done);
+        });
+    });
+
 });

@@ -28,7 +28,7 @@
     "docs": "npm-run-all docs:*",
     "docs:api": "jsdoc src/js -r -d docs/api",
     "lint": "npm-run-all lint:*",
-    "lint:js": "eslint src/js test build-config *.js",
+    "lint:js": "eslint src/js test build-config",
     "lint:html": "htmlhint examples",
     "start": "npm run build && webpack-dev-server --config ./build-config/webpack.dev.main.js",
     "test": "karma start karma.conf.js",

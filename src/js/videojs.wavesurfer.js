@@ -325,7 +325,9 @@ class Wavesurfer extends Plugin {
      */
     play() {
         // show pause button
-        this.player.controlBar.playToggle.handlePlay();
+        if (this.player.controlBar.playToggle.contentEl()) {
+            this.player.controlBar.playToggle.handlePlay();
+        }
 
         if (this.liveMode) {
             // start/resume microphone visualization
