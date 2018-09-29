@@ -51,7 +51,7 @@ describe('formatTime', () => {
 });
 
 /** @test {log} */
-describe('log', function() {
+describe('log', () => {
 
     /** @test {log} */
     it('does not work when debug is false', () => {

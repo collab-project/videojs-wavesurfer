@@ -206,7 +206,7 @@ class Wavesurfer extends Plugin {
             let playerHeight = rect.height;
             surferOpts.height = playerHeight - controlBarHeight;
         } else {
-            surferOpts.height = opts.waveformHeight;
+            surferOpts.height = surferOpts.waveformHeight;
         }
 
         // split channels
@@ -325,7 +325,9 @@ class Wavesurfer extends Plugin {
      */
     play() {
         // show pause button
-        this.player.controlBar.playToggle.handlePlay();
+        if (this.player.controlBar.playToggle.contentEl()) {
+            this.player.controlBar.playToggle.handlePlay();
+        }
 
         if (this.liveMode) {
             // start/resume microphone visualization
@@ -506,7 +508,7 @@ class Wavesurfer extends Plugin {
                     formatTime(time, duration, this.msDisplayMax);
         }
 
-        if (this.textTracksEnabled) {
+        if (this.textTracksEnabled && this.player.tech_ && this.player.tech_.el_) {
             // only needed for text tracks
             this.player.tech_.setCurrentTime(currentTime);
         }

@@ -34,7 +34,7 @@ var cssBannerPlugin = new webpack.BannerPlugin({
 
 // inject JS version number
 var jsVersionPlugin = new webpack.DefinePlugin({
-  '__VERSION__': JSON.stringify(pckg.version)
+    '__VERSION__': JSON.stringify(pckg.version)
 });
 
 var rootDir = path.resolve(__dirname, '..', '..');
@@ -58,6 +58,7 @@ module.exports = {
     module: {
         rules: [
             {
+                // javascript
                 test: /\.js$/,
                 include: path.resolve(rootDir, 'src', 'js'),
                 exclude: /(node_modules|bower_components|test)/,
@@ -66,8 +67,10 @@ module.exports = {
                 }
             },
             {
+                // scss
                 test: /\.scss$/,
                 include: path.resolve(rootDir, 'src', 'css'),
+                exclude: /(node_modules|bower_components|test)/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader',

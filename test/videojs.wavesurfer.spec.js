@@ -342,4 +342,5 @@ describe('Wavesurfer', () => {
             player.wavesurfer().setAudioOutput('foo');
         });
     });
+
 });
