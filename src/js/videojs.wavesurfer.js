@@ -506,7 +506,7 @@ class Wavesurfer extends Plugin {
                     formatTime(time, duration, this.msDisplayMax);
         }
 
-        if (this.textTracksEnabled) {
+        if (this.textTracksEnabled && this.player.tech_ && this.player.tech_.el_) {
             // only needed for text tracks
             this.player.tech_.setCurrentTime(currentTime);
         }
