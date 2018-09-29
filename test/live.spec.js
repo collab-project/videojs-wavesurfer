@@ -31,12 +31,12 @@ describe('Wavesurfer Live', () => {
 
     /** @test {Wavesurfer} */
     it('throws error when microphone plugin is missing', () => {
-        var originalPlayer = WaveSurfer.microphone;
+        var plugin = WaveSurfer.microphone;
         WaveSurfer.microphone = undefined;
 
         player = TestHelpers.makeLivePlayer();
 
-        WaveSurfer.microphone = originalPlayer;
+        WaveSurfer.microphone = plugin;
     });
 
 });

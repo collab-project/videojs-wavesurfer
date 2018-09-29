@@ -49,4 +49,21 @@ describe('Wavesurfer options', () => {
         });
     });
 
+    /** @test {Wavesurfer#startPlayers} */
+    it('hides loading spinner when no valid src is found', (done) => {
+        player = TestHelpers.makePlayer({
+            plugins: {
+                wavesurfer: {
+                    src: undefined
+                }
+            }
+        });
+
+        player.one('ready', () => {
+            expect(player.loadingSpinner.hasClass('vjs-hidden')).toBeTrue();
+
+            done();
+        });
+    });
+
 });
