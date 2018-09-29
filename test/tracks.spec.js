@@ -20,7 +20,7 @@ describe('Wavesurfer TextTracks', () => {
         tag.appendChild(track);
 
         // create new player
-        player = TestHelpers.makePlayer(tag);
+        player = TestHelpers.makePlayer({}, tag);
     });
 
     afterEach(() => {

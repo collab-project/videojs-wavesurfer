@@ -206,7 +206,7 @@ class Wavesurfer extends Plugin {
             let playerHeight = rect.height;
             surferOpts.height = playerHeight - controlBarHeight;
         } else {
-            surferOpts.height = opts.waveformHeight;
+            surferOpts.height = surferOpts.waveformHeight;
         }
 
         // split channels

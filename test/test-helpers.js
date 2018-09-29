@@ -4,7 +4,7 @@
 
 import document from 'global/document';
 
-import Player from 'video.js';
+import {Player, mergeOptions} from 'video.js';
 
 
 const TestHelpers = {
@@ -43,17 +43,17 @@ const TestHelpers = {
     /**
      * Create a test player containing the videojs-wavesurfer plugin.
      *
-     * @param  {Element|String} elementTag
      * @param  {Object} playerOptions
+     * @param  {Element|String} elementTag
      */
-    makePlayer(elementTag, playerOptions) {
+    makePlayer(playerOptions, elementTag) {
         elementTag = elementTag || TestHelpers.makeTag();
 
         // add to dom
         document.getElementsByTagName('body')[0].appendChild(elementTag);
 
         // default options
-        playerOptions = playerOptions || {
+        var opts = mergeOptions({
             controls: true,
             autoplay: false,
             fluid: false,
@@ -72,31 +72,27 @@ const TestHelpers = {
                     xhr: {}
                 }
             }
-        };
+        }, playerOptions || {});
 
-        return videojs(elementTag.id, playerOptions);
+        return videojs(elementTag.id, opts);
     },
 
+    /**
+     * Create a test player with the microphone plugin enabled.
+     */
     makeLivePlayer() {
         var tag = TestHelpers.makeTag('audio', 'liveAudio');
-        return this.makePlayer(tag, {
-            controls: true,
-            autoplay: false,
-            fluid: false,
-            loop: false,
-            width: 600,
-            height: 300,
+        var opts = {
             plugins: {
                 wavesurfer: {
                     src: 'live',
                     waveColor: 'black',
-                    debug: true,
                     cursorWidth: 0,
-                    interact: false,
-                    hideScrollbar: true
+                    interact: false
                 }
             }
-        });
+        };
+        return this.makePlayer(opts, tag);
     },
 
     /**

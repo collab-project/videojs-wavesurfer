@@ -13,23 +13,18 @@ describe('Wavesurfer Fluid', () => {
     beforeEach(() => {
         // create new player
         let options = {
-            controls: true,
-            autoplay: false,
             fluid: true,
             plugins: {
                 wavesurfer: {
-                    src: TestHelpers.EXAMPLE_AUDIO_FILE,
-                    msDisplayMax: 10,
                     debug: false,
                     waveColor: 'yellow',
                     progressColor: '#FCF990',
-                    cursorColor: '#FCFC42',
-                    hideScrollbar: true
+                    cursorColor: '#FCFC42'
                 }
             }
         };
         var tag = TestHelpers.makeTag('audio', 'fluidAudio');
-        player = TestHelpers.makePlayer(tag, options);
+        player = TestHelpers.makePlayer(options, tag);
     });
 
     afterEach(() => {
