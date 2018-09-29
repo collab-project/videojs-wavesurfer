@@ -66,4 +66,13 @@ describe('Wavesurfer options', () => {
         });
     });
 
+    /** @test {Wavesurfer} */
+    it('accepts autoplay option', (done) => {
+        player = TestHelpers.makePlayer({
+            autoplay: true
+        });
+
+        player.one('playbackFinish', done);
+    });
+
 });
