@@ -1,6 +1,13 @@
 videojs-wavesurfer changelog
 ============================
 
+3.0.0 - unreleased
+------------------
+
+- Bump required wavesurfer.js version to 2.1.0 for microphone support in
+  the MS Edge browser
+
+
 2.5.1 - 2018/08/08
 ------------------
 
