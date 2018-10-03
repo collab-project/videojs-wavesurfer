@@ -1,7 +1,7 @@
 videojs-wavesurfer changelog
 ============================
 
-3.0.0 - unreleased
+2.6.0 - 2018/10/04
 ------------------
 
 - Bump required wavesurfer.js version to 2.1.0 for microphone support in
