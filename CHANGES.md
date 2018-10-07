@@ -1,7 +1,7 @@
 videojs-wavesurfer changelog
 ============================
 
-2.6.1 - unreleased
+2.6.1 - 2018/10/07
 ------------------
 
 - Fix hiding time controls (#73)
