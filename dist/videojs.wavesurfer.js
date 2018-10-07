@@ -1,6 +1,6 @@
 /*!
  * videojs-wavesurfer
- * @version 2.6.0
+ * @version 2.6.1
  * @see https://github.com/collab-project/videojs-wavesurfer
  * @copyright 2014-2018 Collab
  * @license MIT
@@ -892,10 +892,10 @@ function (_Plugin) {
       }
 
       currentTime = isNaN(currentTime) ? 0 : currentTime;
-      duration = isNaN(duration) ? 0 : duration;
-      var time = Math.min(currentTime, duration); // update current time display component
+      duration = isNaN(duration) ? 0 : duration; // update current time display component
 
-      if (this.player.controlBar.currentTimeDisplay.contentEl()) {
+      if (this.player.controlBar.currentTimeDisplay && this.player.controlBar.currentTimeDisplay.contentEl()) {
+        var time = Math.min(currentTime, duration);
         this.player.controlBar.currentTimeDisplay.formattedTime_ = this.player.controlBar.currentTimeDisplay.contentEl().lastChild.textContent = (0, _formatTime.default)(time, duration, this.msDisplayMax);
       }
 
@@ -933,7 +933,7 @@ function (_Plugin) {
 
       duration = isNaN(duration) ? 0 : duration; // update duration display component
 
-      if (this.player.controlBar.durationDisplay.contentEl()) {
+      if (this.player.controlBar.durationDisplay && this.player.controlBar.durationDisplay.contentEl()) {
         this.player.controlBar.durationDisplay.formattedTime_ = this.player.controlBar.durationDisplay.contentEl().lastChild.textContent = (0, _formatTime.default)(duration, duration, this.msDisplayMax);
       }
     }
@@ -1186,7 +1186,7 @@ function (_Plugin) {
 }(Plugin); // version nr is injected during build
 
 
-Wavesurfer.VERSION = "2.6.0"; // register plugin once
+Wavesurfer.VERSION = "2.6.1"; // register plugin once
 
 _video.default.Wavesurfer = Wavesurfer;
 
@@ -1207,8 +1207,8 @@ module.exports = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/thijstriemstra/projects/videojs-wavesurfer/src/js/videojs.wavesurfer.js */"./src/js/videojs.wavesurfer.js");
-module.exports = __webpack_require__(/*! /Users/thijstriemstra/projects/videojs-wavesurfer/src/css/videojs.wavesurfer.scss */"./src/css/videojs.wavesurfer.scss");
+__webpack_require__(/*! /home/thijs/projects/videojs-wavesurfer/src/js/videojs.wavesurfer.js */"./src/js/videojs.wavesurfer.js");
+module.exports = __webpack_require__(/*! /home/thijs/projects/videojs-wavesurfer/src/css/videojs.wavesurfer.scss */"./src/css/videojs.wavesurfer.scss");
 
 
 /***/ }),
