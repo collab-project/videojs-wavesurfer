@@ -58,14 +58,14 @@
     "babel-loader": "^8.0.4",
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-istanbul": "^5.1.0",
-    "browserslist": "^4.2.1",
+    "browserslist": "^4.3.3",
     "css-loader": "^1.0.0",
-    "eslint": "^5.7.0",
+    "eslint": "^5.8.0",
     "htmlhint": "^0.10.1",
     "in-publish": "^2.0.0",
-    "jasmine-core": "^3.2.1",
+    "jasmine-core": "^3.3.0",
     "jsdoc": "^3.5.5",
-    "karma": "^3.0.0",
+    "karma": "^3.1.1",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.2",
     "karma-coveralls": "^2.1.0",
@@ -87,10 +87,10 @@
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "terser-webpack-plugin": "^1.1.0",
-    "webpack": "^4.21.0",
+    "webpack": "^4.23.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.9",
+    "webpack-dev-server": "^3.1.10",
     "webpack-merge": "^4.1.4",
-    "webrtc-adapter": "^6.4.3"
+    "webrtc-adapter": "^6.4.4"
   }
 }
