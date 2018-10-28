@@ -13,6 +13,8 @@
 
   <script src="../dist/videojs.wavesurfer.js"></script>
 
+  <script src="safari-workaround.js"></script>
+
   <style>
   /* change player background color */
   #myAudio {
@@ -26,7 +28,8 @@
 <audio id="myAudio" class="video-js vjs-default-skin"></audio>
 
 <script>
-var player = videojs('myAudio', {
+var player;
+var options = {
     controls: true,
     autoplay: true,
     fluid: false,
@@ -49,18 +52,40 @@ var player = videojs('myAudio', {
             ]
         }
     }
-}, function(){
-    // print version information at startup
-    var msg = 'Using video.js '+ videojs.VERSION +
-        ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer') +
-        ' and wavesurfer.js ' + WaveSurfer.VERSION;
-    videojs.log(msg);
-});
+};
 
-// error handling
-player.on('error', function(error) {
-    console.warn('ERROR:', error);
-});
+if (isSafari) {
+    // add start button for safari
+    addStartButton();
+} else {
+    // other browsers
+    createPlayer();
+}
+
+function createPlayer(event) {
+    if (isSafari) {
+        if (event) {
+            // hide button on safari
+            event.target.style.display = 'none';
+        }
+        updateContext(options);
+    }
+
+    // create player
+    player = videojs('myAudio', options, function() {
+        // print version information at startup
+        var msg = 'Using video.js '+ videojs.VERSION +
+            ' with videojs-wavesurfer ' +
+            videojs.getPluginVersion('wavesurfer') +
+            ' and wavesurfer.js ' + WaveSurfer.VERSION;
+        videojs.log(msg);
+    });
+
+    // error handling
+    player.on('error', function(error) {
+        console.warn('ERROR:', error);
+    });
+}
 </script>
 
 </body>
