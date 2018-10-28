@@ -58,7 +58,7 @@
     "babel-loader": "^8.0.4",
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-istanbul": "^5.1.0",
-    "browserslist": "^4.3.3",
+    "browserslist": "^4.3.4",
     "css-loader": "^1.0.0",
     "eslint": "^5.8.0",
     "htmlhint": "^0.10.1",
