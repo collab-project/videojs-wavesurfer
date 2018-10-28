@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+2.6.2 - unreleased
+------------------
+
+- Examples: add Safari browser workaround (#47)
+
+
 2.6.1 - 2018/10/07
 ------------------
 
