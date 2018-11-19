@@ -37,6 +37,6 @@
   ],
   "dependencies": {
     "video.js": ">=6.0.0",
-    "wavesurfer.js": ">=2.0.3"
+    "wavesurfer.js": ">=2.1.1"
   }
 }

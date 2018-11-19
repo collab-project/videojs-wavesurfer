@@ -4,6 +4,8 @@ videojs-wavesurfer changelog
 2.6.2 - unreleased
 ------------------
 
+- Bump required wavesurfer.js version to 2.1.1 for microphone support in
+  the Safari browser
 - Examples: add Safari browser workaround (#47)
 
 
