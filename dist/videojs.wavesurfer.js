@@ -1,6 +1,6 @@
 /*!
  * videojs-wavesurfer
- * @version 2.6.1
+ * @version 2.6.2
  * @see https://github.com/collab-project/videojs-wavesurfer
  * @copyright 2014-2018 Collab
  * @license MIT
@@ -1186,7 +1186,7 @@ function (_Plugin) {
 }(Plugin); // version nr is injected during build
 
 
-Wavesurfer.VERSION = "2.6.1"; // register plugin once
+Wavesurfer.VERSION = "2.6.2"; // register plugin once
 
 _video.default.Wavesurfer = Wavesurfer;
 
