@@ -93,45 +93,39 @@ module.exports = function(config) {
             enabled: true,
             usePhantomJS: false,
             preferHeadless: true,
-
             postDetection: function(availableBrowsers) {
                 if (availableBrowsers.length > 1) {
                     // use custom browser launchers
                     var result = availableBrowsers;
                     let cd = availableBrowsers.indexOf('ChromeHeadless');
                     if (cd > -1) {
-                        availableBrowsers[cd] = 'Chrome_headless';
+                        availableBrowsers[cd] = 'Chrome_dev';
                     }
                     let fd = availableBrowsers.indexOf('FirefoxHeadless');
                     if (fd > -1) {
-                        availableBrowsers[fd] = 'Firefox_headless';
+                        availableBrowsers[fd] = 'Firefox_dev';
                     }
                     let fh = availableBrowsers.indexOf('Firefox');
                     if (fh > -1) {
-                        availableBrowsers[fh] = 'Firefox_headless';
+                        availableBrowsers[fh] = 'Firefox_dev';
                     }
                     let ch = availableBrowsers.indexOf('ChromiumHeadless');
                     if (ch > -1) {
-                        availableBrowsers[ch] = 'Chromium_headless';
+                        availableBrowsers[ch] = 'Chromium_dev';
                     }
                     return result;
                 }
-            }
         },
         customLaunchers: {
             Chrome_dev: {
-                base: 'Chrome',
-                flags: chromeFlags
-            },
-            Chrome_headless: {
                 base: 'ChromeHeadless',
                 flags: chromeFlags
             },
-            Chromium_headless: {
+            Chromium_dev: {
                 base: 'ChromiumHeadless',
                 flags: chromeFlags
             },
-            Firefox_headless: {
+            Firefox_dev: {
                 base: 'FirefoxHeadless',
                 prefs: firefoxFlags
             }
@@ -148,7 +142,7 @@ module.exports = function(config) {
     };
 
     if (ci) {
-        configuration.browsers = ['Chrome_headless', 'Firefox_headless'];
+        configuration.browsers = ['Chrome_dev', 'Firefox_dev'];
         configuration.detectBrowsers.enabled = false;
         configuration.singleRun = true;
 
