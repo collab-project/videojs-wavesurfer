@@ -115,6 +115,7 @@ module.exports = function(config) {
                     }
                     return result;
                 }
+            }
         },
         customLaunchers: {
             Chrome_dev: {
