@@ -8,7 +8,7 @@ import TestHelpers from './test-helpers.js';
 
 /** @test {Wavesurfer} */
 describe('Wavesurfer Fluid', () => {
-    var player;
+    let player;
 
     beforeEach(() => {
         // create new player
@@ -23,7 +23,7 @@ describe('Wavesurfer Fluid', () => {
                 }
             }
         };
-        var tag = TestHelpers.makeTag('audio', 'fluidAudio');
+        let tag = TestHelpers.makeTag('audio', 'fluidAudio');
         player = TestHelpers.makePlayer(options, tag);
     });
 

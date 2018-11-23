@@ -6,7 +6,7 @@ import TestHelpers from './test-helpers.js';
 
 /** @test {Wavesurfer} */
 describe('Wavesurfer Live', () => {
-    var player;
+    let player;
 
     afterEach(() => {
         // delete player
@@ -31,7 +31,7 @@ describe('Wavesurfer Live', () => {
 
     /** @test {Wavesurfer} */
     it('throws error when microphone plugin is missing', () => {
-        var plugin = WaveSurfer.microphone;
+        let plugin = WaveSurfer.microphone;
         WaveSurfer.microphone = undefined;
 
         player = TestHelpers.makeLivePlayer();

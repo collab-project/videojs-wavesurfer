@@ -7,7 +7,7 @@ import TestHelpers from './test-helpers.js';
 
 /** @test {Wavesurfer} */
 describe('Wavesurfer TextTracks', () => {
-    var player;
+    let player;
 
     beforeEach(() => {
         // create audio element with nested text track element

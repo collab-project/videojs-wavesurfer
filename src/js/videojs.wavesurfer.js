@@ -20,14 +20,14 @@ const wavesurferClassName = 'vjs-wavedisplay';
 /**
  * Draw a waveform for audio and video files in a video.js player.
  *
- * @class Wavesurfer
- * @extends videojs.Plugin
+ * @class
+ * @augments videojs.Plugin
  */
 class Wavesurfer extends Plugin {
     /**
      * The constructor function for the class.
      *
-     * @param {(videojs.Player|Object)} player
+     * @param {(videojs.Player|Object)} player - video.js Player object.
      * @param {Object} options - Player options.
      */
     constructor(player, options) {
@@ -65,6 +65,8 @@ class Wavesurfer extends Plugin {
 
     /**
      * Player UI is ready: customize controls.
+     *
+     * @private
      */
     initialize() {
         // hide big play button
@@ -173,8 +175,9 @@ class Wavesurfer extends Plugin {
     /**
      * Initializes the waveform options.
      *
-     * @param {Object} surferOpts - Plugin options.
      * @private
+     * @param {Object} surferOpts - Plugin options.
+     * @returns {Object} - Updated `surferOpts` object.
      */
     parseOptions(surferOpts) {
         let rect = this.player.el_.getBoundingClientRect();
@@ -275,7 +278,7 @@ class Wavesurfer extends Plugin {
      *
      * @param {string|blob|file} url - Either the URL of the audio file,
      *     a Blob or a File object.
-     * @param {string|?number[]|number[][]} peaks - Either the URL of peaks
+     * @param {string|number[]} peaks - Either the URL of peaks
      *     data for the audio file, or an array with peaks data.
      */
     load(url, peaks) {
@@ -437,12 +440,12 @@ class Wavesurfer extends Plugin {
     /**
      * Save waveform image as data URI.
      *
-     * The default format is 'image/png'. Other supported types are
-     * 'image/jpeg' and 'image/webp'.
+     * The default format is `'image/png'`. Other supported types are
+     * `'image/jpeg'` and `'image/webp'`.
      *
      * @param {string} [format=image/png] - String indicating the image format.
      * @param {number} [quality=1] - Number between 0 and 1 indicating image
-     *     quality if the requested type is 'image/jpeg' or 'image/webp'.
+     *     quality if the requested type is `'image/jpeg'` or `'image/webp'`.
      * @returns {string} The data URI of the image data.
      */
     exportImage(format, quality) {
@@ -452,7 +455,7 @@ class Wavesurfer extends Plugin {
     /**
      * Change the audio output device.
      *
-     * @param {string} sinkId - Id of audio output device.
+     * @param {string} deviceId - Id of audio output device.
      */
     setAudioOutput(deviceId) {
         if (deviceId) {
@@ -472,6 +475,8 @@ class Wavesurfer extends Plugin {
      * Get the current time (in seconds) of the stream during playback.
      *
      * Returns 0 if no stream is available (yet).
+     *
+     * @returns {float} Current time of the stream.
      */
     getCurrentTime() {
         let currentTime = this.surfer.getCurrentTime();
@@ -520,6 +525,8 @@ class Wavesurfer extends Plugin {
      * Get the duration of the stream in seconds.
      *
      * Returns 0 if no stream is available (yet).
+     *
+     * @returns {float} Duration of the stream.
      */
     getDuration() {
         let duration = this.surfer.getDuration();
@@ -689,7 +696,7 @@ class Wavesurfer extends Plugin {
     onScreenChange() {
         // execute with tiny delay so the player element completes
         // rendering and correct dimensions are reported
-        var fullscreenDelay = this.player.setInterval(() => {
+        let fullscreenDelay = this.player.setInterval(() => {
             let isFullscreen = this.player.isFullscreen();
             let newWidth, newHeight;
             if (!isFullscreen) {
@@ -765,7 +772,12 @@ class Wavesurfer extends Plugin {
     }
 
     /**
+     * Log message to console (if the debug option is enabled).
+     *
      * @private
+     * @param {Array} args - The arguments to be passed to the matching console
+     *     method.
+     * @param {string} logType - The name of the console method to use.
      */
     log(args, logType) {
         log(args, logType, this.debug);
