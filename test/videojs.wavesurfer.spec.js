@@ -12,7 +12,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
 
 /** @test {Wavesurfer} */
 describe('Wavesurfer', () => {
-    var player;
+    let player;
 
     beforeEach(() => {
         // create new player

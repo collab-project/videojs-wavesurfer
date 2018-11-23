@@ -6,7 +6,7 @@ import TestHelpers from './test-helpers.js';
 
 /** @test {Wavesurfer} */
 describe('Wavesurfer options', () => {
-    var player;
+    let player;
 
     afterEach(() => {
         // delete player
