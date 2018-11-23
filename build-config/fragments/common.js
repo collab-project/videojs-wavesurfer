@@ -9,35 +9,34 @@ const moment = require('moment');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const time = moment().format('YYYY');
+const rootDir = path.resolve(__dirname, '..', '..');
 const pckg = require(path.join(__dirname, '..', '..', 'package.json'));
 
 // add JS banner with copyright and version info
-var jsBanner = `${pckg.name}
+let jsBanner = `${pckg.name}
 @version ${pckg.version}
 @see ${pckg.homepage}
 @copyright 2014-${time} ${pckg.author}
 @license ${pckg.license}`;
-var jsBannerPlugin = new webpack.BannerPlugin({
+let jsBannerPlugin = new webpack.BannerPlugin({
     banner: jsBanner,
     test: /\.js$/
 });
 
 // add CSS banner with version info
-var cssBanner = `/*!
+let cssBanner = `/*!
 Default styles for ${pckg.name} ${pckg.version}
 */`;
-var cssBannerPlugin = new webpack.BannerPlugin({
+let cssBannerPlugin = new webpack.BannerPlugin({
     banner: cssBanner,
     raw: true,
     test: /\.css$/
 });
 
 // inject JS version number
-var jsVersionPlugin = new webpack.DefinePlugin({
+let jsVersionPlugin = new webpack.DefinePlugin({
     '__VERSION__': JSON.stringify(pckg.version)
 });
-
-var rootDir = path.resolve(__dirname, '..', '..');
 
 module.exports = {
     context: rootDir,

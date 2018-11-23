@@ -53,7 +53,7 @@ const TestHelpers = {
         document.getElementsByTagName('body')[0].appendChild(elementTag);
 
         // default options
-        var opts = mergeOptions({
+        let opts = mergeOptions({
             controls: true,
             autoplay: false,
             fluid: false,
@@ -81,8 +81,8 @@ const TestHelpers = {
      * Create a test player with the microphone plugin enabled.
      */
     makeLivePlayer() {
-        var tag = TestHelpers.makeTag('audio', 'liveAudio');
-        var opts = {
+        let tag = TestHelpers.makeTag('audio', 'liveAudio');
+        let opts = {
             plugins: {
                 wavesurfer: {
                     src: 'live',
