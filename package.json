@@ -20,7 +20,7 @@
   "dependencies": {
     "video.js": "^7.3.0",
     "videojs-wavesurfer": "^2.6.2",
-    "webrtc-adapter": "^6.4.6"
+    "webrtc-adapter": "^6.4.8"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -33,8 +33,8 @@
     "htmlhint": "^0.10.1",
     "in-publish": "^2.0.0",
     "mv": "^2.1.1",
-    "nodemon": "^1.18.6",
-    "npm-run-all": "^4.1.3",
+    "nodemon": "^1.18.7",
+    "npm-run-all": "^4.1.5",
     "portscanner": "^2.2.0",
     "serve-static": "^1.13.2",
     "zip-dir": "^1.0.2"
