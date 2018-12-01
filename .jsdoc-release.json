@@ -1,0 +1,17 @@
+{
+    "opts": {
+        "template": "node_modules/tui-jsdoc-template",
+        "encoding": "utf8",
+        "recurse": true,
+        "package": "node_modules/videojs-wavesurfer/package.json",
+        "readme": "node_modules/videojs-wavesurfer/README.md"
+    },
+    "templates": {
+        "name": "videojs-wavesurfer",
+        "default": {
+            "layoutFile": "./doc-layout.tmpl"
+        }
+    },
+    "plugins": ["plugins/markdown"]
+}
+
