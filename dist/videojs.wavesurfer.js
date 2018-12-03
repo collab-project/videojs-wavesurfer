@@ -1,6 +1,6 @@
 /*!
  * videojs-wavesurfer
- * @version 2.6.2
+ * @version 2.6.3
  * @see https://github.com/collab-project/videojs-wavesurfer
  * @copyright 2014-2018 Collab
  * @license MIT
@@ -144,7 +144,7 @@ g = (function() {
 
 try {
 	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1, eval)("this");
+	g = g || new Function("return this")();
 } catch (e) {
 	// This works if the window reference is available
 	if (typeof window === "object") g = window;
@@ -315,6 +315,12 @@ var ERROR = 'error';
 var WARN = 'warn';
 /**
  * Log message (if the debug option is enabled).
+ *
+ * @private
+ * @param {Array} args - The arguments to be passed to the matching console
+ *     method.
+ * @param {string} logType - The name of the console method to use.
+ * @param {boolean} debug - Whether or not the debug option is enabled or not.
  */
 
 var log = function log(args, logType, debug) {
@@ -383,8 +389,8 @@ var wavesurferClassName = 'vjs-wavedisplay';
 /**
  * Draw a waveform for audio and video files in a video.js player.
  *
- * @class Wavesurfer
- * @extends videojs.Plugin
+ * @class
+ * @augments videojs.Plugin
  */
 
 var Wavesurfer =
@@ -395,7 +401,7 @@ function (_Plugin) {
   /**
    * The constructor function for the class.
    *
-   * @param {(videojs.Player|Object)} player
+   * @param {(videojs.Player|Object)} player - video.js Player object.
    * @param {Object} options - Player options.
    */
   function Wavesurfer(player, options) {
@@ -435,6 +441,8 @@ function (_Plugin) {
   }
   /**
    * Player UI is ready: customize controls.
+   *
+   * @private
    */
 
 
@@ -536,8 +544,9 @@ function (_Plugin) {
     /**
      * Initializes the waveform options.
      *
-     * @param {Object} surferOpts - Plugin options.
      * @private
+     * @param {Object} surferOpts - Plugin options.
+     * @returns {Object} - Updated `surferOpts` object.
      */
 
   }, {
@@ -641,7 +650,7 @@ function (_Plugin) {
      *
      * @param {string|blob|file} url - Either the URL of the audio file,
      *     a Blob or a File object.
-     * @param {string|?number[]|number[][]} peaks - Either the URL of peaks
+     * @param {string|number[]} peaks - Either the URL of peaks
      *     data for the audio file, or an array with peaks data.
      */
 
@@ -821,12 +830,12 @@ function (_Plugin) {
     /**
      * Save waveform image as data URI.
      *
-     * The default format is 'image/png'. Other supported types are
-     * 'image/jpeg' and 'image/webp'.
+     * The default format is `'image/png'`. Other supported types are
+     * `'image/jpeg'` and `'image/webp'`.
      *
      * @param {string} [format=image/png] - String indicating the image format.
      * @param {number} [quality=1] - Number between 0 and 1 indicating image
-     *     quality if the requested type is 'image/jpeg' or 'image/webp'.
+     *     quality if the requested type is `'image/jpeg'` or `'image/webp'`.
      * @returns {string} The data URI of the image data.
      */
 
@@ -838,7 +847,7 @@ function (_Plugin) {
     /**
      * Change the audio output device.
      *
-     * @param {string} sinkId - Id of audio output device.
+     * @param {string} deviceId - Id of audio output device.
      */
 
   }, {
@@ -862,6 +871,8 @@ function (_Plugin) {
      * Get the current time (in seconds) of the stream during playback.
      *
      * Returns 0 if no stream is available (yet).
+     *
+     * @returns {float} Current time of the stream.
      */
 
   }, {
@@ -908,6 +919,8 @@ function (_Plugin) {
      * Get the duration of the stream in seconds.
      *
      * Returns 0 if no stream is available (yet).
+     *
+     * @returns {float} Duration of the stream.
      */
 
   }, {
@@ -1172,7 +1185,12 @@ function (_Plugin) {
       }
     }
     /**
+     * Log message to console (if the debug option is enabled).
+     *
      * @private
+     * @param {Array} args - The arguments to be passed to the matching console
+     *     method.
+     * @param {string} logType - The name of the console method to use.
      */
 
   }, {
@@ -1186,7 +1204,7 @@ function (_Plugin) {
 }(Plugin); // version nr is injected during build
 
 
-Wavesurfer.VERSION = "2.6.2"; // register plugin once
+Wavesurfer.VERSION = "2.6.3"; // register plugin once
 
 _video.default.Wavesurfer = Wavesurfer;
 
@@ -1207,8 +1225,8 @@ module.exports = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/thijs/projects/videojs-wavesurfer/src/js/videojs.wavesurfer.js */"./src/js/videojs.wavesurfer.js");
-module.exports = __webpack_require__(/*! /home/thijs/projects/videojs-wavesurfer/src/css/videojs.wavesurfer.scss */"./src/css/videojs.wavesurfer.scss");
+__webpack_require__(/*! /Users/thijstriemstra/projects/videojs-wavesurfer/src/js/videojs.wavesurfer.js */"./src/js/videojs.wavesurfer.js");
+module.exports = __webpack_require__(/*! /Users/thijstriemstra/projects/videojs-wavesurfer/src/css/videojs.wavesurfer.scss */"./src/css/videojs.wavesurfer.scss");
 
 
 /***/ }),
