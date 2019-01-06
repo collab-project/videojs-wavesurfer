@@ -1,4 +1,5 @@
-dist: trusty
+sudo: false
+dist: xenial
 
 language: node_js
 node_js:
@@ -9,6 +10,7 @@ addons:
   firefox: latest
 
 install:
+  - npm install opencollective-postinstall
   - npm prune
   - npm install
 
