@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export OLD_VERSION=7.2.4
-export NEW_VERSION=7.3.0
+export OLD_VERSION=7.3.0
+export NEW_VERSION=7.4.1
 
 # check if language files exist
 # wget --delete-after https://vjs.zencdn.net/$NEW_VERSION/lang/nl.js
