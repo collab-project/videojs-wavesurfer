@@ -1,7 +1,7 @@
 videojs-wavesurfer changelog
 ============================
 
-2.6.4 - unreleased
+2.6.4 - 2019/02/04
 ------------------
 
 - Bump required wavesurfer.js version to 2.1.3 for Safari browser
