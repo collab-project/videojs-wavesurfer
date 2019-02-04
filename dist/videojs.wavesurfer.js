@@ -1,8 +1,8 @@
 /*!
  * videojs-wavesurfer
- * @version 2.6.3
+ * @version 2.6.4
  * @see https://github.com/collab-project/videojs-wavesurfer
- * @copyright 2014-2018 Collab
+ * @copyright 2014-2019 Collab
  * @license MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1204,7 +1204,7 @@ function (_Plugin) {
 }(Plugin); // version nr is injected during build
 
 
-Wavesurfer.VERSION = "2.6.3"; // register plugin once
+Wavesurfer.VERSION = "2.6.4"; // register plugin once
 
 _video.default.Wavesurfer = Wavesurfer;
 
@@ -1225,8 +1225,8 @@ module.exports = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/thijstriemstra/projects/videojs-wavesurfer/src/js/videojs.wavesurfer.js */"./src/js/videojs.wavesurfer.js");
-module.exports = __webpack_require__(/*! /Users/thijstriemstra/projects/videojs-wavesurfer/src/css/videojs.wavesurfer.scss */"./src/css/videojs.wavesurfer.scss");
+__webpack_require__(/*! /home/thijs/projects/videojs-wavesurfer/src/js/videojs.wavesurfer.js */"./src/js/videojs.wavesurfer.js");
+module.exports = __webpack_require__(/*! /home/thijs/projects/videojs-wavesurfer/src/css/videojs.wavesurfer.scss */"./src/css/videojs.wavesurfer.scss");
 
 
 /***/ }),
