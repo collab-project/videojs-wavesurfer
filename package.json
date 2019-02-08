@@ -88,8 +88,8 @@
     "style-loader": "^0.23.1",
     "terser-webpack-plugin": "^1.2.2",
     "tui-jsdoc-template": "^1.2.2",
-    "webpack": "^4.29.1",
-    "webpack-cli": "^3.2.1",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14",
     "webpack-merge": "^4.2.1",
     "webrtc-adapter": "^7.2.0"
