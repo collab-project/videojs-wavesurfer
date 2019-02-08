@@ -1,6 +1,6 @@
 /*!
  * videojs-wavesurfer
- * @version 2.6.4
+ * @version 2.7.0
  * @see https://github.com/collab-project/videojs-wavesurfer
  * @copyright 2014-2019 Collab
  * @license MIT
@@ -351,6 +351,11 @@ module.exports = exports.default;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Wavesurfer = void 0;
+
 var _log2 = _interopRequireDefault(__webpack_require__(/*! ./utils/log */ "./src/js/utils/log.js"));
 
 var _formatTime = _interopRequireDefault(__webpack_require__(/*! ./utils/format-time */ "./src/js/utils/format-time.js"));
@@ -449,6 +454,8 @@ function (_Plugin) {
   _createClass(Wavesurfer, [{
     key: "initialize",
     value: function initialize() {
+      var _this2 = this;
+
       // hide big play button
       this.player.bigPlayButton.hide(); // the native controls don't work for this UI so disable
       // them no matter what
@@ -463,14 +470,19 @@ function (_Plugin) {
       if (this.player.options_.controls === true) {
         // make sure controlBar is showing
         this.player.controlBar.show();
-        this.player.controlBar.el_.style.display = 'flex'; // progress control isn't used by this plugin
+        this.player.controlBar.el_.style.display = 'flex'; // progress control (if present) isn't used by this plugin
 
-        this.player.controlBar.progressControl.hide(); // make sure time displays are visible
+        if (this.player.controlBar.progressControl !== undefined) {
+          this.player.controlBar.progressControl.hide();
+        } // make sure time displays are visible
 
-        var uiElements = [this.player.controlBar.currentTimeDisplay, this.player.controlBar.timeDivider, this.player.controlBar.durationDisplay];
+
+        var uiElements = ['currentTimeDisplay', 'timeDivider', 'durationDisplay'];
         uiElements.forEach(function (element) {
           // ignore and show when essential elements have been disabled
           // by user
+          element = _this2.player.controlBar[element];
+
           if (element !== undefined) {
             element.el_.style.display = 'block';
             element.show();
@@ -479,14 +491,16 @@ function (_Plugin) {
 
         if (this.player.controlBar.remainingTimeDisplay !== undefined) {
           this.player.controlBar.remainingTimeDisplay.hide();
-        } // handle play toggle interaction
+        }
 
+        if (this.player.controlBar.playToggle !== undefined) {
+          // handle play toggle interaction
+          this.player.controlBar.playToggle.on(['tap', 'click'], this.onPlayToggle.bind(this)); // disable play button until waveform is ready
+          // (except when in live mode)
 
-        this.player.controlBar.playToggle.on(['tap', 'click'], this.onPlayToggle.bind(this)); // disable play button until waveform is ready
-        // (except when in live mode)
-
-        if (!this.liveMode) {
-          this.player.controlBar.playToggle.hide();
+          if (!this.liveMode) {
+            this.player.controlBar.playToggle.hide();
+          }
         }
       } // wavesurfer.js setup
 
@@ -530,10 +544,13 @@ function (_Plugin) {
 
 
       if (this.textTracksEnabled) {
-        // disable timeupdates
-        this.player.controlBar.currentTimeDisplay.off(this.player, 'timeupdate', this.player.controlBar.currentTimeDisplay.throttledUpdateContent); // sets up an interval function to track current time
+        if (this.player.controlBar.currentTimeDisplay !== undefined) {
+          // disable timeupdates
+          this.player.controlBar.currentTimeDisplay.off(this.player, 'timeupdate', this.player.controlBar.currentTimeDisplay.throttledUpdateContent);
+        } // sets up an interval function to track current time
         // and trigger timeupdate every 250 milliseconds.
         // needed for text tracks
+
 
         this.player.tech_.trackCurrentTime();
       } // kick things off
@@ -657,7 +674,7 @@ function (_Plugin) {
   }, {
     key: "load",
     value: function load(url, peaks) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (url instanceof Blob || url instanceof File) {
         this.log('Loading object: ' + JSON.stringify(url));
@@ -683,16 +700,16 @@ function (_Plugin) {
             var ajax = _wavesurfer.default.util.ajax(ajaxOptions);
 
             ajax.on('success', function (data, e) {
-              _this2.log('Loaded Peak Data URL: ' + peaks);
+              _this3.log('Loaded Peak Data URL: ' + peaks);
 
-              _this2.surfer.load(url, data.data);
+              _this3.surfer.load(url, data.data);
             });
             ajax.on('error', function (e) {
-              _this2.log('Unable to retrieve peak data from ' + peaks + '. Status code: ' + e.target.status, 'warn');
+              _this3.log('Unable to retrieve peak data from ' + peaks + '. Status code: ' + e.target.status, 'warn');
 
-              _this2.log('Loading URL: ' + url);
+              _this3.log('Loading URL: ' + url);
 
-              _this2.surfer.load(url);
+              _this3.surfer.load(url);
             });
           }
         } else {
@@ -710,7 +727,7 @@ function (_Plugin) {
     key: "play",
     value: function play() {
       // show pause button
-      if (this.player.controlBar.playToggle.contentEl()) {
+      if (this.player.controlBar.playToggle !== undefined && this.player.controlBar.playToggle.contentEl()) {
         this.player.controlBar.playToggle.handlePlay();
       }
 
@@ -746,7 +763,7 @@ function (_Plugin) {
     key: "pause",
     value: function pause() {
       // show play button
-      if (this.player.controlBar.playToggle.contentEl()) {
+      if (this.player.controlBar.playToggle !== undefined && this.player.controlBar.playToggle.contentEl()) {
         this.player.controlBar.playToggle.handlePause();
       }
 
@@ -853,17 +870,17 @@ function (_Plugin) {
   }, {
     key: "setAudioOutput",
     value: function setAudioOutput(deviceId) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (deviceId) {
         this.surfer.setSinkId(deviceId).then(function (result) {
           // notify listeners
-          _this3.player.trigger('audioOutputReady');
+          _this4.player.trigger('audioOutputReady');
         }).catch(function (err) {
           // notify listeners
-          _this3.player.trigger('error', err);
+          _this4.player.trigger('error', err);
 
-          _this3.log(err, 'error');
+          _this4.log(err, 'error');
         });
       }
     }
@@ -969,7 +986,7 @@ function (_Plugin) {
       this.setCurrentTime();
       this.setDuration(); // enable and show play button
 
-      if (this.player.controlBar.playToggle.contentEl()) {
+      if (this.player.controlBar.playToggle !== undefined && this.player.controlBar.playToggle.contentEl()) {
         this.player.controlBar.playToggle.show();
       } // hide loading spinner
 
@@ -993,7 +1010,7 @@ function (_Plugin) {
   }, {
     key: "onWaveFinish",
     value: function onWaveFinish() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.log('Finished playback'); // notify listeners
 
@@ -1014,9 +1031,11 @@ function (_Plugin) {
         // button
 
         this.surfer.once('seek', function () {
-          _this4.player.controlBar.playToggle.removeClass('vjs-ended');
+          if (_this5.player.controlBar.playToggle !== undefined) {
+            _this5.player.controlBar.playToggle.removeClass('vjs-ended');
+          }
 
-          _this4.player.trigger('pause');
+          _this5.player.trigger('pause');
         });
       }
     }
@@ -1065,7 +1084,7 @@ function (_Plugin) {
     key: "onPlayToggle",
     value: function onPlayToggle() {
       // workaround for video.js 6.3.1 and newer
-      if (this.player.controlBar.playToggle.hasClass('vjs-ended')) {
+      if (this.player.controlBar.playToggle !== undefined && this.player.controlBar.playToggle.hasClass('vjs-ended')) {
         this.player.controlBar.playToggle.removeClass('vjs-ended');
       }
 
@@ -1101,34 +1120,34 @@ function (_Plugin) {
   }, {
     key: "onScreenChange",
     value: function onScreenChange() {
-      var _this5 = this;
+      var _this6 = this;
 
       // execute with tiny delay so the player element completes
       // rendering and correct dimensions are reported
       var fullscreenDelay = this.player.setInterval(function () {
-        var isFullscreen = _this5.player.isFullscreen();
+        var isFullscreen = _this6.player.isFullscreen();
 
         var newWidth, newHeight;
 
         if (!isFullscreen) {
           // restore original dimensions
-          newWidth = _this5.originalWidth;
-          newHeight = _this5.originalHeight;
+          newWidth = _this6.originalWidth;
+          newHeight = _this6.originalHeight;
         }
 
-        if (_this5.waveReady) {
-          if (_this5.liveMode && !_this5.surfer.microphone.active) {
+        if (_this6.waveReady) {
+          if (_this6.liveMode && !_this6.surfer.microphone.active) {
             // we're in live mode but the microphone hasn't been
             // started yet
             return;
           } // redraw
 
 
-          _this5.redrawWaveform(newWidth, newHeight);
+          _this6.redrawWaveform(newWidth, newHeight);
         } // stop fullscreenDelay interval
 
 
-        _this5.player.clearInterval(fullscreenDelay);
+        _this6.player.clearInterval(fullscreenDelay);
       }, 100);
     }
     /**
@@ -1204,17 +1223,14 @@ function (_Plugin) {
 }(Plugin); // version nr is injected during build
 
 
-Wavesurfer.VERSION = "2.6.4"; // register plugin once
+exports.Wavesurfer = Wavesurfer;
+Wavesurfer.VERSION = "2.7.0"; // register plugin once
 
 _video.default.Wavesurfer = Wavesurfer;
 
 if (_video.default.getPlugin('wavesurfer') === undefined) {
   _video.default.registerPlugin('wavesurfer', Wavesurfer);
 }
-
-module.exports = {
-  Wavesurfer: Wavesurfer
-};
 
 /***/ }),
 

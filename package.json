@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "video.js": "^7.4.1",
-    "videojs-wavesurfer": "^2.6.4",
+    "videojs-wavesurfer": "^2.7.0",
     "webrtc-adapter": "^7.2.0"
   },
   "devDependencies": {
