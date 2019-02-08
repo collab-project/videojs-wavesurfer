@@ -86,18 +86,17 @@ class Wavesurfer extends Plugin {
             this.player.controlBar.show();
             this.player.controlBar.el_.style.display = 'flex';
 
-            // progress control isn't used by this plugin
-            this.player.controlBar.progressControl.hide();
+            // progress control (if present) isn't used by this plugin
+            if (this.player.controlBar.progressControl !== undefined) {
+                this.player.controlBar.progressControl.hide();
+            }
 
             // make sure time displays are visible
-            let uiElements = [
-                this.player.controlBar.currentTimeDisplay,
-                this.player.controlBar.timeDivider,
-                this.player.controlBar.durationDisplay
-            ];
+            let uiElements = ['currentTimeDisplay', 'timeDivider', 'durationDisplay'];
             uiElements.forEach((element) => {
                 // ignore and show when essential elements have been disabled
                 // by user
+                element = this.player.controlBar[element];
                 if (element !== undefined) {
                     element.el_.style.display = 'block';
                     element.show();
@@ -107,14 +106,16 @@ class Wavesurfer extends Plugin {
                 this.player.controlBar.remainingTimeDisplay.hide();
             }
 
-            // handle play toggle interaction
-            this.player.controlBar.playToggle.on(['tap', 'click'],
-                this.onPlayToggle.bind(this));
+            if (this.player.controlBar.playToggle !== undefined) {
+                // handle play toggle interaction
+                this.player.controlBar.playToggle.on(['tap', 'click'],
+                    this.onPlayToggle.bind(this));
 
-            // disable play button until waveform is ready
-            // (except when in live mode)
-            if (!this.liveMode) {
-                this.player.controlBar.playToggle.hide();
+                // disable play button until waveform is ready
+                // (except when in live mode)
+                if (!this.liveMode) {
+                    this.player.controlBar.playToggle.hide();
+                }
             }
         }
 
@@ -158,9 +159,11 @@ class Wavesurfer extends Plugin {
 
         // text tracks
         if (this.textTracksEnabled) {
-            // disable timeupdates
-            this.player.controlBar.currentTimeDisplay.off(this.player, 'timeupdate',
-                this.player.controlBar.currentTimeDisplay.throttledUpdateContent);
+            if (this.player.controlBar.currentTimeDisplay !== undefined) {
+                // disable timeupdates
+                this.player.controlBar.currentTimeDisplay.off(this.player, 'timeupdate',
+                    this.player.controlBar.currentTimeDisplay.throttledUpdateContent);
+            }
 
             // sets up an interval function to track current time
             // and trigger timeupdate every 250 milliseconds.
@@ -328,7 +331,8 @@ class Wavesurfer extends Plugin {
      */
     play() {
         // show pause button
-        if (this.player.controlBar.playToggle.contentEl()) {
+        if (this.player.controlBar.playToggle !== undefined &&
+            this.player.controlBar.playToggle.contentEl()) {
             this.player.controlBar.playToggle.handlePlay();
         }
 
@@ -365,7 +369,8 @@ class Wavesurfer extends Plugin {
      */
     pause() {
         // show play button
-        if (this.player.controlBar.playToggle.contentEl()) {
+        if (this.player.controlBar.playToggle !== undefined &&
+            this.player.controlBar.playToggle.contentEl()) {
             this.player.controlBar.playToggle.handlePause();
         }
 
@@ -575,7 +580,8 @@ class Wavesurfer extends Plugin {
         this.setDuration();
 
         // enable and show play button
-        if (this.player.controlBar.playToggle.contentEl()) {
+        if (this.player.controlBar.playToggle !== undefined &&
+            this.player.controlBar.playToggle.contentEl()) {
             this.player.controlBar.playToggle.show();
         }
 
@@ -621,7 +627,9 @@ class Wavesurfer extends Plugin {
             // seeks so that we can change the replay button back to a play
             // button
             this.surfer.once('seek', () => {
-                this.player.controlBar.playToggle.removeClass('vjs-ended');
+                if (this.player.controlBar.playToggle !== undefined) {
+                    this.player.controlBar.playToggle.removeClass('vjs-ended');
+                }
                 this.player.trigger('pause');
             });
         }
@@ -664,7 +672,8 @@ class Wavesurfer extends Plugin {
      */
     onPlayToggle() {
         // workaround for video.js 6.3.1 and newer
-        if (this.player.controlBar.playToggle.hasClass('vjs-ended')) {
+        if (this.player.controlBar.playToggle !== undefined &&
+            this.player.controlBar.playToggle.hasClass('vjs-ended')) {
             this.player.controlBar.playToggle.removeClass('vjs-ended');
         }
         if (this.surfer.isPlaying()) {
@@ -793,6 +802,4 @@ if (videojs.getPlugin('wavesurfer') === undefined) {
     videojs.registerPlugin('wavesurfer', Wavesurfer);
 }
 
-module.exports = {
-    Wavesurfer
-};
+export {Wavesurfer};

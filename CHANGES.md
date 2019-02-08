@@ -1,6 +1,13 @@
 videojs-wavesurfer changelog
 ============================
 
+2.7.0 - unreleased
+------------------
+
+- Fix hiding `playToggle` control
+- Fix ES export syntax for `Wavesurfer`
+
+
 2.6.4 - 2019/02/04
 ------------------
 
