@@ -4,7 +4,8 @@
  */
 
 const path = require('path');
-const sourceDir = path.resolve(__dirname, '..', '..', 'src');
+const rootDir = path.resolve(__dirname, '..', '..');
+const sourceDir = path.join(rootDir, 'src');
 
 module.exports = {
     entry: {
@@ -16,7 +17,7 @@ module.exports = {
         ]
     },
     output: {
-        path: path.resolve(__dirname, '..', '..', 'dist'),
+        path: path.join(rootDir, 'dist'),
         filename: '[name].js',
         library: 'VideojsWavesurfer'
     }

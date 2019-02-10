@@ -62,7 +62,10 @@ module.exports = {
                 include: path.resolve(rootDir, 'src', 'js'),
                 exclude: /(node_modules|bower_components|test)/,
                 use: {
-                    loader: 'babel-loader'
+                    loader: 'babel-loader',
+                    options: {
+                        comments: false
+                    }
                 }
             },
             {
