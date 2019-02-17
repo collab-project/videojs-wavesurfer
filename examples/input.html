@@ -152,8 +152,8 @@ function changeAudioInput(event) {
     });
 
     // error handling
-    player.on('error', function(error) {
-        console.log('error:', error);
+    player.on('error', function(element, error) {
+        console.warn('ERROR:', error);
     });
 };
 </script>
