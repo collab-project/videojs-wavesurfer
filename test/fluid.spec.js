@@ -4,6 +4,8 @@
 
 import window from 'global/window';
 
+import Event from '../src/js/event.js';
+
 import TestHelpers from './test-helpers.js';
 
 /** @test {Wavesurfer} */
@@ -34,7 +36,7 @@ describe('Wavesurfer Fluid', () => {
 
     /** @test {Wavesurfer#redrawWaveform} */
     it('redraws the waveform', (done) => {
-        player.one('waveReady', () => {
+        player.one(Event.WAVE_READY, () => {
             player.wavesurfer().redrawWaveform(100, 200);
 
             done();

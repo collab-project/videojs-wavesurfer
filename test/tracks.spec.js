@@ -2,8 +2,9 @@
  * @since 2.5.0
  */
 
-import TestHelpers from './test-helpers.js';
+import Event from '../src/js/event.js';
 
+import TestHelpers from './test-helpers.js';
 
 /** @test {Wavesurfer} */
 describe('Wavesurfer TextTracks', () => {
@@ -31,7 +32,7 @@ describe('Wavesurfer TextTracks', () => {
     /** @test {Wavesurfer} */
     it('displays interface elements', (done) => {
 
-        player.one('waveReady', () => {
+        player.one(Event.WAVE_READY, () => {
             // text tracks UI is visible
             expect(player.controlBar.subsCapsButton.hasClass('vjs-hidden')).toBeFalse();
 

@@ -6,7 +6,6 @@ import document from 'global/document';
 
 import {Player, mergeOptions} from 'video.js';
 
-
 const TestHelpers = {
 
     /** Example audio clip */

@@ -2,6 +2,8 @@
  * @since 2.3.0
  */
 
+import Event from '../src/js/event.js';
+
 import TestHelpers from './test-helpers.js';
 
 /** @test {Wavesurfer} */
@@ -17,9 +19,10 @@ describe('Wavesurfer Live', () => {
     it('starts and pauses the microphone', (done) => {
         player = TestHelpers.makeLivePlayer();
 
-        player.one('ready', () => {
+        player.one(Event.READY, () => {
             // trigger click event on playToggle button to start mic
-            TestHelpers.triggerDomEvent(player.controlBar.playToggle.el(), 'click');
+            TestHelpers.triggerDomEvent(player.controlBar.playToggle.el(),
+                'click');
 
             player.wavesurfer().play();
             player.wavesurfer().pause();
