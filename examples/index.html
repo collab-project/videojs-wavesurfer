@@ -31,7 +31,7 @@
 var player;
 var options = {
     controls: true,
-    autoplay: true,
+    autoplay: false,
     fluid: false,
     loop: false,
     width: 600,
@@ -84,7 +84,7 @@ function createPlayer(event) {
     });
 
     // error handling
-    player.on('error', function(error) {
+    player.on('error', function(element, error) {
         console.warn('ERROR:', error);
     });
 }

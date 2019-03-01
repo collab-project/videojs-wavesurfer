@@ -1,6 +1,26 @@
 videojs-wavesurfer changelog
 ============================
 
+2.8.0 - unreleased
+------------------
+
+- Move event types to separate class
+
+
+2.7.0 - 2019/02/08
+------------------
+
+- Fix hiding `playToggle` control
+- Fix ES export syntax for `Wavesurfer`
+
+
+2.6.4 - 2019/02/04
+------------------
+
+- Bump required wavesurfer.js version to 2.1.3 for Safari browser
+  improvement
+
+
 2.6.3 - 2018/12/03
 ------------------
 

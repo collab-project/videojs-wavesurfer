@@ -2,6 +2,8 @@
  * @since 3.0.0
  */
 
+import Event from '../src/js/event.js';
+
 import TestHelpers from './test-helpers.js';
 
 /** @test {Wavesurfer} */
@@ -24,7 +26,7 @@ describe('Wavesurfer options', () => {
             }
         });
 
-        player.one('waveReady', () => {
+        player.one(Event.WAVE_READY, () => {
             expect(player.wavesurfer().surfer.getHeight()).toEqual(height);
 
             done();
@@ -42,7 +44,7 @@ describe('Wavesurfer options', () => {
             }
         });
 
-        player.one('waveReady', () => {
+        player.one(Event.WAVE_READY, () => {
             expect(player.wavesurfer().surfer.getHeight()).toEqual(35);
 
             done();
@@ -59,7 +61,7 @@ describe('Wavesurfer options', () => {
             }
         });
 
-        player.one('ready', () => {
+        player.one(Event.READY, () => {
             expect(player.loadingSpinner.hasClass('vjs-hidden')).toBeTrue();
 
             done();
@@ -72,7 +74,7 @@ describe('Wavesurfer options', () => {
             autoplay: true
         });
 
-        player.one('playbackFinish', done);
+        player.one(Event.PLAYBACK_FINISH, done);
     });
 
     /** @test {Wavesurfer} */
@@ -82,9 +84,9 @@ describe('Wavesurfer options', () => {
             loop: true
         });
 
-        player.one('playbackFinish', () => {
+        player.one(Event.PLAYBACK_FINISH, () => {
             // stop after it looped once
-            player.one('playbackFinish', done);
+            player.one(Event.PLAYBACK_FINISH, done);
         });
     });
 

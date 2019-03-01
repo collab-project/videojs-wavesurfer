@@ -3,6 +3,8 @@
  * @since 2.0.0
  */
 
+import videojs from 'video.js';
+
 const ERROR = 'error';
 const WARN = 'warn';
 

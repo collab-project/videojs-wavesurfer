@@ -13,6 +13,8 @@ input](#microphone-plugin).
 [![License](https://img.shields.io/npm/l/videojs-wavesurfer.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/collab-project/videojs-wavesurfer.svg?branch=master)](https://travis-ci.org/collab-project/videojs-wavesurfer)
 [![Coverage Status](https://coveralls.io/repos/github/collab-project/videojs-wavesurfer/badge.svg?branch=master)](https://coveralls.io/github/collab-project/videojs-wavesurfer?branch=master)
+![Size](https://img.shields.io/bundlephobia/minzip/videojs-wavesurfer.svg?style=flat)
+![Stars](https://img.shields.io/github/stars/collab-project/videojs-wavesurfer.svg?style=social)
 
 Table of Contents
 -----------------

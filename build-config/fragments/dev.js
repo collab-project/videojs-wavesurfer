@@ -10,7 +10,6 @@ const contentBase = path.resolve(__dirname, '..', '..');
 
 module.exports = {
     mode: 'development',
-    devtool: 'source-map',
     devServer: {
         contentBase: [contentBase],
         publicPath: 'localhost:8080/dist/',

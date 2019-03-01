@@ -40,7 +40,7 @@ var textTracks = [
 ];
 var options = {
     controls: true,
-    autoplay: true,
+    autoplay: false,
     fluid: false,
     width: 600,
     height: 300,
@@ -94,7 +94,7 @@ function createPlayer(event) {
     });
 
     // error handling
-    player.on('error', function(error) {
+    player.on('error', function(element, error) {
         console.warn('ERROR:', error);
     });
 }
