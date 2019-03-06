@@ -12,19 +12,13 @@ import Wavesurfer from '../src/js/videojs.wavesurfer.js';
 /** @test {Wavesurfer} */
 describe('Wavesurfer', () => {
     let player;
-    let originalTimeout;
 
     beforeEach(() => {
-        originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
-
         // create new player
         player = TestHelpers.makePlayer();
     });
 
     afterEach(() => {
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-
         try {
             player.dispose();
         } catch (err) {}
