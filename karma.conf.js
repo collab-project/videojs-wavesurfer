@@ -22,7 +22,6 @@ var chromeFlags = [
     '--use-fake-device-for-media-stream',
     '--use-fake-ui-for-media-stream',
     '--use-file-for-fake-audio-capture=' + fakeAudioStream,
-    '--autoplay-policy=no-user-gesture-required',
     '--user-data-dir=.chrome',
     '--disable-translate',
     '--disable-extensions',
