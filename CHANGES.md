@@ -1,7 +1,7 @@
 videojs-wavesurfer changelog
 ============================
 
-2.8.0 - unreleased
+2.8.0 - 2019/03/06
 ------------------
 
 - Move event types to separate class
