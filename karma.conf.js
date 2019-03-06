@@ -82,6 +82,7 @@ module.exports = function(config) {
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-safari-launcher',
+            'karma-safaritechpreview-launcher',
             'karma-edge-launcher',
             'karma-coverage',
             'karma-coveralls',
