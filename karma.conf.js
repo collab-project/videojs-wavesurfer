@@ -127,7 +127,7 @@ module.exports = function(config) {
                 flags: chromeFlags
             },
             Firefox_dev: {
-                base: 'Firefox',
+                base: 'FirefoxHeadless',
                 prefs: firefoxFlags
             }
         },
