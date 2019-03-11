@@ -27,7 +27,8 @@ var chromeFlags = [
     '--disable-extensions',
     '--disable-infobars',
     '--ignore-certificate-errors',
-    '--allow-insecure-localhost'
+    '--allow-insecure-localhost',
+    '--autoplay-policy=no-user-gesture-required'
 ];
 var firefoxFlags = {
     'media.navigator.permission.disabled': true,
