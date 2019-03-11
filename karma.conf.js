@@ -32,7 +32,8 @@ var chromeFlags = [
 ];
 var firefoxFlags = {
     'media.navigator.permission.disabled': true,
-    'media.navigator.streams.fake': true
+    'media.navigator.streams.fake': true,
+    'focusmanager.testmode': true
 };
 var ci = process.env.TRAVIS || process.env.APPVEYOR;
 
