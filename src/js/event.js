@@ -19,10 +19,10 @@ Event.FINISH = 'finish';
 Event.SEEK = 'seek';
 Event.REDRAW = 'redraw';
 Event.AUDIOPROCESS = 'audioprocess';
-
-// videojs-wavesurfer
 Event.DEVICE_READY = 'deviceReady';
 Event.DEVICE_ERROR = 'deviceError';
+
+// videojs-wavesurfer
 Event.AUDIO_OUTPUT_READY = 'audioOutputReady';
 Event.WAVE_READY = 'waveReady';
 Event.PLAYBACK_FINISH = 'playbackFinish';
