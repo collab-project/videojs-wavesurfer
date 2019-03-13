@@ -22,17 +22,18 @@ var chromeFlags = [
     '--use-fake-device-for-media-stream',
     '--use-fake-ui-for-media-stream',
     '--use-file-for-fake-audio-capture=' + fakeAudioStream,
-    '--autoplay-policy=no-user-gesture-required',
     '--user-data-dir=.chrome',
     '--disable-translate',
     '--disable-extensions',
     '--disable-infobars',
     '--ignore-certificate-errors',
-    '--allow-insecure-localhost'
+    '--allow-insecure-localhost',
+    '--autoplay-policy=no-user-gesture-required'
 ];
 var firefoxFlags = {
     'media.navigator.permission.disabled': true,
-    'media.navigator.streams.fake': true
+    'media.navigator.streams.fake': true,
+    'focusmanager.testmode': true
 };
 var ci = process.env.TRAVIS || process.env.APPVEYOR;
 
@@ -83,6 +84,7 @@ module.exports = function(config) {
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-safari-launcher',
+            'karma-safaritechpreview-launcher',
             'karma-edge-launcher',
             'karma-coverage',
             'karma-coveralls',

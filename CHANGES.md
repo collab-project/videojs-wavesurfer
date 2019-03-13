@@ -5,6 +5,8 @@ videojs-wavesurfer changelog
 ------------------
 
 - Move event types to separate class
+- Bump required wavesurfer.js version to 2.2.0
+- Display `video` element in video example (#8)
 
 
 2.7.0 - 2019/02/08

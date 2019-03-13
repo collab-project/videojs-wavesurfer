@@ -42,7 +42,11 @@ var options = {
             waveColor: '#336699',
             progressColor: 'black',
             cursorColor: 'black',
-            hideScrollbar: true
+            hideScrollbar: true,
+            // disable options below to hide the video playback,
+            // and only show the waveform
+            backend: 'MediaElement',
+            mediaType: 'video'
         }
     }
 };
