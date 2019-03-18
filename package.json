@@ -1,6 +1,6 @@
 {
   "name": "videojs-wavesurfer",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "description": "video.js plugin that adds a navigable waveform for audio and video files.",
   "author": "Collab",
   "license": "MIT",
@@ -58,9 +58,9 @@
     "babel-loader": "^8.0.5",
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-istanbul": "^5.1.1",
-    "browserslist": "^4.4.2",
+    "browserslist": "^4.5.1",
     "css-loader": "^2.1.1",
-    "eslint": "^5.15.1",
+    "eslint": "^5.15.2",
     "htmlhint": "^0.11.0",
     "in-publish": "^2.0.0",
     "jasmine-core": "^3.3.0",
@@ -90,7 +90,7 @@
     "terser-webpack-plugin": "^1.2.3",
     "tui-jsdoc-template": "^1.2.2",
     "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.3",
+    "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1",
     "webpack-merge": "^4.2.1",
     "webrtc-adapter": "^7.2.1"
