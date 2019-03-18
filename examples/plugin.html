@@ -10,6 +10,8 @@
   <script src="//vjs.zencdn.net/7.4.1/video.min.js"></script>
   <script src="//unpkg.com/wavesurfer.js"></script>
   <script src="//unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js"></script>
+  <script src="//unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js"></script>
+  <script src="//unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.regions.min.js"></script>
 
   <script src="../dist/videojs.wavesurfer.min.js"></script>
 
@@ -26,6 +28,8 @@
 <body>
 
 <audio id="myAudio" class="video-js vjs-default-skin"></audio>
+
+<div id="wave-timeline"></div>
 
 <script>
 var player;
@@ -52,6 +56,7 @@ var options = {
             cursorColor: 'black',
             hideScrollbar: true,
             plugins: [
+                // cursor
                 WaveSurfer.cursor.create({
                     hideOnBlur: true,
                     showTime: true,
@@ -62,6 +67,24 @@ var options = {
                         padding: '2px',
                         'font-size': '10px'
                     }
+                }),
+                // timeline
+                WaveSurfer.timeline.create({
+                    container: '#wave-timeline'
+                }),
+                // regions
+                WaveSurfer.regions.create({
+                    regions: [
+                        {
+                            start: 1.123,
+                            end: 5,
+                            color: 'rgba(123, 159, 232, 0.7)'
+                        }, {
+                            start: 6.5,
+                            end: 8,
+                            color: 'rgba(232, 123, 159, 0.6)'
+                        }
+                    ]
                 })
             ]
         }
