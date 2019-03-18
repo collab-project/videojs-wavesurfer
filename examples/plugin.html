@@ -47,7 +47,15 @@ var options = {
             hideScrollbar: true,
             plugins: [
                 WaveSurfer.cursor.create({
-                    hideOnBlur: true
+                    hideOnBlur: true,
+                    showTime: true,
+                    opacity: 1,
+                    customShowTimeStyle: {
+                        'background-color': '#000',
+                        color: '#fff',
+                        padding: '2px',
+                        'font-size': '10px'
+                    }
                 })
             ]
         }
