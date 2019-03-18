@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: defaults.js | videojs-wavesurfer</title>
+    <title>Source: event.js | videojs-wavesurfer</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -49,24 +49,41 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @file defaults.js
- * @since 2.0.0
+ * @file event.js
+ * @since 2.8.0
  */
 
-// plugin defaults
-const pluginDefaultOptions = {
-    // Display console log messages.
-    debug: false,
-    // msDisplayMax indicates the number of seconds that is
-    // considered the boundary value for displaying milliseconds
-    // in the time controls. An audio clip with a total length of
-    // 2 seconds and a msDisplayMax of 3 will use the format
-    // M:SS:MMM. Clips longer than msDisplayMax will be displayed
-    // as M:SS or HH:MM:SS.
-    msDisplayMax: 3
-};
+class Event {}
 
-export default pluginDefaultOptions;
+// video.js
+Event.READY = 'ready';
+Event.ERROR = 'error';
+Event.VOLUMECHANGE = 'volumechange';
+Event.FULLSCREENCHANGE = 'fullscreenchange';
+Event.TIMEUPDATE = 'timeupdate';
+Event.ENDED = 'ended';
+Event.PAUSE = 'pause';
+
+// wavesurfer.js
+Event.FINISH = 'finish';
+Event.SEEK = 'seek';
+Event.REDRAW = 'redraw';
+Event.AUDIOPROCESS = 'audioprocess';
+Event.DEVICE_READY = 'deviceReady';
+Event.DEVICE_ERROR = 'deviceError';
+
+// videojs-wavesurfer
+Event.AUDIO_OUTPUT_READY = 'audioOutputReady';
+Event.WAVE_READY = 'waveReady';
+Event.PLAYBACK_FINISH = 'playbackFinish';
+
+// dom
+Event.RESIZE = 'resize';
+
+// after the freeze, any attempts of altering the class will have no result
+Object.freeze(Event);
+
+export default Event;
 </code></pre>
         </article>
     </section>
