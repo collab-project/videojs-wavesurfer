@@ -41,14 +41,10 @@
 
   <div class="inputSelector">
     <label>Select audio input: </label>
-    <select id="selector"></select>
+    <select id="selector">
+      <option value="" disabled selected hidden>Please choose...</option>
+    </select>
   </div>
-</div>
-
-<hr>
-
-<div>
-    <p>This demo must be run in Chrome 49 or later, other browsers are not supported yet.</p>
 </div>
 
 <script>
@@ -80,7 +76,7 @@ navigator.mediaDevices.enumerateDevices(this).then(function(result) {
         }
     }
 
-    if (inputSelector.length == 0) {
+    if (inputSelector.length <= 1) {
         // no input devices found, disable select
         option = document.createElement('option');
         option.text = 'No audio input devices found';
@@ -89,7 +85,7 @@ navigator.mediaDevices.enumerateDevices(this).then(function(result) {
         inputSelector.disabled = true;
         console.warn(option.text);
     } else {
-        console.log('Total input devices found:', inputSelector.length);
+        console.log('Total input devices found:', inputSelector.length - 1);
     }
 }).catch(function(err) {
     console.error(err);
