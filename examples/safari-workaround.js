@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /* workaround safari issues */
 
 var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);

@@ -39,17 +39,14 @@
 
   <div class="outputSelector">
     <label>Select audio output: </label>
-    <select id="selector"></select>
+    <select id="selector">
+      <option value="" disabled selected hidden>Please choose...</option>
+    </select>
   </div>
 </div>
 
-<hr>
-
-<div>
-    <p>This demo must be run in Chrome 49 or later, other browsers are not supported yet.</p>
-</div>
-
 <script>
+/* eslint-disable */
 var player = videojs('myAudio', {
     controls: true,
     width: 600,
@@ -102,7 +99,7 @@ player.on('ready', function() {
             }
         }
 
-        if (outputSelector.length == 0) {
+        if (outputSelector.length <= 1) {
             // no output devices found, disable select
             option = document.createElement('option');
             option.text = 'No audio output devices found';
@@ -111,7 +108,7 @@ player.on('ready', function() {
             outputSelector.disabled = true;
             console.warn(option.text);
         } else {
-            console.log('Total output devices found:', outputSelector.length);
+            console.log('Total output devices found:', outputSelector.length - 1);
         }
     }).catch(function(err) {
         console.error(err);
