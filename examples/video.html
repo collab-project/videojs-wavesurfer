@@ -23,7 +23,7 @@
 </head>
 <body>
 
-<video id="myVideo" class="video-js vjs-default-skin"></video>
+<video id="myVideo" playsinline class="video-js vjs-default-skin"></video>
 
 <script>
 var player;
@@ -35,12 +35,12 @@ var options = {
     height: 300,
     plugins: {
         wavesurfer: {
-            src: "media/example.mp4",
+            src: 'media/example.mp4',
             msDisplayMax: 10,
             debug: true,
-            waveColor: "#336699",
-            progressColor: "black",
-            cursorColor: "black",
+            waveColor: '#336699',
+            progressColor: 'black',
+            cursorColor: 'black',
             hideScrollbar: true,
             // disable options below to hide the video playback,
             // and only show the waveform
