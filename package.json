@@ -52,18 +52,18 @@
     "wavesurfer.js": ">=2.2.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
     "@babel/register": "^7.4.0",
     "babel-loader": "^8.0.5",
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-istanbul": "^5.1.1",
-    "browserslist": "^4.5.2",
+    "browserslist": "^4.5.4",
     "css-loader": "^2.1.1",
-    "eslint": "^5.15.3",
+    "eslint": "^5.16.0",
     "htmlhint": "^0.11.0",
     "in-publish": "^2.0.0",
-    "jasmine-core": "^3.3.0",
+    "jasmine-core": "^3.4.0",
     "jsdoc": "^3.5.5",
     "karma": "^4.0.1",
     "karma-chrome-launcher": "^2.2.0",
@@ -93,6 +93,6 @@
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1",
     "webpack-merge": "^4.2.1",
-    "webrtc-adapter": "^7.2.1"
+    "webrtc-adapter": "^7.2.2"
   }
 }
