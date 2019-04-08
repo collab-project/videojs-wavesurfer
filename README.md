@@ -30,6 +30,7 @@ Table of Contents
 - [Responsive layout](#responsive-layout)
 - [Text Tracks](#text-tracks)
 - [Microphone plugin](#microphone-plugin)
+- [Using peaks for long audio files](#using-peaks-for-large-audio-files)
 - [Change audio output or input device](#change-audio-output-or-input-device)
 - [Webpack](#webpack)
 - [Using with React](#using-with-react)
@@ -82,7 +83,7 @@ Add an `audio` element:
 Or `video` element:
 
 ```html
-<video id="myClip" class="video-js vjs-default-skin"></video>
+<video id="myClip" class="video-js vjs-default-skin" playsinline></video>
 ```
 
 Plugin Options
@@ -119,9 +120,9 @@ var player = videojs('myClip',
 The additional options for this plugin are:
 
 | option | type | default | description |
-| --- | --- | --- | --- |
+| ------ | ---- | ------- | ----------- |
 | `src` | string | `null` | The URL of the audio/video file or `'live'` when [using the microphone plugin](#microphone-plugin).|
-| `peaks` | string | `null` | The URL of the JSON file with peak data corresponding to the source audio/video file. This allows the waveform to be created from pre-rendered peak data. This file can be generated using the [bbc/audiowaveform](https://github.com/bbc/audiowaveform) utility. |
+| `peaks` | string | `null` | The URL of the JSON file with peaks data corresponding to the source audio/video file. See the [peaks section](#using-peaks-for-large-audio-files) below for more information. |
 | `debug` | boolean | `false` | Display internal log messages using the `videojs.log` method. |
 | `msDisplayMax` | float | `3` | Indicates the number of seconds that is considered the boundary value for displaying milliseconds in the time controls. An audio clip with a total length of 2 seconds and a `msDisplayMax` of 3 will use the format `M:SS:MMM`. Clips with a duration that is longer than `msDisplayMax` will be displayed as `M:SS` or `HH:MM:SS`.|
 
@@ -169,7 +170,7 @@ player.on('ready', function() {
 ```
 
 | Method | Description |
-| --- | --- |
+| ------ | ----------- |
 | `destroy` | Destroys the wavesurfer instance and children (including the video.js player). |
 | `load(url)` | Load the clip at `url`. Also supports loading [File](https://developer.mozilla.org/nl/docs/Web/API/File) or [Blob](https://developer.mozilla.org/nl/docs/Web/API/Blob) objects. |
 | `setVolume(level)` | Set the volume level (value between 0.0 and 1.0). |
@@ -203,7 +204,7 @@ player.on('waveReady', function(event) {
 ```
 
 | Event | Description |
-| --- | --- |
+| ----- | ----------- |
 | `waveReady` | Audio is loaded, decoded and the waveform is drawn. |
 | `playbackFinish` | Audio playback finished. |
 | `audioOutputReady` | Audio output was changed and is now active. |
@@ -296,6 +297,19 @@ The microphone plugin has additional configuration
 See the full `live` example
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/live.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/live.html)).
+
+Using peaks for large audio files
+--------------------------------
+
+When you're dealing with long audio files, it's sometimes useful to generate the waveform data,
+called peaks, on the server. This allows wavesurfer.js to load the peaks JSON data and create the
+waveform from that pre-rendered peak data. This JSON file can be generated using the
+[bbc/audiowaveform](https://github.com/bbc/audiowaveform) utility. For more information, see the
+[wavesurfer.js FAQ](https://wavesurfer-js.org/faq/).
+
+See the full `peaks` example
+([demo](https://collab-project.github.io/videojs-wavesurfer/examples/peaks.html) or
+[source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/peaks.html)).
 
 Change audio output or input device
 -----------------------------------
