@@ -114,7 +114,7 @@ function createPlayer(event) {
     });
 
     // error handling
-    player.on('error', function(error) {
+    player.on('error', function(element, error) {
         console.warn('ERROR:', error);
     });
 }

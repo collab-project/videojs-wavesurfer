@@ -22,7 +22,7 @@ class VideojsWavesurferPlayer extends React.Component {
         });
 
         // error handling
-        this.player.on('error', (error) => {
+        this.player.on('error', (element, error) => {
             console.warn(error);
         });
     }
