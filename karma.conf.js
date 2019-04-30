@@ -33,7 +33,12 @@ var chromeFlags = [
 var firefoxFlags = {
     'media.navigator.permission.disabled': true,
     'media.navigator.streams.fake': true,
-    'focusmanager.testmode': true
+    'focusmanager.testmode': true,
+    // disable autoplay blocking, see https://www.ghacks.net/2018/09/21/firefox-improved-autoplay-blocking/
+    'media.autoplay.default': 0,
+    'media.autoplay.ask-permission': false,
+    'media.autoplay.enabled.user-gestures-needed': false,
+    'media.autoplay.block-webaudio': false
 };
 var ci = process.env.TRAVIS || process.env.APPVEYOR;
 
