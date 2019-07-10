@@ -300,23 +300,23 @@ class Wavesurfer extends Plugin {
                     this.surfer.load(url, peaks);
                 } else {
                     // load peak data from file
-                    let ajaxOptions = {
+                    let requestOptions = {
                         url: peaks,
                         responseType: 'json'
                     };
                     // supply xhr options, if any
                     if (this.player.options_.plugins.wavesurfer.xhr !== undefined) {
-                        ajaxOptions.xhr = this.player.options_.plugins.wavesurfer.xhr;
+                        requestOptions.xhr = this.player.options_.plugins.wavesurfer.xhr;
                     }
-                    let ajax = WaveSurfer.util.ajax(ajaxOptions);
+                    let request = WaveSurfer.util.fetchFile(requestOptions);
 
-                    ajax.on('success', (data, e) => {
+                    request.once('success', data => {
                         this.log('Loaded Peak Data URL: ' + peaks);
-                        this.surfer.load(url, data.data);
+                        this.surfer.load(url, data);
                     });
-                    ajax.on('error', (e) => {
+                    request.on('error', e => {
                         this.log('Unable to retrieve peak data from ' + peaks +
-                            '. Status code: ' + e.target.status, 'warn');
+                            '. Status code: ' + request.response.status, 'warn');
                         this.log('Loading URL: ' + url);
                         this.surfer.load(url);
                     });
