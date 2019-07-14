@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export OLD_VERSION=7.3.0
-export NEW_VERSION=7.4.1
+export OLD_VERSION=7.4.1
+export NEW_VERSION=7.6.0
 
 # check if language files exist
 # wget --delete-after https://vjs.zencdn.net/$NEW_VERSION/lang/nl.js
@@ -14,3 +14,6 @@ else
 fi
 
 #git commit -am "bump videojs to $NEW_VERSION in examples"
+
+echo "Ready."
+
