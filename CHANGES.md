@@ -1,7 +1,7 @@
 videojs-wavesurfer changelog
 ============================
 
-2.9.0 - unreleased
+2.9.0 - 2019/07/14
 ------------------
 
 - Replace usage of `WaveSurfer.util.ajax()` with `WaveSurfer.util.fetchFile()`
