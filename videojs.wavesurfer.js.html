@@ -28,7 +28,7 @@
     <div class="title">
         <h1><a href="index.html" class="link">videojs-wavesurfer</a></h1>
         
-            <span class="version">v2.8.0</span>
+            <span class="version">v2.9.0</span>
         
     </div>
     <div class="search-container" id="search-container">
@@ -140,6 +140,13 @@ class Wavesurfer extends Plugin {
             // progress control (if present) isn't used by this plugin
             if (this.player.controlBar.progressControl !== undefined) {
                 this.player.controlBar.progressControl.hide();
+            }
+
+            // disable Picture-In-Picture toggle introduced in video.js 7.6.0
+            // until there is support for canvas in the Picture-In-Picture
+            // browser API (see https://www.chromestatus.com/features/4844605453369344)
+            if (this.player.controlBar.pictureInPictureToggle !== undefined) {
+                this.player.controlBar.pictureInPictureToggle.hide();
             }
 
             // make sure time displays are visible
@@ -350,23 +357,23 @@ class Wavesurfer extends Plugin {
                     this.surfer.load(url, peaks);
                 } else {
                     // load peak data from file
-                    let ajaxOptions = {
+                    let requestOptions = {
                         url: peaks,
                         responseType: 'json'
                     };
                     // supply xhr options, if any
                     if (this.player.options_.plugins.wavesurfer.xhr !== undefined) {
-                        ajaxOptions.xhr = this.player.options_.plugins.wavesurfer.xhr;
+                        requestOptions.xhr = this.player.options_.plugins.wavesurfer.xhr;
                     }
-                    let ajax = WaveSurfer.util.ajax(ajaxOptions);
+                    let request = WaveSurfer.util.fetchFile(requestOptions);
 
-                    ajax.on('success', (data, e) => {
+                    request.once('success', data => {
                         this.log('Loaded Peak Data URL: ' + peaks);
-                        this.surfer.load(url, data.data);
+                        this.surfer.load(url, data);
                     });
-                    ajax.on('error', (e) => {
+                    request.on('error', e => {
                         this.log('Unable to retrieve peak data from ' + peaks +
-                            '. Status code: ' + e.target.status, 'warn');
+                            '. Status code: ' + request.response.status, 'warn');
                         this.log('Loading URL: ' + url);
                         this.surfer.load(url);
                     });
