@@ -49,7 +49,7 @@
   ],
   "dependencies": {
     "video.js": ">=6.0.0",
-    "wavesurfer.js": ">=2.2.1"
+    "wavesurfer.js": ">=3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",
@@ -65,8 +65,8 @@
     "in-publish": "^2.0.0",
     "jasmine-core": "^3.4.0",
     "jsdoc": "^3.6.2",
-    "karma": "^4.1.0",
-    "karma-chrome-launcher": "^2.2.0",
+    "karma": "^4.2.0",
+    "karma-chrome-launcher": "^3.0.0",
     "karma-coverage": "^1.1.2",
     "karma-coveralls": "^2.1.0",
     "karma-detect-browsers": "^2.3.3",
@@ -93,6 +93,6 @@
     "webpack-cli": "^3.3.5",
     "webpack-dev-server": "^3.7.2",
     "webpack-merge": "^4.2.1",
-    "webrtc-adapter": "^7.2.6"
+    "webrtc-adapter": "^7.2.8"
   }
 }
