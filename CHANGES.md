@@ -6,6 +6,8 @@ videojs-wavesurfer changelog
 
 - Replace usage of `WaveSurfer.util.ajax()` with `WaveSurfer.util.fetchFile()`
 - Bump required wavesurfer.js version to 3.0.0
+- Disable Picture-In-Picture toggle introduced in video.js 7.6.0 until there is support
+  for `canvas` in the Picture-In-Picture browser API
 
 
 2.8.0 - 2019/03/18

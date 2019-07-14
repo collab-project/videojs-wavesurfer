@@ -92,6 +92,13 @@ class Wavesurfer extends Plugin {
                 this.player.controlBar.progressControl.hide();
             }
 
+            // disable Picture-In-Picture toggle introduced in video.js 7.6.0
+            // until there is support for canvas in the Picture-In-Picture
+            // browser API (see https://www.chromestatus.com/features/4844605453369344)
+            if (this.player.controlBar.pictureInPictureToggle !== undefined) {
+                this.player.controlBar.pictureInPictureToggle.hide();
+            }
+
             // make sure time displays are visible
             let uiElements = ['currentTimeDisplay', 'timeDivider', 'durationDisplay'];
             uiElements.forEach((element) => {
