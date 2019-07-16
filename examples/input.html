@@ -63,16 +63,17 @@ navigator.mediaDevices.enumerateDevices(this).then(function(result) {
     inputSelector.addEventListener('change', changeAudioInput);
 
     // populate select options
-    var deviceInfo, option, i;
+    var deviceInfo, option, i, label;
     for (i = 0; i < devices.length; i++) {
         deviceInfo = devices[i];
         option = document.createElement('option');
         option.value = deviceInfo.deviceId;
 
         if (deviceInfo.kind === 'audioinput') {
-            console.info('Found audio input device: ', deviceInfo.label);
-            option.text = deviceInfo.label || 'speaker ' +
+            label = deviceInfo.label || 'input device ' +
                 (inputSelector.length + 1);
+            console.info('Found audio input device: ', label);
+            option.text = label;
             inputSelector.appendChild(option);
         }
     }
@@ -96,6 +97,7 @@ var deviceId, constraints;
 var destroyed = false;
 function changeAudioInput(event) {
     deviceId = event.target.value;
+    console.info('using deviceId: ' + deviceId);
 
     // hide input select
     event.target.parentElement.style.visibility = 'hidden';
@@ -129,7 +131,11 @@ function changeAudioInput(event) {
                 progressColor: 'black',
                 cursorWidth: 0,
                 interact: false,
-                hideScrollbar: true
+                hideScrollbar: true,
+                // microphone plugin settings
+                numberOfInputChannels: 1,
+                bufferSize: 4096,
+                constraints: constraints
             }
         }
     }, function() {
