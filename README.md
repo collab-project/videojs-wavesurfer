@@ -34,6 +34,7 @@ Table of Contents
 - [Change audio output or input device](#change-audio-output-or-input-device)
 - [Webpack](#webpack)
 - [Using with React](#using-with-react)
+- [Using other frameworks](#using-other-frameworks)
 - [More features using other plugins](#more-features-using-other-plugins)
 - [Development](#development)
 - [License](#license)
@@ -347,6 +348,13 @@ shows how to get started with React and videojs-wavesurfer using the
 Alternatively, the `react` example shows how to integrate this plugin in a [React](https://reactjs.org) component
 ([demo](https://collab-project.github.io/videojs-wavesurfer/examples/react/index.html) or
 [source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/react/index.html)).
+
+Using other frameworks
+----------------------
+
+The [Angular](https://github.com/collab-project/videojs-wavesurfer/wiki/Angular) wiki page shows how to setup Angular and videojs-wavesurfer.
+
+The [Vue.js](https://github.com/collab-project/videojs-wavesurfer/wiki/Vue.js) wiki page shows how to setup Vue.js and videojs-wavesurfer.
 
 More features using other plugins
 ---------------------------------
