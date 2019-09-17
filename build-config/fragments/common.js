@@ -5,10 +5,10 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const moment = require('moment');
+const datefns = require('date-fns');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const time = moment().format('YYYY');
+const date = datefns.format(new Date(), 'yyyy');
 const rootDir = path.resolve(__dirname, '..', '..');
 const pckg = require(path.join(__dirname, '..', '..', 'package.json'));
 
@@ -16,7 +16,7 @@ const pckg = require(path.join(__dirname, '..', '..', 'package.json'));
 let jsBanner = `${pckg.name}
 @version ${pckg.version}
 @see ${pckg.homepage}
-@copyright 2014-${time} ${pckg.author}
+@copyright 2014-${date} ${pckg.author}
 @license ${pckg.license}`;
 let jsBannerPlugin = new webpack.BannerPlugin({
     banner: jsBanner,
