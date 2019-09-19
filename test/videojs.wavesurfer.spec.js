@@ -9,6 +9,8 @@ import Event from '../src/js/event.js';
 // registers the plugin (once)
 import Wavesurfer from '../src/js/videojs.wavesurfer.js';
 
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
+
 /** @test {Wavesurfer} */
 describe('Wavesurfer', () => {
     let player;
