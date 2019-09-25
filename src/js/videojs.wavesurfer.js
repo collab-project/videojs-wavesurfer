@@ -671,7 +671,7 @@ class Wavesurfer extends Plugin {
      */
     onWaveError(error) {
         // notify listeners
-        if (error.name === 'AbortError' ||
+        if (error.name && error.name === 'AbortError' ||
             error.name === 'DOMException' && error.message.startsWith('The operation was aborted'))
         {
             this.player.trigger(Event.ABORT, error);
