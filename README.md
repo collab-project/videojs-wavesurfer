@@ -209,6 +209,7 @@ player.on('waveReady', function(event) {
 | `waveReady` | Audio is loaded, decoded and the waveform is drawn. |
 | `playbackFinish` | Audio playback finished. |
 | `audioOutputReady` | Audio output was changed and is now active. |
+| `abort` | Audio loading process was interrupted and cancelled. |
 | `error` | Error occurred. |
 
 Customizing controls
