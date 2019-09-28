@@ -26,6 +26,7 @@ Event.DEVICE_ERROR = 'deviceError';
 Event.AUDIO_OUTPUT_READY = 'audioOutputReady';
 Event.WAVE_READY = 'waveReady';
 Event.PLAYBACK_FINISH = 'playbackFinish';
+Event.ABORT = 'abort';
 
 // dom
 Event.RESIZE = 'resize';

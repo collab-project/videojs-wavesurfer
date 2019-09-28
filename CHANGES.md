@@ -1,6 +1,12 @@
 videojs-wavesurfer changelog
 ============================
 
+2.10.0 - unreleased
+-------------------
+
+- New `abort` event; triggeredd when wavesurfer.js fetch call is cancelled (#87)
+
+
 2.9.0 - 2019/07/14
 ------------------
 

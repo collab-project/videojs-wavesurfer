@@ -16,7 +16,9 @@ module.exports = {
         watchContentBase: true,
         watchOptions: {
             ignored: [
+                /.build_cache/,
                 /.chrome/,
+                /.git/,
                 /node_modules/,
                 /bower_components/,
                 /coverage/,
