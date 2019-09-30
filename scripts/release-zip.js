@@ -25,9 +25,9 @@ const targetDirRenamed = path.join(targetDir, dirName);
 const targetDirUnpacked = path.join(targetDir, dirNameWithVersion);
 const zipName = dirNameWithVersion + '.zip';
 
-console.log('-----------------------------------------------');
+console.log('------------------------------------------------');
 console.log('Generating release for', pjson.name, version);
-console.log('-----------------------------------------------');
+console.log('------------------------------------------------');
 
 // clean old dir
 del([targetDirUnpacked, targetDirRenamed], {force: true, dryRun: false}).then(paths => {

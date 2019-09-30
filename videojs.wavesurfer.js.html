@@ -28,7 +28,7 @@
     <div class="title">
         <h1><a href="index.html" class="link">videojs-wavesurfer</a></h1>
         
-            <span class="version">v2.9.0</span>
+            <span class="version">v2.10.0</span>
         
     </div>
     <div class="search-container" id="search-container">
@@ -721,9 +721,15 @@ class Wavesurfer extends Plugin {
      */
     onWaveError(error) {
         // notify listeners
-        this.player.trigger(Event.ERROR, error);
+        if (error.name &amp;&amp; error.name === 'AbortError' ||
+            error.name === 'DOMException' &amp;&amp; error.message.startsWith('The operation was aborted'))
+        {
+            this.player.trigger(Event.ABORT, error);
+        } else {
+            this.player.trigger(Event.ERROR, error);
 
-        this.log(error, 'error');
+            this.log(error, 'error');
+        }
     }
 
     /**
