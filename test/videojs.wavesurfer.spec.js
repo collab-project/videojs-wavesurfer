@@ -321,6 +321,22 @@ describe('Wavesurfer', () => {
         });
     });
 
+    /** @test {Wavesurfer#load} */
+    it('throws error if peaks data cannot be found in file', (done) => {
+        player.one(Event.ERROR, (e) => {
+            expect(e).toEqual('data:image/jpeg;base64,');
+            done();
+        });
+
+        player.one(Event.WAVE_READY, () => {
+            // try loading from peaks file without a data property
+            player.wavesurfer().load(
+                TestHelpers.EXAMPLE_AUDIO_FILE,
+                TestHelpers.EXAMPLE_AUDIO_PEAKS_INVALID_FILE
+            );
+        });
+    });
+
     /** @test {Wavesurfer#setAudioOutput} */
     it('throws error for non-existing device', (done) => {
 
