@@ -324,7 +324,8 @@ describe('Wavesurfer', () => {
     /** @test {Wavesurfer#load} */
     it('throws error if peaks data cannot be found in file', (done) => {
         player.one(Event.ERROR, (element, err) => {
-            expect(err).toEqual('data:image/jpeg;base64,');
+            expect(err).toEqual(
+                'Could not load peaks data from test/support/demo-peaks-invalid.json');
             done();
         });
 
