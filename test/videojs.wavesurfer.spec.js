@@ -323,8 +323,8 @@ describe('Wavesurfer', () => {
 
     /** @test {Wavesurfer#load} */
     it('throws error if peaks data cannot be found in file', (done) => {
-        player.one(Event.ERROR, (e) => {
-            expect(e).toEqual('data:image/jpeg;base64,');
+        player.one(Event.ERROR, (element, err) => {
+            expect(err).toEqual('data:image/jpeg;base64,');
             done();
         });
 
