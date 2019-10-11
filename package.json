@@ -9,7 +9,7 @@
     "url": "https://github.com/collab-project/videojs-wavesurfer/issues"
   },
   "homepage": "https://github.com/collab-project/videojs-wavesurfer",
-  "main": "dist/videojs.wavesurfer.min.js",
+  "main": "dist/videojs.wavesurfer.js",
   "directories": {
     "doc": "./docs",
     "lib": "./src",
