@@ -10,6 +10,8 @@
   },
   "homepage": "https://github.com/collab-project/videojs-wavesurfer",
   "main": "dist/videojs.wavesurfer.js",
+  "style": "dist/css/videojs.wavesurfer.css",
+  "sass": "src/css/videojs.wavesurfer.scss",
   "directories": {
     "doc": "./docs",
     "lib": "./src",

@@ -1,10 +1,16 @@
 videojs-wavesurfer changelog
 ============================
 
+2.11.0 - unreleased
+-------------------
+
+- Add `style` and `sass` entries to `package.json`
+- Specify non-minified videojs-wavesurfer in `main` entry of `package.json`
+
 2.10.0 - 2019/09/30
 -------------------
 
-- New `abort` event; triggeredd when wavesurfer.js fetch call is cancelled (#87)
+- New `abort` event; triggered when wavesurfer.js fetch call is cancelled (#87)
 - Bump required wavesurfer.js version to 3.1.0
 
 
