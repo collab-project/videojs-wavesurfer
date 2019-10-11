@@ -321,6 +321,23 @@ describe('Wavesurfer', () => {
         });
     });
 
+    /** @test {Wavesurfer#load} */
+    it('throws error if peaks data cannot be found in file', (done) => {
+        player.one(Event.ERROR, (element, err) => {
+            expect(err).toStartWith('Could not load peaks data from ');
+            expect(err).toEndWith('demo-peaks-invalid.json');
+            done();
+        });
+
+        player.one(Event.WAVE_READY, () => {
+            // try loading from peaks file without a data property
+            player.wavesurfer().load(
+                TestHelpers.EXAMPLE_AUDIO_FILE,
+                TestHelpers.EXAMPLE_AUDIO_PEAKS_INVALID_FILE
+            );
+        });
+    });
+
     /** @test {Wavesurfer#setAudioOutput} */
     it('throws error for non-existing device', (done) => {
 

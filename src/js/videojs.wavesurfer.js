@@ -319,7 +319,14 @@ class Wavesurfer extends Plugin {
 
                     request.once('success', data => {
                         this.log('Loaded Peak Data URL: ' + peaks);
-                        this.surfer.load(url, data);
+                        // check for data property containing peaks
+                        if (data && data.data) {
+                            this.surfer.load(url, data.data);
+                        } else {
+                            this.player.trigger(Event.ERROR,
+                                'Could not load peaks data from ' + peaks);
+                            this.log(err, 'error');
+                        }
                     });
                     request.on('error', e => {
                         this.log('Unable to retrieve peak data from ' + peaks +

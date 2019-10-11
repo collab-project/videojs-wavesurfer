@@ -4,8 +4,10 @@ videojs-wavesurfer changelog
 2.11.0 - unreleased
 -------------------
 
+- Fix loading peaks data from JSON files (#90)
 - Add `style` and `sass` entries to `package.json`
 - Specify non-minified videojs-wavesurfer in `main` entry of `package.json`
+
 
 2.10.0 - 2019/09/30
 -------------------

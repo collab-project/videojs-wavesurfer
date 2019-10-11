@@ -17,6 +17,9 @@ const TestHelpers = {
     /** Peaks data for example audio clip */
     EXAMPLE_AUDIO_PEAKS_FILE: '/base/test/support/demo-peaks.json',
 
+    /** File with invalid peaks data */
+    EXAMPLE_AUDIO_PEAKS_INVALID_FILE: '/base/test/support/demo-peaks-invalid.json',
+
     /** Example VTT clip */
     EXAMPLE_VTT_FILE: '/base/test/support/demo.vtt',
 
