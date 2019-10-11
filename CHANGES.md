@@ -1,6 +1,15 @@
 videojs-wavesurfer changelog
 ============================
 
+3.0.0 - unreleased
+------------------
+
+- Support for progress control
+- Better media loading:
+  - Removed `src` option: use `player.src()` instead
+  - Ability to specify media using `<source>` tags
+
+
 2.11.0 - 2019/10/11
 -------------------
 
