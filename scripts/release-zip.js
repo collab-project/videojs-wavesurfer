@@ -12,6 +12,7 @@ const path = require('path');
 const zipdir = require('zip-dir');
 const copydir = require('copy-dir');
 const {spawn} = require('child_process');
+const tempDirectory = require('temp-dir');
 const download = require('download-tarball');
 
 const dirName = 'videojs-wavesurfer';
@@ -19,7 +20,7 @@ const libDir = path.join('node_modules', dirName);
 const pjson = JSON.parse(fs.readFileSync(path.resolve(libDir, 'package.json'), 'utf8'));
 const version = pjson.version;
 const url = 'https://github.com/collab-project/' + dirName + '/archive/' + version + '.tar.gz';
-const targetDir = '/tmp';
+const targetDir = tempDirectory;
 const dirNameWithVersion = dirName + '-' + version;
 const targetDirRenamed = path.join(targetDir, dirName);
 const targetDirUnpacked = path.join(targetDir, dirNameWithVersion);

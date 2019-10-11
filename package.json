@@ -39,6 +39,7 @@
     "portscanner": "^2.2.0",
     "requizzle": "^0.2.3",
     "serve-static": "^1.14.1",
+    "temp-dir": "^2.0.0",
     "tui-jsdoc-template": "^1.2.2",
     "zip-dir": "^1.0.2"
   },
@@ -50,7 +51,7 @@
     "update": "npm-run-all -s update:* && npm-run-all docs",
     "update:videojs-wavesurfer": "cpx -v 'node_modules/videojs-wavesurfer/dist/**/*' dist/",
     "release:zip": "node scripts/release-zip.js",
-    "docs": "jsdoc node_modules/videojs-wavesurfer/src/js -c ./.jsdoc.json",
+    "docs": "jsdoc node_modules/videojs-wavesurfer/src/js -c .jsdoc.json",
     "test": "echo No tests yet!",
     "watch": "npm-run-all -p watch:lint",
     "watch:lint": "nodemon --watch examples --exec npm run lint"
