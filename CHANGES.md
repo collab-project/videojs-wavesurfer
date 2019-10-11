@@ -1,7 +1,7 @@
 videojs-wavesurfer changelog
 ============================
 
-2.11.0 - unreleased
+2.11.0 - 2019/10/11
 -------------------
 
 - Fix loading peaks data from JSON files (#90)
