@@ -52,8 +52,8 @@
     "wavesurfer.js": ">=3.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.2",
-    "@babel/preset-env": "^7.6.2",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
     "babel-loader": "^8.0.6",
     "babel-plugin-add-module-exports": "^1.0.2",
@@ -61,7 +61,7 @@
     "browserslist": "^4.7.0",
     "css-loader": "^3.2.0",
     "date-fns": "^2.4.1",
-    "eslint": "^6.5.0",
+    "eslint": "^6.5.1",
     "htmlhint": "^0.11.0",
     "in-publish": "^2.0.0",
     "jasmine-core": "^3.5.0",
@@ -87,11 +87,11 @@
     "rimraf": "^3.0.0",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
-    "terser-webpack-plugin": "^2.1.2",
+    "terser-webpack-plugin": "^2.1.3",
     "tui-jsdoc-template": "^1.2.2",
-    "webpack": "^4.41.0",
+    "webpack": "^4.41.1",
     "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.8.1",
+    "webpack-dev-server": "^3.8.2",
     "webpack-merge": "^4.2.2",
     "webrtc-adapter": "^7.3.0"
   }
