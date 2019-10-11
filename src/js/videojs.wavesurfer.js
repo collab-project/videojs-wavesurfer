@@ -47,6 +47,8 @@ class Wavesurfer extends Plugin {
         this.textTracksEnabled = (this.player.options_.tracks.length > 0);
 
         // microphone plugin
+        // XXX: no more 'src' option in v3
+        /*
         if (options.src === 'live') {
             // check if the wavesurfer.js microphone plugin can be enabled
             if (WaveSurfer.microphone !== undefined) {
@@ -59,6 +61,7 @@ class Wavesurfer extends Plugin {
                 return;
             }
         }
+        */
 
         // wait until player ui is ready
         this.player.one(Event.READY, this.initialize.bind(this));
@@ -75,29 +78,40 @@ class Wavesurfer extends Plugin {
 
         // the native controls don't work for this UI so disable
         // them no matter what
+        // XXX: doublecheck this
+        /*
         if (this.player.usingNativeControls_ === true) {
             if (this.player.tech_.el_ !== undefined) {
                 this.player.tech_.el_.controls = false;
             }
         }
+        */
 
         // controls
         if (this.player.options_.controls === true) {
-            // make sure controlBar is showing
+            // make sure controlBar is showing.
+            // video.js hides the controlbar by default because it expects
+            // the user to click on the 'big play button' first.
             this.player.controlBar.show();
             this.player.controlBar.el_.style.display = 'flex';
 
             // progress control (if present) isn't used by this plugin
+            // CHECK: this is supported now
+            /*
             if (this.player.controlBar.progressControl !== undefined) {
                 this.player.controlBar.progressControl.hide();
             }
+            */
 
             // disable Picture-In-Picture toggle introduced in video.js 7.6.0
             // until there is support for canvas in the Picture-In-Picture
             // browser API (see https://www.chromestatus.com/features/4844605453369344)
+            // XXX: doublecheck this
+            /*
             if (this.player.controlBar.pictureInPictureToggle !== undefined) {
                 this.player.controlBar.pictureInPictureToggle.hide();
             }
+            */
 
             // make sure time displays are visible
             let uiElements = ['currentTimeDisplay', 'timeDivider', 'durationDisplay'];
@@ -114,6 +128,8 @@ class Wavesurfer extends Plugin {
                 this.player.controlBar.remainingTimeDisplay.hide();
             }
 
+            // XXX: maybe only in live mode?
+            /*
             if (this.player.controlBar.playToggle !== undefined) {
                 // handle play toggle interaction
                 this.player.controlBar.playToggle.on(['tap', 'click'],
@@ -125,6 +141,7 @@ class Wavesurfer extends Plugin {
                     this.player.controlBar.playToggle.hide();
                 }
             }
+            */
         }
 
         // wavesurfer.js setup
@@ -132,14 +149,16 @@ class Wavesurfer extends Plugin {
         this.surfer = WaveSurfer.create(mergedOptions);
         this.surfer.on(Event.ERROR, this.onWaveError.bind(this));
         this.surfer.on(Event.FINISH, this.onWaveFinish.bind(this));
+
         if (this.liveMode === true) {
             // listen for wavesurfer.js microphone plugin events
             this.surfer.microphone.on(Event.DEVICE_ERROR,
                 this.onWaveError.bind(this));
         }
         this.surferReady = this.onWaveReady.bind(this);
-        this.surferProgress = this.onWaveProgress.bind(this);
-        this.surferSeek = this.onWaveSeek.bind(this);
+        // CHECK: not needed anymore
+        //this.surferProgress = this.onWaveProgress.bind(this);
+        //this.surferSeek = this.onWaveSeek.bind(this);
 
         // only listen to these wavesurfer.js playback events when not
         // in live mode
@@ -152,11 +171,16 @@ class Wavesurfer extends Plugin {
         this.player.on(Event.FULLSCREENCHANGE, this.onScreenChange.bind(this));
 
         // make sure volume is muted when requested
+        // XXX: not needed anymore? doublecheck
+        /*
         if (this.player.muted()) {
             this.setVolume(0);
         }
+        */
 
         // video.js fluid option
+        // XXX: doublecheck
+        /*
         if (this.player.options_.fluid === true) {
             // give wave element a classname so it can be styled
             this.surfer.drawer.wrapper.className = wavesurferClassName;
@@ -165,8 +189,11 @@ class Wavesurfer extends Plugin {
                 this.onResizeChange.bind(this), 150);
             window.addEventListener(Event.RESIZE, this.responsiveWave);
         }
+        */
 
         // text tracks
+        // XXX: hopefully not needed anymore; doublecheck
+        /*
         if (this.textTracksEnabled) {
             if (this.player.controlBar.currentTimeDisplay !== undefined) {
                 // disable timeupdates
@@ -180,9 +207,10 @@ class Wavesurfer extends Plugin {
             // needed for text tracks
             this.player.tech_.trackCurrentTime();
         }
+        */
 
         // kick things off
-        this.startPlayers();
+        //this.startPlayers();
     }
 
     /**
@@ -277,12 +305,14 @@ class Wavesurfer extends Plugin {
     setupPlaybackEvents(enable) {
         if (enable === false) {
             this.surfer.un(Event.READY, this.surferReady);
-            this.surfer.un(Event.AUDIOPROCESS, this.surferProgress);
-            this.surfer.un(Event.SEEK, this.surferSeek);
+            // CHECK: not needed anymore
+            //this.surfer.un(Event.AUDIOPROCESS, this.surferProgress);
+            //this.surfer.un(Event.SEEK, this.surferSeek);
         } else if (enable === true) {
             this.surfer.on(Event.READY, this.surferReady);
-            this.surfer.on(Event.AUDIOPROCESS, this.surferProgress);
-            this.surfer.on(Event.SEEK, this.surferSeek);
+            // CHECK: not needed anymore
+            //this.surfer.on(Event.AUDIOPROCESS, this.surferProgress);
+            //this.surfer.on(Event.SEEK, this.surferSeek);
         }
     }
 
@@ -510,6 +540,8 @@ class Wavesurfer extends Plugin {
     /**
      * Updates the player's element displaying the current time.
      *
+     * CHECK: not needed anymore
+     *
      * @param {number} [currentTime] - Current position of the playhead
      *     (in seconds).
      * @param {number} [duration] - Duration of the waveform (in seconds).
@@ -560,6 +592,8 @@ class Wavesurfer extends Plugin {
     /**
      * Updates the player's element displaying the duration time.
      *
+     * CHECK: not needed anymore
+     *
      * @param {number} [duration] - Duration of the waveform (in seconds).
      * @private
      */
@@ -593,10 +627,14 @@ class Wavesurfer extends Plugin {
         this.player.trigger(Event.WAVE_READY);
 
         // update time display
+        // CHECK: not needed anymore
+        /*
         this.setCurrentTime();
         this.setDuration();
+        */
 
         // enable and show play button
+        /* CHECK: not needed anymore
         if (this.player.controlBar.playToggle !== undefined &&
             this.player.controlBar.playToggle.contentEl()) {
             this.player.controlBar.playToggle.show();
@@ -611,6 +649,7 @@ class Wavesurfer extends Plugin {
         if (this.player.options_.autoplay === true) {
             this.play();
         }
+        */
     }
 
     /**
@@ -626,6 +665,8 @@ class Wavesurfer extends Plugin {
         this.player.trigger(Event.PLAYBACK_FINISH);
 
         // check if loop is enabled
+        /* XXX: check this workaround
+
         if (this.player.options_.loop === true) {
             // reset waveform
             this.surfer.stop();
@@ -650,10 +691,13 @@ class Wavesurfer extends Plugin {
                 this.player.trigger(Event.PAUSE);
             });
         }
+        */
     }
 
     /**
      * Fires continuously during audio playback.
+     *
+     * CHECK: not needed anymore
      *
      * @param {number} time - Current time/location of the playhead.
      * @private
@@ -664,6 +708,9 @@ class Wavesurfer extends Plugin {
 
     /**
      * Fires during seeking of the waveform.
+     *
+     * CHECK: not needed anymore
+     *
      * @private
      */
     onWaveSeek() {
@@ -824,5 +871,65 @@ videojs.Wavesurfer = Wavesurfer;
 if (videojs.getPlugin('wavesurfer') === undefined) {
     videojs.registerPlugin('wavesurfer', Wavesurfer);
 }
+
+/* eslint-disable */
+
+// register a star-middleware
+videojs.use('*', player => {
+    return {
+        setSource(srcObj, next) {
+            next(null, srcObj);
+
+            let backend = player.wavesurfer().surfer.params.backend;
+            switch (backend) {
+                case 'MediaElement':
+                    // load media element into wavesurfer
+                    player.wavesurfer().surfer.load(player.tech_.el());
+                    break;
+
+                default:
+                    // load url into wavesurfer
+                    player.wavesurfer().surfer.load(srcObj.src);
+                    break;
+            }
+        },
+
+        callPlay: function() {
+            console.log('Play has been called');
+            // Terminate by returning the middleware terminator
+            //return videojs.middleware.TERMINATOR;
+        },
+        callPause: function() {
+            console.log('Pause has been called');
+
+            // Terminate by returning the middleware terminator
+            //return videojs.middleware.TERMINATOR;
+        },
+        pause: function(cancelled, value) {
+            console.log('pause got back from tech. What is the value passed?', value);
+
+            if (cancelled) {
+                console.log('pause has been cancelled prior to this middleware');
+            }
+
+            return value;
+        },
+        play: function(terminated, value) {
+            if (terminated) {
+                console.log('The play was middleware terminated.');
+
+                // the value is a play promise
+            } else if (value && value.then) {
+                value
+                    .then(() => {
+                        console.log('The play succeeded!')
+                    })
+                    .catch(err => {
+                        console.log('The play was rejected', err);
+                    });
+            }
+        }
+    };
+});
 
 export {Wavesurfer};
