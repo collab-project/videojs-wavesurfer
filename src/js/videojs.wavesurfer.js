@@ -97,6 +97,7 @@ class Wavesurfer extends Plugin {
 
             // progress control (if present) isn't used by this plugin
             // CHECK: this is supported now
+            // XXX: should be hidden in live mode
             /*
             if (this.player.controlBar.progressControl !== undefined) {
                 this.player.controlBar.progressControl.hide();
@@ -157,6 +158,7 @@ class Wavesurfer extends Plugin {
         }
         this.surferReady = this.onWaveReady.bind(this);
         // CHECK: not needed anymore
+        // XXX: still needed for WebAudio backend
         //this.surferProgress = this.onWaveProgress.bind(this);
         //this.surferSeek = this.onWaveSeek.bind(this);
 
@@ -179,8 +181,6 @@ class Wavesurfer extends Plugin {
         */
 
         // video.js fluid option
-        // XXX: doublecheck
-        /*
         if (this.player.options_.fluid === true) {
             // give wave element a classname so it can be styled
             this.surfer.drawer.wrapper.className = wavesurferClassName;
@@ -189,10 +189,10 @@ class Wavesurfer extends Plugin {
                 this.onResizeChange.bind(this), 150);
             window.addEventListener(Event.RESIZE, this.responsiveWave);
         }
-        */
 
         // text tracks
-        // XXX: hopefully not needed anymore; doublecheck
+        // CHECK: hopefully not needed anymore;
+        // XXX: maybe still needed for webaudio
         /*
         if (this.textTracksEnabled) {
             if (this.player.controlBar.currentTimeDisplay !== undefined) {
@@ -306,11 +306,13 @@ class Wavesurfer extends Plugin {
         if (enable === false) {
             this.surfer.un(Event.READY, this.surferReady);
             // CHECK: not needed anymore
+            // XXX: still needed for WebAudio backend
             //this.surfer.un(Event.AUDIOPROCESS, this.surferProgress);
             //this.surfer.un(Event.SEEK, this.surferSeek);
         } else if (enable === true) {
             this.surfer.on(Event.READY, this.surferReady);
             // CHECK: not needed anymore
+            // XXX: still needed for WebAudio backend
             //this.surfer.on(Event.AUDIOPROCESS, this.surferProgress);
             //this.surfer.on(Event.SEEK, this.surferSeek);
         }
@@ -541,6 +543,7 @@ class Wavesurfer extends Plugin {
      * Updates the player's element displaying the current time.
      *
      * CHECK: not needed anymore
+     * XXX: still needed for WebAudio backend
      *
      * @param {number} [currentTime] - Current position of the playhead
      *     (in seconds).
@@ -593,6 +596,7 @@ class Wavesurfer extends Plugin {
      * Updates the player's element displaying the duration time.
      *
      * CHECK: not needed anymore
+     * XXX: still needed for WebAudio backend
      *
      * @param {number} [duration] - Duration of the waveform (in seconds).
      * @private
@@ -628,6 +632,7 @@ class Wavesurfer extends Plugin {
 
         // update time display
         // CHECK: not needed anymore
+        // XXX: still needed for WebAudio backend
         /*
         this.setCurrentTime();
         this.setDuration();
@@ -635,6 +640,7 @@ class Wavesurfer extends Plugin {
 
         // enable and show play button
         /* CHECK: not needed anymore
+         * XXX: still needed for WebAudio backend
         if (this.player.controlBar.playToggle !== undefined &&
             this.player.controlBar.playToggle.contentEl()) {
             this.player.controlBar.playToggle.show();
@@ -698,6 +704,7 @@ class Wavesurfer extends Plugin {
      * Fires continuously during audio playback.
      *
      * CHECK: not needed anymore
+     * XXX: still needed for WebAudio backend
      *
      * @param {number} time - Current time/location of the playhead.
      * @private
@@ -710,6 +717,7 @@ class Wavesurfer extends Plugin {
      * Fires during seeking of the waveform.
      *
      * CHECK: not needed anymore
+     * XXX: still needed for WebAudio backend
      *
      * @private
      */
