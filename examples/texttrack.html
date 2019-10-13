@@ -48,7 +48,7 @@ var options = {
     tracks: textTracks,
     plugins: {
         wavesurfer: {
-            src: 'media/hal.wav',
+            backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
             waveColor: '#086280',
@@ -84,6 +84,9 @@ function createPlayer(event) {
             videojs.getPluginVersion('wavesurfer') +
             ' and wavesurfer.js ' + WaveSurfer.VERSION;
         videojs.log(msg);
+
+        // load file
+        player.src({src: 'media/hal.wav', type: 'audio/wav'});
     });
 
     player.on('waveReady', function(event) {

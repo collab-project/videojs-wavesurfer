@@ -37,17 +37,13 @@ var options = {
     height: 300,
     plugins: {
         wavesurfer: {
-            src: 'media/example.mp4',
+            backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
             waveColor: '#336699',
             progressColor: 'black',
             cursorColor: 'black',
-            hideScrollbar: true,
-            // disable options below to hide the video playback,
-            // and only show the waveform
-            backend: 'MediaElement',
-            mediaType: 'video'
+            hideScrollbar: true
         }
     }
 };
@@ -77,6 +73,9 @@ function createPlayer(event) {
             videojs.getPluginVersion('wavesurfer') +
             ' and wavesurfer.js ' + WaveSurfer.VERSION;
         videojs.log(msg);
+        
+        // load file
+        player.src({src: 'media/example.mp4', type: 'video/mp4'});
     });
 
     player.on('waveReady', function(event) {

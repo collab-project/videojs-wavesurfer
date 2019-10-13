@@ -81,8 +81,9 @@ navigator.mediaDevices.enumerateDevices(this).then(function(result) {
     if (inputSelector.length <= 1) {
         // no input devices found, disable select
         option = document.createElement('option');
-        option.text = 'No audio input devices found';
-        option.value = undefined;
+        option.text = 'No additional audio input devices found';
+        option.value = '';
+        inputSelector.options[0] = null;
         inputSelector.appendChild(option);
         inputSelector.disabled = true;
         console.warn(option.text);

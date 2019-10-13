@@ -38,7 +38,6 @@ var options = {
     height: 300,
     plugins: {
         wavesurfer: {
-            src: 'media/hal.wav',
             // Use peaks from JSON file. See https://wavesurfer-js.org/faq/
             // for instructions on how to generate peaks
             peaks: 'media/hal-peaks.json',
@@ -79,6 +78,9 @@ function createPlayer(event) {
             videojs.getPluginVersion('wavesurfer') +
             ' and wavesurfer.js ' + WaveSurfer.VERSION;
         videojs.log(msg);
+
+        // load file
+        player.src({src: 'media/hal.wav', type: 'audio/wav'});
     });
 
     // error handling
