@@ -5,6 +5,7 @@ videojs-wavesurfer changelog
 ------------------
 
 - Support for progress control
+- Bump required video.js version to 7.0.5 or newer
 - Better media loading:
   - Removed `src` option: use `player.src()` instead
   - Ability to specify media using `<source>` tags
