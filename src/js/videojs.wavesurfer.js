@@ -173,7 +173,8 @@ class Wavesurfer extends Plugin {
         this.player.on(Event.FULLSCREENCHANGE, this.onScreenChange.bind(this));
 
         // make sure volume is muted when requested
-        // XXX: not needed anymore? doublecheck
+        // CHECK: not needed anymore?
+        // XXX: only needed for WebAudio backend
         /*
         if (this.player.muted()) {
             this.setVolume(0);
@@ -455,6 +456,9 @@ class Wavesurfer extends Plugin {
             // destroy wavesurfer instance
             this.surfer.destroy();
         }
+        /*
+         * XXX: check if needed
+         */
         if (this.textTracksEnabled) {
             this.player.tech_.stopTrackingCurrentTime();
         }
@@ -645,6 +649,7 @@ class Wavesurfer extends Plugin {
             this.player.controlBar.playToggle.contentEl()) {
             this.player.controlBar.playToggle.show();
         }
+        */
 
         // hide loading spinner
         if (this.player.loadingSpinner.contentEl()) {
@@ -653,9 +658,14 @@ class Wavesurfer extends Plugin {
 
         // auto-play when ready (if enabled)
         if (this.player.options_.autoplay === true) {
-            this.play();
+            // autoplay is only allowed when audio is muted
+            this.setVolume(0);
+
+            // try auto-play
+            this.player.play().catch(e => {
+                this.onWaveError(e);
+            });
         }
-        */
     }
 
     /**
@@ -671,16 +681,19 @@ class Wavesurfer extends Plugin {
         this.player.trigger(Event.PLAYBACK_FINISH);
 
         // check if loop is enabled
-        /* XXX: check this workaround
-
         if (this.player.options_.loop === true) {
+            // XXX: only for webaudio backend
+            /*
             // reset waveform
             this.surfer.stop();
             this.play();
+            */
         } else {
             // finished
             this.waveFinished = true;
 
+            // XXX: only for webaudio backend
+            /*
             // pause player
             this.pause();
 
@@ -696,8 +709,8 @@ class Wavesurfer extends Plugin {
                 }
                 this.player.trigger(Event.PAUSE);
             });
+            */
         }
-        */
     }
 
     /**
@@ -930,10 +943,10 @@ videojs.use('*', player => {
             } else if (value && value.then) {
                 value
                     .then(() => {
-                        console.log('The play succeeded!')
+                        console.log('The play call succeeded!')
                     })
                     .catch(err => {
-                        console.log('The play was rejected', err);
+                        console.log('The play call was rejected', err);
                     });
             }
         }
