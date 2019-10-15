@@ -21,6 +21,12 @@
   #myLiveAudio {
       background-color: #ADD3FF;
   }
+
+  /* position fullscreen control on right side of the player */
+  .video-js.vjs-wavesurfer .vjs-control.vjs-fullscreen-control {
+      position: absolute;
+      right: 0;
+  }
   </style>
 </head>
 <body>
@@ -32,6 +38,9 @@
 var player;
 var options = {
     controls: true,
+    autoplay: false,
+    loop: false,
+    muted: false,
     fluid: false,
     width: 600,
     height: 300,
@@ -40,16 +49,25 @@ var options = {
         timeDivider: false,
         durationDisplay: false,
         remainingTimeDisplay: false,
-        volumePanel: false
+        volumePanel: false,
+        progressControl: false
     },
     plugins: {
+        // enable videojs-wavesurfer plugin (for video.js)
         wavesurfer: {
-            src: 'live',
             waveColor: 'black',
             debug: true,
             cursorWidth: 0,
             interact: false,
             hideScrollbar: true,
+            plugins: [
+                // enable microphone plugin (for wavesurfer.js)
+                WaveSurfer.microphone.create({
+                    bufferSize: 4096,
+                    numberOfInputChannels: 1,
+                    numberOfOutputChannels: 1
+                })
+            ]
         }
     }
 };
