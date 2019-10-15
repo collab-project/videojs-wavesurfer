@@ -46,23 +46,6 @@ class Wavesurfer extends Plugin {
         this.msDisplayMax = parseFloat(options.msDisplayMax);
         this.textTracksEnabled = (this.player.options_.tracks.length > 0);
 
-        // microphone plugin
-        // XXX: no more 'src' option in v3
-        /*
-        if (options.src === 'live') {
-            // check if the wavesurfer.js microphone plugin can be enabled
-            if (WaveSurfer.microphone !== undefined) {
-                // enable audio input from a microphone
-                this.liveMode = true;
-                this.waveReady = true;
-            } else {
-                this.onWaveError('Could not find wavesurfer.js ' +
-                    'microphone plugin!');
-                return;
-            }
-        }
-        */
-
         // wait until player ui is ready
         this.player.one(Event.READY, this.initialize.bind(this));
     }
@@ -96,8 +79,8 @@ class Wavesurfer extends Plugin {
             this.player.controlBar.el_.style.display = 'flex';
 
             // progress control (if present) isn't used by this plugin
-            // CHECK: this is supported now
-            // XXX: should be hidden in live mode
+            // CHECK: this is supported now with MediaElement backend
+            // hide manually in live mode using video.js config
             /*
             if (this.player.controlBar.progressControl !== undefined) {
                 this.player.controlBar.progressControl.hide();
@@ -107,12 +90,9 @@ class Wavesurfer extends Plugin {
             // disable Picture-In-Picture toggle introduced in video.js 7.6.0
             // until there is support for canvas in the Picture-In-Picture
             // browser API (see https://www.chromestatus.com/features/4844605453369344)
-            // XXX: doublecheck this
-            /*
             if (this.player.controlBar.pictureInPictureToggle !== undefined) {
                 this.player.controlBar.pictureInPictureToggle.hide();
             }
-            */
 
             // make sure time displays are visible
             let uiElements = ['currentTimeDisplay', 'timeDivider', 'durationDisplay'];
@@ -128,21 +108,6 @@ class Wavesurfer extends Plugin {
             if (this.player.controlBar.remainingTimeDisplay !== undefined) {
                 this.player.controlBar.remainingTimeDisplay.hide();
             }
-
-            // XXX: maybe only in live mode?
-            /*
-            if (this.player.controlBar.playToggle !== undefined) {
-                // handle play toggle interaction
-                this.player.controlBar.playToggle.on(['tap', 'click'],
-                    this.onPlayToggle.bind(this));
-
-                // disable play button until waveform is ready
-                // (except when in live mode)
-                if (!this.liveMode) {
-                    this.player.controlBar.playToggle.hide();
-                }
-            }
-            */
         }
 
         // wavesurfer.js setup
@@ -151,18 +116,41 @@ class Wavesurfer extends Plugin {
         this.surfer.on(Event.ERROR, this.onWaveError.bind(this));
         this.surfer.on(Event.FINISH, this.onWaveFinish.bind(this));
 
-        if (this.liveMode === true) {
+        // check if the wavesurfer.js microphone plugin can be enabled
+        if (WaveSurfer.microphone !== undefined) {
+            // enable audio input from a microphone
+            this.liveMode = true;
+            this.waveReady = true;
+            this.log('wavesurfer.js microphone plugin enabled.');
+
             // listen for wavesurfer.js microphone plugin events
             this.surfer.microphone.on(Event.DEVICE_ERROR,
                 this.onWaveError.bind(this));
+
+            // XXX: only in live mode?
+            if (this.player.controlBar.playToggle !== undefined) {
+                // handle play toggle interaction
+                this.player.controlBar.playToggle.on(['tap', 'click'],
+                    this.onPlayToggle.bind(this));
+
+                // disable play button until waveform is ready
+                // (except when in live mode)
+                /*
+                if (!this.liveMode) {
+                    this.player.controlBar.playToggle.hide();
+                }
+                */
+            }
         }
+
+        // listen for wavesurfer.js events
         this.surferReady = this.onWaveReady.bind(this);
         // CHECK: not needed anymore
         // XXX: still needed for WebAudio backend
         //this.surferProgress = this.onWaveProgress.bind(this);
         //this.surferSeek = this.onWaveSeek.bind(this);
 
-        // only listen to these wavesurfer.js playback events when not
+        // only listen to the wavesurfer.js playback events when not
         // in live mode
         if (!this.liveMode) {
             this.setupPlaybackEvents(true);
@@ -173,7 +161,7 @@ class Wavesurfer extends Plugin {
         this.player.on(Event.FULLSCREENCHANGE, this.onScreenChange.bind(this));
 
         // make sure volume is muted when requested
-        // CHECK: not needed anymore?
+        // CHECK: not needed anymore
         // XXX: only needed for WebAudio backend
         /*
         if (this.player.muted()) {
@@ -221,7 +209,7 @@ class Wavesurfer extends Plugin {
      * @param {Object} surferOpts - Plugin options.
      * @returns {Object} - Updated `surferOpts` object.
      */
-    parseOptions(surferOpts) {
+    parseOptions(surferOpts = {}) {
         let rect = this.player.el_.getBoundingClientRect();
         this.originalWidth = this.player.options_.width || rect.width;
         this.originalHeight = this.player.options_.height || rect.height;
@@ -260,12 +248,15 @@ class Wavesurfer extends Plugin {
         }
 
         // enable wavesurfer.js microphone plugin
+        /*
+         CHECK: not needed anymore
         if (this.liveMode === true) {
             surferOpts.plugins = [
                 WaveSurfer.microphone.create(surferOpts)
             ];
             this.log('wavesurfer.js microphone plugin enabled.');
         }
+        */
 
         return surferOpts;
     }
@@ -273,6 +264,7 @@ class Wavesurfer extends Plugin {
     /**
      * Start the players.
      * @private
+     * XXX: not needed anymore? check
      */
     startPlayers() {
         let options = this.player.options_.plugins.wavesurfer;
