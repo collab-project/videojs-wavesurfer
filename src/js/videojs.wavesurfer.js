@@ -43,8 +43,8 @@ class Wavesurfer extends Plugin {
         this.waveFinished = false;
         this.liveMode = false;
         this.debug = (options.debug.toString() === 'true');
-        this.msDisplayMax = parseFloat(options.msDisplayMax);
         this.textTracksEnabled = (this.player.options_.tracks.length > 0);
+        this.msDisplayMax = parseFloat(options.msDisplayMax);
 
         // wait until player ui is ready
         this.player.one(Event.READY, this.initialize.bind(this));
@@ -58,6 +58,11 @@ class Wavesurfer extends Plugin {
     initialize() {
         // hide big play button
         this.player.bigPlayButton.hide();
+
+        // set time format
+        videojs.setFormatTime((seconds, guide) => {
+            return formatTime(seconds, guide, this.msDisplayMax)
+        });
 
         // the native controls don't work for this UI so disable
         // them no matter what
