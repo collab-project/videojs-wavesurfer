@@ -52,6 +52,8 @@ class VideojsWavesurferPlayer extends React.Component {
 const videoJsOptions = {
     controls: true,
     autoplay: false,
+    loop: false,
+    muted: false,
     fluid: false,
     width: 600,
     height: 300,

@@ -49,9 +49,12 @@
 /* eslint-disable */
 var player = videojs('myAudio', {
     controls: true,
+    autoplay: false,
+    loop: false,
+    muted: false,
+    fluid: false,
     width: 600,
     height: 300,
-    fluid: false,
     plugins: {
         wavesurfer: {
             backend: 'MediaElement',
