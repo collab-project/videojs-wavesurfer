@@ -61,7 +61,7 @@ class Wavesurfer extends Plugin {
 
         // set time format
         videojs.setFormatTime((seconds, guide) => {
-            return formatTime(seconds, guide, this.msDisplayMax)
+            return formatTime(seconds, guide, this.msDisplayMax);
         });
 
         // the native controls don't work for this UI so disable
@@ -86,6 +86,7 @@ class Wavesurfer extends Plugin {
             // progress control (if present) isn't used by this plugin
             // CHECK: this is supported now with MediaElement backend
             // hide manually in live mode using video.js config
+            // XXX: maybe hide with webaudio backend?
             /*
             if (this.player.controlBar.progressControl !== undefined) {
                 this.player.controlBar.progressControl.hide();
