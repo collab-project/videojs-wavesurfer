@@ -39,9 +39,6 @@ var options = {
     height: 300,
     plugins: {
         wavesurfer: {
-            // Use peaks from JSON file. See https://wavesurfer-js.org/faq/
-            // for instructions on how to generate peaks
-            peaks: 'media/hal-peaks.json',
             backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
@@ -80,8 +77,14 @@ function createPlayer(event) {
             ' and wavesurfer.js ' + WaveSurfer.VERSION;
         videojs.log(msg);
 
-        // load file
-        player.src({src: 'media/hal.wav', type: 'audio/wav'});
+        // load file with peaks
+        player.src({
+            src: 'media/hal.wav',
+            type: 'audio/wav',
+            // Use peaks from JSON file. See https://wavesurfer-js.org/faq/
+            // for instructions on how to generate peaks
+            peaks: 'media/hal-peaks.json'
+        });
     });
 
     // error handling

@@ -332,45 +332,50 @@ class Wavesurfer extends Plugin {
         } else {
             // load peak data from file
             if (peaks !== undefined) {
-                if (Array.isArray(peaks)) {
-                    // use supplied peaks data
-                    this.log('Loading URL: ' + url);
-                    this.surfer.load(url, peaks);
-                } else {
-                    // load peak data from file
-                    let requestOptions = {
-                        url: peaks,
-                        responseType: 'json'
-                    };
-                    // supply xhr options, if any
-                    if (this.player.options_.plugins.wavesurfer.xhr !== undefined) {
-                        requestOptions.xhr = this.player.options_.plugins.wavesurfer.xhr;
-                    }
-                    let request = WaveSurfer.util.fetchFile(requestOptions);
-
-                    request.once('success', data => {
-                        this.log('Loaded Peak Data URL: ' + peaks);
-                        // check for data property containing peaks
-                        if (data && data.data) {
-                            this.surfer.load(url, data.data);
-                        } else {
-                            this.player.trigger(Event.ERROR,
-                                'Could not load peaks data from ' + peaks);
-                            this.log(err, 'error');
-                        }
-                    });
-                    request.on('error', e => {
-                        this.log('Unable to retrieve peak data from ' + peaks +
-                            '. Status code: ' + request.response.status, 'warn');
-                        this.log('Loading URL: ' + url);
-                        this.surfer.load(url);
-                    });
-                }
+                this.loadPeaks(url, peaks);
             } else {
                 // no peaks
                 this.log('Loading URL: ' + url);
                 this.surfer.load(url);
             }
+        }
+    }
+
+    loadPeaks(url, peaks) {
+        if (Array.isArray(peaks)) {
+            // use supplied peaks data
+            this.log('Loading URL: ' + url);
+            this.surfer.load(url, peaks);
+        } else {
+            // load peak data from file
+            let requestOptions = {
+                url: peaks,
+                responseType: 'json'
+            };
+
+            // supply xhr options, if any
+            if (this.player.options_.plugins.wavesurfer.xhr !== undefined) {
+                requestOptions.xhr = this.player.options_.plugins.wavesurfer.xhr;
+            }
+            let request = WaveSurfer.util.fetchFile(requestOptions);
+
+            request.once('success', data => {
+                this.log('Loaded Peak Data URL: ' + peaks);
+                // check for data property containing peaks
+                if (data && data.data) {
+                    this.surfer.load(url, data.data);
+                } else {
+                    this.player.trigger(Event.ERROR,
+                        'Could not load peaks data from ' + peaks);
+                    this.log(err, 'error');
+                }
+            });
+            request.on('error', e => {
+                this.log('Unable to retrieve peak data from ' + peaks +
+                    '. Status code: ' + request.response.status, 'warn');
+                this.log('Loading URL: ' + url);
+                this.surfer.load(url);
+            });
         }
     }
 
@@ -900,15 +905,25 @@ videojs.use('*', player => {
             next(null, srcObj);
 
             let backend = player.wavesurfer().surfer.params.backend;
+            let src = srcObj.src;
+            let peaks = srcObj.peaks;
+
             switch (backend) {
                 case 'MediaElement':
+                    let element = player.tech_.el();
                     // load media element into wavesurfer
-                    player.wavesurfer().surfer.load(player.tech_.el());
+                    if (peaks === undefined) {
+                        // regular element
+                        player.wavesurfer().load(element);
+                    } else {
+                        // load with peaks
+                        player.wavesurfer().load(element, peaks);
+                    }
                     break;
 
                 default:
                     // load url into wavesurfer
-                    player.wavesurfer().surfer.load(srcObj.src);
+                    player.wavesurfer().surfer.load(src);
                     break;
             }
         },

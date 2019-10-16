@@ -8,9 +8,13 @@
 }
 
 /* Ensure that vjs menus and interfaces can be interacted with (such as the
-   closed captions button).
+   progress control).
 --------------------------------------------------------------------------------
 */
-.vjs-wavesurfer .vjs-menu-content {
+.vjs-wavesurfer .vjs-menu-content, .vjs-progress-control {
+    z-index: 4;
+}
+
+.vjs-wavesurfer .vjs-modal-dialog, .vjs-text-track-display {
     z-index: 4;
 }
