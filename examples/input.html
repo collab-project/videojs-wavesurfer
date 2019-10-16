@@ -31,6 +31,12 @@
   .inputSelector {
       margin-top: 30px;
   }
+
+  /* position fullscreen control on right side of the player */
+  .video-js.vjs-wavesurfer .vjs-control.vjs-fullscreen-control {
+      position: absolute;
+      right: 0;
+  }
   </style>
 
 </head>
@@ -124,11 +130,11 @@ function changeAudioInput(event) {
             timeDivider: false,
             durationDisplay: false,
             remainingTimeDisplay: false,
-            volumePanel: false
+            volumePanel: false,
+            progressControl: false
         },
         plugins: {
             wavesurfer: {
-                src: 'live',
                 msDisplayMax: 10,
                 debug: true,
                 waveColor: '#3F4D4B',
@@ -136,10 +142,15 @@ function changeAudioInput(event) {
                 cursorWidth: 0,
                 interact: false,
                 hideScrollbar: true,
-                // microphone plugin settings
-                numberOfInputChannels: 1,
-                bufferSize: 4096,
-                constraints: constraints
+                plugins: [
+                    // enable microphone plugin (for wavesurfer.js)
+                    WaveSurfer.microphone.create({
+                        bufferSize: 4096,
+                        numberOfInputChannels: 1,
+                        numberOfOutputChannels: 1,
+                        constraints: constraints
+                    })
+                ]
             }
         }
     }, function() {
