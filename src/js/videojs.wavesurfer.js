@@ -140,11 +140,11 @@ class Wavesurfer extends Plugin {
 
         // XXX: only in live mode?
         if (this.player.controlBar.playToggle !== undefined) {
-            /*if (this.backend === 'WebAudio' || this.liveMode === true) {
+            if (this.backend === 'WebAudio' || this.liveMode === true) {
                 // handle play toggle interaction
                 this.player.controlBar.playToggle.on(['tap', 'click'],
                     this.onPlayToggle.bind(this));
-            }*/
+            }
 
             // disable play button until waveform is ready
             // (except when in live mode)
@@ -166,11 +166,9 @@ class Wavesurfer extends Plugin {
             // make sure volume is muted when requested
             // CHECK: not needed anymore
             // XXX: only needed for WebAudio backend
-            /*
             if (this.player.muted()) {
                 this.setVolume(0);
             }
-            */
         }
 
         // only listen to the wavesurfer.js playback events when not
@@ -353,6 +351,14 @@ class Wavesurfer extends Plugin {
         }
     }
 
+    /**
+     * Start loading waveform data.
+     *
+     * @param {string|blob|file} url - Either the URL of the audio file,
+     *     a Blob or a File object.
+     * @param {string|number[]} peaks - Either the URL of peaks
+     *     data for the audio file, or an array with peaks data.
+     */
     loadPeaks(url, peaks) {
         if (Array.isArray(peaks)) {
             // use supplied peaks data
@@ -652,19 +658,20 @@ class Wavesurfer extends Plugin {
         // update time display
         // CHECK: not needed anymore
         // XXX: still needed for WebAudio backend
-        /*
-        this.setCurrentTime();
-        this.setDuration();
-        */
+        if (this.backend === 'WebAudio') {
+            this.setCurrentTime();
+            this.setDuration();
 
-        // enable and show play button
-        /* CHECK: not needed anymore
-         * XXX: still needed for WebAudio backend
-        if (this.player.controlBar.playToggle !== undefined &&
-            this.player.controlBar.playToggle.contentEl()) {
-            this.player.controlBar.playToggle.show();
+            // enable and show play button
+            /* CHECK: not needed anymore
+             * XXX: maybe for webaudio
+             *
+            if (this.player.controlBar.playToggle !== undefined &&
+                this.player.controlBar.playToggle.contentEl()) {
+                this.player.controlBar.playToggle.show();
+            }
+            */
         }
-        */
 
         // hide loading spinner
         if (this.player.loadingSpinner.contentEl()) {
@@ -708,23 +715,23 @@ class Wavesurfer extends Plugin {
             this.waveFinished = true;
 
             // XXX: only for webaudio backend
-            /*
-            // pause player
-            this.pause();
+            if (this.backend === 'WebAudio') {
+                // pause player
+                this.pause();
 
-            // show the replay state of play toggle
-            this.player.trigger(Event.ENDED);
+                // show the replay state of play toggle
+                this.player.trigger(Event.ENDED);
 
-            // this gets called once after the clip has ended and the user
-            // seeks so that we can change the replay button back to a play
-            // button
-            this.surfer.once(Event.SEEK, () => {
-                if (this.player.controlBar.playToggle !== undefined) {
-                    this.player.controlBar.playToggle.removeClass('vjs-ended');
-                }
-                this.player.trigger(Event.PAUSE);
-            });
-            */
+                // this gets called once after the clip has ended and the user
+                // seeks so that we can change the replay button back to a play
+                // button
+                this.surfer.once(Event.SEEK, () => {
+                    if (this.player.controlBar.playToggle !== undefined) {
+                        this.player.controlBar.playToggle.removeClass('vjs-ended');
+                    }
+                    this.player.trigger(Event.PAUSE);
+                });
+            }
         }
     }
 
@@ -907,8 +914,6 @@ videojs.Wavesurfer = Wavesurfer;
 if (videojs.getPlugin('wavesurfer') === undefined) {
     videojs.registerPlugin('wavesurfer', Wavesurfer);
 }
-
-/* eslint-disable */
 
 // register a star-middleware
 videojs.use('*', player => {
