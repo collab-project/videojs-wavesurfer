@@ -9,6 +9,7 @@ import Event from './event';
 import log from './utils/log';
 import formatTime from './utils/format-time';
 import pluginDefaultOptions from './defaults';
+import myMediator from './mediator';
 import window from 'global/window';
 
 import videojs from 'video.js';
@@ -42,6 +43,7 @@ class Wavesurfer extends Plugin {
         this.waveReady = false;
         this.waveFinished = false;
         this.liveMode = false;
+        this.backend = null;
         this.debug = (options.debug.toString() === 'true');
         this.textTracksEnabled = (this.player.options_.tracks.length > 0);
         this.msDisplayMax = parseFloat(options.msDisplayMax);
@@ -121,6 +123,8 @@ class Wavesurfer extends Plugin {
         this.surfer = WaveSurfer.create(mergedOptions);
         this.surfer.on(Event.ERROR, this.onWaveError.bind(this));
         this.surfer.on(Event.FINISH, this.onWaveFinish.bind(this));
+        this.backend = this.surfer.params.backend;
+        this.log('Using ' + this.backend + ' backend.');
 
         // check if the wavesurfer.js microphone plugin can be enabled
         if (WaveSurfer.microphone !== undefined) {
@@ -132,29 +136,42 @@ class Wavesurfer extends Plugin {
             // listen for wavesurfer.js microphone plugin events
             this.surfer.microphone.on(Event.DEVICE_ERROR,
                 this.onWaveError.bind(this));
+        }
 
-            // XXX: only in live mode?
-            if (this.player.controlBar.playToggle !== undefined) {
+        // XXX: only in live mode?
+        if (this.player.controlBar.playToggle !== undefined) {
+            /*if (this.backend === 'WebAudio' || this.liveMode === true) {
                 // handle play toggle interaction
                 this.player.controlBar.playToggle.on(['tap', 'click'],
                     this.onPlayToggle.bind(this));
+            }*/
 
-                // disable play button until waveform is ready
-                // (except when in live mode)
-                /*
-                if (!this.liveMode) {
-                    this.player.controlBar.playToggle.hide();
-                }
-                */
+            // disable play button until waveform is ready
+            // (except when in live mode)
+            /*
+            if (!this.liveMode) {
+                this.player.controlBar.playToggle.hide();
             }
+            */
         }
 
         // listen for wavesurfer.js events
         this.surferReady = this.onWaveReady.bind(this);
         // CHECK: not needed anymore
         // XXX: still needed for WebAudio backend
-        //this.surferProgress = this.onWaveProgress.bind(this);
-        //this.surferSeek = this.onWaveSeek.bind(this);
+        if (this.backend === 'WebAudio') {
+            this.surferProgress = this.onWaveProgress.bind(this);
+            this.surferSeek = this.onWaveSeek.bind(this);
+
+            // make sure volume is muted when requested
+            // CHECK: not needed anymore
+            // XXX: only needed for WebAudio backend
+            /*
+            if (this.player.muted()) {
+                this.setVolume(0);
+            }
+            */
+        }
 
         // only listen to the wavesurfer.js playback events when not
         // in live mode
@@ -165,15 +182,6 @@ class Wavesurfer extends Plugin {
         // video.js player events
         this.player.on(Event.VOLUMECHANGE, this.onVolumeChange.bind(this));
         this.player.on(Event.FULLSCREENCHANGE, this.onScreenChange.bind(this));
-
-        // make sure volume is muted when requested
-        // CHECK: not needed anymore
-        // XXX: only needed for WebAudio backend
-        /*
-        if (this.player.muted()) {
-            this.setVolume(0);
-        }
-        */
 
         // video.js fluid option
         if (this.player.options_.fluid === true) {
@@ -306,14 +314,18 @@ class Wavesurfer extends Plugin {
             this.surfer.un(Event.READY, this.surferReady);
             // CHECK: not needed anymore
             // XXX: still needed for WebAudio backend
-            //this.surfer.un(Event.AUDIOPROCESS, this.surferProgress);
-            //this.surfer.un(Event.SEEK, this.surferSeek);
+            if (this.backend === 'WebAudio') {
+                this.surfer.un(Event.AUDIOPROCESS, this.surferProgress);
+                this.surfer.un(Event.SEEK, this.surferSeek);
+            }
         } else if (enable === true) {
             this.surfer.on(Event.READY, this.surferReady);
             // CHECK: not needed anymore
             // XXX: still needed for WebAudio backend
-            //this.surfer.on(Event.AUDIOPROCESS, this.surferProgress);
-            //this.surfer.on(Event.SEEK, this.surferSeek);
+            if (this.backend === 'WebAudio') {
+                this.surfer.on(Event.AUDIOPROCESS, this.surferProgress);
+                this.surfer.on(Event.SEEK, this.surferSeek);
+            }
         }
     }
 
@@ -900,70 +912,7 @@ if (videojs.getPlugin('wavesurfer') === undefined) {
 
 // register a star-middleware
 videojs.use('*', player => {
-    return {
-        setSource(srcObj, next) {
-            next(null, srcObj);
-
-            let backend = player.wavesurfer().surfer.params.backend;
-            let src = srcObj.src;
-            let peaks = srcObj.peaks;
-
-            switch (backend) {
-                case 'MediaElement':
-                    let element = player.tech_.el();
-                    // load media element into wavesurfer
-                    if (peaks === undefined) {
-                        // regular element
-                        player.wavesurfer().load(element);
-                    } else {
-                        // load with peaks
-                        player.wavesurfer().load(element, peaks);
-                    }
-                    break;
-
-                default:
-                    // load url into wavesurfer
-                    player.wavesurfer().surfer.load(src);
-                    break;
-            }
-        },
-
-        callPlay: function() {
-            console.log('Play has been called');
-            // Terminate by returning the middleware terminator
-            //return videojs.middleware.TERMINATOR;
-        },
-        callPause: function() {
-            console.log('Pause has been called');
-
-            // Terminate by returning the middleware terminator
-            //return videojs.middleware.TERMINATOR;
-        },
-        pause: function(cancelled, value) {
-            console.log('pause got back from tech. What is the value passed?', value);
-
-            if (cancelled) {
-                console.log('pause has been cancelled prior to this middleware');
-            }
-
-            return value;
-        },
-        play: function(terminated, value) {
-            if (terminated) {
-                console.log('The play was middleware terminated.');
-
-                // the value is a play promise
-            } else if (value && value.then) {
-                value
-                    .then(() => {
-                        console.log('The play call succeeded!')
-                    })
-                    .catch(err => {
-                        console.log('The play call was rejected', err);
-                    });
-            }
-        }
-    };
+    return myMediator;
 });
 
 export {Wavesurfer};
