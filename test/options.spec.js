@@ -1,5 +1,5 @@
 /**
- * @since 3.0.0
+ * @since 2.0.0
  */
 
 import Event from '../src/js/event.js';
@@ -31,6 +31,8 @@ describe('Wavesurfer options', () => {
 
             done();
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer} */
@@ -49,23 +51,8 @@ describe('Wavesurfer options', () => {
 
             done();
         });
-    });
 
-    /** @test {Wavesurfer#startPlayers} */
-    it('hides loading spinner when no valid src is found', (done) => {
-        player = TestHelpers.makePlayer({
-            plugins: {
-                wavesurfer: {
-                    src: undefined
-                }
-            }
-        });
-
-        player.one(Event.READY, () => {
-            expect(player.loadingSpinner.hasClass('vjs-hidden')).toBeTrue();
-
-            done();
-        });
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer} */
@@ -75,6 +62,8 @@ describe('Wavesurfer options', () => {
         });
 
         player.one(Event.PLAYBACK_FINISH, done);
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer} */
@@ -83,11 +72,11 @@ describe('Wavesurfer options', () => {
             autoplay: true,
             loop: true
         });
-
-        player.one(Event.PLAYBACK_FINISH, () => {
-            // stop after it looped once
-            player.one(Event.PLAYBACK_FINISH, done);
+        player.one('play', () => {
+            done();
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
 });

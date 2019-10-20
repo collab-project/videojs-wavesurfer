@@ -15,9 +15,13 @@ describe('Wavesurfer Fluid', () => {
     beforeEach(() => {
         // create new player
         let options = {
+            controls: true,
+            autoplay: false,
             fluid: true,
+            loop: false,
             plugins: {
                 wavesurfer: {
+                    backend: 'MediaElement',
                     debug: false,
                     waveColor: 'yellow',
                     progressColor: '#FCF990',
@@ -37,10 +41,11 @@ describe('Wavesurfer Fluid', () => {
     /** @test {Wavesurfer#redrawWaveform} */
     it('redraws the waveform', (done) => {
         player.one(Event.WAVE_READY, () => {
-            player.wavesurfer().redrawWaveform(100, 200);
 
             done();
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
 });

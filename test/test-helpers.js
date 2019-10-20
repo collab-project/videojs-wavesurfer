@@ -6,10 +6,23 @@ import document from 'global/document';
 
 import {Player, mergeOptions} from 'video.js';
 
+// registers the plugin (once)
+import Wavesurfer from '../src/js/videojs.wavesurfer.js';
+
+import MicrophonePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.microphone';
+
+// jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
+
 const TestHelpers = {
 
     /** Example audio clip */
     EXAMPLE_AUDIO_FILE: '/base/test/support/demo.wav',
+
+    /** Example audio src object */
+    EXAMPLE_AUDIO_SRC: {
+        src: '/base/test/support/demo.wav',
+        type: 'audio/wav'
+    },
 
     /** Length of example audio clip */
     EXAMPLE_AUDIO_DURATION: 0.782312925170068,
@@ -64,7 +77,7 @@ const TestHelpers = {
             height: 300,
             plugins: {
                 wavesurfer: {
-                    src: this.EXAMPLE_AUDIO_FILE,
+                    backend: 'MediaElement',
                     msDisplayMax: 10,
                     debug: true,
                     waveColor: 'blue',
@@ -87,10 +100,22 @@ const TestHelpers = {
         let opts = {
             plugins: {
                 wavesurfer: {
-                    src: 'live',
+                    backend: 'WebAudio',
                     waveColor: 'black',
                     cursorWidth: 0,
-                    interact: false
+                    interact: false,
+                    plugins: [
+                        // enable microphone plugin (for wavesurfer.js)
+                        MicrophonePlugin.create({
+                            bufferSize: 4096,
+                            numberOfInputChannels: 1,
+                            numberOfOutputChannels: 1,
+                            constraints: {
+                                video: false,
+                                audio: true
+                            }
+                        })
+                    ]
                 }
             }
         };
