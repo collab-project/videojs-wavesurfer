@@ -34,6 +34,12 @@ const TestHelpers = {
     /** Example VTT clip */
     EXAMPLE_VTT_FILE: '/base/test/support/demo.vtt',
 
+    /** Example video clip */
+    EXAMPLE_VIDEO_FILE: '/base/test/support/stars.mp4',
+
+    /** Example video clip mime-type */
+    EXAMPLE_VIDEO_TYPE: 'video/mp4',
+
     /**
      * Create DOM element.
      */
