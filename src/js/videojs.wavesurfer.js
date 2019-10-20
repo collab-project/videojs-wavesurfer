@@ -340,7 +340,7 @@ class Wavesurfer extends Plugin {
             this.log('Loading object: ' + JSON.stringify(url));
             this.surfer.loadBlob(url);
         } else {
-            // load peak data from file
+            // load peak data from array or file
             if (peaks !== undefined) {
                 this.loadPeaks(url, peaks);
             } else {
@@ -366,7 +366,7 @@ class Wavesurfer extends Plugin {
     loadPeaks(url, peaks) {
         if (Array.isArray(peaks)) {
             // use supplied peaks data
-            this.log('Loading URL: ' + url);
+            this.log('Loading URL with array of peaks: ' + url);
             this.surfer.load(url, peaks);
         } else {
             // load peak data from file
@@ -484,9 +484,11 @@ class Wavesurfer extends Plugin {
         /*
          * XXX: check if needed
          */
+        /*
         if (this.textTracksEnabled) {
             this.player.tech_.stopTrackingCurrentTime();
         }
+        */
         this.log('Destroyed plugin');
     }
 
