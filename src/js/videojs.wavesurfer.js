@@ -345,7 +345,11 @@ class Wavesurfer extends Plugin {
                 this.loadPeaks(url, peaks);
             } else {
                 // no peaks
-                this.log('Loading URL: ' + url);
+                if (typeof url === 'string') {
+                    this.log('Loading URL: ' + url);
+                } else {
+                    this.log('Loading element: ' + url);
+                }
                 this.surfer.load(url);
             }
         }
