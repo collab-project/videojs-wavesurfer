@@ -126,8 +126,8 @@ class Wavesurfer extends Plugin {
         this.backend = this.surfer.params.backend;
         this.log('Using ' + this.backend + ' backend.');
 
-        // check if the wavesurfer.js microphone plugin can be enabled
-        if (WaveSurfer.microphone !== undefined) {
+        // check if the wavesurfer.js microphone plugin is enabled
+        if ('microphone' in this.player.wavesurfer().surfer.getActivePlugins()) {
             // enable audio input from a microphone
             this.liveMode = true;
             this.waveReady = true;
@@ -917,6 +917,9 @@ if (videojs.getPlugin('wavesurfer') === undefined) {
 
 // register a star-middleware
 videojs.use('*', player => {
+    // make player available on middleware
+    myMediator.player = player;
+
     return myMediator;
 });
 
