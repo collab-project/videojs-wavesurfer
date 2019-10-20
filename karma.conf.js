@@ -67,10 +67,16 @@ module.exports = function(config) {
             // library dependencies
             'node_modules/video.js/dist/video.js',
             'node_modules/wavesurfer.js/dist/wavesurfer.js',
+            {pattern: 'node_modules/wavesurfer.js/dist/wavesurfer.js.map', included: false},
             'node_modules/wavesurfer.js/dist/plugin/wavesurfer.microphone.js',
+            {pattern: 'node_modules/wavesurfer.js/dist/plugin/wavesurfer.microphone.js.map', included: false},
 
             // specs
-            {pattern: 'test/**/*.spec.js', watched: false}
+            //{pattern: 'test/**/*.spec.js', watched: false}
+            'test/options.spec.js',
+            'test/defaults.spec.js',
+            'test/utils.spec.js',
+            'test/fluid.spec.js',
         ],
         preprocessors: {
             'test/**/*.spec.js': ['webpack'],
@@ -106,7 +112,7 @@ module.exports = function(config) {
                     var result = availableBrowsers;
                     let cd = availableBrowsers.indexOf('ChromeHeadless');
                     if (cd > -1) {
-                        availableBrowsers[cd] = 'Chrome_dev';
+                        availableBrowsers[cd] = 'Chrome_headless';
                     }
                     let fd = availableBrowsers.indexOf('FirefoxHeadless');
                     if (fd > -1) {
@@ -126,6 +132,11 @@ module.exports = function(config) {
         },
         customLaunchers: {
             Chrome_dev: {
+                base: 'Chrome',
+                flags: chromeFlags,
+                chromeDataDir: path.resolve(__dirname, '.chrome')
+            },
+            Chrome_headless: {
                 base: 'ChromeHeadless',
                 flags: chromeFlags
             },
@@ -150,7 +161,7 @@ module.exports = function(config) {
     };
 
     if (ci) {
-        configuration.browsers = ['Chrome_dev'];
+        configuration.browsers = ['Chrome_headless'];
         configuration.detectBrowsers.enabled = false;
         configuration.singleRun = true;
 
