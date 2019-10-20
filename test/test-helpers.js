@@ -6,9 +6,6 @@ import document from 'global/document';
 
 import {Player, mergeOptions} from 'video.js';
 
-// registers the plugin (once)
-import Wavesurfer from '../src/js/videojs.wavesurfer.js';
-
 import MicrophonePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.microphone';
 
 // jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;

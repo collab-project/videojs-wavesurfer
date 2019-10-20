@@ -8,38 +8,24 @@ import Event from '../src/js/event.js';
 
 import TestHelpers from './test-helpers.js';
 
+// registers the plugin (once)
+import Wavesurfer from '../src/js/videojs.wavesurfer.js';
+
 /** @test {Wavesurfer} */
 describe('Wavesurfer Fluid', () => {
     let player;
 
-    beforeEach(() => {
-        // create new player
-        let options = {
-            controls: true,
-            autoplay: false,
-            fluid: true,
-            loop: false,
-            plugins: {
-                wavesurfer: {
-                    backend: 'MediaElement',
-                    debug: false,
-                    waveColor: 'yellow',
-                    progressColor: '#FCF990',
-                    cursorColor: '#FCFC42'
-                }
-            }
-        };
-        let tag = TestHelpers.makeTag('audio', 'fluidAudio');
-        player = TestHelpers.makePlayer(options, tag);
-    });
-
     afterEach(() => {
-        // delete player
+        // destroy player
         player.dispose();
     });
 
     /** @test {Wavesurfer#redrawWaveform} */
     it('redraws the waveform', (done) => {
+        let options = {
+            fluid: true
+        };
+        player = TestHelpers.makePlayer(options);
         player.one(Event.WAVE_READY, () => {
 
             done();

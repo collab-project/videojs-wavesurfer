@@ -16,13 +16,16 @@ describe('Wavesurfer Live', () => {
     });
 
     /** @test {Wavesurfer} */
-    it('throws error when microphone plugin is missing', () => {
-        let plugin = WaveSurfer.microphone;
-        WaveSurfer.microphone = undefined;
-
+    it('microphone plugin is enabled', (done) => {
         player = TestHelpers.makeLivePlayer();
 
-        WaveSurfer.microphone = plugin;
+        player.one(Event.READY, () => {
+            expect(player.wavesurfer().liveMode).toBeTrue();
+            expect(player.wavesurfer().waveReady).toBeTrue();
+            expect(player.wavesurfer().surfer.microphone).toBeDefined();
+
+            done();
+        });
     });
 
 });

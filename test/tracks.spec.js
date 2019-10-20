@@ -41,5 +41,7 @@ describe('Wavesurfer TextTracks', () => {
 
             done();
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 });

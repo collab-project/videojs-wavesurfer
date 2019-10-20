@@ -19,13 +19,13 @@ const myMiddleware = {
                 // load source into video.js
                 next(null, srcObj);
 
-                let element = this.player.tech_.el();
                 // load media element into wavesurfer
+                let element = this.player.tech_.el();
                 if (peaks === undefined) {
-                    // regular element
+                    // element without peaks
                     this.player.wavesurfer().load(element);
                 } else {
-                    // load with peaks
+                    // element with peaks
                     this.player.wavesurfer().load(element, peaks);
                 }
                 break;
