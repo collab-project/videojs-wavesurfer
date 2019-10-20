@@ -9,7 +9,7 @@ import Event from './event';
 import log from './utils/log';
 import formatTime from './utils/format-time';
 import pluginDefaultOptions from './defaults';
-import myMediator from './mediator';
+import myMiddleware from './middleware';
 import window from 'global/window';
 
 import videojs from 'video.js';
@@ -918,9 +918,9 @@ if (videojs.getPlugin('wavesurfer') === undefined) {
 // register a star-middleware
 videojs.use('*', player => {
     // make player available on middleware
-    myMediator.player = player;
+    myMiddleware.player = player;
 
-    return myMediator;
+    return myMiddleware;
 });
 
 export {Wavesurfer};
