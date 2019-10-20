@@ -72,11 +72,7 @@ module.exports = function(config) {
             {pattern: 'node_modules/wavesurfer.js/dist/plugin/wavesurfer.microphone.js.map', included: false},
 
             // specs
-            //{pattern: 'test/**/*.spec.js', watched: false}
-            'test/options.spec.js',
-            'test/defaults.spec.js',
-            'test/utils.spec.js',
-            'test/fluid.spec.js',
+            {pattern: 'test/**/*.spec.js', watched: false}
         ],
         preprocessors: {
             'test/**/*.spec.js': ['webpack'],
