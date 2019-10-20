@@ -1,9 +1,9 @@
 /**
- * @file mediator.js
+ * @file middleware.js
  * @since 3.0.0
  */
 
-const myMediator = {
+const myMiddleware = {
     setSource(srcObj, next) {
         let backend = this.player.wavesurfer().surfer.params.backend;
         let src = srcObj.src;
@@ -33,4 +33,4 @@ const myMediator = {
     }
 };
 
-export default myMediator;
+export default myMiddleware;
