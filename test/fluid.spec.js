@@ -8,9 +8,6 @@ import Event from '../src/js/event.js';
 
 import TestHelpers from './test-helpers.js';
 
-// registers the plugin (once)
-import Wavesurfer from '../src/js/videojs.wavesurfer.js';
-
 /** @test {Wavesurfer} */
 describe('Wavesurfer Fluid', () => {
     let player;
@@ -27,6 +24,8 @@ describe('Wavesurfer Fluid', () => {
         };
         player = TestHelpers.makePlayer(options);
         player.one(Event.WAVE_READY, () => {
+            // class is present
+            expect(player.hasClass('vjs-fluid')).toBeTrue();
 
             done();
         });
