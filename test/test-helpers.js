@@ -6,14 +6,15 @@ import document from 'global/document';
 
 import {Player, mergeOptions} from 'video.js';
 
-import MicrophonePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.microphone';
-
 // jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
 
 const TestHelpers = {
 
     /** Example audio clip */
     EXAMPLE_AUDIO_FILE: '/base/test/support/demo.wav',
+
+    /** Example audio clip mime-type */
+    EXAMPLE_AUDIO_TYPE: 'audio/wav',
 
     /** Example audio src object */
     EXAMPLE_AUDIO_SRC: {
@@ -87,36 +88,6 @@ const TestHelpers = {
         }, playerOptions || {});
 
         return videojs(elementTag.id, opts);
-    },
-
-    /**
-     * Create a test player with the microphone plugin enabled.
-     */
-    makeLivePlayer() {
-        let tag = TestHelpers.makeTag('audio', 'liveAudio');
-        let opts = {
-            plugins: {
-                wavesurfer: {
-                    backend: 'WebAudio',
-                    waveColor: 'black',
-                    cursorWidth: 0,
-                    interact: false,
-                    plugins: [
-                        // enable microphone plugin (for wavesurfer.js)
-                        MicrophonePlugin.create({
-                            bufferSize: 4096,
-                            numberOfInputChannels: 1,
-                            numberOfOutputChannels: 1,
-                            constraints: {
-                                video: false,
-                                audio: true
-                            }
-                        })
-                    ]
-                }
-            }
-        };
-        return this.makePlayer(opts, tag);
     },
 
     /**
