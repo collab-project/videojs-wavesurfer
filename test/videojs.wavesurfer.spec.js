@@ -325,7 +325,7 @@ describe('Wavesurfer', () => {
             src: TestHelpers.EXAMPLE_AUDIO_FILE,
             type: TestHelpers.EXAMPLE_AUDIO_TYPE,
             peaks: TestHelpers.EXAMPLE_AUDIO_PEAKS_FILE
-        })
+        });
     });
 
     /** @test {Wavesurfer#load} */
