@@ -15,6 +15,7 @@ services:
   - xvfb
 
 install:
+  - npm rebuild node-sass
   - npm install opencollective-postinstall
   - npm prune
   - npm install
