@@ -280,7 +280,7 @@ describe('Wavesurfer', () => {
         player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
-    /** @test {Wavesurfer#load} 
+    /** @test {Wavesurfer#load}
     it('loads Blob', (done) => {
         // XXX: should throw error with MediaElement backend
         done();
