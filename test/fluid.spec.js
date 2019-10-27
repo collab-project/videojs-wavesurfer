@@ -13,7 +13,7 @@ let player;
 
 function fluid_test(backend) {
     /** @test {Wavesurfer#redrawWaveform} */
-    it('redraws the waveform (' + backend + ')', (done) => {
+    it('redraws the waveform', (done) => {
         let options = {
             fluid: true,
             plugins: {
