@@ -51,6 +51,7 @@ describe('Wavesurfer Live', () => {
                 // device is ready
                 expect(player.wavesurfer().surfer.microphone.active).toBeTrue();
 
+                // increase test coverage
                 player.wavesurfer().pause();
                 player.wavesurfer().play();
 

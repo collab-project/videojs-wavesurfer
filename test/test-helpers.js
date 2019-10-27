@@ -6,9 +6,12 @@ import document from 'global/document';
 
 import {Player, mergeOptions} from 'video.js';
 
-// jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
-
 const TestHelpers = {
+
+    /** wavesurer.js backends to test against */
+    MEDIA_ELEMENT_BACKEND: 'MediaElement',
+    MEDIA_ELEMENT_WEB_AUDIO_BACKEND: 'MediaElementWebAudio',
+    WEB_AUDIO_BACKEND: 'WebAudio',
 
     /** Example audio clip */
     EXAMPLE_AUDIO_FILE: '/base/test/support/demo.wav',

@@ -8,19 +8,19 @@ import Event from '../src/js/event.js';
 
 import TestHelpers from './test-helpers.js';
 
-/** @test {Wavesurfer} */
-describe('Wavesurfer Fluid', () => {
-    let player;
 
-    afterEach(() => {
-        // destroy player
-        player.dispose();
-    });
+let player;
 
+function fluid_test(backend) {
     /** @test {Wavesurfer#redrawWaveform} */
-    it('redraws the waveform', (done) => {
+    it('redraws the waveform (' + backend + ')', (done) => {
         let options = {
-            fluid: true
+            fluid: true,
+            plugins: {
+                wavesurfer: {
+                    backend: backend
+                }
+            }
         };
         player = TestHelpers.makePlayer(options);
         player.one(Event.WAVE_READY, () => {
@@ -30,7 +30,19 @@ describe('Wavesurfer Fluid', () => {
             done();
         });
 
+        // load file
         player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
+}
 
+/** @test {Wavesurfer} */
+describe('Wavesurfer Fluid', () => {
+    afterEach(() => {
+        // destroy player
+        player.dispose();
+    });
+
+    fluid_test(TestHelpers.MEDIA_ELEMENT_BACKEND);
+    fluid_test(TestHelpers.WEB_AUDIO_BACKEND);
+    fluid_test(TestHelpers.MEDIA_ELEMENT_WEB_AUDIO_BACKEND);
 });

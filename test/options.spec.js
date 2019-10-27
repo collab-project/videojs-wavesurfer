@@ -6,21 +6,18 @@ import Event from '../src/js/event.js';
 
 import TestHelpers from './test-helpers.js';
 
-/** @test {Wavesurfer} */
-describe('Wavesurfer options', () => {
-    let player;
 
-    afterEach(() => {
-        // delete player
-        player.dispose();
-    });
+let player;
 
+function ws_options_test(backend) {
     /** @test {Wavesurfer} */
-    it('accepts waveformHeight option', (done) => {
+    it('accepts waveformHeight option (' + backend + ')', (done) => {
         let height = 139;
+        // create player
         player = TestHelpers.makePlayer({
             plugins: {
                 wavesurfer: {
+                    backend: backend,
                     waveformHeight: height
                 }
             }
@@ -32,15 +29,17 @@ describe('Wavesurfer options', () => {
             done();
         });
 
+        // load file
         player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer} */
-    it('accepts splitChannels option', (done) => {
+    it('accepts splitChannels option (' + backend + ')', (done) => {
         player = TestHelpers.makePlayer({
             height: 100,
             plugins: {
                 wavesurfer: {
+                    backend: backend,
                     splitChannels: true
                 }
             }
@@ -52,31 +51,54 @@ describe('Wavesurfer options', () => {
             done();
         });
 
+        // load file
         player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer} */
-    it('accepts autoplay option', (done) => {
+    it('accepts autoplay option (' + backend + ')', (done) => {
         player = TestHelpers.makePlayer({
-            autoplay: true
+            autoplay: true,
+            plugins: {
+                wavesurfer: {
+                    backend: backend
+                }
+            }
         });
 
         player.one(Event.PLAYBACK_FINISH, done);
 
+        // load file
         player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer} */
-    it('accepts loop option', (done) => {
+    it('accepts loop option (' + backend + ')', (done) => {
         player = TestHelpers.makePlayer({
             autoplay: true,
-            loop: true
+            loop: true,
+            plugins: {
+                wavesurfer: {
+                    backend: backend
+                }
+            }
         });
         player.one('play', () => {
             done();
         });
 
+        // load file
         player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
+}
 
+/** @test {Wavesurfer} */
+describe('Wavesurfer options', () => {
+    afterEach(() => {
+        // delete player
+        player.dispose();
+    });
+
+    ws_options_test(TestHelpers.MEDIA_ELEMENT_BACKEND);
+    //ws_options_test(TestHelpers.WEB_AUDIO_BACKEND);
 });
