@@ -116,12 +116,11 @@ class Wavesurfer extends Plugin {
                 this.player.controlBar.remainingTimeDisplay.hide();
             }
 
-            if (this.player.controlBar.playToggle !== undefined) {
-                if (this.backend === 'WebAudio' || this.liveMode === true) {
-                    // handle play toggle interaction
-                    this.player.controlBar.playToggle.on(['tap', 'click'],
-                        this.onPlayToggle.bind(this));
-                }
+            if (this.backend === 'WebAudio' &&
+                this.player.controlBar.playToggle !== undefined) {
+                // handle play toggle interaction
+                this.player.controlBar.playToggle.on(['tap', 'click'],
+                    this.onPlayToggle.bind(this));
 
                 // disable play button until waveform is ready
                 // (except when in live mode)
