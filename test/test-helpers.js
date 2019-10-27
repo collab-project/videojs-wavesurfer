@@ -46,20 +46,20 @@ const TestHelpers = {
     /**
      * Create DOM element.
      */
-    makeTag(tag_type, id_name) {
-        if (tag_type === undefined) {
-            tag_type = 'audio';
+    makeElement(element_type, id_name) {
+        if (element_type === undefined) {
+            element_type = 'audio';
         }
         if (id_name === undefined) {
             id_name = 'myAudio';
         }
-        const tag = document.createElement(tag_type);
-        tag.id = id_name;
-        tag.muted = true;
-        tag.className = 'video-js vjs-default-skin';
-        tag.style = 'background-color: #F2E68A;';
+        const element = document.createElement(element_type);
+        element.id = id_name;
+        element.muted = true;
+        element.className = 'video-js vjs-default-skin';
+        element.style = 'background-color: #F2E68A;';
 
-        return tag;
+        return element;
     },
 
     /**
@@ -69,7 +69,7 @@ const TestHelpers = {
      * @param  {Element|String} elementTag
      */
     makePlayer(playerOptions, elementTag) {
-        elementTag = elementTag || TestHelpers.makeTag();
+        elementTag = elementTag || TestHelpers.makeElement();
 
         // add to dom
         document.getElementsByTagName('body')[0].appendChild(elementTag);

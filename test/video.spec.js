@@ -8,25 +8,39 @@ import Event from '../src/js/event.js';
 
 import TestHelpers from './test-helpers.js';
 
+let player, element;
+
+function video_test(backend) {
+    /** @test {Wavesurfer#redrawWaveform} */
+    it('draw waveform for video', (done) => {
+        let opts = {
+            plugins: {
+                wavesurfer: {
+                    backend: backend
+                }
+            }
+        };
+        element = TestHelpers.makeElement('video', 'testVideo');
+        player = TestHelpers.makePlayer(opts, element);
+        player.one(Event.WAVE_READY, done);
+
+        // load file
+        player.src({
+            src: TestHelpers.EXAMPLE_VIDEO_FILE,
+            type: TestHelpers.EXAMPLE_VIDEO_TYPE
+        });
+    });
+}
+
 /** @test {Wavesurfer} */
 describe('Wavesurfer Video', () => {
-    let player, tag;
 
     afterEach(() => {
         // destroy player
         player.dispose();
     });
 
-    /** @test {Wavesurfer#redrawWaveform} */
-    it('draw waveform for video', (done) => {
-        tag = TestHelpers.makeTag('video', 'testVideo');
-        player = TestHelpers.makePlayer({}, tag);
-        player.one(Event.WAVE_READY, done);
-
-        player.src({
-            src: TestHelpers.EXAMPLE_VIDEO_FILE,
-            type: TestHelpers.EXAMPLE_VIDEO_TYPE
-        });
-    });
-
+    video_test(TestHelpers.MEDIA_ELEMENT_BACKEND);
+    video_test(TestHelpers.MEDIA_ELEMENT_WEB_AUDIO_BACKEND);
+    video_test(TestHelpers.WEB_AUDIO_BACKEND);
 });
