@@ -11,7 +11,7 @@ let player;
 
 function ws_options_test(backend) {
     /** @test {Wavesurfer} */
-    it('accepts waveformHeight option (' + backend + ')', (done) => {
+    it('accepts waveformHeight option', (done) => {
         let height = 139;
         // create player
         player = TestHelpers.makePlayer({
@@ -34,7 +34,7 @@ function ws_options_test(backend) {
     });
 
     /** @test {Wavesurfer} */
-    it('accepts splitChannels option (' + backend + ')', (done) => {
+    it('accepts splitChannels option', (done) => {
         player = TestHelpers.makePlayer({
             height: 100,
             plugins: {
@@ -56,7 +56,7 @@ function ws_options_test(backend) {
     });
 
     /** @test {Wavesurfer} */
-    it('accepts autoplay option (' + backend + ')', (done) => {
+    it('accepts autoplay option', (done) => {
         player = TestHelpers.makePlayer({
             autoplay: true,
             plugins: {
@@ -73,7 +73,7 @@ function ws_options_test(backend) {
     });
 
     /** @test {Wavesurfer} */
-    it('accepts loop option (' + backend + ')', (done) => {
+    it('accepts loop option', (done) => {
         player = TestHelpers.makePlayer({
             autoplay: true,
             loop: true,
