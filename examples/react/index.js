@@ -59,7 +59,6 @@ const videoJsOptions = {
     height: 300,
     plugins: {
         wavesurfer: {
-            backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
             waveColor: 'white',
