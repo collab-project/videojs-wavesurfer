@@ -61,7 +61,10 @@ class Wavesurfer extends Plugin {
         // hide big play button
         this.player.bigPlayButton.hide();
 
-        // set time format
+        // parse options
+        let mergedOptions = this.parseOptions(this.player.options_.plugins.wavesurfer);
+
+        // set video.js time format
         videojs.setFormatTime((seconds, guide) => {
             return formatTime(seconds, guide, this.msDisplayMax);
         });
@@ -85,15 +88,11 @@ class Wavesurfer extends Plugin {
             this.player.controlBar.show();
             this.player.controlBar.el_.style.display = 'flex';
 
-            // progress control (if present) isn't used by this plugin
-            // CHECK: this is supported now with MediaElement backend
-            // hide manually in live mode using video.js config
-            // XXX: maybe hide with webaudio backend?
-            /*
-            if (this.player.controlBar.progressControl !== undefined) {
+            // progress control is only supported with the MediaElement backend
+            if (this.backend === 'WebAudio' &&
+                this.player.controlBar.progressControl !== undefined) {
                 this.player.controlBar.progressControl.hide();
             }
-            */
 
             // disable Picture-In-Picture toggle introduced in video.js 7.6.0
             // until there is support for canvas in the Picture-In-Picture
@@ -116,15 +115,28 @@ class Wavesurfer extends Plugin {
             if (this.player.controlBar.remainingTimeDisplay !== undefined) {
                 this.player.controlBar.remainingTimeDisplay.hide();
             }
+
+            if (this.player.controlBar.playToggle !== undefined) {
+                if (this.backend === 'WebAudio' || this.liveMode === true) {
+                    // handle play toggle interaction
+                    this.player.controlBar.playToggle.on(['tap', 'click'],
+                        this.onPlayToggle.bind(this));
+                }
+
+                // disable play button until waveform is ready
+                // (except when in live mode)
+                if (!this.liveMode) {
+                    this.player.controlBar.playToggle.hide();
+                }
+            }
         }
 
         // wavesurfer.js setup
-        let mergedOptions = this.parseOptions(this.player.options_.plugins.wavesurfer);
         this.surfer = WaveSurfer.create(mergedOptions);
         this.surfer.on(Event.ERROR, this.onWaveError.bind(this));
         this.surfer.on(Event.FINISH, this.onWaveFinish.bind(this));
         this.backend = this.surfer.params.backend;
-        this.log('Using ' + this.backend + ' backend.');
+        this.log('Using wavesurfer.js ' + this.backend + ' backend.');
 
         // check if the wavesurfer.js microphone plugin is enabled
         if ('microphone' in this.player.wavesurfer().surfer.getActivePlugins()) {
@@ -138,27 +150,8 @@ class Wavesurfer extends Plugin {
                 this.onWaveError.bind(this));
         }
 
-        // XXX: only in live mode?
-        if (this.player.controlBar.playToggle !== undefined) {
-            if (this.backend === 'WebAudio' || this.liveMode === true) {
-                // handle play toggle interaction
-                this.player.controlBar.playToggle.on(['tap', 'click'],
-                    this.onPlayToggle.bind(this));
-            }
-
-            // disable play button until waveform is ready
-            // (except when in live mode)
-            /*
-            if (!this.liveMode) {
-                this.player.controlBar.playToggle.hide();
-            }
-            */
-        }
-
         // listen for wavesurfer.js events
         this.surferReady = this.onWaveReady.bind(this);
-        // CHECK: not needed anymore
-        // XXX: still needed for WebAudio backend
         if (this.backend === 'WebAudio') {
             this.surferProgress = this.onWaveProgress.bind(this);
             this.surferSeek = this.onWaveSeek.bind(this);
@@ -190,28 +183,6 @@ class Wavesurfer extends Plugin {
                 this.onResizeChange.bind(this), 150);
             window.addEventListener(Event.RESIZE, this.responsiveWave);
         }
-
-        // text tracks
-        // CHECK: hopefully not needed anymore;
-        // XXX: maybe still needed for webaudio
-        /*
-        if (this.textTracksEnabled) {
-            if (this.player.controlBar.currentTimeDisplay !== undefined) {
-                // disable timeupdates
-                this.player.controlBar.currentTimeDisplay.off(
-                    this.player, Event.TIMEUPDATE,
-                    this.player.controlBar.currentTimeDisplay.throttledUpdateContent);
-            }
-
-            // sets up an interval function to track current time
-            // and trigger timeupdate every 250 milliseconds.
-            // needed for text tracks
-            this.player.tech_.trackCurrentTime();
-        }
-        */
-
-        // kick things off
-        //this.startPlayers();
     }
 
     /**
@@ -259,45 +230,15 @@ class Wavesurfer extends Plugin {
             surferOpts.height /= 2;
         }
 
-        // enable wavesurfer.js microphone plugin
-        /*
-         CHECK: not needed anymore
-        if (this.liveMode === true) {
-            surferOpts.plugins = [
-                WaveSurfer.microphone.create(surferOpts)
-            ];
-            this.log('wavesurfer.js microphone plugin enabled.');
+        // use MediaElement as default wavesurfer.js backend if one is not
+        // specified
+        if ('backend' in surferOpts) {
+            this.backend = surferOpts.backend;
+        } else {
+            surferOpts.backend = this.backend = 'MediaElement';
         }
-        */
 
         return surferOpts;
-    }
-
-    /**
-     * Start the players.
-     * @private
-     * XXX: not needed anymore? check
-     */
-    startPlayers() {
-        let options = this.player.options_.plugins.wavesurfer;
-        if (options.src !== undefined) {
-            if (this.surfer.microphone === undefined) {
-                // show loading spinner
-                this.player.loadingSpinner.show();
-
-                // start loading file
-                this.load(options.src, options.peaks);
-            } else {
-                // hide loading spinner
-                this.player.loadingSpinner.hide();
-
-                // connect microphone input to our waveform
-                options.wavesurfer = this.surfer;
-            }
-        } else {
-            // no valid src found, hide loading spinner
-            this.player.loadingSpinner.hide();
-        }
     }
 
     /**
@@ -310,16 +251,12 @@ class Wavesurfer extends Plugin {
     setupPlaybackEvents(enable) {
         if (enable === false) {
             this.surfer.un(Event.READY, this.surferReady);
-            // CHECK: not needed anymore
-            // XXX: still needed for WebAudio backend
             if (this.backend === 'WebAudio') {
                 this.surfer.un(Event.AUDIOPROCESS, this.surferProgress);
                 this.surfer.un(Event.SEEK, this.surferSeek);
             }
         } else if (enable === true) {
             this.surfer.on(Event.READY, this.surferReady);
-            // CHECK: not needed anymore
-            // XXX: still needed for WebAudio backend
             if (this.backend === 'WebAudio') {
                 this.surfer.on(Event.AUDIOPROCESS, this.surferProgress);
                 this.surfer.on(Event.SEEK, this.surferSeek);
@@ -481,14 +418,6 @@ class Wavesurfer extends Plugin {
             // destroy wavesurfer instance
             this.surfer.destroy();
         }
-        /*
-         * XXX: check if needed
-         */
-        /*
-        if (this.textTracksEnabled) {
-            this.player.tech_.stopTrackingCurrentTime();
-        }
-        */
         this.log('Destroyed plugin');
     }
 
@@ -573,9 +502,6 @@ class Wavesurfer extends Plugin {
     /**
      * Updates the player's element displaying the current time.
      *
-     * CHECK: not needed anymore
-     * XXX: still needed for WebAudio backend
-     *
      * @param {number} [currentTime] - Current position of the playhead
      *     (in seconds).
      * @param {number} [duration] - Duration of the waveform (in seconds).
@@ -626,9 +552,6 @@ class Wavesurfer extends Plugin {
     /**
      * Updates the player's element displaying the duration time.
      *
-     * CHECK: not needed anymore
-     * XXX: still needed for WebAudio backend
-     *
      * @param {number} [duration] - Duration of the waveform (in seconds).
      * @private
      */
@@ -662,21 +585,15 @@ class Wavesurfer extends Plugin {
         this.player.trigger(Event.WAVE_READY);
 
         // update time display
-        // CHECK: not needed anymore
-        // XXX: still needed for WebAudio backend
         if (this.backend === 'WebAudio') {
             this.setCurrentTime();
             this.setDuration();
 
             // enable and show play button
-            /* CHECK: not needed anymore
-             * XXX: maybe for webaudio
-             *
             if (this.player.controlBar.playToggle !== undefined &&
                 this.player.controlBar.playToggle.contentEl()) {
                 this.player.controlBar.playToggle.show();
             }
-            */
         }
 
         // hide loading spinner
@@ -690,9 +607,13 @@ class Wavesurfer extends Plugin {
             this.setVolume(0);
 
             // try auto-play
-            this.player.play().catch(e => {
-                this.onWaveError(e);
-            });
+            if (this.backend === 'WebAudio') {
+                this.play();
+            } else {
+                this.player.play().catch(e => {
+                    this.onWaveError(e);
+                });
+            }
         }
     }
 
@@ -710,17 +631,15 @@ class Wavesurfer extends Plugin {
 
         // check if loop is enabled
         if (this.player.options_.loop === true) {
-            // XXX: only for webaudio backend
-            /*
-            // reset waveform
-            this.surfer.stop();
-            this.play();
-            */
+            if (this.backend === 'WebAudio') {
+                // reset waveform
+                this.surfer.stop();
+                this.play();
+            }
         } else {
             // finished
             this.waveFinished = true;
 
-            // XXX: only for webaudio backend
             if (this.backend === 'WebAudio') {
                 // pause player
                 this.pause();
@@ -744,9 +663,6 @@ class Wavesurfer extends Plugin {
     /**
      * Fires continuously during audio playback.
      *
-     * CHECK: not needed anymore
-     * XXX: still needed for WebAudio backend
-     *
      * @param {number} time - Current time/location of the playhead.
      * @private
      */
@@ -756,9 +672,6 @@ class Wavesurfer extends Plugin {
 
     /**
      * Fires during seeking of the waveform.
-     *
-     * CHECK: not needed anymore
-     * XXX: still needed for WebAudio backend
      *
      * @private
      */

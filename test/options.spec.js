@@ -83,9 +83,16 @@ function ws_options_test(backend) {
                 }
             }
         });
-        player.one('play', () => {
-            done();
-        });
+        if (backend === TestHelpers.WEB_AUDIO_BACKEND) {
+            player.one(Event.PLAYBACK_FINISH, () => {
+                // stop after it looped once
+                player.one(Event.PLAYBACK_FINISH, done);
+            });
+        } else {
+            player.one('play', () => {
+                done();
+            });
+        }
 
         // load file
         player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
@@ -100,5 +107,6 @@ describe('Wavesurfer options', () => {
     });
 
     ws_options_test(TestHelpers.MEDIA_ELEMENT_BACKEND);
-    //ws_options_test(TestHelpers.WEB_AUDIO_BACKEND);
+    ws_options_test(TestHelpers.MEDIA_ELEMENT_WEB_AUDIO_BACKEND);
+    ws_options_test(TestHelpers.WEB_AUDIO_BACKEND);
 });
