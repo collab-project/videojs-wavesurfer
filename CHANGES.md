@@ -4,7 +4,7 @@ videojs-wavesurfer changelog
 3.0.0 - unreleased
 ------------------
 
-- Support for progress control
+- Support for video.js progress control
 - Bump required video.js version to 7.0.5 or newer
 - Bump required wavesurfer.js version to 3.2.0 or newer
 - Better media loading:
