@@ -54,15 +54,15 @@
     "wavesurfer.js": ">=3.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/preset-env": "^7.6.3",
-    "@babel/register": "^7.6.2",
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/register": "^7.7.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-istanbul": "^5.2.0",
     "browserslist": "^4.7.2",
     "css-loader": "^3.2.0",
-    "date-fns": "^2.6.0",
+    "date-fns": "^2.7.0",
     "eslint": "^6.6.0",
     "htmlhint": "^0.11.0",
     "in-publish": "^2.0.0",
@@ -92,7 +92,7 @@
     "terser-webpack-plugin": "^2.2.1",
     "tui-jsdoc-template": "^1.2.2",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9",
+    "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0",
     "webpack-merge": "^4.2.2",
     "webrtc-adapter": "^7.3.0"
