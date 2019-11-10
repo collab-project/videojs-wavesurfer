@@ -14,8 +14,6 @@
 
   <script src="../dist/videojs.wavesurfer.js"></script>
 
-  <script src="safari-workaround.js"></script>
-
   <style>
   /* change player background color */
   #myAudio {
@@ -37,7 +35,6 @@
 
 <script>
 /* eslint-disable */
-var player;
 var options = {
     controls: true,
     autoplay: false,
@@ -48,6 +45,7 @@ var options = {
     height: 300,
     plugins: {
         wavesurfer: {
+            backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
             waveColor: 'grey',
@@ -80,47 +78,29 @@ var options = {
     }
 };
 
-if (isSafari) {
-    // add start button for safari
-    addStartButton();
-} else {
-    // other browsers
-    createPlayer();
-}
+// create player
+var player = videojs('myAudio', options, function() {
+    // print version information at startup
+    var msg = 'Using video.js '+ videojs.VERSION +
+        ' with videojs-wavesurfer ' +
+        videojs.getPluginVersion('wavesurfer') +
+        ' and wavesurfer.js ' + WaveSurfer.VERSION;
+    videojs.log(msg);
 
-function createPlayer(event) {
-    if (isSafari) {
-        if (event) {
-            // hide button on safari
-            event.target.style.display = 'none';
-        }
-        updateContext(options);
-    }
+    // load file
+    player.src({src: 'media/hal.wav', type: 'audio/wav'});
+});
 
-    // create player
-    player = videojs('myAudio', options, function() {
-        // print version information at startup
-        var msg = 'Using video.js '+ videojs.VERSION +
-            ' with videojs-wavesurfer ' +
-            videojs.getPluginVersion('wavesurfer') +
-            ' and wavesurfer.js ' + WaveSurfer.VERSION;
-        videojs.log(msg);
+player.on('waveReady', function() {
+    // print wavesurfer.js plugins
+    videojs.log('active wavesurfer.js plugins: ',
+        player.wavesurfer().surfer.getActivePlugins());
+});
 
-        // load file
-        player.src({src: 'media/hal.wav', type: 'audio/wav'});
-    });
-
-    player.on('waveReady', function() {
-        // print wavesurfer.js plugins
-        videojs.log('active wavesurfer.js plugins: ',
-            player.wavesurfer().surfer.getActivePlugins());
-    });
-
-    // error handling
-    player.on('error', function(element, error) {
-        console.warn('ERROR:', error);
-    });
-}
+// error handling
+player.on('error', function(element, error) {
+    console.warn('ERROR:', error);
+});
 </script>
 
 </body>

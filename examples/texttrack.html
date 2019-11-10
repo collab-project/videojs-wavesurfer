@@ -12,8 +12,6 @@
 
     <script src="../dist/videojs.wavesurfer.js"></script>
 
-    <script src="safari-workaround.js"></script>
-
     <style>
         /* change player background color */
         #myAudio {
@@ -28,7 +26,6 @@
 
 <script>
 /* eslint-disable */
-var player;
 var textTracks = [
     {
         kind: 'captions',
@@ -50,6 +47,7 @@ var options = {
     tracks: textTracks,
     plugins: {
         wavesurfer: {
+            backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
             waveColor: '#086280',
@@ -60,49 +58,31 @@ var options = {
     }
 };
 
-if (isSafari) {
-    // add start button for safari
-    addStartButton();
-} else {
-    // other browsers
-    createPlayer();
-}
+// create player
+var player = videojs('myAudio', options, function() {
+    // print version information at startup
+    var msg = 'Using video.js '+ videojs.VERSION +
+        ' with videojs-wavesurfer ' +
+        videojs.getPluginVersion('wavesurfer') +
+        ' and wavesurfer.js ' + WaveSurfer.VERSION;
+    videojs.log(msg);
 
-function createPlayer(event) {
-    if (isSafari) {
-        if (event) {
-            // hide button on safari
-            event.target.style.display = 'none';
-        }
-        updateContext(options);
-    }
+    // load file
+    player.src({src: 'media/hal.wav', type: 'audio/wav'});
+});
 
-    // create player
-    player = videojs('myAudio', options, function() {
-        // print version information at startup
-        var msg = 'Using video.js '+ videojs.VERSION +
-            ' with videojs-wavesurfer ' +
-            videojs.getPluginVersion('wavesurfer') +
-            ' and wavesurfer.js ' + WaveSurfer.VERSION;
-        videojs.log(msg);
+player.on('waveReady', function(event) {
+    console.log('waveform: ready!');
+});
 
-        // load file
-        player.src({src: 'media/hal.wav', type: 'audio/wav'});
-    });
+player.on('playbackFinish', function(event) {
+    console.log('playback finished.');
+});
 
-    player.on('waveReady', function(event) {
-        console.log('waveform: ready!');
-    });
-
-    player.on('playbackFinish', function(event) {
-        console.log('playback finished.');
-    });
-
-    // error handling
-    player.on('error', function(element, error) {
-        console.warn('ERROR:', error);
-    });
-}
+// error handling
+player.on('error', function(element, error) {
+    console.warn('ERROR:', error);
+});
 </script>
 
 </body>
