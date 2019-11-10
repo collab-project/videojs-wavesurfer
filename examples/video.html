@@ -17,11 +17,19 @@
   #myVideo {
       background-color: #6699FF;
   }
+
+  #waveform {
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+  }
   </style>
 </head>
 <body>
 
 <video id="myVideo" playsinline class="video-js vjs-default-skin"></video>
+
+<div id="waveform"></div>
 
 <script>
 var options = {
@@ -39,7 +47,9 @@ var options = {
             waveColor: '#336699',
             progressColor: 'black',
             cursorColor: 'black',
-            hideScrollbar: true
+            hideScrollbar: true,
+            // put waveform in separate container
+            container: '#waveform'
         }
     }
 };
