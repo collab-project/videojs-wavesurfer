@@ -4,12 +4,15 @@ videojs-wavesurfer changelog
 3.0.0 - unreleased
 ------------------
 
-- Support for video.js progress control
+- Support for video.js progress control (#93)
 - Bump required video.js version to 7.0.5 or newer
 - Bump required wavesurfer.js version to 3.2.0 or newer
-- Better media loading:
-  - Removed `src` option: use `player.src()` instead
-  - Ability to specify media using `<source>` tags
+
+**Backwards-incompatible changes** (when upgrading from a previous version):
+
+- Removed `src` option: use `player.src()` instead (#91)
+- Removed `src: 'live'` option: enable the wavesurfer.js microphone plugin
+  using the config instead
 
 
 2.11.0 - 2019/10/11

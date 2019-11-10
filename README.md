@@ -283,13 +283,21 @@ Add an `audio` element:
 <audio id="myLiveAudio" class="video-js vjs-default-skin"></audio>
 ```
 
-Specify the `WebAudio` backend and enable the microphone plugin:
+Hide irrelevant controls, specify the `WebAudio` backend and enable the microphone plugin:
 
 ```javascript
 let player = videojs('myLiveAudio', {
     controls: true,
     width: 600,
     height: 300,
+    controlBar: {
+        currentTimeDisplay: false,
+        timeDivider: false,
+        durationDisplay: false,
+        remainingTimeDisplay: false,
+        volumePanel: false,
+        progressControl: false
+    },
     plugins: {
         wavesurfer: {
             debug: true,
