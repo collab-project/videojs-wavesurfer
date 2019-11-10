@@ -8,13 +8,13 @@ process.env.BABEL_ENV = 'test';
 const path = require('path');
 require('@babel/register');
 
-var webpackConfig = require('./build-config/webpack.prod.main.js');
-var support_dir = path.resolve(__dirname, 'test', 'support');
-var fakeAudioStream = path.join(support_dir, 'demo.wav');
+let webpackConfig = require('./build-config/webpack.prod.main.js');
+let support_dir = path.resolve(__dirname, 'test', 'support');
+let fakeAudioStream = path.join(support_dir, 'demo.wav');
 
 // Chrome CLI options
 // http://peter.sh/experiments/chromium-command-line-switches/
-var chromeFlags = [
+let chromeFlags = [
     '--no-sandbox',
     '--no-first-run',
     '--noerrdialogs',
@@ -30,7 +30,7 @@ var chromeFlags = [
     '--allow-insecure-localhost',
     '--autoplay-policy=no-user-gesture-required'
 ];
-var firefoxFlags = {
+let firefoxFlags = {
     'media.navigator.permission.disabled': true,
     'media.navigator.streams.fake': true,
     'focusmanager.testmode': true,
@@ -40,10 +40,10 @@ var firefoxFlags = {
     'media.autoplay.enabled.user-gestures-needed': false,
     'media.autoplay.block-webaudio': false
 };
-var ci = process.env.TRAVIS || process.env.APPVEYOR;
+const ci = process.env.TRAVIS || process.env.APPVEYOR;
 
 module.exports = function(config) {
-    var configuration = {
+    let configuration = {
         basePath: '',
         frameworks: ['jasmine', 'jasmine-matchers', 'detectBrowsers'],
         hostname: 'localhost',
@@ -105,7 +105,7 @@ module.exports = function(config) {
             postDetection: function(availableBrowsers) {
                 if (availableBrowsers.length > 1) {
                     // use custom browser launchers
-                    var result = availableBrowsers;
+                    let result = availableBrowsers;
                     let cd = availableBrowsers.indexOf('ChromeHeadless');
                     if (cd > -1) {
                         availableBrowsers[cd] = 'Chrome_headless';
