@@ -9,13 +9,10 @@
 
   <script src="//vjs.zencdn.net/7.6.5/video.min.js"></script>
   <script src="//unpkg.com/wavesurfer.js"></script>
-  <script src="//unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js"></script>
   <script src="//unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js"></script>
   <script src="//unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.regions.min.js"></script>
 
   <script src="../dist/videojs.wavesurfer.min.js"></script>
-
-  <script src="safari-workaround.js"></script>
 
   <style>
   /* change player background color */
@@ -32,12 +29,11 @@
 <div id="wave-timeline"></div>
 
 <script>
-var player;
 // use mp3 for IE11 support
-var src = 'media/hal.mp3';
+var src = {src: 'media/hal.mp3', type: 'audio/mpeg'};
 if (!document.getElementById('myAudio').canPlayType('audio/mpeg;')) {
     // fallback with wav
-    src = 'media/hal.wav';
+    src = {src: 'media/hal.wav', type: 'audio/wav'};
 }
 var options = {
     controls: true,
@@ -48,7 +44,7 @@ var options = {
     height: 300,
     plugins: {
         wavesurfer: {
-            src: src,
+            backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
             waveColor: 'white',
@@ -56,18 +52,6 @@ var options = {
             cursorColor: 'black',
             hideScrollbar: true,
             plugins: [
-                // cursor
-                WaveSurfer.cursor.create({
-                    hideOnBlur: true,
-                    showTime: true,
-                    opacity: 1,
-                    customShowTimeStyle: {
-                        'background-color': '#000',
-                        color: '#fff',
-                        padding: '2px',
-                        'font-size': '10px'
-                    }
-                }),
                 // timeline
                 WaveSurfer.timeline.create({
                     container: '#wave-timeline'
@@ -78,11 +62,13 @@ var options = {
                         {
                             start: 1.123,
                             end: 5,
-                            color: 'rgba(123, 159, 232, 0.7)'
+                            color: 'rgba(123, 159, 232, 0.7)',
+                            drag: false
                         }, {
                             start: 6.5,
                             end: 8,
-                            color: 'rgba(232, 123, 159, 0.6)'
+                            color: 'rgba(232, 123, 159, 0.6)',
+                            drag: false
                         }
                     ]
                 })
@@ -91,46 +77,31 @@ var options = {
     }
 };
 
-if (isSafari) {
-    // add start button for safari
-    addStartButton();
-} else {
-    // other browsers
-    createPlayer();
-}
+// create player
+var player = videojs('myAudio', options, function() {
+    // print version information at startup
+    var msg = 'Using video.js ' + videojs.VERSION +
+        ' with videojs-wavesurfer ' +
+        videojs.getPluginVersion('wavesurfer') +
+        ' and wavesurfer.js ' + WaveSurfer.VERSION;
+    videojs.log(msg);
 
-function createPlayer(event) {
-    if (isSafari) {
-        if (event) {
-            // hide button on safari
-            event.target.style.display = 'none';
-        }
-        updateContext(options);
-    }
+    // load file
+    player.src(src);
+});
 
-    // create player
-    player = videojs('myAudio', options, function() {
-        // print version information at startup
-        var msg = 'Using video.js ' + videojs.VERSION +
-            ' with videojs-wavesurfer ' +
-            videojs.getPluginVersion('wavesurfer') +
-            ' and wavesurfer.js ' + WaveSurfer.VERSION;
-        videojs.log(msg);
-    });
+player.on('waveReady', function(event) {
+    console.log('waveform: ready!');
+});
 
-    player.on('waveReady', function(event) {
-        console.log('waveform: ready!');
-    });
+player.on('playbackFinish', function(event) {
+    console.log('playback finished.');
+});
 
-    player.on('playbackFinish', function(event) {
-        console.log('playback finished.');
-    });
-
-    // error handling
-    player.on('error', function(error) {
-        console.warn('ERROR:', error);
-    });
-}
+// error handling
+player.on('error', function(element, error) {
+    console.warn('ERROR:', error);
+});
 </script>
 
 </body>

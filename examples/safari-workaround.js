@@ -1,4 +1,4 @@
-/* workaround safari issues */
+/* workaround safari issues when using the WebAudio backend in wavesurfer.js */
 
 var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
