@@ -7,21 +7,18 @@ node_js:
 addons:
   chrome: beta
   firefox: latest
-
-before_install:
-  - sudo update-alternatives --set google-chrome /usr/bin/google-chrome-beta
-  # Codecs needed for Firefox to play audio.
-  - sudo apt-get install -y -qq ubuntu-restricted-addons
-
-addons:
   apt:
     packages:
       - xvfb
+      - ubuntu-restricted-addons
+
+before_install:
+  - sudo update-alternatives --set google-chrome /usr/bin/google-chrome-beta
 
 install:
+  - npm install
   - export DISPLAY=':99.0'
   - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-  - npm install
 
 script:
   - npm run lint || travis_terminate 1
