@@ -58,7 +58,7 @@ function ws_options_test(backend) {
     /** @test {Wavesurfer} */
     it('accepts autoplay option', (done) => {
         player = TestHelpers.makePlayer({
-            autoplay: true,
+            autoplay: 'any',
             plugins: {
                 wavesurfer: {
                     backend: backend

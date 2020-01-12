@@ -601,7 +601,7 @@ class Wavesurfer extends Plugin {
         }
 
         // auto-play when ready (if enabled)
-        if (this.player.options_.autoplay === true) {
+        if (this.player.options_.autoplay !== false) {
             // autoplay is only allowed when audio is muted
             this.setVolume(0);
 
