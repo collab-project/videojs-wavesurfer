@@ -78,7 +78,7 @@ function ws_options_test(backend) {
     /** @test {Wavesurfer} */
     it('accepts loop option', (done) => {
         player = TestHelpers.makePlayer({
-            autoplay: true,
+            autoplay: false,
             loop: true,
             plugins: {
                 wavesurfer: {
@@ -90,16 +90,14 @@ function ws_options_test(backend) {
             fail(error);
         });
 
-        if (backend === TestHelpers.WEB_AUDIO_BACKEND) {
-            player.one(Event.PLAYBACK_FINISH, () => {
-                // stop after it looped once
-                player.one(Event.PLAYBACK_FINISH, done);
-            });
-        } else {
-            player.one('play', () => {
-                done();
-            });
-        }
+        player.one(Event.WAVE_READY, () => {
+            player.play();
+        });
+
+        player.one(Event.PLAYBACK_FINISH, () => {
+            // stop after it looped once
+            player.one(Event.PLAYBACK_FINISH, done);
+        });
 
         // load file
         player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
