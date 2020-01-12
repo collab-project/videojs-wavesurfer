@@ -22,6 +22,9 @@ function video_test(backend) {
         };
         element = TestHelpers.makeElement('video', 'testVideo');
         player = TestHelpers.makePlayer(opts, element);
+        player.one(Event.ERROR, (e) => {
+            fail(e);
+        });
         player.one(Event.WAVE_READY, done);
 
         // load file
