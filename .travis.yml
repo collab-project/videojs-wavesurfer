@@ -10,6 +10,8 @@ addons:
 
 before_install:
   - sudo update-alternatives --set google-chrome /usr/bin/google-chrome-beta
+  # Codecs needed for Firefox to play audio.
+  - sudo apt-get install -y -qq ubuntu-restricted-addons
 
 services:
   - xvfb
