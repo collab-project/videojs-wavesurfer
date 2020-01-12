@@ -9,13 +9,15 @@ addons:
   firefox: latest
   apt:
     packages:
-      - xvfb
       - ubuntu-restricted-addons
       - chromium-codecs-ffmpeg-extra
       - gstreamer1.0-fluendo-mp3
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-ugly
       - gstreamer1.0-vaapi
+
+services:
+  - xvfb
 
 before_install:
   - sudo update-alternatives --set google-chrome /usr/bin/google-chrome-beta
