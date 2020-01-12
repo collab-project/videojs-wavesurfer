@@ -59,10 +59,6 @@ function ws_options_test(backend) {
 
     /** @test {Wavesurfer} */
     it('accepts autoplay option', (done) => {
-        // skip test in firefox until autoplay in headless browser is figured out
-        if (host.browser.firefox) {
-            done();
-        }
         player = TestHelpers.makePlayer({
             autoplay: true,
             plugins: {
@@ -72,38 +68,15 @@ function ws_options_test(backend) {
             }
         });
 
+        // skip test in firefox until autoplay in headless browser is figured out
+        if (host.browser.firefox) {
+            done();
+        }
+
         player.one(Event.ERROR, (element, error) => {
             fail(error);
         });
         player.one(Event.PLAYBACK_FINISH, done);
-
-        // load file
-        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
-    });
-
-    /** @test {Wavesurfer} */
-    it('accepts loop option', (done) => {
-        player = TestHelpers.makePlayer({
-            autoplay: false,
-            loop: true,
-            plugins: {
-                wavesurfer: {
-                    backend: backend
-                }
-            }
-        });
-        player.one(Event.ERROR, (element, error) => {
-            fail(error);
-        });
-
-        player.one(Event.WAVE_READY, () => {
-            player.play();
-        });
-
-        player.one(Event.PLAYBACK_FINISH, () => {
-            // stop after it looped once
-            player.one(Event.PLAYBACK_FINISH, done);
-        });
 
         // load file
         player.src(TestHelpers.EXAMPLE_AUDIO_SRC);

@@ -601,7 +601,7 @@ class Wavesurfer extends Plugin {
         }
 
         // auto-play when ready (if enabled)
-        if (this.player.options_.autoplay !== false) {
+        if (this.player.options_.autoplay === true) {
             // autoplay is only allowed when audio is muted
             this.setVolume(0);
 
@@ -609,15 +609,9 @@ class Wavesurfer extends Plugin {
             if (this.backend === 'WebAudio') {
                 this.play();
             } else {
-                let promise = this.player.play();
-
-                if (promise !== undefined) {
-                    promise.catch(e => {
-                        this.onWaveError(e);
-                    });
-                } else {
-                    this.log('blocked play');
-                }
+                this.player.play().catch(e => {
+                    this.onWaveError(e);
+                });
             }
         }
     }
