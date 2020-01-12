@@ -17,7 +17,6 @@ services:
   - xvfb
 
 install:
-  - npm prune
   - npm install
 
 script:
