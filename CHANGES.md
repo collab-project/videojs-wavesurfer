@@ -6,7 +6,7 @@ videojs-wavesurfer changelog
 
 - Support for video.js progress control (#93)
 - Bump required video.js version to 7.0.5 or newer
-- Bump required wavesurfer.js version to 3.2.0 or newer
+- Bump required wavesurfer.js version to 3.3.0 or newer
 
 **Backwards-incompatible changes** (when upgrading from a previous version):
 
