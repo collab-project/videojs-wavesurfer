@@ -35,7 +35,7 @@ let firefoxFlags = {
     'media.navigator.streams.fake': true,
     'focusmanager.testmode': true,
     // disable autoplay blocking, see https://www.ghacks.net/2018/09/21/firefox-improved-autoplay-blocking/
-    'media.autoplay.default': 0,
+    'media.autoplay.default': 1,
     'media.autoplay.ask-permission': false,
     'media.autoplay.enabled.user-gestures-needed': false,
     'media.autoplay.block-webaudio': false,

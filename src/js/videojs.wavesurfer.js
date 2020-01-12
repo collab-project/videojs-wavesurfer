@@ -609,9 +609,15 @@ class Wavesurfer extends Plugin {
             if (this.backend === 'WebAudio') {
                 this.play();
             } else {
-                this.player.play().catch(e => {
-                    this.onWaveError(e);
-                });
+                let promise = this.player.play();
+
+                if (promise !== undefined) {
+                    promise.catch(e => {
+                        this.onWaveError(e);
+                    });
+                } else {
+                    this.log('blocked play');
+                }
             }
         }
     }
