@@ -38,7 +38,12 @@ let firefoxFlags = {
     'media.autoplay.default': 0,
     'media.autoplay.ask-permission': false,
     'media.autoplay.enabled.user-gestures-needed': false,
-    'media.autoplay.block-webaudio': false
+    'media.autoplay.block-webaudio': false,
+    // disable update and startup
+    'extensions.update.enabled': false,
+    'app.update.enabled': false,
+    'browser.startup.page': 0,
+    'browser.shell.checkDefaultBrowser': false
 };
 const ci = process.env.TRAVIS || process.env.APPVEYOR;
 
