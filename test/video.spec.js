@@ -44,5 +44,6 @@ describe('Wavesurfer Video', () => {
     });
 
     video_test(TestHelpers.MEDIA_ELEMENT_BACKEND);
+    video_test(TestHelpers.MEDIA_ELEMENT_WEB_AUDIO_BACKEND);
     video_test(TestHelpers.WEB_AUDIO_BACKEND);
 });
