@@ -13,10 +13,14 @@ before_install:
   # Codecs needed for Firefox to play audio.
   - sudo apt-get install -y -qq ubuntu-restricted-addons
 
-services:
-  - xvfb
+addons:
+  apt:
+    packages:
+      - xvfb
 
 install:
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
   - npm install
 
 script:
