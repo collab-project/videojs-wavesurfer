@@ -66,6 +66,9 @@ function ws_options_test(backend) {
             }
         });
 
+        player.one(Event.ERROR, (element, error) => {
+            fail(error);
+        });
         player.one(Event.PLAYBACK_FINISH, done);
 
         // load file
@@ -83,6 +86,10 @@ function ws_options_test(backend) {
                 }
             }
         });
+        player.one(Event.ERROR, (element, error) => {
+            fail(error);
+        });
+
         if (backend === TestHelpers.WEB_AUDIO_BACKEND) {
             player.one(Event.PLAYBACK_FINISH, () => {
                 // stop after it looped once
