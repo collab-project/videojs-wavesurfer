@@ -10,13 +10,13 @@ import TestHelpers from './test-helpers.js';
 
 let player, element;
 
-function video_test(backend) {
+function video_test(test_backend) {
     /** @test {Wavesurfer#redrawWaveform} */
     it('draw waveform for video', (done) => {
         let opts = {
             plugins: {
                 wavesurfer: {
-                    backend: backend
+                    backend: test_backend
                 }
             }
         };
@@ -44,6 +44,5 @@ describe('Wavesurfer Video', () => {
     });
 
     video_test(TestHelpers.MEDIA_ELEMENT_BACKEND);
-    video_test(TestHelpers.MEDIA_ELEMENT_WEB_AUDIO_BACKEND);
     video_test(TestHelpers.WEB_AUDIO_BACKEND);
 });
