@@ -17,7 +17,6 @@ services:
   - xvfb
 
 install:
-  - npm install opencollective-postinstall
   - npm prune
   - npm install
 
