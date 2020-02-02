@@ -34,6 +34,12 @@ let firefoxFlags = {
     'media.navigator.permission.disabled': true,
     'media.navigator.streams.fake': true,
     'focusmanager.testmode': true,
+    // devtools
+    'devtools.theme': 'dark',
+    'devtools.webconsole.timestampMessages': true,
+    'devtools.toolbox.host': 'right',
+    'devtools.toolbox.selectedTool': 'webconsole',
+    'devtools.chrome.enabled': true,
     // disable autoplay blocking, see https://www.ghacks.net/2018/09/21/firefox-improved-autoplay-blocking/
     'media.autoplay.default': 1,
     'media.autoplay.ask-permission': false,
