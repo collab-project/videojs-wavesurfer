@@ -2,7 +2,7 @@
  * @since 2.0.0
  */
 
-import host from 'host-environment';
+import host from "@jsdevtools/host-environment";
 
 import Event from '../src/js/event.js';
 
