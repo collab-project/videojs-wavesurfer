@@ -49,12 +49,15 @@
 /* eslint-disable */
 var player = videojs('myAudio', {
     controls: true,
+    autoplay: false,
+    loop: false,
+    muted: false,
+    fluid: false,
     width: 600,
     height: 300,
-    fluid: false,
     plugins: {
         wavesurfer: {
-            src: 'media/hal.wav',
+            backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
             waveColor: '#F2E68A',
@@ -69,13 +72,16 @@ var player = videojs('myAudio', {
         ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer') +
         ' and wavesurfer.js ' + WaveSurfer.VERSION;
     videojs.log(msg);
+    
+    // load file
+    player.src({src: 'media/hal.wav', type: 'audio/wav'});
 });
 
 var devices = [];
 player.on('ready', function() {
     // fetch input/output devices
     if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
-        throw new Error('enumerateDevices not supported in this browser.');
+        throw new Error('enumerateDevices is not supported in this browser.');
     }
     navigator.mediaDevices.enumerateDevices(this).then(function(result) {
         devices = result;
@@ -102,8 +108,9 @@ player.on('ready', function() {
         if (outputSelector.length <= 1) {
             // no output devices found, disable select
             option = document.createElement('option');
-            option.text = 'No audio output devices found';
-            option.value = undefined;
+            option.text = 'No additional audio output devices found';
+            option.value = '';
+            outputSelector.options[0] = null;
             outputSelector.appendChild(option);
             outputSelector.disabled = true;
             console.warn(option.text);

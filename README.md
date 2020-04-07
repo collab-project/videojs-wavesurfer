@@ -47,10 +47,10 @@ You can use [npm](https://www.npmjs.org) (`npm install videojs-wavesurfer`) to i
 plugin, or [download it here](https://github.com/collab-project/videojs-wavesurfer/releases).
 If you want to try the examples, check [these instructions below](#examples).
 
-Since v2.0 this plugin is compatible with video.js 6.0 and wavesurfer.js 2.0 and
+Since v3.0 this plugin is compatible with video.js 7.0.5 and wavesurfer.js 3.2.0 and
 newer. If you want to use this plugin with an older video.js or wavesurfer.js version,
-check the [archived releases](https://github.com/collab-project/videojs-wavesurfer/releases?after=1.3.7)
-for a 1.3.x or older release of this plugin.
+check the [archived releases](https://github.com/collab-project/videojs-wavesurfer/releases)
+for an older release of this plugin.
 
 Take a look at the [changelog](./CHANGES.md) when upgrading from a previous
 version of videojs-wavesurfer.
@@ -61,10 +61,12 @@ Using the Plugin
 The plugin depends on the video.js and wavesurfer.js libraries:
 
 ```html
+<!-- style -->
 <link href="video-js.min.css" rel="stylesheet">
 <link href="videojs.wavesurfer.css" rel="stylesheet">
-<script src="video.min.js"></script>
 
+<!-- libraries -->
+<script src="video.min.js"></script>
 <script src="wavesurfer.min.js"></script>
 ```
 
@@ -96,17 +98,16 @@ and enable the plugin by adding a `wavesurfer` entry with the related wavesurfer
 [options](https://wavesurfer-js.org/docs/options.html):
 
 ```javascript
-var player = videojs('myClip',
-{
+let player = videojs('myClip', {
     controls: true,
-    autoplay: true,
+    autoplay: false,
     loop: false,
     fluid: false,
     width: 600,
     height: 300,
     plugins: {
         wavesurfer: {
-            src: 'media/hal.wav',
+            backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
             waveColor: 'grey',
@@ -115,6 +116,16 @@ var player = videojs('myClip',
             hideScrollbar: true
         }
     }
+}, function() {
+    // print version information at startup
+    let msg = 'Using video.js ' + videojs.VERSION +
+        ' with videojs-wavesurfer ' +
+        videojs.getPluginVersion('wavesurfer') +
+        ' and wavesurfer.js ' + WaveSurfer.VERSION;
+    videojs.log(msg);
+
+    // load url
+    player.src({src: 'media/hal.wav', type: 'audio/wav'});
 });
 ```
 
@@ -122,7 +133,6 @@ The additional options for this plugin are:
 
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
-| `src` | string | `null` | The URL of the audio/video file or `'live'` when [using the microphone plugin](#microphone-plugin).|
 | `peaks` | string | `null` | The URL of the JSON file with peaks data corresponding to the source audio/video file. See the [peaks section](#using-peaks-for-large-audio-files) below for more information. |
 | `debug` | boolean | `false` | Display internal log messages using the `videojs.log` method. |
 | `msDisplayMax` | float | `3` | Indicates the number of seconds that is considered the boundary value for displaying milliseconds in the time controls. An audio clip with a total length of 2 seconds and a `msDisplayMax` of 3 will use the format `M:SS:MMM`. Clips with a duration that is longer than `msDisplayMax` will be displayed as `M:SS` or `HH:MM:SS`.|
@@ -273,21 +283,41 @@ Add an `audio` element:
 <audio id="myLiveAudio" class="video-js vjs-default-skin"></audio>
 ```
 
-Configure the player: use the value `'live'` for the `src` option:
+Hide irrelevant controls, specify the `WebAudio` backend and enable the microphone plugin:
 
 ```javascript
-var player = videojs('myLiveAudio', {
+let player = videojs('myLiveAudio', {
     controls: true,
     width: 600,
     height: 300,
+    controlBar: {
+        currentTimeDisplay: false,
+        timeDivider: false,
+        durationDisplay: false,
+        remainingTimeDisplay: false,
+        volumePanel: false,
+        progressControl: false
+    },
     plugins: {
         wavesurfer: {
-            src: 'live',
             debug: true,
+            backend: 'WebAudio',
             waveColor: 'black',
             cursorWidth: 0,
             interact: false,
-            hideScrollbar: true
+            hideScrollbar: true,
+            plugins: [
+                // enable microphone plugin
+                WaveSurfer.microphone.create({
+                    bufferSize: 4096,
+                    numberOfInputChannels: 1,
+                    numberOfOutputChannels: 1,
+                    constraints: {
+                        video: false,
+                        audio: true
+                    }
+                })
+            ]
         }
     }
 });

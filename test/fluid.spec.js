@@ -8,39 +8,41 @@ import Event from '../src/js/event.js';
 
 import TestHelpers from './test-helpers.js';
 
-/** @test {Wavesurfer} */
-describe('Wavesurfer Fluid', () => {
-    let player;
 
-    beforeEach(() => {
-        // create new player
+let player;
+
+function fluid_test(backend) {
+    /** @test {Wavesurfer#redrawWaveform} */
+    it('redraws the waveform', (done) => {
         let options = {
             fluid: true,
             plugins: {
                 wavesurfer: {
-                    debug: false,
-                    waveColor: 'yellow',
-                    progressColor: '#FCF990',
-                    cursorColor: '#FCFC42'
+                    backend: backend
                 }
             }
         };
-        let tag = TestHelpers.makeTag('audio', 'fluidAudio');
-        player = TestHelpers.makePlayer(options, tag);
-    });
-
-    afterEach(() => {
-        // delete player
-        player.dispose();
-    });
-
-    /** @test {Wavesurfer#redrawWaveform} */
-    it('redraws the waveform', (done) => {
+        player = TestHelpers.makePlayer(options);
         player.one(Event.WAVE_READY, () => {
-            player.wavesurfer().redrawWaveform(100, 200);
+            // class is present
+            expect(player.hasClass('vjs-fluid')).toBeTrue();
 
             done();
         });
+
+        // load file
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
+    });
+}
+
+/** @test {Wavesurfer} */
+describe('Wavesurfer Fluid', () => {
+    afterEach(() => {
+        // destroy player
+        player.dispose();
     });
 
+    fluid_test(TestHelpers.MEDIA_ELEMENT_BACKEND);
+    fluid_test(TestHelpers.WEB_AUDIO_BACKEND);
+    fluid_test(TestHelpers.MEDIA_ELEMENT_WEB_AUDIO_BACKEND);
 });

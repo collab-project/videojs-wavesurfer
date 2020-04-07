@@ -9,8 +9,6 @@ import Event from '../src/js/event.js';
 // registers the plugin (once)
 import Wavesurfer from '../src/js/videojs.wavesurfer.js';
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
-
 /** @test {Wavesurfer} */
 describe('Wavesurfer', () => {
     let player;
@@ -53,6 +51,8 @@ describe('Wavesurfer', () => {
             // start playback
             player.wavesurfer().play();
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer#pause} */
@@ -68,17 +68,42 @@ describe('Wavesurfer', () => {
 
             done();
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
+    });
+
+    /** @test {Wavesurfer#onWaveSeek} */
+    it('seek', (done) => {
+
+        player.one(Event.WAVE_READY, () => {
+            // initially 0
+            expect(player.wavesurfer().getCurrentTime()).toEqual(0);
+
+            // seek
+            player.wavesurfer().surfer.seekTo(0.5);
+            expect(player.wavesurfer().getCurrentTime()).toBeGreaterThan(0);
+
+            done();
+        });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer#destroy} */
     it('destroys player', (done) => {
 
         player.one(Event.WAVE_READY, () => {
-            // die
+            expect(player.wavesurfer().isDestroyed()).toBeFalse();
+
+            // kill it
             player.wavesurfer().destroy();
+
+            expect(player.wavesurfer().isDestroyed()).toBeTrue();
 
             done();
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer#getCurrentTime} */
@@ -97,6 +122,8 @@ describe('Wavesurfer', () => {
             // start playback until end
             player.wavesurfer().play();
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer#setCurrentTime} */
@@ -116,6 +143,8 @@ describe('Wavesurfer', () => {
 
             done();
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer#getDuration} */
@@ -128,6 +157,8 @@ describe('Wavesurfer', () => {
 
             done();
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer#setDuration} */
@@ -148,6 +179,8 @@ describe('Wavesurfer', () => {
 
             done();
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer#setVolume} */
@@ -155,6 +188,7 @@ describe('Wavesurfer', () => {
 
         player.one(Event.WAVE_READY, () => {
 
+            player.wavesurfer().setVolume(0);
             expect(player.volume()).toEqual(0);
 
             // invalid values are ignored
@@ -166,6 +200,8 @@ describe('Wavesurfer', () => {
 
             done();
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer#exportImage} */
@@ -187,21 +223,22 @@ describe('Wavesurfer', () => {
 
             done();
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer#onWaveReady} */
     it('fires waveReady event', (done) => {
 
         player.one(Event.WAVE_READY, () => {
-            // play button is initially hidden
-            expect(player.controlBar.playToggle.hasClass('vjs-hidden')).toBeTrue();
-
             expect(player.wavesurfer().waveReady).toBeTrue();
             expect(player.wavesurfer().waveFinished).toBeFalse();
             expect(player.wavesurfer().liveMode).toBeFalse();
 
             done();
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer#onWaveFinish} */
@@ -214,41 +251,8 @@ describe('Wavesurfer', () => {
             // start playback until end
             player.wavesurfer().play();
         });
-    });
 
-    /** @test {Wavesurfer#onWaveSeek} */
-    it('seek', (done) => {
-
-        player.one(Event.WAVE_READY, () => {
-            // initially 0
-            expect(player.wavesurfer().getCurrentTime()).toEqual(0);
-
-            // seek
-            player.wavesurfer().surfer.seekTo(0.5);
-            expect(player.wavesurfer().getCurrentTime()).toBeGreaterThan(0);
-
-            done();
-        });
-    });
-
-    /** @test {Wavesurfer#onPlayToggle} */
-    it('toggles play', (done) => {
-
-        player.one(Event.WAVE_READY, () => {
-            // display end of clip icon
-            player.controlBar.playToggle.addClass('vjs-ended');
-
-            // pause button initially visible
-            expect(player.controlBar.playToggle.hasClass('vjs-playing')).toBeFalse();
-
-            // trigger click event on playToggle button
-            TestHelpers.triggerDomEvent(player.controlBar.playToggle.el(), 'click');
-
-            // enabled the vjs-playing class
-            expect(player.controlBar.playToggle.hasClass('vjs-playing')).toBeTrue();
-
-            done();
-        });
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer#setupPlaybackEvents} */
@@ -259,83 +263,8 @@ describe('Wavesurfer', () => {
 
             done();
         });
-    });
 
-    /** @test {Wavesurfer#load} */
-    it('loads Blob', (done) => {
-
-        player.one(Event.WAVE_READY, () => {
-            // fetch blob version of example audio file
-            fetch(TestHelpers.EXAMPLE_AUDIO_FILE).then((response) => {
-                return response.blob();
-            }).then((blob) => {
-                // load blob
-                player.one(Event.WAVE_READY, done);
-                player.wavesurfer().load(blob);
-            });
-        });
-    });
-
-    /** @test {Wavesurfer#load} */
-    it('loads peaks from array', (done) => {
-
-        player.one(Event.WAVE_READY, () => {
-            player.wavesurfer().surfer.once(Event.REDRAW, done);
-            // load with peaks data
-            player.wavesurfer().load(
-                TestHelpers.EXAMPLE_AUDIO_FILE,
-                [
-                    -0.007874015748031496, 0.0, -0.007874015748031496,
-                    0.0, -0.007874015748031496, 0.0, -0.007874015748031496,
-                    0.0, -0.007874015748031496, 0.0, -0.007874015748031496,
-                    0.0, -0.007874015748031496, 0.0, -0.007874015748031496,
-                    0.0, -0.007874015748031496, 0.0, -0.007874015748031496
-                ]
-            );
-        });
-    });
-
-    /** @test {Wavesurfer#load} */
-    it('loads peaks from file', (done) => {
-
-        player.one(Event.WAVE_READY, () => {
-            player.wavesurfer().surfer.once(Event.REDRAW, done);
-            // load from peaks file
-            player.wavesurfer().load(
-                TestHelpers.EXAMPLE_AUDIO_FILE,
-                TestHelpers.EXAMPLE_AUDIO_PEAKS_FILE
-            );
-        });
-    });
-
-    /** @test {Wavesurfer#load} */
-    it('ignores peaks if file cannot be found', (done) => {
-
-        player.one(Event.WAVE_READY, () => {
-            player.wavesurfer().surfer.once(Event.REDRAW, done);
-            // try loading from non-existing peaks file
-            player.wavesurfer().load(
-                TestHelpers.EXAMPLE_AUDIO_FILE,
-                'broken_file.json'
-            );
-        });
-    });
-
-    /** @test {Wavesurfer#load} */
-    it('throws error if peaks data cannot be found in file', (done) => {
-        player.one(Event.ERROR, (element, err) => {
-            expect(err).toStartWith('Could not load peaks data from ');
-            expect(err).toEndWith('demo-peaks-invalid.json');
-            done();
-        });
-
-        player.one(Event.WAVE_READY, () => {
-            // try loading from peaks file without a data property
-            player.wavesurfer().load(
-                TestHelpers.EXAMPLE_AUDIO_FILE,
-                TestHelpers.EXAMPLE_AUDIO_PEAKS_INVALID_FILE
-            );
-        });
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer#setAudioOutput} */
@@ -347,6 +276,84 @@ describe('Wavesurfer', () => {
             // set to non-existing device
             player.wavesurfer().setAudioOutput('foo');
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
+    /** @test {Wavesurfer#load}
+    it('loads Blob', (done) => {
+        // XXX: should throw error with MediaElement backend
+        done();
+
+        player.one(Event.READY, () => {
+            // fetch blob version of example audio file
+            fetch(TestHelpers.EXAMPLE_AUDIO_FILE).then((response) => {
+                return response.blob();
+            }).then((blob) => {
+                // load blob
+                player.one(Event.WAVE_READY, done);
+                player.wavesurfer().load(blob);
+            });
+        });
+    });
+    */
+
+    /** @test {Wavesurfer#load} */
+    it('loads peaks from array', (done) => {
+
+        player.one(Event.WAVE_READY, done);
+
+        player.src({
+            src: TestHelpers.EXAMPLE_AUDIO_FILE,
+            type: TestHelpers.EXAMPLE_AUDIO_TYPE,
+            peaks: [
+                -0.007874015748031496, 0.0, -0.007874015748031496,
+                0.0, -0.007874015748031496, 0.0, -0.007874015748031496,
+                0.0, -0.007874015748031496, 0.0, -0.007874015748031496,
+                0.0, -0.007874015748031496, 0.0, -0.007874015748031496,
+                0.0, -0.007874015748031496, 0.0, -0.007874015748031496
+            ]
+        });
+    });
+
+    /** @test {Wavesurfer#load} */
+    it('loads peaks from JSON file', (done) => {
+
+        player.one(Event.WAVE_READY, done);
+
+        player.src({
+            src: TestHelpers.EXAMPLE_AUDIO_FILE,
+            type: TestHelpers.EXAMPLE_AUDIO_TYPE,
+            peaks: TestHelpers.EXAMPLE_AUDIO_PEAKS_FILE
+        });
+    });
+
+    /** @test {Wavesurfer#load} */
+    it('ignores peaks if file cannot be found', (done) => {
+
+        player.one(Event.WAVE_READY, done);
+
+        // try loading from non-existing peaks file
+        player.src({
+            src: TestHelpers.EXAMPLE_AUDIO_FILE,
+            type: TestHelpers.EXAMPLE_AUDIO_TYPE,
+            peaks: 'non_existing_file.json'
+        });
+    });
+
+    /** @test {Wavesurfer#load} */
+    it('throws error if peaks data property cannot be found in JSON file', (done) => {
+        player.one(Event.ERROR, (element, err) => {
+            expect(err).toStartWith('Could not load peaks data from ');
+            expect(err).toEndWith('demo-peaks-invalid.json');
+            done();
+        });
+
+        // try loading from peaks file without a data property
+        player.src({
+            src: TestHelpers.EXAMPLE_AUDIO_FILE,
+            type: TestHelpers.EXAMPLE_AUDIO_TYPE,
+            peaks: TestHelpers.EXAMPLE_AUDIO_PEAKS_INVALID_FILE
+        });
+    });
 });

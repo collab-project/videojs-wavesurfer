@@ -11,6 +11,9 @@ class VideojsWavesurferPlayer extends React.Component {
                 ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer') +
                 ' and wavesurfer.js ' + WaveSurfer.VERSION;
             videojs.log(version_info);
+
+            // load file
+            this.player.src({src: '../media/hal.wav', type: 'audio/wav'});
         });
 
         this.player.on('waveReady', (event) => {
@@ -49,12 +52,14 @@ class VideojsWavesurferPlayer extends React.Component {
 const videoJsOptions = {
     controls: true,
     autoplay: false,
+    loop: false,
+    muted: false,
     fluid: false,
     width: 600,
     height: 300,
     plugins: {
         wavesurfer: {
-            src: '../media/hal.wav',
+            backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
             waveColor: 'white',

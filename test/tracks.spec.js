@@ -12,16 +12,16 @@ describe('Wavesurfer TextTracks', () => {
 
     beforeEach(() => {
         // create audio element with nested text track element
-        const tag = TestHelpers.makeTag('audio', 'myAudioTextTracks');
+        const element = TestHelpers.makeElement('audio', 'myAudioTextTracks');
         const track = document.createElement('track');
         track.kind = 'captions';
         track.src = TestHelpers.EXAMPLE_VTT_FILE;
         track.srclang = 'en-US';
         track.default = true;
-        tag.appendChild(track);
+        element.appendChild(track);
 
         // create new player
-        player = TestHelpers.makePlayer({}, tag);
+        player = TestHelpers.makePlayer({}, element);
     });
 
     afterEach(() => {
@@ -41,5 +41,7 @@ describe('Wavesurfer TextTracks', () => {
 
             done();
         });
+
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 });

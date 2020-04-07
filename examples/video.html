@@ -12,12 +12,16 @@
 
   <script src="../dist/videojs.wavesurfer.js"></script>
 
-  <script src="safari-workaround.js"></script>
-
   <style>
   /* change player background color */
   #myVideo {
-      background-color: #6699FF;
+      background-color: #000;
+  }
+
+  #waveform {
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
   }
   </style>
 </head>
@@ -25,73 +29,59 @@
 
 <video id="myVideo" playsinline class="video-js vjs-default-skin"></video>
 
+<div id="waveform"></div>
+
 <script>
 /* eslint-disable */
-var player;
 var options = {
     controls: true,
     autoplay: false,
-    fluid: false,
     loop: false,
+    muted: false,
+    fluid: false,
     width: 600,
     height: 300,
+    inactivityTimeout: 0,
     plugins: {
         wavesurfer: {
-            src: 'media/example.mp4',
+            backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
             waveColor: '#336699',
             progressColor: 'black',
             cursorColor: 'black',
             hideScrollbar: true,
-            // disable options below to hide the video playback,
-            // and only show the waveform
-            backend: 'MediaElement',
-            mediaType: 'video'
+            // put waveform in separate container
+            container: '#waveform'
         }
     }
 };
 
-if (isSafari) {
-    // add start button for safari
-    addStartButton();
-} else {
-    // other browsers
-    createPlayer();
-}
+// create player
+var player = videojs('myVideo', options, function() {
+    // print version information at startup
+    var msg = 'Using video.js '+ videojs.VERSION +
+        ' with videojs-wavesurfer ' +
+        videojs.getPluginVersion('wavesurfer') +
+        ' and wavesurfer.js ' + WaveSurfer.VERSION;
+    videojs.log(msg);
 
-function createPlayer(event) {
-    if (isSafari) {
-        if (event) {
-            // hide button on safari
-            event.target.style.display = 'none';
-        }
-        updateContext(options);
-    }
+    // load file
+    player.src({src: 'media/example.mp4', type: 'video/mp4'});
+});
 
-    // create player
-    player = videojs('myVideo', options, function() {
-        // print version information at startup
-        var msg = 'Using video.js '+ videojs.VERSION +
-            ' with videojs-wavesurfer ' +
-            videojs.getPluginVersion('wavesurfer') +
-            ' and wavesurfer.js ' + WaveSurfer.VERSION;
-        videojs.log(msg);
-    });
+player.on('waveReady', function(event) {
+    console.log('waveform: ready!');
+});
 
-    player.on('waveReady', function(event) {
-        console.log('waveform: ready!');
-    });
+player.on('playbackFinish', function(event) {
+    console.log('playback finished.');
+});
 
-    player.on('playbackFinish', function(event) {
-        console.log('playback finished.');
-    });
-
-    // error handling
-    player.on('error', function(element, error) {
-        console.warn('ERROR:', error);
-    });
-}
+// error handling
+player.on('error', function(element, error) {
+    console.warn('ERROR:', error);
+});
 </script>
 
 </body>

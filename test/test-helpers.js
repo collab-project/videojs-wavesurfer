@@ -8,8 +8,22 @@ import {Player, mergeOptions} from 'video.js';
 
 const TestHelpers = {
 
+    /** wavesurer.js backends to test against */
+    MEDIA_ELEMENT_BACKEND: 'MediaElement',
+    MEDIA_ELEMENT_WEB_AUDIO_BACKEND: 'MediaElementWebAudio',
+    WEB_AUDIO_BACKEND: 'WebAudio',
+
     /** Example audio clip */
     EXAMPLE_AUDIO_FILE: '/base/test/support/demo.wav',
+
+    /** Example audio clip mime-type */
+    EXAMPLE_AUDIO_TYPE: 'audio/wav',
+
+    /** Example audio src object */
+    EXAMPLE_AUDIO_SRC: {
+        src: '/base/test/support/demo.wav',
+        type: 'audio/wav'
+    },
 
     /** Length of example audio clip */
     EXAMPLE_AUDIO_DURATION: 0.782312925170068,
@@ -23,23 +37,29 @@ const TestHelpers = {
     /** Example VTT clip */
     EXAMPLE_VTT_FILE: '/base/test/support/demo.vtt',
 
+    /** Example video clip */
+    EXAMPLE_VIDEO_FILE: '/base/test/support/stars.mp4',
+
+    /** Example video clip mime-type */
+    EXAMPLE_VIDEO_TYPE: 'video/mp4',
+
     /**
      * Create DOM element.
      */
-    makeTag(tag_type, id_name) {
-        if (tag_type === undefined) {
-            tag_type = 'audio';
+    makeElement(element_type, id_name) {
+        if (element_type === undefined) {
+            element_type = 'audio';
         }
         if (id_name === undefined) {
             id_name = 'myAudio';
         }
-        const tag = document.createElement(tag_type);
-        tag.id = id_name;
-        tag.muted = true;
-        tag.className = 'video-js vjs-default-skin';
-        tag.style = 'background-color: #F2E68A;';
+        const element = document.createElement(element_type);
+        element.id = id_name;
+        element.muted = true;
+        element.className = 'video-js vjs-default-skin';
+        element.style = 'background-color: #F2E68A;';
 
-        return tag;
+        return element;
     },
 
     /**
@@ -49,7 +69,7 @@ const TestHelpers = {
      * @param  {Element|String} elementTag
      */
     makePlayer(playerOptions, elementTag) {
-        elementTag = elementTag || TestHelpers.makeTag();
+        elementTag = elementTag || TestHelpers.makeElement();
 
         // add to dom
         document.getElementsByTagName('body')[0].appendChild(elementTag);
@@ -64,7 +84,7 @@ const TestHelpers = {
             height: 300,
             plugins: {
                 wavesurfer: {
-                    src: this.EXAMPLE_AUDIO_FILE,
+                    backend: 'MediaElement',
                     msDisplayMax: 10,
                     debug: true,
                     waveColor: 'blue',
@@ -77,24 +97,6 @@ const TestHelpers = {
         }, playerOptions || {});
 
         return videojs(elementTag.id, opts);
-    },
-
-    /**
-     * Create a test player with the microphone plugin enabled.
-     */
-    makeLivePlayer() {
-        let tag = TestHelpers.makeTag('audio', 'liveAudio');
-        let opts = {
-            plugins: {
-                wavesurfer: {
-                    src: 'live',
-                    waveColor: 'black',
-                    cursorWidth: 0,
-                    interact: false
-                }
-            }
-        };
-        return this.makePlayer(opts, tag);
     },
 
     /**

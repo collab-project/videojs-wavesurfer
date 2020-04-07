@@ -9,6 +9,7 @@ import Event from './event';
 import log from './utils/log';
 import formatTime from './utils/format-time';
 import pluginDefaultOptions from './defaults';
+import myMiddleware from './middleware';
 import window from 'global/window';
 
 import videojs from 'video.js';
@@ -42,23 +43,10 @@ class Wavesurfer extends Plugin {
         this.waveReady = false;
         this.waveFinished = false;
         this.liveMode = false;
+        this.backend = null;
         this.debug = (options.debug.toString() === 'true');
-        this.msDisplayMax = parseFloat(options.msDisplayMax);
         this.textTracksEnabled = (this.player.options_.tracks.length > 0);
-
-        // microphone plugin
-        if (options.src === 'live') {
-            // check if the wavesurfer.js microphone plugin can be enabled
-            if (WaveSurfer.microphone !== undefined) {
-                // enable audio input from a microphone
-                this.liveMode = true;
-                this.waveReady = true;
-            } else {
-                this.onWaveError('Could not find wavesurfer.js ' +
-                    'microphone plugin!');
-                return;
-            }
-        }
+        this.msDisplayMax = parseFloat(options.msDisplayMax);
 
         // wait until player ui is ready
         this.player.one(Event.READY, this.initialize.bind(this));
@@ -73,22 +61,36 @@ class Wavesurfer extends Plugin {
         // hide big play button
         this.player.bigPlayButton.hide();
 
+        // parse options
+        let mergedOptions = this.parseOptions(this.player.options_.plugins.wavesurfer);
+
+        // set video.js time format
+        videojs.setFormatTime((seconds, guide) => {
+            return formatTime(seconds, guide, this.msDisplayMax);
+        });
+
         // the native controls don't work for this UI so disable
         // them no matter what
+        // XXX: doublecheck this
+        /*
         if (this.player.usingNativeControls_ === true) {
             if (this.player.tech_.el_ !== undefined) {
                 this.player.tech_.el_.controls = false;
             }
         }
+        */
 
         // controls
         if (this.player.options_.controls === true) {
-            // make sure controlBar is showing
+            // make sure controlBar is showing.
+            // video.js hides the controlbar by default because it expects
+            // the user to click on the 'big play button' first.
             this.player.controlBar.show();
             this.player.controlBar.el_.style.display = 'flex';
 
-            // progress control (if present) isn't used by this plugin
-            if (this.player.controlBar.progressControl !== undefined) {
+            // progress control is only supported with the MediaElement backend
+            if (this.backend === 'WebAudio' &&
+                this.player.controlBar.progressControl !== undefined) {
                 this.player.controlBar.progressControl.hide();
             }
 
@@ -114,7 +116,8 @@ class Wavesurfer extends Plugin {
                 this.player.controlBar.remainingTimeDisplay.hide();
             }
 
-            if (this.player.controlBar.playToggle !== undefined) {
+            if (this.backend === 'WebAudio' &&
+                this.player.controlBar.playToggle !== undefined) {
                 // handle play toggle interaction
                 this.player.controlBar.playToggle.on(['tap', 'click'],
                     this.onPlayToggle.bind(this));
@@ -128,20 +131,39 @@ class Wavesurfer extends Plugin {
         }
 
         // wavesurfer.js setup
-        let mergedOptions = this.parseOptions(this.player.options_.plugins.wavesurfer);
         this.surfer = WaveSurfer.create(mergedOptions);
         this.surfer.on(Event.ERROR, this.onWaveError.bind(this));
         this.surfer.on(Event.FINISH, this.onWaveFinish.bind(this));
-        if (this.liveMode === true) {
+        this.backend = this.surfer.params.backend;
+        this.log('Using wavesurfer.js ' + this.backend + ' backend.');
+
+        // check if the wavesurfer.js microphone plugin is enabled
+        if ('microphone' in this.player.wavesurfer().surfer.getActivePlugins()) {
+            // enable audio input from a microphone
+            this.liveMode = true;
+            this.waveReady = true;
+            this.log('wavesurfer.js microphone plugin enabled.');
+
             // listen for wavesurfer.js microphone plugin events
             this.surfer.microphone.on(Event.DEVICE_ERROR,
                 this.onWaveError.bind(this));
         }
-        this.surferReady = this.onWaveReady.bind(this);
-        this.surferProgress = this.onWaveProgress.bind(this);
-        this.surferSeek = this.onWaveSeek.bind(this);
 
-        // only listen to these wavesurfer.js playback events when not
+        // listen for wavesurfer.js events
+        this.surferReady = this.onWaveReady.bind(this);
+        if (this.backend === 'WebAudio') {
+            this.surferProgress = this.onWaveProgress.bind(this);
+            this.surferSeek = this.onWaveSeek.bind(this);
+
+            // make sure volume is muted when requested
+            // CHECK: not needed anymore
+            // XXX: only needed for WebAudio backend
+            if (this.player.muted()) {
+                this.setVolume(0);
+            }
+        }
+
+        // only listen to the wavesurfer.js playback events when not
         // in live mode
         if (!this.liveMode) {
             this.setupPlaybackEvents(true);
@@ -150,11 +172,6 @@ class Wavesurfer extends Plugin {
         // video.js player events
         this.player.on(Event.VOLUMECHANGE, this.onVolumeChange.bind(this));
         this.player.on(Event.FULLSCREENCHANGE, this.onScreenChange.bind(this));
-
-        // make sure volume is muted when requested
-        if (this.player.muted()) {
-            this.setVolume(0);
-        }
 
         // video.js fluid option
         if (this.player.options_.fluid === true) {
@@ -165,24 +182,6 @@ class Wavesurfer extends Plugin {
                 this.onResizeChange.bind(this), 150);
             window.addEventListener(Event.RESIZE, this.responsiveWave);
         }
-
-        // text tracks
-        if (this.textTracksEnabled) {
-            if (this.player.controlBar.currentTimeDisplay !== undefined) {
-                // disable timeupdates
-                this.player.controlBar.currentTimeDisplay.off(
-                    this.player, Event.TIMEUPDATE,
-                    this.player.controlBar.currentTimeDisplay.throttledUpdateContent);
-            }
-
-            // sets up an interval function to track current time
-            // and trigger timeupdate every 250 milliseconds.
-            // needed for text tracks
-            this.player.tech_.trackCurrentTime();
-        }
-
-        // kick things off
-        this.startPlayers();
     }
 
     /**
@@ -192,7 +191,7 @@ class Wavesurfer extends Plugin {
      * @param {Object} surferOpts - Plugin options.
      * @returns {Object} - Updated `surferOpts` object.
      */
-    parseOptions(surferOpts) {
+    parseOptions(surferOpts = {}) {
         let rect = this.player.el_.getBoundingClientRect();
         this.originalWidth = this.player.options_.width || rect.width;
         this.originalHeight = this.player.options_.height || rect.height;
@@ -230,41 +229,15 @@ class Wavesurfer extends Plugin {
             surferOpts.height /= 2;
         }
 
-        // enable wavesurfer.js microphone plugin
-        if (this.liveMode === true) {
-            surferOpts.plugins = [
-                WaveSurfer.microphone.create(surferOpts)
-            ];
-            this.log('wavesurfer.js microphone plugin enabled.');
+        // use MediaElement as default wavesurfer.js backend if one is not
+        // specified
+        if ('backend' in surferOpts) {
+            this.backend = surferOpts.backend;
+        } else {
+            surferOpts.backend = this.backend = 'MediaElement';
         }
 
         return surferOpts;
-    }
-
-    /**
-     * Start the players.
-     * @private
-     */
-    startPlayers() {
-        let options = this.player.options_.plugins.wavesurfer;
-        if (options.src !== undefined) {
-            if (this.surfer.microphone === undefined) {
-                // show loading spinner
-                this.player.loadingSpinner.show();
-
-                // start loading file
-                this.load(options.src, options.peaks);
-            } else {
-                // hide loading spinner
-                this.player.loadingSpinner.hide();
-
-                // connect microphone input to our waveform
-                options.wavesurfer = this.surfer;
-            }
-        } else {
-            // no valid src found, hide loading spinner
-            this.player.loadingSpinner.hide();
-        }
     }
 
     /**
@@ -277,12 +250,16 @@ class Wavesurfer extends Plugin {
     setupPlaybackEvents(enable) {
         if (enable === false) {
             this.surfer.un(Event.READY, this.surferReady);
-            this.surfer.un(Event.AUDIOPROCESS, this.surferProgress);
-            this.surfer.un(Event.SEEK, this.surferSeek);
+            if (this.backend === 'WebAudio') {
+                this.surfer.un(Event.AUDIOPROCESS, this.surferProgress);
+                this.surfer.un(Event.SEEK, this.surferSeek);
+            }
         } else if (enable === true) {
             this.surfer.on(Event.READY, this.surferReady);
-            this.surfer.on(Event.AUDIOPROCESS, this.surferProgress);
-            this.surfer.on(Event.SEEK, this.surferSeek);
+            if (this.backend === 'WebAudio') {
+                this.surfer.on(Event.AUDIOPROCESS, this.surferProgress);
+                this.surfer.on(Event.SEEK, this.surferSeek);
+            }
         }
     }
 
@@ -299,47 +276,64 @@ class Wavesurfer extends Plugin {
             this.log('Loading object: ' + JSON.stringify(url));
             this.surfer.loadBlob(url);
         } else {
-            // load peak data from file
+            // load peak data from array or file
             if (peaks !== undefined) {
-                if (Array.isArray(peaks)) {
-                    // use supplied peaks data
-                    this.log('Loading URL: ' + url);
-                    this.surfer.load(url, peaks);
-                } else {
-                    // load peak data from file
-                    let requestOptions = {
-                        url: peaks,
-                        responseType: 'json'
-                    };
-                    // supply xhr options, if any
-                    if (this.player.options_.plugins.wavesurfer.xhr !== undefined) {
-                        requestOptions.xhr = this.player.options_.plugins.wavesurfer.xhr;
-                    }
-                    let request = WaveSurfer.util.fetchFile(requestOptions);
-
-                    request.once('success', data => {
-                        this.log('Loaded Peak Data URL: ' + peaks);
-                        // check for data property containing peaks
-                        if (data && data.data) {
-                            this.surfer.load(url, data.data);
-                        } else {
-                            this.player.trigger(Event.ERROR,
-                                'Could not load peaks data from ' + peaks);
-                            this.log(err, 'error');
-                        }
-                    });
-                    request.on('error', e => {
-                        this.log('Unable to retrieve peak data from ' + peaks +
-                            '. Status code: ' + request.response.status, 'warn');
-                        this.log('Loading URL: ' + url);
-                        this.surfer.load(url);
-                    });
-                }
+                this.loadPeaks(url, peaks);
             } else {
                 // no peaks
-                this.log('Loading URL: ' + url);
+                if (typeof url === 'string') {
+                    this.log('Loading URL: ' + url);
+                } else {
+                    this.log('Loading element: ' + url);
+                }
                 this.surfer.load(url);
             }
+        }
+    }
+
+    /**
+     * Start loading waveform data.
+     *
+     * @param {string|blob|file} url - Either the URL of the audio file,
+     *     a Blob or a File object.
+     * @param {string|number[]} peaks - Either the URL of peaks
+     *     data for the audio file, or an array with peaks data.
+     */
+    loadPeaks(url, peaks) {
+        if (Array.isArray(peaks)) {
+            // use supplied peaks data
+            this.log('Loading URL with array of peaks: ' + url);
+            this.surfer.load(url, peaks);
+        } else {
+            // load peak data from file
+            let requestOptions = {
+                url: peaks,
+                responseType: 'json'
+            };
+
+            // supply xhr options, if any
+            if (this.player.options_.plugins.wavesurfer.xhr !== undefined) {
+                requestOptions.xhr = this.player.options_.plugins.wavesurfer.xhr;
+            }
+            let request = WaveSurfer.util.fetchFile(requestOptions);
+
+            request.once('success', data => {
+                this.log('Loaded Peak Data URL: ' + peaks);
+                // check for data property containing peaks
+                if (data && data.data) {
+                    this.surfer.load(url, data.data);
+                } else {
+                    this.player.trigger(Event.ERROR,
+                        'Could not load peaks data from ' + peaks);
+                    this.log(err, 'error');
+                }
+            });
+            request.on('error', e => {
+                this.log('Unable to retrieve peak data from ' + peaks +
+                    '. Status code: ' + request.response.status, 'warn');
+                this.log('Loading URL: ' + url);
+                this.surfer.load(url);
+            });
         }
     }
 
@@ -422,9 +416,6 @@ class Wavesurfer extends Plugin {
             }
             // destroy wavesurfer instance
             this.surfer.destroy();
-        }
-        if (this.textTracksEnabled) {
-            this.player.tech_.stopTrackingCurrentTime();
         }
         this.log('Destroyed plugin');
     }
@@ -593,13 +584,15 @@ class Wavesurfer extends Plugin {
         this.player.trigger(Event.WAVE_READY);
 
         // update time display
-        this.setCurrentTime();
-        this.setDuration();
+        if (this.backend === 'WebAudio') {
+            this.setCurrentTime();
+            this.setDuration();
 
-        // enable and show play button
-        if (this.player.controlBar.playToggle !== undefined &&
-            this.player.controlBar.playToggle.contentEl()) {
-            this.player.controlBar.playToggle.show();
+            // enable and show play button
+            if (this.player.controlBar.playToggle !== undefined &&
+                this.player.controlBar.playToggle.contentEl()) {
+                this.player.controlBar.playToggle.show();
+            }
         }
 
         // hide loading spinner
@@ -609,7 +602,17 @@ class Wavesurfer extends Plugin {
 
         // auto-play when ready (if enabled)
         if (this.player.options_.autoplay === true) {
-            this.play();
+            // autoplay is only allowed when audio is muted
+            this.setVolume(0);
+
+            // try auto-play
+            if (this.backend === 'WebAudio') {
+                this.play();
+            } else {
+                this.player.play().catch(e => {
+                    this.onWaveError(e);
+                });
+            }
         }
     }
 
@@ -627,28 +630,32 @@ class Wavesurfer extends Plugin {
 
         // check if loop is enabled
         if (this.player.options_.loop === true) {
-            // reset waveform
-            this.surfer.stop();
-            this.play();
+            if (this.backend === 'WebAudio') {
+                // reset waveform
+                this.surfer.stop();
+                this.play();
+            }
         } else {
             // finished
             this.waveFinished = true;
 
-            // pause player
-            this.pause();
+            if (this.backend === 'WebAudio') {
+                // pause player
+                this.pause();
 
-            // show the replay state of play toggle
-            this.player.trigger(Event.ENDED);
+                // show the replay state of play toggle
+                this.player.trigger(Event.ENDED);
 
-            // this gets called once after the clip has ended and the user
-            // seeks so that we can change the replay button back to a play
-            // button
-            this.surfer.once(Event.SEEK, () => {
-                if (this.player.controlBar.playToggle !== undefined) {
-                    this.player.controlBar.playToggle.removeClass('vjs-ended');
-                }
-                this.player.trigger(Event.PAUSE);
-            });
+                // this gets called once after the clip has ended and the user
+                // seeks so that we can change the replay button back to a play
+                // button
+                this.surfer.once(Event.SEEK, () => {
+                    if (this.player.controlBar.playToggle !== undefined) {
+                        this.player.controlBar.playToggle.removeClass('vjs-ended');
+                    }
+                    this.player.trigger(Event.PAUSE);
+                });
+            }
         }
     }
 
@@ -664,6 +671,7 @@ class Wavesurfer extends Plugin {
 
     /**
      * Fires during seeking of the waveform.
+     *
      * @private
      */
     onWaveSeek() {
@@ -824,5 +832,13 @@ videojs.Wavesurfer = Wavesurfer;
 if (videojs.getPlugin('wavesurfer') === undefined) {
     videojs.registerPlugin('wavesurfer', Wavesurfer);
 }
+
+// register a star-middleware
+videojs.use('*', player => {
+    // make player available on middleware
+    myMiddleware.player = player;
+
+    return myMiddleware;
+});
 
 export {Wavesurfer};

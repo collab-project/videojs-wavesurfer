@@ -1,26 +1,25 @@
 /**
- * @since 3.0.0
+ * @since 2.0.0
  */
+
+import host from "@jsdevtools/host-environment";
 
 import Event from '../src/js/event.js';
 
 import TestHelpers from './test-helpers.js';
 
-/** @test {Wavesurfer} */
-describe('Wavesurfer options', () => {
-    let player;
 
-    afterEach(() => {
-        // delete player
-        player.dispose();
-    });
+let player;
 
+function ws_options_test(backend) {
     /** @test {Wavesurfer} */
     it('accepts waveformHeight option', (done) => {
         let height = 139;
+        // create player
         player = TestHelpers.makePlayer({
             plugins: {
                 wavesurfer: {
+                    backend: backend,
                     waveformHeight: height
                 }
             }
@@ -31,6 +30,9 @@ describe('Wavesurfer options', () => {
 
             done();
         });
+
+        // load file
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer} */
@@ -39,6 +41,7 @@ describe('Wavesurfer options', () => {
             height: 100,
             plugins: {
                 wavesurfer: {
+                    backend: backend,
                     splitChannels: true
                 }
             }
@@ -49,45 +52,45 @@ describe('Wavesurfer options', () => {
 
             done();
         });
-    });
 
-    /** @test {Wavesurfer#startPlayers} */
-    it('hides loading spinner when no valid src is found', (done) => {
-        player = TestHelpers.makePlayer({
-            plugins: {
-                wavesurfer: {
-                    src: undefined
-                }
-            }
-        });
-
-        player.one(Event.READY, () => {
-            expect(player.loadingSpinner.hasClass('vjs-hidden')).toBeTrue();
-
-            done();
-        });
+        // load file
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
 
     /** @test {Wavesurfer} */
     it('accepts autoplay option', (done) => {
         player = TestHelpers.makePlayer({
-            autoplay: true
-        });
-
-        player.one(Event.PLAYBACK_FINISH, done);
-    });
-
-    /** @test {Wavesurfer} */
-    it('accepts loop option', (done) => {
-        player = TestHelpers.makePlayer({
             autoplay: true,
-            loop: true
+            plugins: {
+                wavesurfer: {
+                    backend: backend
+                }
+            }
         });
 
-        player.one(Event.PLAYBACK_FINISH, () => {
-            // stop after it looped once
-            player.one(Event.PLAYBACK_FINISH, done);
+        // skip test in firefox until autoplay in headless browser is figured out
+        if (host.browser.firefox) {
+            done();
+        }
+
+        player.one(Event.ERROR, (element, error) => {
+            fail(error);
         });
+        player.one(Event.PLAYBACK_FINISH, done);
+
+        // load file
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
+    });
+}
+
+/** @test {Wavesurfer} */
+describe('Wavesurfer options', () => {
+    afterEach(() => {
+        // delete player
+        player.dispose();
     });
 
+    ws_options_test(TestHelpers.MEDIA_ELEMENT_BACKEND);
+    ws_options_test(TestHelpers.MEDIA_ELEMENT_WEB_AUDIO_BACKEND);
+    ws_options_test(TestHelpers.WEB_AUDIO_BACKEND);
 });

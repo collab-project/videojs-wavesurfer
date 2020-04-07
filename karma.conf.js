@@ -8,13 +8,13 @@ process.env.BABEL_ENV = 'test';
 const path = require('path');
 require('@babel/register');
 
-var webpackConfig = require('./build-config/webpack.prod.main.js');
-var support_dir = path.resolve(__dirname, 'test', 'support');
-var fakeAudioStream = path.join(support_dir, 'demo.wav');
+let webpackConfig = require('./build-config/webpack.prod.main.js');
+let support_dir = path.resolve(__dirname, 'test', 'support');
+let fakeAudioStream = path.join(support_dir, 'demo.wav');
 
 // Chrome CLI options
 // http://peter.sh/experiments/chromium-command-line-switches/
-var chromeFlags = [
+let chromeFlags = [
     '--no-sandbox',
     '--no-first-run',
     '--noerrdialogs',
@@ -30,20 +30,31 @@ var chromeFlags = [
     '--allow-insecure-localhost',
     '--autoplay-policy=no-user-gesture-required'
 ];
-var firefoxFlags = {
+let firefoxFlags = {
     'media.navigator.permission.disabled': true,
     'media.navigator.streams.fake': true,
     'focusmanager.testmode': true,
+    // devtools
+    'devtools.theme': 'dark',
+    'devtools.webconsole.timestampMessages': true,
+    'devtools.toolbox.host': 'right',
+    'devtools.toolbox.selectedTool': 'webconsole',
+    'devtools.chrome.enabled': true,
     // disable autoplay blocking, see https://www.ghacks.net/2018/09/21/firefox-improved-autoplay-blocking/
-    'media.autoplay.default': 0,
+    'media.autoplay.default': 1,
     'media.autoplay.ask-permission': false,
     'media.autoplay.enabled.user-gestures-needed': false,
-    'media.autoplay.block-webaudio': false
+    'media.autoplay.block-webaudio': false,
+    // disable update and startup
+    'extensions.update.enabled': false,
+    'app.update.enabled': false,
+    'browser.startup.page': 0,
+    'browser.shell.checkDefaultBrowser': false
 };
-var ci = process.env.TRAVIS || process.env.APPVEYOR;
+const ci = process.env.TRAVIS || process.env.APPVEYOR;
 
 module.exports = function(config) {
-    var configuration = {
+    let configuration = {
         basePath: '',
         frameworks: ['jasmine', 'jasmine-matchers', 'detectBrowsers'],
         hostname: 'localhost',
@@ -67,7 +78,9 @@ module.exports = function(config) {
             // library dependencies
             'node_modules/video.js/dist/video.js',
             'node_modules/wavesurfer.js/dist/wavesurfer.js',
+            {pattern: 'node_modules/wavesurfer.js/dist/wavesurfer.js.map', included: false},
             'node_modules/wavesurfer.js/dist/plugin/wavesurfer.microphone.js',
+            {pattern: 'node_modules/wavesurfer.js/dist/plugin/wavesurfer.microphone.js.map', included: false},
 
             // specs
             {pattern: 'test/**/*.spec.js', watched: false}
@@ -103,14 +116,14 @@ module.exports = function(config) {
             postDetection: function(availableBrowsers) {
                 if (availableBrowsers.length > 1) {
                     // use custom browser launchers
-                    var result = availableBrowsers;
+                    let result = availableBrowsers;
                     let cd = availableBrowsers.indexOf('ChromeHeadless');
                     if (cd > -1) {
-                        availableBrowsers[cd] = 'Chrome_dev';
+                        availableBrowsers[cd] = 'Chrome_headless';
                     }
                     let fd = availableBrowsers.indexOf('FirefoxHeadless');
                     if (fd > -1) {
-                        availableBrowsers[fd] = 'Firefox_dev';
+                        availableBrowsers[fd] = 'Firefox_headless';
                     }
                     let fh = availableBrowsers.indexOf('Firefox');
                     if (fh > -1) {
@@ -126,6 +139,11 @@ module.exports = function(config) {
         },
         customLaunchers: {
             Chrome_dev: {
+                base: 'Chrome',
+                flags: chromeFlags,
+                chromeDataDir: path.resolve(__dirname, '.chrome')
+            },
+            Chrome_headless: {
                 base: 'ChromeHeadless',
                 flags: chromeFlags
             },
@@ -134,6 +152,10 @@ module.exports = function(config) {
                 flags: chromeFlags
             },
             Firefox_dev: {
+                base: 'Firefox',
+                flags: firefoxFlags
+            },
+            Firefox_headless: {
                 base: 'FirefoxHeadless',
                 prefs: firefoxFlags
             }
@@ -150,7 +172,7 @@ module.exports = function(config) {
     };
 
     if (ci) {
-        configuration.browsers = ['Chrome_dev'];
+        configuration.browsers = ['Chrome_headless', 'Firefox_headless'];
         configuration.detectBrowsers.enabled = false;
         configuration.singleRun = true;
 
