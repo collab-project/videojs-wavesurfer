@@ -21,6 +21,12 @@
   #myLiveAudio {
       background-color: #ADD3FF;
   }
+
+  /* position fullscreen control on right side of the player */
+  .video-js.vjs-wavesurfer .vjs-control.vjs-fullscreen-control {
+      position: absolute;
+      right: 0;
+  }
   </style>
 </head>
 <body>
@@ -38,16 +44,29 @@ var options = {
         timeDivider: false,
         durationDisplay: false,
         remainingTimeDisplay: false,
-        volumePanel: false
+        volumePanel: false,
+        progressControl: false
     },
     plugins: {
         wavesurfer: {
-            src: 'live',
+            backend: 'WebAudio',
             waveColor: 'black',
             debug: true,
             cursorWidth: 0,
             interact: false,
-            hideScrollbar: true
+            hideScrollbar: true,
+            plugins: [
+                // enable microphone plugin (for wavesurfer.js)
+                WaveSurfer.microphone.create({
+                    bufferSize: 4096,
+                    numberOfInputChannels: 1,
+                    numberOfOutputChannels: 1,
+                    constraints: {
+                        video: false,
+                        audio: true
+                    }
+                })
+            ]
         }
     }
 };
@@ -80,7 +99,7 @@ function createPlayer(event) {
     });
 
     // error handling
-    player.on('error', function(error) {
+    player.on('error', function(element, error) {
         console.warn(error);
     });
 }

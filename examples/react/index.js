@@ -11,6 +11,9 @@ class VideojsWavesurferPlayer extends React.Component {
                 ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer') +
                 ' and wavesurfer.js ' + WaveSurfer.VERSION;
             videojs.log(version_info);
+
+            // load file
+            this.player.src({src: '../media/hal.wav', type: 'audio/wav'});
         });
 
         this.player.on('waveReady', (event) => {
@@ -22,7 +25,7 @@ class VideojsWavesurferPlayer extends React.Component {
         });
 
         // error handling
-        this.player.on('error', (error) => {
+        this.player.on('error', (element, error) => {
             console.warn(error);
         });
     }
@@ -54,7 +57,7 @@ const videoJsOptions = {
     height: 300,
     plugins: {
         wavesurfer: {
-            src: '../media/hal.wav',
+            backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
             waveColor: 'white',

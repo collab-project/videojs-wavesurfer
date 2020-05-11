@@ -12,8 +12,6 @@
 
   <script src="../dist/videojs.wavesurfer.min.js"></script>
 
-  <script src="safari-workaround.js"></script>
-
   <style>
   /* change player background color */
   #myAudio {
@@ -27,12 +25,11 @@
 <audio id="myAudio" class="video-js vjs-default-skin"></audio>
 
 <script>
-var player;
 // use mp3 for IE11 support
-var src = 'media/hal.mp3';
+var src = {src: 'media/hal.mp3', type: 'audio/mpeg', peaks: 'media/hal-peaks.json'};
 if (!document.getElementById('myAudio').canPlayType('audio/mpeg;')) {
     // fallback with wav
-    src = 'media/hal.wav';
+    src = {src: 'media/hal.wav', type: 'audio/wav', peaks: 'media/hal-peaks.json'};
 }
 var options = {
     controls: true,
@@ -43,10 +40,6 @@ var options = {
     height: 300,
     plugins: {
         wavesurfer: {
-            src: src,
-            // Use peaks from JSON file. See https://wavesurfer-js.org/faq/
-            // for instructions on how to generate peaks
-            peaks: 'media/hal-peaks.json',
             backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
@@ -59,46 +52,31 @@ var options = {
     }
 };
 
-if (isSafari) {
-    // add start button for safari
-    addStartButton();
-} else {
-    // other browsers
-    createPlayer();
-}
+// create player
+var player = videojs('myAudio', options, function() {
+    // print version information at startup
+    var msg = 'Using video.js ' + videojs.VERSION +
+        ' with videojs-wavesurfer ' +
+        videojs.getPluginVersion('wavesurfer') +
+        ' and wavesurfer.js ' + WaveSurfer.VERSION;
+    videojs.log(msg);
 
-function createPlayer(event) {
-    if (isSafari) {
-        if (event) {
-            // hide button on safari
-            event.target.style.display = 'none';
-        }
-        updateContext(options);
-    }
+    // load file with peaks
+    player.src(src);
+});
 
-    // create player
-    player = videojs('myAudio', options, function() {
-        // print version information at startup
-        var msg = 'Using video.js ' + videojs.VERSION +
-            ' with videojs-wavesurfer ' +
-            videojs.getPluginVersion('wavesurfer') +
-            ' and wavesurfer.js ' + WaveSurfer.VERSION;
-        videojs.log(msg);
-    });
+player.on('waveReady', function(event) {
+    console.log('waveform: ready!');
+});
 
-    player.on('waveReady', function(event) {
-        console.log('waveform: ready!');
-    });
+player.on('playbackFinish', function(event) {
+    console.log('playback finished.');
+});
 
-    player.on('playbackFinish', function(event) {
-        console.log('playback finished.');
-    });
-
-    // error handling
-    player.on('error', function(element, error) {
-        console.error('ERROR:', error);
-    });
-}
+// error handling
+player.on('error', function(element, error) {
+    console.error('ERROR:', error);
+});
 </script>
 
 </body>

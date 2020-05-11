@@ -1,7 +1,8 @@
+# Website
+
 This is the branch for the website at https://collab-project.github.io/videojs-wavesurfer
 
-Install
--------
+## Install
 
 Install dependencies using npm:
 
@@ -9,8 +10,7 @@ Install dependencies using npm:
 npm install
 ```
 
-Update Libraries
-----------------
+## Update Libraries
 
 Check if there are updates using
 [npm-check-updates](https://www.npmjs.com/package/npm-check-updates):
@@ -32,8 +32,7 @@ Copy updated libraries into repository:
 npm run update
 ```
 
-Development Server
-------------------
+## Development Server
 
 During development:
 
@@ -50,7 +49,6 @@ are run using:
 npm run <command>
 ```
 
-License
--------
+## License
 
 This work is licensed under the [MIT License](https://github.com/collab-project/videojs-wavesurfer/blob/master/LICENSE).
