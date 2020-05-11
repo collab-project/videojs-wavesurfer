@@ -16,7 +16,6 @@ bower_components
 
 # Build-related
 dist/
-docs/
 tmp
 coverage/
 .build_cache/
