@@ -13,8 +13,8 @@ Plugins actually tested with videojs-wavesurfer include:
 
 ## wavesurfer.js
 
-Check the `plugin` example that extends the videojs-wavesurfer with the
-wavesurfer.js [cursor plugin](https://wavesurfer-js.org/example/cursor/index.html):
+The plugin example extends videojs-wavesurfer with the wavesurfer.js
+[cursor plugin](https://wavesurfer-js.org/example/cursor/index.html):
 
 - [online demo](https://collab-project.github.io/videojs-wavesurfer/examples/plugin.html)
 - [demo source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/plugin.html)

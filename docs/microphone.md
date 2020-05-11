@@ -4,6 +4,11 @@ It's also possible to use a microphone for real-time rendering of the audio wave
 uses the [microphone plugin](https://wavesurfer-js.org/plugins/microphone.html) that comes
 with wavesurfer.js.
 
+## Example
+
+- [online demo](https://collab-project.github.io/videojs-wavesurfer/examples/live.html)
+- [demo source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/live.html)
+
 ## Usage
 
 Include the additional `wavesurfer.microphone.js` plugin on your page.
@@ -60,8 +65,3 @@ let player = videojs('myLiveAudio', {
 
 The wavesurfer.js microphone plugin has additional configuration
 [options](https://wavesurfer-js.org/plugins/microphone.html).
-
-## Example
-
-- [online demo](https://collab-project.github.io/videojs-wavesurfer/examples/live.html)
-- [demo source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/live.html)

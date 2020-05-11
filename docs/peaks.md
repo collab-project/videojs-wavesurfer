@@ -7,6 +7,13 @@ waveform from that pre-rendered peak data. This JSON file can be generated using
 
 For more information, see the wavesurfer.js [FAQ](https://wavesurfer-js.org/faq/).
 
+## Example
+
+- [online demo](https://collab-project.github.io/videojs-wavesurfer/examples/peaks.html)
+- [demo source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/peaks.html)
+
+## Usage
+
 Load peaks data:
 
 ```javascript
@@ -19,8 +26,3 @@ player.src({
     peaks: 'media/hal-peaks.json'
 });
 ```
-
-## Example
-
-- [online demo](https://collab-project.github.io/videojs-wavesurfer/examples/peaks.html)
-- [demo source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/peaks.html)
