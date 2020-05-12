@@ -35,8 +35,8 @@
 
 <script>
 /* eslint-disable */
-var player;
-var options = {
+let player;
+let options = {
     controls: true,
     autoplay: false,
     loop: false,
@@ -53,7 +53,7 @@ var options = {
         progressControl: false
     },
     plugins: {
-        // enable videojs-wavesurfer plugin (for video.js)
+        // enable videojs-wavesurfer plugin
         wavesurfer: {
             backend: 'WebAudio',
             waveColor: 'black',
@@ -62,7 +62,7 @@ var options = {
             interact: false,
             hideScrollbar: true,
             plugins: [
-                // enable microphone plugin (for wavesurfer.js)
+                // enable microphone plugin
                 WaveSurfer.microphone.create({
                     bufferSize: 4096,
                     numberOfInputChannels: 1,
@@ -97,7 +97,7 @@ function createPlayer(event) {
     // create player
     player = videojs('myLiveAudio', options, function() {
         // print version information at startup
-        var msg = 'Using video.js ' + videojs.VERSION +
+        const msg = 'Using video.js ' + videojs.VERSION +
             ' with videojs-wavesurfer ' +
             videojs.getPluginVersion('wavesurfer') +
             ' and wavesurfer.js ' + WaveSurfer.VERSION;

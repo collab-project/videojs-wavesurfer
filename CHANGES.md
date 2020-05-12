@@ -1,5 +1,10 @@
 # videojs-wavesurfer changelog
 
+## 3.0.1 - unreleased
+
+- Fix microphone play button
+
+
 ## 3.0.0 - 2020/05/12
 
 - Support for video.js progress control (#93)

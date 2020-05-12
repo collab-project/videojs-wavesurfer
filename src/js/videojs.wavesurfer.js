@@ -123,10 +123,7 @@ class Wavesurfer extends Plugin {
                     this.onPlayToggle.bind(this));
 
                 // disable play button until waveform is ready
-                // (except when in live mode)
-                if (!this.liveMode) {
-                    this.player.controlBar.playToggle.hide();
-                }
+                this.player.controlBar.playToggle.hide();
             }
         }
 
@@ -144,6 +141,9 @@ class Wavesurfer extends Plugin {
             this.waveReady = true;
             this.log('wavesurfer.js microphone plugin enabled.');
 
+            // in live mode, show play button at startup
+            this.player.controlBar.playToggle.show();
+
             // listen for wavesurfer.js microphone plugin events
             this.surfer.microphone.on(Event.DEVICE_ERROR,
                 this.onWaveError.bind(this));
@@ -156,8 +156,6 @@ class Wavesurfer extends Plugin {
             this.surferSeek = this.onWaveSeek.bind(this);
 
             // make sure volume is muted when requested
-            // CHECK: not needed anymore
-            // XXX: only needed for WebAudio backend
             if (this.player.muted()) {
                 this.setVolume(0);
             }
@@ -702,7 +700,6 @@ class Wavesurfer extends Plugin {
      * @private
      */
     onPlayToggle() {
-        // workaround for video.js 6.3.1 and newer
         if (this.player.controlBar.playToggle !== undefined &&
             this.player.controlBar.playToggle.hasClass('vjs-ended')) {
             this.player.controlBar.playToggle.removeClass('vjs-ended');
