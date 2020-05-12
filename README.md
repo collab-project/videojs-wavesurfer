@@ -1,6 +1,6 @@
-# Website
+# Old website
 
-This is the branch for the website at https://collab-project.github.io/videojs-wavesurfer
+**This is the old branch for the website, kept here for reference.**
 
 ## Install
 
