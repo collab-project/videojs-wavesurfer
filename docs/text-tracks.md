@@ -33,22 +33,9 @@ And pass it to the video.js `tracks` option:
 
 ```javascript
 const options = {
-    controls: true,
-    autoplay: false,
-    fluid: false,
-    width: 600,
-    height: 300,
-    tracks: textTracks, // <- enable text tracks
+    tracks: textTracks,
     plugins: {
-        wavesurfer: {
-            backend: 'MediaElement',
-            msDisplayMax: 10,
-            debug: true,
-            waveColor: '#086280',
-            progressColor: 'black',
-            cursorColor: 'black',
-            hideScrollbar: true
-        }
+        // etc...
     }
 };
 ```
