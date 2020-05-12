@@ -1,6 +1,6 @@
 # videojs-wavesurfer changelog
 
-## 3.0.2 - unreleased
+## 3.0.2 - 2020/05/12
 
 - Fix hiding `bigPlayButton`
 
