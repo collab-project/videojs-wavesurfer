@@ -26,6 +26,7 @@ test_script:
   - npm --version
   - npm run build
   - npm run test
+  - npm run docs
 
 cache:
   - '%APPDATA%\npm-cache'
