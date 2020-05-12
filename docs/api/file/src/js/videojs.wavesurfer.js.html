@@ -102,7 +102,9 @@ class Wavesurfer extends Plugin {
      */
     initialize() {
         // hide big play button
-        this.player.bigPlayButton.hide();
+        if (this.player.bigPlayButton !== undefined) {
+            this.player.bigPlayButton.hide();
+        }
 
         // parse options
         let mergedOptions = this.parseOptions(this.player.options_.plugins.wavesurfer);
