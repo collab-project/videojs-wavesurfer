@@ -1,6 +1,6 @@
 # videojs-wavesurfer changelog
 
-## 3.0.0 - unreleased
+## 3.0.0 - 2020/05/12
 
 - Support for video.js progress control (#93)
 - Move documentation into docsify website (#100)
