@@ -97,6 +97,7 @@ import WaveSurfer from 'wavesurfer.js';
 /*
 // the following imports are only required when using the
 // videojs-wavesurfer 'live' mode with the microphone plugin
+// make sure to import them before importing videojs-wavesurfer
 import 'webrtc-adapter';
 import MicrophonePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.microphone.js';
 WaveSurfer.microphone = MicrophonePlugin;
@@ -108,6 +109,8 @@ import Wavesurfer from 'videojs-wavesurfer/dist/videojs.wavesurfer.js';
 
 let player;
 const elementId = 'myAudio';
+let src = {src: '/hal.wav', type: 'audio/wav'};
+
 const playerOptions = {
     controls: true,
     autoplay: false,
@@ -118,7 +121,7 @@ const playerOptions = {
     plugins: {
         // configure videojs-wavesurfer plugin
         wavesurfer: {
-            src: '/hal.wav',
+            backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
             waveColor: '#4A4A22',
@@ -140,6 +143,9 @@ document.addEventListener('DOMContentLoaded', function() {
             ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer') +
             ' and wavesurfer.js ' + WaveSurfer.VERSION;
         videojs.log(msg);
+
+        // load file
+        player.src(src);
     });
 
     player.on('waveReady', function(event) {

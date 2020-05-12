@@ -53,7 +53,7 @@ npm install
 Install and save `videojs-wavesurfer` and `@types/video.js`:
 
 ```console
-npm install --save videojs-record @types/video.js
+npm install --save videojs-wavesurfer @types/video.js
 ```
 
 ## Configuration
@@ -111,7 +111,7 @@ module.exports = {
 Create the `src/app/` directory and add a new Angular component for videojs-wavesurfer
 in `src/app/videojs.wavesurfer.component.ts`:
 
-```javascript
+```ts
 import {
   Component,
   OnInit,
@@ -175,7 +175,7 @@ export class VideoJSWavesurferComponent implements OnInit, OnDestroy {
       plugins: {
         // configure videojs-wavesurfer plugin
         wavesurfer: {
-            src: '/hal.wav',
+            backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
             waveColor: '#4A4A22',
@@ -200,18 +200,21 @@ export class VideoJSWavesurferComponent implements OnInit, OnDestroy {
       console.log('player ready! id:', el);
 
       // print version information at startup
-      var msg = 'Using video.js ' + videojs.VERSION +
+      const msg = 'Using video.js ' + videojs.VERSION +
         ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer') +
         ' and wavesurfer.js ' + WaveSurfer.VERSION;
       videojs.log(msg);
+
+      // load file
+      this.player.src({src: '/hal.wav', type: 'audio/wav'});
     });
 
     this.player.on('waveReady', event => {
-        console.log('waveform is ready!');
+      console.log('waveform is ready!');
     });
 
     this.player.on('playbackFinish', event => {
-        console.log('playback finished.');
+      console.log('playback finished.');
     });
 
     // error handling
@@ -283,7 +286,6 @@ And finally, create the main index HTML file in `src/index.html`:
     <link href="node_modules/videojs-wavesurfer/dist/css/videojs.wavesurfer.css" rel="stylesheet">
 </head>
 <body>
-    <h2>Angular + videojs-wavesurfer</h2>
     <videojs-wavesurfer></videojs-wavesurfer>
 </body>
 </html>

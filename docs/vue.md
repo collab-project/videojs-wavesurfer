@@ -15,7 +15,7 @@ npm install -g @vue/cli
 Create a new application, e.g. `videojs-wavesurfer-app`:
 
 ```console
-vue create --preset default videojs-wavesurfer-app
+vue create --default videojs-wavesurfer-app
 ```
 
 Install videojs-wavesurfer:
@@ -37,14 +37,12 @@ module.exports = {
     resolve: {
         alias: {
             videojs: 'video.js',
-            WaveSurfer: 'wavesurfer.js',
-            RecordRTC: 'recordrtc'
+            WaveSurfer: 'wavesurfer.js'
         }
     },
     plugins: [
         new webpack.ProvidePlugin({
-            videojs: 'video.js/dist/video.cjs.js',
-            RecordRTC: 'recordrtc'
+            videojs: 'video.js/dist/video.cjs.js'
         })
     ]
   }
@@ -83,7 +81,7 @@ Create `src/components/VideoJSWavesurfer.vue`:
                     plugins: {
                         // configure videojs-wavesurfer plugin
                         wavesurfer: {
-                            src: '/hal.wav',
+                            backend: 'MediaElement',
                             msDisplayMax: 10,
                             debug: true,
                             waveColor: '#6f7982',
@@ -103,6 +101,9 @@ Create `src/components/VideoJSWavesurfer.vue`:
                     ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer') +
                     ' and wavesurfer.js ' + WaveSurfer.VERSION;
                 videojs.log(msg);
+
+                // load file
+                this.player.src({src: '/hal.wav', type: 'audio/wav'});
             });
 
             this.player.on('waveReady', event => {

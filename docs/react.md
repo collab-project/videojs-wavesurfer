@@ -46,7 +46,7 @@ const videoJsOptions = {
     fluid: false,
     plugins: {
         wavesurfer: {
-            src: 'hal.wav',
+            backend: 'MediaElement',
             msDisplayMax: 10,
             debug: true,
             waveColor: '#163b5b',
@@ -57,7 +57,12 @@ const videoJsOptions = {
     }
 };
 
-ReactDOM.render(<App { ...videoJsOptions }/>, document.getElementById('root'));
+ReactDOM.render(
+  <React.StrictMode>
+    <App { ...videoJsOptions }/>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
@@ -79,7 +84,7 @@ import videojs from 'video.js';
 import WaveSurfer from 'wavesurfer.js';
 
 /*
-// the following imports are only needed when you're using 
+// the following imports are only needed when you're using
 // the microphone plugin
 import 'webrtc-adapter';
 
@@ -96,10 +101,13 @@ class App extends Component {
         // instantiate Video.js
         this.player = videojs(this.audioNode, this.props, () => {
             // print version information at startup
-            var version_info = 'Using video.js ' + videojs.VERSION +
+            const version_info = 'Using video.js ' + videojs.VERSION +
                 ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer') +
                 ' and wavesurfer.js ' + WaveSurfer.VERSION;
             videojs.log(version_info);
+
+            // load file
+            this.player.src({src: 'hal.wav', type: 'audio/wav'});
         });
 
         this.player.on('waveReady', (event) => {
@@ -173,7 +181,7 @@ for `start`, `build` and `test`:
 "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
 }
 ```
