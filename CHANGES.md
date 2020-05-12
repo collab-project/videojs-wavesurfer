@@ -1,6 +1,6 @@
 # videojs-wavesurfer changelog
 
-## 3.0.1 - unreleased
+## 3.0.1 - 2020/05/12
 
 - Fix microphone play button
 
