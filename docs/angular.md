@@ -9,7 +9,7 @@ for Angular.
 
 Create a project directory, e.g. `angular-videojs-wavesurfer`.
 
-Create a `package.json` file inside the project directory that contains the project
+Create a `package.json` file inside that project directory that lists the project
 dependencies:
 
 ```json
@@ -43,12 +43,14 @@ dependencies:
     }
 }
 ```
+
 Install the dependencies:
 
 ```console
 npm install
 ```
-Finally, install and save `videojs-wavesurfer` and `@types/video.js`:
+
+Install and save `videojs-wavesurfer` and `@types/video.js`:
 
 ```console
 npm install --save videojs-record @types/video.js
