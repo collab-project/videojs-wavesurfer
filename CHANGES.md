@@ -3,6 +3,7 @@
 ## 3.0.0 - unreleased
 
 - Support for video.js progress control (#93)
+- Move documentation into docsify website (#100)
 - Bump required video.js version to 7.0.5 or newer
 - Bump required wavesurfer.js version to 3.3.0 or newer
 
