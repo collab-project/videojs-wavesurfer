@@ -113,6 +113,7 @@ let src = {src: '/hal.wav', type: 'audio/wav'};
 
 const playerOptions = {
     controls: true,
+    bigPlayButton: false,
     autoplay: false,
     fluid: false,
     loop: false,

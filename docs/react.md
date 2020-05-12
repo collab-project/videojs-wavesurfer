@@ -41,6 +41,7 @@ import * as serviceWorker from './serviceWorker';
 
 const videoJsOptions = {
     controls: true,
+    bigPlayButton: false,
     width: 600,
     height: 300,
     fluid: false,

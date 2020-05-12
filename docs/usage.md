@@ -38,6 +38,7 @@ adding a `wavesurfer` entry:
 // configuration for video.js
 let options = {
     controls: true,
+    bigPlayButton: false,
     autoplay: false,
     loop: false,
     fluid: false,

@@ -167,6 +167,7 @@ export class VideoJSWavesurferComponent implements OnInit, OnDestroy {
     // video.js configuration
     this.config = {
       controls: true,
+      bigPlayButton: false,
       autoplay: false,
       fluid: false,
       loop: false,

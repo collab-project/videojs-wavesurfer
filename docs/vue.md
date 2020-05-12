@@ -73,6 +73,7 @@ Create `src/components/VideoJSWavesurfer.vue`:
                 player: '',
                 options: {
                     controls: true,
+                    bigPlayButton: false,
                     autoplay: false,
                     fluid: false,
                     loop: false,

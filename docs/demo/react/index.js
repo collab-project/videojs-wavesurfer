@@ -55,6 +55,7 @@ const videoJsOptions = {
     fluid: false,
     width: 600,
     height: 300,
+    bigPlayButton: false,
     plugins: {
         wavesurfer: {
             backend: 'MediaElement',
