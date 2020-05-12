@@ -11,5 +11,5 @@ For more information, check the video.js
 
 ## Example
 
-- [online demo](https://collab-project.github.io/videojs-wavesurfer/examples/texttrack.html)
+- [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/texttrack.html)
 - [demo source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/texttrack.html)

@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Audio Output Example - Wavesurfer Plugin for Video.js</title>
+
+  <link href="//vjs.zencdn.net/7.6.5/video-js.min.css" rel="stylesheet">
+  <link href="//unpkg.com/videojs-wavesurfer/dist/css/videojs.wavesurfer.min.css" rel="stylesheet">
+
+  <script src="//vjs.zencdn.net/7.6.5/video.min.js"></script>
+  <script src="//unpkg.com/wavesurfer.js"></script>
+
+  <script src="//unpkg.com/videojs-wavesurfer/dist/videojs.wavesurfer.min.js"></script>
+
+  <style>
+  body {
+      font-weight: 300;
+  }
+
+  /* change player background color */
+  #myAudio {
+      background-color: #AE57B3;
+  }
+
+  select {
+      margin: 0 0 0.5em 0;
+  }
+
+  .outputSelector {
+      margin-top: 30px;
+  }
+  </style>
+
+</head>
+<body>
+
+<div>
+  <audio id="myAudio" class="video-js vjs-default-skin"></audio>
+
+  <div class="outputSelector">
+    <label>Select audio output: </label>
+    <select id="selector">
+      <option value="" disabled selected hidden>Please choose...</option>
+    </select>
+  </div>
+</div>
+
+<script>
+let player = videojs('myAudio', {
+    controls: true,
+    width: 600,
+    height: 300,
+    fluid: false,
+    plugins: {
+        wavesurfer: {
+            backend: 'MediaElement',
+            msDisplayMax: 10,
+            debug: true,
+            waveColor: '#F2E68A',
+            progressColor: 'black',
+            cursorColor: 'black',
+            hideScrollbar: true
+        }
+    }
+}, function() {
+    // print version information at startup
+    const msg = 'Using video.js ' + videojs.VERSION +
+        ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer') +
+        ' and wavesurfer.js ' + WaveSurfer.VERSION;
+    videojs.log(msg);
+
+    // load file
+    player.src({src: 'media/hal.wav', type: 'audio/wav'});
+});
+
+let devices = [];
+player.on('ready', function() {
+    // fetch input/output devices
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+        throw new Error('enumerateDevices not supported in this browser.');
+    }
+    navigator.mediaDevices.enumerateDevices(this).then(function(result) {
+        devices = result;
+
+        // handle selection changes
+        let outputSelector = document.getElementById('selector');
+        outputSelector.addEventListener('change', changeAudioOutput);
+
+        // populate select options
+        let deviceInfo, option, i;
+        for (i = 0; i < devices.length; i++) {
+            deviceInfo = devices[i];
+            option = document.createElement('option');
+            option.value = deviceInfo.deviceId;
+
+            if (deviceInfo.kind === 'audiooutput') {
+                console.info('Found audio output device: ', deviceInfo.label);
+                option.text = deviceInfo.label || 'speaker ' +
+                    (outputSelector.length + 1);
+                outputSelector.appendChild(option);
+            }
+        }
+
+        if (outputSelector.length <= 1) {
+            // no output devices found, disable select
+            option = document.createElement('option');
+            option.text = 'No audio output devices found';
+            option.value = undefined;
+            outputSelector.appendChild(option);
+            outputSelector.disabled = true;
+            console.warn(option.text);
+        } else {
+            console.log('Total output devices found:', outputSelector.length - 1);
+        }
+    }).catch(function(err) {
+        console.error(err);
+    });
+});
+
+player.on('audioOutputReady', function() {
+    console.log('Changed audio output to deviceId:', deviceId);
+});
+
+let deviceId;
+function changeAudioOutput(event) {
+    deviceId = event.target.value;
+    let outputSelector = event.target;
+
+    try {
+        // change audio output device
+        player.wavesurfer().setAudioOutput(deviceId);
+    } catch (error) {
+        console.warn(error)
+
+        // jump back to first output device in the list as it's the default.
+        outputSelector.selectedIndex = 0;
+    }
+};
+
+player.on('waveReady', function(event) {
+    console.log('waveform: ready!');
+});
+
+player.on('playbackFinish', function(event) {
+    console.log('playback finished.');
+});
+
+// error handling
+player.on('error', function(element, error) {
+    console.warn('ERROR:', error);
+});
+</script>
+
+</body>
+</html>

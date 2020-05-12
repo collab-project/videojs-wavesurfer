@@ -9,7 +9,7 @@ For more information, see the wavesurfer.js [FAQ](https://wavesurfer-js.org/faq/
 
 ## Example
 
-- [online demo](https://collab-project.github.io/videojs-wavesurfer/examples/peaks.html)
+- [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/peaks.html)
 - [demo source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/peaks.html)
 
 ## Usage

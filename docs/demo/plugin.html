@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Plugin Example - Wavesurfer Plugin for Video.js</title>
+
+  <link href="//vjs.zencdn.net/7.6.5/video-js.min.css" rel="stylesheet">
+  <link href="//unpkg.com/videojs-wavesurfer/dist/css/videojs.wavesurfer.min.css" rel="stylesheet">
+
+  <script src="//vjs.zencdn.net/7.6.5/video.min.js"></script>
+  <script src="//unpkg.com/wavesurfer.js"></script>
+  <script src="//unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js"></script>
+  <script src="//unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.regions.min.js"></script>
+
+  <script src="//unpkg.com/videojs-wavesurfer/dist/videojs.wavesurfer.min.js"></script>
+
+  <style>
+  /* change player background color */
+  #myAudio {
+      background-color: #9FE87B;
+  }
+  </style>
+
+</head>
+<body>
+
+<audio id="myAudio" class="video-js vjs-default-skin"></audio>
+
+<div id="wave-timeline"></div>
+
+<script>
+// use mp3 for IE11 support
+let src = {src: 'media/hal.mp3', type: 'audio/mpeg'};
+if (!document.getElementById('myAudio').canPlayType('audio/mpeg;')) {
+    // fallback with wav
+    src = {src: 'media/hal.wav', type: 'audio/wav'};
+}
+const options = {
+    controls: true,
+    autoplay: false,
+    loop: false,
+    fluid: false,
+    width: 600,
+    height: 300,
+    plugins: {
+        wavesurfer: {
+            backend: 'MediaElement',
+            msDisplayMax: 10,
+            debug: true,
+            waveColor: 'white',
+            progressColor: 'black',
+            cursorColor: 'black',
+            hideScrollbar: true,
+            plugins: [
+                // timeline
+                WaveSurfer.timeline.create({
+                    container: '#wave-timeline'
+                }),
+                // regions
+                WaveSurfer.regions.create({
+                    regions: [
+                        {
+                            start: 1.123,
+                            end: 5,
+                            color: 'rgba(123, 159, 232, 0.7)',
+                            drag: false
+                        }, {
+                            start: 6.5,
+                            end: 8,
+                            color: 'rgba(232, 123, 159, 0.6)',
+                            drag: false
+                        }
+                    ]
+                })
+            ]
+        }
+    }
+};
+
+// create player
+let player = videojs('myAudio', options, function() {
+    // print version information at startup
+    const msg = 'Using video.js ' + videojs.VERSION +
+        ' with videojs-wavesurfer ' +
+        videojs.getPluginVersion('wavesurfer') +
+        ' and wavesurfer.js ' + WaveSurfer.VERSION;
+    videojs.log(msg);
+
+    // load file
+    player.src(src);
+});
+
+player.on('waveReady', function(event) {
+    console.log('waveform: ready!');
+});
+
+player.on('playbackFinish', function(event) {
+    console.log('playback finished.');
+});
+
+// error handling
+player.on('error', function(element, error) {
+    console.warn('ERROR:', error);
+});
+</script>
+
+</body>
+</html>

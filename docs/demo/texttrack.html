@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Text tracks - Wavesurfer Plugin for Video.js Example</title>
+
+    <link href="//vjs.zencdn.net/7.6.5/video-js.min.css" rel="stylesheet">
+    <link href="//unpkg.com/videojs-wavesurfer/dist/css/videojs.wavesurfer.min.css" rel="stylesheet">
+
+    <script src="//vjs.zencdn.net/7.6.5/video.min.js"></script>
+    <script src="//unpkg.com/wavesurfer.js"></script>
+
+    <script src="//unpkg.com/videojs-wavesurfer/dist/videojs.wavesurfer.min.js"></script>
+
+    <style>
+        /* change player background color */
+        #myAudio {
+            background-color: #3BA8CC;
+        }
+    </style>
+
+</head>
+<body>
+
+<audio id="myAudio" class="video-js vjs-default-skin"></audio>
+
+<script>
+let textTracks = [
+    {
+        kind: 'captions',
+        srclang: 'en',
+        label: 'English',
+        src: 'media/hal.vtt',
+        mode: 'showing',
+        default: true
+    }
+];
+const options = {
+    controls: true,
+    autoplay: false,
+    fluid: false,
+    width: 600,
+    height: 300,
+    tracks: textTracks,
+    plugins: {
+        wavesurfer: {
+            backend: 'MediaElement',
+            msDisplayMax: 10,
+            debug: true,
+            waveColor: '#086280',
+            progressColor: 'black',
+            cursorColor: 'black',
+            hideScrollbar: true
+        }
+    }
+};
+
+// create player
+let player = videojs('myAudio', options, function() {
+    // print version information at startup
+    const msg = 'Using video.js ' + videojs.VERSION +
+        ' with videojs-wavesurfer ' +
+        videojs.getPluginVersion('wavesurfer') +
+        ' and wavesurfer.js ' + WaveSurfer.VERSION;
+    videojs.log(msg);
+
+    // load file
+    player.src({src: 'media/hal.wav', type: 'audio/wav'});
+});
+
+player.on('waveReady', function(event) {
+    console.log('waveform: ready!');
+});
+
+player.on('playbackFinish', function(event) {
+    console.log('playback finished.');
+});
+
+// error handling
+player.on('error', function(element, error) {
+    console.warn('ERROR:', error);
+});
+</script>
+
+</body>
+</html>

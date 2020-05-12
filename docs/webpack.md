@@ -134,8 +134,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // create player
     player = videojs(elementId, playerOptions, function() {
         console.log('player ready! id:', elementId);
+
         // print version information at startup
-        var msg = 'Using video.js ' + videojs.VERSION +
+        const msg = 'Using video.js ' + videojs.VERSION +
             ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer') +
             ' and wavesurfer.js ' + WaveSurfer.VERSION;
         videojs.log(msg);

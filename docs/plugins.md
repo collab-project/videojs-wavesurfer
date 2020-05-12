@@ -16,5 +16,5 @@ Plugins actually tested with videojs-wavesurfer include:
 The plugin example extends videojs-wavesurfer with the wavesurfer.js
 [cursor plugin](https://wavesurfer-js.org/example/cursor/index.html):
 
-- [online demo](https://collab-project.github.io/videojs-wavesurfer/examples/plugin.html)
+- [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/plugin.html)
 - [demo source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/plugin.html)

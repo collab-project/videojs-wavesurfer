@@ -6,7 +6,7 @@ with wavesurfer.js.
 
 ## Example
 
-- [online demo](https://collab-project.github.io/videojs-wavesurfer/examples/live.html)
+- [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/live.html)
 - [demo source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/live.html)
 
 ## Usage

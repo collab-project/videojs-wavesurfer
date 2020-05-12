@@ -13,5 +13,5 @@ For more information, see the video.js [layout documentation](https://github.com
 
 ## Example
 
-- [online demo](https://collab-project.github.io/videojs-wavesurfer/examples/fluid.html)
+- [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/fluid.html)
 - [demo source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/fluid.html)

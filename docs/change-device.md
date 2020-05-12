@@ -4,7 +4,7 @@
 
 ### Example
 
-- [online demo](https://collab-project.github.io/videojs-wavesurfer/examples/output.html)
+- [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/output.html)
 - [demo source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/output.html)
 
 
@@ -26,5 +26,5 @@ these devices and allow the user to choose one, check out the input example.
 
 #### Example
 
-- [online demo](https://collab-project.github.io/videojs-wavesurfer/examples/input.html)
+- [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/input.html)
 - [demo source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/input.html)
