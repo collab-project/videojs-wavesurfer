@@ -1,5 +1,10 @@
 # videojs-wavesurfer changelog
 
+## 3.0.2 - unreleased
+
+- Fix hiding `bigPlayButton`
+
+
 ## 3.0.1 - 2020/05/12
 
 - Fix microphone play button

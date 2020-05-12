@@ -30,6 +30,8 @@ let player = videojs('myLiveAudio', {
     controls: true,
     width: 600,
     height: 300,
+    // hide irrelevant controls
+    bigPlayButton: false,
     controlBar: {
         currentTimeDisplay: false,
         timeDivider: false,
@@ -39,6 +41,7 @@ let player = videojs('myLiveAudio', {
         progressControl: false
     },
     plugins: {
+        // enable videojs-wavesurfer plugin
         wavesurfer: {
             debug: true,
             backend: 'WebAudio',
