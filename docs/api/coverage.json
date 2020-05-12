@@ -1,0 +1,57 @@
+{
+  "coverage": "66.03%",
+  "expectCount": 53,
+  "actualCount": 35,
+  "files": {
+    "src/js/defaults.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/js/event.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/js/middleware.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/js/utils/format-time.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/js/utils/log.js": {
+      "expectCount": 3,
+      "actualCount": 1,
+      "undocumentLines": [
+        8,
+        9
+      ]
+    },
+    "src/js/videojs.wavesurfer.js": {
+      "expectCount": 46,
+      "actualCount": 30,
+      "undocumentLines": [
+        18,
+        20,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        134,
+        153,
+        155,
+        156,
+        181,
+        196,
+        197
+      ]
+    }
+  }
+}

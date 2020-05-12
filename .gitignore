@@ -8,6 +8,7 @@
 *.pid
 *.log
 
+# examples
 examples/media/test
 
 # Dependency-related directories

@@ -6,7 +6,7 @@ for audio and video files, using the [wavesurfer.js](https://github.com/katspaug
 library. Includes support for fullscreen mode and [real-time visualization of microphone
 input](https://collab-project.github.io/videojs-wavesurfer/#/microphone).
 
-![Screenshot](docs/img/screenshot.png?raw=true "Screenshot")
+![Screenshot](https://raw.githubusercontent.com/collab-project/videojs-wavesurfer/master/docs/img/screenshot.png?raw=true "Screenshot")
 
 [![npm version](https://img.shields.io/npm/v/videojs-wavesurfer.svg?style=flat)](https://www.npmjs.com/package/videojs-wavesurfer)
 [![npm](https://img.shields.io/npm/dm/videojs-wavesurfer.svg)](https://github.com/collab-project/videojs-wavesurfer/releases)

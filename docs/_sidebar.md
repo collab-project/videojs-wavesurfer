@@ -14,6 +14,7 @@
   - [Using peaks for large audio files](peaks.md)
   - [Change audio device](change-device.md)
   - [More features using other plugins](plugins.md)
+  - [API documentation](/api)
 
 - Frameworks
   - [Webpack](webpack.md)
@@ -22,6 +23,7 @@
   - [Vue](vue.md)
 
 - [Development](development.md)
-- [Changelog](https://github.com/collab-project/videojs-wavesurfer/blob/master/CHANGES.md)
+- [Changelog](/changelog)
+- [Github](https://github.com/collab-project/videojs-wavesurfer)
 - [License](license.md)
 - [Donate](donate.md)
