@@ -20,26 +20,26 @@ dependencies:
         "start": "webpack-dev-server --mode development"
     },
     "dependencies": {
-        "@angular/common": "^8.1.2",
-        "@angular/compiler": "^8.1.2",
-        "@angular/core": "^8.1.2",
-        "@angular/forms": "^8.1.2",
-        "@angular/platform-browser": "^8.1.2",
-        "@angular/platform-browser-dynamic": "^8.1.2",
-        "@angular/router": "^8.1.2",
-        "core-js": "^3.1.4",
-        "rxjs": "^6.5.2",
-        "zone.js": "^0.9.1"
+        "@angular/common": "^9.1.6",
+        "@angular/compiler": "^9.1.6",
+        "@angular/core": "^9.1.6",
+        "@angular/forms": "^9.1.6",
+        "@angular/platform-browser": "^9.1.6",
+        "@angular/platform-browser-dynamic": "^9.1.6",
+        "@angular/router": "^9.1.6",
+        "core-js": "^3.6.5",
+        "rxjs": "^6.5.5",
+        "zone.js": "^0.10.3"
     },
     "devDependencies": {
-        "@types/node": "^12.6.8",
-        "html-webpack-plugin": "^3.2.0",
-        "raw-loader": "^3.1.0",
-        "ts-loader": "^6.0.4",
-        "typescript": "^3.5.3",
-        "webpack": "^4.36.1",
-        "webpack-cli": "^3.3.6",
-        "webpack-dev-server": "^3.7.2"
+        "@types/node": "^13.13.5",
+        "html-webpack-plugin": "^4.3.0",
+        "raw-loader": "^4.0.1",
+        "ts-loader": "^7.0.4",
+        "typescript": "^3.8.3",
+        "webpack": "^4.43.0",
+        "webpack-cli": "^3.3.11",
+        "webpack-dev-server": "^3.11.0"
     }
 }
 ```

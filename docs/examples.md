@@ -14,7 +14,7 @@ View the examples online:
 | **Peaks** | Use JSON [peaks data](peaks.md) to render waveform | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/peaks.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/peaks.html) |
 | **Output device** | Change audio [output device](change-device.md) | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/output.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/output.html) |
 | **Input device** | Change audio [input device](change-device.md) | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/input.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/input.html) |
-| **Cursor** | Enable more [wavesurfer.js plugins](plugins.md) | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/plugin.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/plugin.html) |
+| **Plugin** | Enable additional [wavesurfer.js plugins](plugins.md) | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/plugin.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/plugin.html) |
 | **React** | Basic [React](react.md) example | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/react/index.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/react/index.html) |
 
 ## Local setup
