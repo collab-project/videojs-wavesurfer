@@ -5,12 +5,12 @@
   <title>Wavesurfer Plugin for Video.js Fluid Example</title>
 
   <link href="//vjs.zencdn.net/7.6.5/video-js.min.css" rel="stylesheet">
-  <link href="../dist/css/videojs.wavesurfer.css" rel="stylesheet">
+  <link href="//unpkg.com/videojs-wavesurfer/dist/css/videojs.wavesurfer.css" rel="stylesheet">
 
   <script src="//vjs.zencdn.net/7.6.5/video.min.js"></script>
   <script src="//unpkg.com/wavesurfer.js"></script>
 
-  <script src="../dist/videojs.wavesurfer.min.js"></script>
+  <script src="//unpkg.com/videojs-wavesurfer/dist/videojs.wavesurfer.min.js"></script>
 
   <style>
   /* change player background color */
@@ -25,7 +25,7 @@
 <audio id="myAudio" class="video-js vjs-default-skin"></audio>
 
 <script>
-var options = {
+const options = {
     controls: true,
     autoplay: false,
     fluid: true,
@@ -43,9 +43,9 @@ var options = {
 };
 
 // create player
-var player = videojs('myAudio', options, function() {
+let player = videojs('myAudio', options, function() {
     // print version information at startup
-    var msg = 'Using video.js ' + videojs.VERSION +
+    const msg = 'Using video.js ' + videojs.VERSION +
         ' with videojs-wavesurfer ' +
         videojs.getPluginVersion('wavesurfer') +
         ' and wavesurfer.js ' + WaveSurfer.VERSION;

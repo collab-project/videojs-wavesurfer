@@ -64,6 +64,7 @@ Create `src/components/VideoJSWavesurfer.vue`:
     /* eslint-disable */
     import 'video.js/dist/video-js.css'
     import 'videojs-wavesurfer/dist/css/videojs.wavesurfer.css'
+
     import videojs from 'video.js'
     import WaveSurfer from 'wavesurfer.js'
     import Wavesurfer from 'videojs-wavesurfer/dist/videojs.wavesurfer.js'
@@ -154,7 +155,7 @@ export default {
 </style>
 ```
 
-## Content
+## Media
 
 Download the [example audio file](https://github.com/collab-project/videojs-wavesurfer/raw/master/examples/media/hal.wav)
 and place it in the `public` directory.

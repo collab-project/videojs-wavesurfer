@@ -289,7 +289,7 @@ And finally, create the main index HTML file in `src/index.html`:
 </html>
 ```
 
-## Content
+## Media
 
 Download the [example audio file](https://github.com/collab-project/videojs-wavesurfer/raw/master/examples/media/hal.wav)
 and place it in the project directory.

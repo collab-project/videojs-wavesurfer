@@ -178,12 +178,12 @@ for `start`, `build` and `test`:
 }
 ```
 
-## Content
+## Media
 
 Download the [example audio file](https://github.com/collab-project/videojs-wavesurfer/raw/master/examples/media/hal.wav)
 and place it in the `public` directory.
 
-## Run
+## Run example
 
 Start the development server:
 

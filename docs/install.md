@@ -1,5 +1,7 @@
 # Installation
 
+## NPM
+
 You can use [npm](https://www.npmjs.org) to install the plugin:
 
 ```

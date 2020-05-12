@@ -2,7 +2,7 @@
 
 This document describes how to setup [Webpack](https://webpack.js.org/) with videojs-wavesurfer.
 
-## Setup
+## Installation
 
 Install Webpack:
 
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 ```
 
-## Content
+## Media
 
 Download the [example audio file](https://github.com/collab-project/videojs-wavesurfer/raw/master/examples/media/hal.wav)
 and place it in the root directory.

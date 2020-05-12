@@ -1,5 +1,7 @@
 # Examples
 
+## Online demos
+
 View the examples online:
 
 | Example | Description | Demo | Source |
@@ -15,7 +17,7 @@ View the examples online:
 | **Cursor** | Enable more [wavesurfer.js plugins](plugins.md) | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/plugin.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/plugin.html) |
 | **React** | Basic [React](react.md) example | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/react/index.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/react/index.html) |
 
-## Local
+## Local setup
 
 To try out the examples locally either:
 
