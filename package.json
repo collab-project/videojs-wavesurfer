@@ -23,15 +23,15 @@
     "url": "https://github.com/collab-project/videojs-wavesurfer.git"
   },
   "scripts": {
-    "clean": "rimraf dist docs",
+    "clean": "rimraf dist",
     "build": "npm run clean && npm run lint && npm run build:dev && npm run build:min",
     "build:dev": "webpack --config ./build-config/webpack.dev.main.js",
     "build:min": "webpack --config ./build-config/webpack.prod.main.js",
     "docs": "npm-run-all docs:*",
-    "docs:api": "esdoc",
+    "docs:api": "rimraf docs/api && esdoc",
     "lint": "npm-run-all lint:*",
     "lint:js": "eslint src/js test build-config",
-    "lint:html": "htmlhint examples",
+    "lint:html": "htmlhint examples docs/demo",
     "start": "npm run build && webpack-dev-server --config ./build-config/webpack.dev.main.js",
     "test": "karma start karma.conf.js",
     "release:zip": "node docs/tools/release-zip.js",
@@ -52,7 +52,7 @@
   ],
   "dependencies": {
     "video.js": ">=7.0.5",
-    "wavesurfer.js": ">=3.3.0"
+    "wavesurfer.js": ">=3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
