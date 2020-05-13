@@ -1,8 +1,9 @@
 # videojs-wavesurfer changelog
 
-## 3.0.3 - unreleased
+## 3.0.3 - 2020/05/13
 
 - Fix multiple players on single page (#101)
+
 
 ## 3.0.2 - 2020/05/12
 
