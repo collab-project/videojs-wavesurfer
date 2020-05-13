@@ -55,6 +55,7 @@ const WavesurferMiddleware = {
      * @param {Function} [next] - The next middleware to run.
      */
     setSource(srcObj, next) {
+        // check if this player is using the videojs-wavesurfer plugin
         if (this.player.usingPlugin(&apos;wavesurfer&apos;)) {
             let backend = this.player.wavesurfer().surfer.params.backend;
             let src = srcObj.src;
