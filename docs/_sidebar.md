@@ -25,5 +25,5 @@
 - [Development](development.md)
 - [Changelog](/changelog)
 - [Github](https://github.com/collab-project/videojs-wavesurfer)
-- [License](license.md)
+- [License](https://github.com/collab-project/videojs-wavesurfer/blob/master/LICENSE)
 - [Donate](donate.md)
