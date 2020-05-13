@@ -5,6 +5,6 @@ for audio and video files, using the [wavesurfer.js](https://github.com/katspaug
 library.
 
 Includes support for fullscreen mode and [real-time visualization of microphone
-input](#microphone-plugin).
+input](microphone.md).
 
 ![Screenshot](img/screenshot.png?raw=true "videojs-wavesurfer")
