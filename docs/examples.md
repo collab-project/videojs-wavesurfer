@@ -16,6 +16,7 @@ View the examples online:
 | **Input device** | Change audio [input device](change-device.md) | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/input.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/input.html) |
 | **Plugin** | Enable additional [wavesurfer.js plugins](plugins.md) | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/plugin.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/plugin.html) |
 | **React** | Basic [React](react.md) example | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/react/index.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/react/index.html) |
+| **Multi** | Using multiple players on single page | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/multi.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/multi.html) |
 
 ## Local setup
 
