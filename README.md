@@ -1,7 +1,7 @@
 videojs-wavesurfer
 ==================
 
-A [video.js](http://www.videojs.com/) plugin that adds a navigable waveform
+A [video.js](https://www.videojs.com/) plugin that adds a navigable waveform
 for audio and video files, using the [wavesurfer.js](https://github.com/katspaugh/wavesurfer.js)
 library. Includes support for fullscreen mode and [real-time visualization of microphone
 input](https://collab-project.github.io/videojs-wavesurfer/#/microphone).
