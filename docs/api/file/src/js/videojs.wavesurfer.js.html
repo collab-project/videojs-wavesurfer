@@ -877,7 +877,7 @@ if (videojs.getPlugin(wavesurferPluginName) === undefined) {
 }
 
 // register a star-middleware
-videojs.use(&apos;audio/wav&apos;, player =&gt; {
+videojs.use(&apos;*&apos;, player =&gt; {
     // make player available on middleware
     WavesurferMiddleware.player = player;
 
