@@ -3,7 +3,14 @@
  * @since 3.0.0
  */
 
-const myMiddleware = {
+const WavesurferMiddleware = {
+    /**
+     * Setup the routing between a specific source and middleware
+     * and eventually set the source on the Tech.
+     *
+     * @param {Tech~SourceObject} [srcObj] - Source object to manipulate.
+     * @param {Function} [next] - The next middleware to run.
+     */
     setSource(srcObj, next) {
         let backend = this.player.wavesurfer().surfer.params.backend;
         let src = srcObj.src;
@@ -33,4 +40,4 @@ const myMiddleware = {
     }
 };
 
-export default myMiddleware;
+export default WavesurferMiddleware;

@@ -637,7 +637,7 @@
     "__docId__": 52,
     "kind": "file",
     "name": "src/js/middleware.js",
-    "content": "/**\n * @file middleware.js\n * @since 3.0.0\n */\n\nconst myMiddleware = {\n    setSource(srcObj, next) {\n        let backend = this.player.wavesurfer().surfer.params.backend;\n        let src = srcObj.src;\n        let peaks = srcObj.peaks;\n\n        switch (backend) {\n            case 'WebAudio':\n                // load url into wavesurfer\n                this.player.wavesurfer().load(src);\n                break;\n\n            default:\n                // load source into video.js\n                next(null, srcObj);\n\n                // load media element into wavesurfer\n                let element = this.player.tech_.el();\n                if (peaks === undefined) {\n                    // element without peaks\n                    this.player.wavesurfer().load(element);\n                } else {\n                    // element with peaks\n                    this.player.wavesurfer().load(element, peaks);\n                }\n                break;\n        }\n    }\n};\n\nexport default myMiddleware;",
+    "content": "/**\n * @file middleware.js\n * @since 3.0.0\n */\n\nconst WavesurferMiddleware = {\n    /**\n     * Setup the routing between a specific source and middleware\n     * and eventually set the source on the Tech.\n     *\n     * @param {Tech~SourceObject} [srcObj] - Source object to manipulate.\n     * @param {Function} [next] - The next middleware to run.\n     */\n    setSource(srcObj, next) {\n        let backend = this.player.wavesurfer().surfer.params.backend;\n        let src = srcObj.src;\n        let peaks = srcObj.peaks;\n\n        switch (backend) {\n            case 'WebAudio':\n                // load url into wavesurfer\n                this.player.wavesurfer().load(src);\n                break;\n\n            default:\n                // load source into video.js\n                next(null, srcObj);\n\n                // load media element into wavesurfer\n                let element = this.player.tech_.el();\n                if (peaks === undefined) {\n                    // element without peaks\n                    this.player.wavesurfer().load(element);\n                } else {\n                    // element with peaks\n                    this.player.wavesurfer().load(element, peaks);\n                }\n                break;\n        }\n    }\n};\n\nexport default WavesurferMiddleware;\n",
     "static": true,
     "longname": "/home/thijs/projects/videojs-wavesurfer/src/js/middleware.js",
     "access": "public",
@@ -647,14 +647,14 @@
   {
     "__docId__": 53,
     "kind": "variable",
-    "name": "myMiddleware",
+    "name": "WavesurferMiddleware",
     "memberof": "src/js/middleware.js",
     "static": true,
-    "longname": "src/js/middleware.js~myMiddleware",
+    "longname": "src/js/middleware.js~WavesurferMiddleware",
     "access": "public",
     "export": true,
     "importPath": "videojs-wavesurfer/src/js/middleware.js",
-    "importStyle": "myMiddleware",
+    "importStyle": "WavesurferMiddleware",
     "description": "",
     "lineNumber": 6,
     "since": "3.0.0",
@@ -843,7 +843,7 @@
     "__docId__": 60,
     "kind": "file",
     "name": "src/js/videojs.wavesurfer.js",
-    "content": "/**\n * @file videojs.wavesurfer.js\n *\n * The main file for the videojs-wavesurfer project.\n * MIT license: https://github.com/collab-project/videojs-wavesurfer/blob/master/LICENSE\n */\n\nimport Event from './event';\nimport log from './utils/log';\nimport formatTime from './utils/format-time';\nimport pluginDefaultOptions from './defaults';\nimport myMiddleware from './middleware';\nimport window from 'global/window';\n\nimport videojs from 'video.js';\nimport WaveSurfer from 'wavesurfer.js';\n\nconst Plugin = videojs.getPlugin('plugin');\n\nconst wavesurferClassName = 'vjs-wavedisplay';\n\n/**\n * Draw a waveform for audio and video files in a video.js player.\n *\n * @class\n * @augments videojs.Plugin\n */\nclass Wavesurfer extends Plugin {\n    /**\n     * The constructor function for the class.\n     *\n     * @param {(videojs.Player|Object)} player - video.js Player object.\n     * @param {Object} options - Player options.\n     */\n    constructor(player, options) {\n        super(player, options);\n\n        // add plugin style\n        player.addClass('vjs-wavesurfer');\n\n        // parse options\n        options = videojs.mergeOptions(pluginDefaultOptions, options);\n        this.waveReady = false;\n        this.waveFinished = false;\n        this.liveMode = false;\n        this.backend = null;\n        this.debug = (options.debug.toString() === 'true');\n        this.textTracksEnabled = (this.player.options_.tracks.length > 0);\n        this.msDisplayMax = parseFloat(options.msDisplayMax);\n\n        // wait until player ui is ready\n        this.player.one(Event.READY, this.initialize.bind(this));\n    }\n\n    /**\n     * Player UI is ready: customize controls.\n     *\n     * @private\n     */\n    initialize() {\n        // hide big play button\n        if (this.player.bigPlayButton !== undefined) {\n            this.player.bigPlayButton.hide();\n        }\n\n        // parse options\n        let mergedOptions = this.parseOptions(this.player.options_.plugins.wavesurfer);\n\n        // set video.js time format\n        videojs.setFormatTime((seconds, guide) => {\n            return formatTime(seconds, guide, this.msDisplayMax);\n        });\n\n        // the native controls don't work for this UI so disable\n        // them no matter what\n        // XXX: doublecheck this\n        /*\n        if (this.player.usingNativeControls_ === true) {\n            if (this.player.tech_.el_ !== undefined) {\n                this.player.tech_.el_.controls = false;\n            }\n        }\n        */\n\n        // controls\n        if (this.player.options_.controls === true) {\n            // make sure controlBar is showing.\n            // video.js hides the controlbar by default because it expects\n            // the user to click on the 'big play button' first.\n            this.player.controlBar.show();\n            this.player.controlBar.el_.style.display = 'flex';\n\n            // progress control is only supported with the MediaElement backend\n            if (this.backend === 'WebAudio' &&\n                this.player.controlBar.progressControl !== undefined) {\n                this.player.controlBar.progressControl.hide();\n            }\n\n            // disable Picture-In-Picture toggle introduced in video.js 7.6.0\n            // until there is support for canvas in the Picture-In-Picture\n            // browser API (see https://www.chromestatus.com/features/4844605453369344)\n            if (this.player.controlBar.pictureInPictureToggle !== undefined) {\n                this.player.controlBar.pictureInPictureToggle.hide();\n            }\n\n            // make sure time displays are visible\n            let uiElements = ['currentTimeDisplay', 'timeDivider', 'durationDisplay'];\n            uiElements.forEach((element) => {\n                // ignore and show when essential elements have been disabled\n                // by user\n                element = this.player.controlBar[element];\n                if (element !== undefined) {\n                    element.el_.style.display = 'block';\n                    element.show();\n                }\n            });\n            if (this.player.controlBar.remainingTimeDisplay !== undefined) {\n                this.player.controlBar.remainingTimeDisplay.hide();\n            }\n\n            if (this.backend === 'WebAudio' &&\n                this.player.controlBar.playToggle !== undefined) {\n                // handle play toggle interaction\n                this.player.controlBar.playToggle.on(['tap', 'click'],\n                    this.onPlayToggle.bind(this));\n\n                // disable play button until waveform is ready\n                this.player.controlBar.playToggle.hide();\n            }\n        }\n\n        // wavesurfer.js setup\n        this.surfer = WaveSurfer.create(mergedOptions);\n        this.surfer.on(Event.ERROR, this.onWaveError.bind(this));\n        this.surfer.on(Event.FINISH, this.onWaveFinish.bind(this));\n        this.backend = this.surfer.params.backend;\n        this.log('Using wavesurfer.js ' + this.backend + ' backend.');\n\n        // check if the wavesurfer.js microphone plugin is enabled\n        if ('microphone' in this.player.wavesurfer().surfer.getActivePlugins()) {\n            // enable audio input from a microphone\n            this.liveMode = true;\n            this.waveReady = true;\n            this.log('wavesurfer.js microphone plugin enabled.');\n\n            // in live mode, show play button at startup\n            this.player.controlBar.playToggle.show();\n\n            // listen for wavesurfer.js microphone plugin events\n            this.surfer.microphone.on(Event.DEVICE_ERROR,\n                this.onWaveError.bind(this));\n        }\n\n        // listen for wavesurfer.js events\n        this.surferReady = this.onWaveReady.bind(this);\n        if (this.backend === 'WebAudio') {\n            this.surferProgress = this.onWaveProgress.bind(this);\n            this.surferSeek = this.onWaveSeek.bind(this);\n\n            // make sure volume is muted when requested\n            if (this.player.muted()) {\n                this.setVolume(0);\n            }\n        }\n\n        // only listen to the wavesurfer.js playback events when not\n        // in live mode\n        if (!this.liveMode) {\n            this.setupPlaybackEvents(true);\n        }\n\n        // video.js player events\n        this.player.on(Event.VOLUMECHANGE, this.onVolumeChange.bind(this));\n        this.player.on(Event.FULLSCREENCHANGE, this.onScreenChange.bind(this));\n\n        // video.js fluid option\n        if (this.player.options_.fluid === true) {\n            // give wave element a classname so it can be styled\n            this.surfer.drawer.wrapper.className = wavesurferClassName;\n            // listen for window resize events\n            this.responsiveWave = WaveSurfer.util.debounce(\n                this.onResizeChange.bind(this), 150);\n            window.addEventListener(Event.RESIZE, this.responsiveWave);\n        }\n    }\n\n    /**\n     * Initializes the waveform options.\n     *\n     * @private\n     * @param {Object} surferOpts - Plugin options.\n     * @returns {Object} - Updated `surferOpts` object.\n     */\n    parseOptions(surferOpts = {}) {\n        let rect = this.player.el_.getBoundingClientRect();\n        this.originalWidth = this.player.options_.width || rect.width;\n        this.originalHeight = this.player.options_.height || rect.height;\n\n        // controlbar\n        let controlBarHeight = this.player.controlBar.height();\n        if (this.player.options_.controls === true && controlBarHeight === 0) {\n            // the dimensions of the controlbar are not known yet, but we\n            // need it now, so we can calculate the height of the waveform.\n            // The default height is 30px, so use that instead.\n            controlBarHeight = 30;\n        }\n\n        // set waveform element and dimensions\n        // Set the container to player's container if \"container\" option is\n        // not provided. If a waveform needs to be appended to your custom\n        // element, then use below option. For example:\n        // container: document.querySelector(\"#vjs-waveform\")\n        if (surferOpts.container === undefined) {\n            surferOpts.container = this.player.el_;\n        }\n\n        // set the height of generated waveform if user has provided height\n        // from options. If height of waveform need to be customized then use\n        // option below. For example: waveformHeight: 30\n        if (surferOpts.waveformHeight === undefined) {\n            let playerHeight = rect.height;\n            surferOpts.height = playerHeight - controlBarHeight;\n        } else {\n            surferOpts.height = surferOpts.waveformHeight;\n        }\n\n        // split channels\n        if (surferOpts.splitChannels && surferOpts.splitChannels === true) {\n            surferOpts.height /= 2;\n        }\n\n        // use MediaElement as default wavesurfer.js backend if one is not\n        // specified\n        if ('backend' in surferOpts) {\n            this.backend = surferOpts.backend;\n        } else {\n            surferOpts.backend = this.backend = 'MediaElement';\n        }\n\n        return surferOpts;\n    }\n\n    /**\n     * Starts or stops listening to events related to audio-playback.\n     *\n     * @param {boolean} enable - Start or stop listening to playback\n     *     related events.\n     * @private\n     */\n    setupPlaybackEvents(enable) {\n        if (enable === false) {\n            this.surfer.un(Event.READY, this.surferReady);\n            if (this.backend === 'WebAudio') {\n                this.surfer.un(Event.AUDIOPROCESS, this.surferProgress);\n                this.surfer.un(Event.SEEK, this.surferSeek);\n            }\n        } else if (enable === true) {\n            this.surfer.on(Event.READY, this.surferReady);\n            if (this.backend === 'WebAudio') {\n                this.surfer.on(Event.AUDIOPROCESS, this.surferProgress);\n                this.surfer.on(Event.SEEK, this.surferSeek);\n            }\n        }\n    }\n\n    /**\n     * Start loading waveform data.\n     *\n     * @param {string|blob|file} url - Either the URL of the audio file,\n     *     a Blob or a File object.\n     * @param {string|number[]} peaks - Either the URL of peaks\n     *     data for the audio file, or an array with peaks data.\n     */\n    load(url, peaks) {\n        if (url instanceof Blob || url instanceof File) {\n            this.log('Loading object: ' + JSON.stringify(url));\n            this.surfer.loadBlob(url);\n        } else {\n            // load peak data from array or file\n            if (peaks !== undefined) {\n                this.loadPeaks(url, peaks);\n            } else {\n                // no peaks\n                if (typeof url === 'string') {\n                    this.log('Loading URL: ' + url);\n                } else {\n                    this.log('Loading element: ' + url);\n                }\n                this.surfer.load(url);\n            }\n        }\n    }\n\n    /**\n     * Start loading waveform data.\n     *\n     * @param {string|blob|file} url - Either the URL of the audio file,\n     *     a Blob or a File object.\n     * @param {string|number[]} peaks - Either the URL of peaks\n     *     data for the audio file, or an array with peaks data.\n     */\n    loadPeaks(url, peaks) {\n        if (Array.isArray(peaks)) {\n            // use supplied peaks data\n            this.log('Loading URL with array of peaks: ' + url);\n            this.surfer.load(url, peaks);\n        } else {\n            // load peak data from file\n            let requestOptions = {\n                url: peaks,\n                responseType: 'json'\n            };\n\n            // supply xhr options, if any\n            if (this.player.options_.plugins.wavesurfer.xhr !== undefined) {\n                requestOptions.xhr = this.player.options_.plugins.wavesurfer.xhr;\n            }\n            let request = WaveSurfer.util.fetchFile(requestOptions);\n\n            request.once('success', data => {\n                this.log('Loaded Peak Data URL: ' + peaks);\n                // check for data property containing peaks\n                if (data && data.data) {\n                    this.surfer.load(url, data.data);\n                } else {\n                    this.player.trigger(Event.ERROR,\n                        'Could not load peaks data from ' + peaks);\n                    this.log(err, 'error');\n                }\n            });\n            request.on('error', e => {\n                this.log('Unable to retrieve peak data from ' + peaks +\n                    '. Status code: ' + request.response.status, 'warn');\n                this.log('Loading URL: ' + url);\n                this.surfer.load(url);\n            });\n        }\n    }\n\n    /**\n     * Start/resume playback or microphone.\n     */\n    play() {\n        // show pause button\n        if (this.player.controlBar.playToggle !== undefined &&\n            this.player.controlBar.playToggle.contentEl()) {\n            this.player.controlBar.playToggle.handlePlay();\n        }\n\n        if (this.liveMode) {\n            // start/resume microphone visualization\n            if (!this.surfer.microphone.active)\n            {\n                this.log('Start microphone');\n                this.surfer.microphone.start();\n            } else {\n                // toggle paused\n                let paused = !this.surfer.microphone.paused;\n\n                if (paused) {\n                    this.pause();\n                } else {\n                    this.log('Resume microphone');\n                    this.surfer.microphone.play();\n                }\n            }\n        } else {\n            this.log('Start playback');\n\n            // put video.js player UI in playback mode\n            this.player.play();\n\n            // start surfer playback\n            this.surfer.play();\n        }\n    }\n\n    /**\n     * Pauses playback or microphone visualization.\n     */\n    pause() {\n        // show play button\n        if (this.player.controlBar.playToggle !== undefined &&\n            this.player.controlBar.playToggle.contentEl()) {\n            this.player.controlBar.playToggle.handlePause();\n        }\n\n        if (this.liveMode) {\n            // pause microphone visualization\n            this.log('Pause microphone');\n            this.surfer.microphone.pause();\n        } else {\n            // pause playback\n            this.log('Pause playback');\n\n            if (!this.waveFinished) {\n                // pause wavesurfer playback\n                this.surfer.pause();\n            } else {\n                this.waveFinished = false;\n            }\n\n            this.setCurrentTime();\n        }\n    }\n\n    /**\n     * @private\n     */\n    dispose() {\n        if (this.surfer) {\n            if (this.liveMode && this.surfer.microphone) {\n                // destroy microphone plugin\n                this.surfer.microphone.destroy();\n                this.log('Destroyed microphone plugin');\n            }\n            // destroy wavesurfer instance\n            this.surfer.destroy();\n        }\n        this.log('Destroyed plugin');\n    }\n\n    /**\n     * Indicates whether the plugin is destroyed or not.\n     *\n     * @return {boolean} Plugin destroyed or not.\n     */\n    isDestroyed() {\n        return this.player && (this.player.children() === null);\n    }\n\n    /**\n     * Remove the player and waveform.\n     */\n    destroy() {\n        this.player.dispose();\n    }\n\n    /**\n     * Set the volume level.\n     *\n     * @param {number} volume - The new volume level.\n     */\n    setVolume(volume) {\n        if (volume !== undefined) {\n            this.log('Changing volume to: ' + volume);\n\n            // update player volume\n            this.player.volume(volume);\n        }\n    }\n\n    /**\n     * Save waveform image as data URI.\n     *\n     * The default format is `'image/png'`. Other supported types are\n     * `'image/jpeg'` and `'image/webp'`.\n     *\n     * @param {string} [format=image/png] - String indicating the image format.\n     * @param {number} [quality=1] - Number between 0 and 1 indicating image\n     *     quality if the requested type is `'image/jpeg'` or `'image/webp'`.\n     * @returns {string} The data URI of the image data.\n     */\n    exportImage(format, quality) {\n        return this.surfer.exportImage(format, quality);\n    }\n\n    /**\n     * Change the audio output device.\n     *\n     * @param {string} deviceId - Id of audio output device.\n     */\n    setAudioOutput(deviceId) {\n        if (deviceId) {\n            this.surfer.setSinkId(deviceId).then((result) => {\n                // notify listeners\n                this.player.trigger(Event.AUDIO_OUTPUT_READY);\n            }).catch((err) => {\n                // notify listeners\n                this.player.trigger(Event.ERROR, err);\n\n                this.log(err, 'error');\n            });\n        }\n    }\n\n    /**\n     * Get the current time (in seconds) of the stream during playback.\n     *\n     * Returns 0 if no stream is available (yet).\n     *\n     * @returns {float} Current time of the stream.\n     */\n    getCurrentTime() {\n        let currentTime = this.surfer.getCurrentTime();\n        currentTime = isNaN(currentTime) ? 0 : currentTime;\n\n        return currentTime;\n    }\n\n    /**\n     * Updates the player's element displaying the current time.\n     *\n     * @param {number} [currentTime] - Current position of the playhead\n     *     (in seconds).\n     * @param {number} [duration] - Duration of the waveform (in seconds).\n     * @private\n     */\n    setCurrentTime(currentTime, duration) {\n        if (currentTime === undefined) {\n            currentTime = this.surfer.getCurrentTime();\n        }\n\n        if (duration === undefined) {\n            duration = this.surfer.getDuration();\n        }\n\n        currentTime = isNaN(currentTime) ? 0 : currentTime;\n        duration = isNaN(duration) ? 0 : duration;\n\n        // update current time display component\n        if (this.player.controlBar.currentTimeDisplay &&\n            this.player.controlBar.currentTimeDisplay.contentEl()) {\n            let time = Math.min(currentTime, duration);\n\n            this.player.controlBar.currentTimeDisplay.formattedTime_ =\n                this.player.controlBar.currentTimeDisplay.contentEl().lastChild.textContent =\n                    formatTime(time, duration, this.msDisplayMax);\n        }\n\n        if (this.textTracksEnabled && this.player.tech_ && this.player.tech_.el_) {\n            // only needed for text tracks\n            this.player.tech_.setCurrentTime(currentTime);\n        }\n    }\n\n    /**\n     * Get the duration of the stream in seconds.\n     *\n     * Returns 0 if no stream is available (yet).\n     *\n     * @returns {float} Duration of the stream.\n     */\n    getDuration() {\n        let duration = this.surfer.getDuration();\n        duration = isNaN(duration) ? 0 : duration;\n\n        return duration;\n    }\n\n    /**\n     * Updates the player's element displaying the duration time.\n     *\n     * @param {number} [duration] - Duration of the waveform (in seconds).\n     * @private\n     */\n    setDuration(duration) {\n        if (duration === undefined) {\n            duration = this.surfer.getDuration();\n        }\n        duration = isNaN(duration) ? 0 : duration;\n\n        // update duration display component\n        if (this.player.controlBar.durationDisplay &&\n            this.player.controlBar.durationDisplay.contentEl()) {\n            this.player.controlBar.durationDisplay.formattedTime_ =\n                this.player.controlBar.durationDisplay.contentEl().lastChild.textContent =\n                    formatTime(duration, duration, this.msDisplayMax);\n        }\n    }\n\n    /**\n     * Audio is loaded, decoded and the waveform is drawn.\n     *\n     * @fires waveReady\n     * @private\n     */\n    onWaveReady() {\n        this.waveReady = true;\n        this.waveFinished = false;\n        this.liveMode = false;\n\n        this.log('Waveform is ready');\n        this.player.trigger(Event.WAVE_READY);\n\n        // update time display\n        if (this.backend === 'WebAudio') {\n            this.setCurrentTime();\n            this.setDuration();\n\n            // enable and show play button\n            if (this.player.controlBar.playToggle !== undefined &&\n                this.player.controlBar.playToggle.contentEl()) {\n                this.player.controlBar.playToggle.show();\n            }\n        }\n\n        // hide loading spinner\n        if (this.player.loadingSpinner.contentEl()) {\n            this.player.loadingSpinner.hide();\n        }\n\n        // auto-play when ready (if enabled)\n        if (this.player.options_.autoplay === true) {\n            // autoplay is only allowed when audio is muted\n            this.setVolume(0);\n\n            // try auto-play\n            if (this.backend === 'WebAudio') {\n                this.play();\n            } else {\n                this.player.play().catch(e => {\n                    this.onWaveError(e);\n                });\n            }\n        }\n    }\n\n    /**\n     * Fires when audio playback completed.\n     *\n     * @fires playbackFinish\n     * @private\n     */\n    onWaveFinish() {\n        this.log('Finished playback');\n\n        // notify listeners\n        this.player.trigger(Event.PLAYBACK_FINISH);\n\n        // check if loop is enabled\n        if (this.player.options_.loop === true) {\n            if (this.backend === 'WebAudio') {\n                // reset waveform\n                this.surfer.stop();\n                this.play();\n            }\n        } else {\n            // finished\n            this.waveFinished = true;\n\n            if (this.backend === 'WebAudio') {\n                // pause player\n                this.pause();\n\n                // show the replay state of play toggle\n                this.player.trigger(Event.ENDED);\n\n                // this gets called once after the clip has ended and the user\n                // seeks so that we can change the replay button back to a play\n                // button\n                this.surfer.once(Event.SEEK, () => {\n                    if (this.player.controlBar.playToggle !== undefined) {\n                        this.player.controlBar.playToggle.removeClass('vjs-ended');\n                    }\n                    this.player.trigger(Event.PAUSE);\n                });\n            }\n        }\n    }\n\n    /**\n     * Fires continuously during audio playback.\n     *\n     * @param {number} time - Current time/location of the playhead.\n     * @private\n     */\n    onWaveProgress(time) {\n        this.setCurrentTime();\n    }\n\n    /**\n     * Fires during seeking of the waveform.\n     *\n     * @private\n     */\n    onWaveSeek() {\n        this.setCurrentTime();\n    }\n\n    /**\n     * Waveform error.\n     *\n     * @param {string} error - The wavesurfer error.\n     * @private\n     */\n    onWaveError(error) {\n        // notify listeners\n        if (error.name && error.name === 'AbortError' ||\n            error.name === 'DOMException' && error.message.startsWith('The operation was aborted'))\n        {\n            this.player.trigger(Event.ABORT, error);\n        } else {\n            this.player.trigger(Event.ERROR, error);\n\n            this.log(error, 'error');\n        }\n    }\n\n    /**\n     * Fired when the play toggle is clicked.\n     * @private\n     */\n    onPlayToggle() {\n        if (this.player.controlBar.playToggle !== undefined &&\n            this.player.controlBar.playToggle.hasClass('vjs-ended')) {\n            this.player.controlBar.playToggle.removeClass('vjs-ended');\n        }\n        if (this.surfer.isPlaying()) {\n            this.pause();\n        } else {\n            this.play();\n        }\n    }\n\n    /**\n     * Fired when the volume in the video.js player changes.\n     * @private\n     */\n    onVolumeChange() {\n        let volume = this.player.volume();\n        if (this.player.muted()) {\n            // muted volume\n            volume = 0;\n        }\n\n        // update wavesurfer.js volume\n        this.surfer.setVolume(volume);\n    }\n\n    /**\n     * Fired when the video.js player switches in or out of fullscreen mode.\n     * @private\n     */\n    onScreenChange() {\n        // execute with tiny delay so the player element completes\n        // rendering and correct dimensions are reported\n        let fullscreenDelay = this.player.setInterval(() => {\n            let isFullscreen = this.player.isFullscreen();\n            let newWidth, newHeight;\n            if (!isFullscreen) {\n                // restore original dimensions\n                newWidth = this.originalWidth;\n                newHeight = this.originalHeight;\n            }\n\n            if (this.waveReady) {\n                if (this.liveMode && !this.surfer.microphone.active) {\n                    // we're in live mode but the microphone hasn't been\n                    // started yet\n                    return;\n                }\n                // redraw\n                this.redrawWaveform(newWidth, newHeight);\n            }\n\n            // stop fullscreenDelay interval\n            this.player.clearInterval(fullscreenDelay);\n\n        }, 100);\n    }\n\n    /**\n     * Fired when the video.js player is resized.\n     *\n     * @private\n     */\n    onResizeChange() {\n        if (this.surfer !== undefined) {\n            // redraw waveform\n            this.redrawWaveform();\n        }\n    }\n\n    /**\n     * Redraw waveform.\n     *\n     * @param {number} [newWidth] - New width for the waveform.\n     * @param {number} [newHeight] - New height for the waveform.\n     * @private\n     */\n    redrawWaveform(newWidth, newHeight) {\n        if (!this.isDestroyed()) {\n            if (this.player.el_) {\n                let rect = this.player.el_.getBoundingClientRect();\n                if (newWidth === undefined) {\n                    // get player width\n                    newWidth = rect.width;\n                }\n                if (newHeight === undefined) {\n                    // get player height\n                    newHeight = rect.height;\n                }\n            }\n\n            // destroy old drawing\n            this.surfer.drawer.destroy();\n\n            // set new dimensions\n            this.surfer.params.width = newWidth;\n            this.surfer.params.height = newHeight - this.player.controlBar.height();\n\n            // redraw waveform\n            this.surfer.createDrawer();\n            this.surfer.drawer.wrapper.className = wavesurferClassName;\n            this.surfer.drawBuffer();\n\n            // make sure playhead is restored at right position\n            this.surfer.drawer.progress(this.surfer.backend.getPlayedPercents());\n        }\n    }\n\n    /**\n     * Log message to console (if the debug option is enabled).\n     *\n     * @private\n     * @param {Array} args - The arguments to be passed to the matching console\n     *     method.\n     * @param {string} logType - The name of the console method to use.\n     */\n    log(args, logType) {\n        log(args, logType, this.debug);\n    }\n}\n\n// version nr is injected during build\nWavesurfer.VERSION = __VERSION__;\n\n// register plugin once\nvideojs.Wavesurfer = Wavesurfer;\nif (videojs.getPlugin('wavesurfer') === undefined) {\n    videojs.registerPlugin('wavesurfer', Wavesurfer);\n}\n\n// register a star-middleware\nvideojs.use('*', player => {\n    // make player available on middleware\n    myMiddleware.player = player;\n\n    return myMiddleware;\n});\n\nexport {Wavesurfer};",
+    "content": "/**\n * @file videojs.wavesurfer.js\n *\n * The main file for the videojs-wavesurfer project.\n * MIT license: https://github.com/collab-project/videojs-wavesurfer/blob/master/LICENSE\n */\n\nimport Event from './event';\nimport log from './utils/log';\nimport formatTime from './utils/format-time';\nimport pluginDefaultOptions from './defaults';\nimport WavesurferMiddleware from './middleware';\nimport window from 'global/window';\n\nimport videojs from 'video.js';\nimport WaveSurfer from 'wavesurfer.js';\n\nconst Plugin = videojs.getPlugin('plugin');\n\nconst wavesurferPluginName = 'wavesurfer';\nconst wavesurferClassName = 'vjs-wavedisplay';\n\n/**\n * Draw a waveform for audio and video files in a video.js player.\n *\n * @class\n * @augments videojs.Plugin\n */\nclass Wavesurfer extends Plugin {\n    /**\n     * The constructor function for the class.\n     *\n     * @param {(videojs.Player|Object)} player - video.js Player object.\n     * @param {Object} options - Player options.\n     */\n    constructor(player, options) {\n        super(player, options);\n\n        // add plugin style\n        player.addClass('vjs-wavesurfer');\n\n        // parse options\n        options = videojs.mergeOptions(pluginDefaultOptions, options);\n        this.waveReady = false;\n        this.waveFinished = false;\n        this.liveMode = false;\n        this.backend = null;\n        this.debug = (options.debug.toString() === 'true');\n        this.textTracksEnabled = (this.player.options_.tracks.length > 0);\n        this.msDisplayMax = parseFloat(options.msDisplayMax);\n\n        // wait until player ui is ready\n        this.player.one(Event.READY, this.initialize.bind(this));\n    }\n\n    /**\n     * Player UI is ready: customize controls.\n     *\n     * @private\n     */\n    initialize() {\n        // hide big play button\n        if (this.player.bigPlayButton !== undefined) {\n            this.player.bigPlayButton.hide();\n        }\n\n        // parse options\n        let mergedOptions = this.parseOptions(this.player.options_.plugins.wavesurfer);\n\n        // set video.js time format\n        videojs.setFormatTime((seconds, guide) => {\n            return formatTime(seconds, guide, this.msDisplayMax);\n        });\n\n        // the native controls don't work for this UI so disable\n        // them no matter what\n        // XXX: doublecheck this\n        /*\n        if (this.player.usingNativeControls_ === true) {\n            if (this.player.tech_.el_ !== undefined) {\n                this.player.tech_.el_.controls = false;\n            }\n        }\n        */\n\n        // controls\n        if (this.player.options_.controls === true) {\n            // make sure controlBar is showing.\n            // video.js hides the controlbar by default because it expects\n            // the user to click on the 'big play button' first.\n            this.player.controlBar.show();\n            this.player.controlBar.el_.style.display = 'flex';\n\n            // progress control is only supported with the MediaElement backend\n            if (this.backend === 'WebAudio' &&\n                this.player.controlBar.progressControl !== undefined) {\n                this.player.controlBar.progressControl.hide();\n            }\n\n            // disable Picture-In-Picture toggle introduced in video.js 7.6.0\n            // until there is support for canvas in the Picture-In-Picture\n            // browser API (see https://www.chromestatus.com/features/4844605453369344)\n            if (this.player.controlBar.pictureInPictureToggle !== undefined) {\n                this.player.controlBar.pictureInPictureToggle.hide();\n            }\n\n            // make sure time displays are visible\n            let uiElements = ['currentTimeDisplay', 'timeDivider', 'durationDisplay'];\n            uiElements.forEach((element) => {\n                // ignore and show when essential elements have been disabled\n                // by user\n                element = this.player.controlBar[element];\n                if (element !== undefined) {\n                    element.el_.style.display = 'block';\n                    element.show();\n                }\n            });\n            if (this.player.controlBar.remainingTimeDisplay !== undefined) {\n                this.player.controlBar.remainingTimeDisplay.hide();\n            }\n\n            if (this.backend === 'WebAudio' &&\n                this.player.controlBar.playToggle !== undefined) {\n                // handle play toggle interaction\n                this.player.controlBar.playToggle.on(['tap', 'click'],\n                    this.onPlayToggle.bind(this));\n\n                // disable play button until waveform is ready\n                this.player.controlBar.playToggle.hide();\n            }\n        }\n\n        // wavesurfer.js setup\n        this.surfer = WaveSurfer.create(mergedOptions);\n        this.surfer.on(Event.ERROR, this.onWaveError.bind(this));\n        this.surfer.on(Event.FINISH, this.onWaveFinish.bind(this));\n        this.backend = this.surfer.params.backend;\n        this.log('Using wavesurfer.js ' + this.backend + ' backend.');\n\n        // check if the wavesurfer.js microphone plugin is enabled\n        if ('microphone' in this.player.wavesurfer().surfer.getActivePlugins()) {\n            // enable audio input from a microphone\n            this.liveMode = true;\n            this.waveReady = true;\n            this.log('wavesurfer.js microphone plugin enabled.');\n\n            // in live mode, show play button at startup\n            this.player.controlBar.playToggle.show();\n\n            // listen for wavesurfer.js microphone plugin events\n            this.surfer.microphone.on(Event.DEVICE_ERROR,\n                this.onWaveError.bind(this));\n        }\n\n        // listen for wavesurfer.js events\n        this.surferReady = this.onWaveReady.bind(this);\n        if (this.backend === 'WebAudio') {\n            this.surferProgress = this.onWaveProgress.bind(this);\n            this.surferSeek = this.onWaveSeek.bind(this);\n\n            // make sure volume is muted when requested\n            if (this.player.muted()) {\n                this.setVolume(0);\n            }\n        }\n\n        // only listen to the wavesurfer.js playback events when not\n        // in live mode\n        if (!this.liveMode) {\n            this.setupPlaybackEvents(true);\n        }\n\n        // video.js player events\n        this.player.on(Event.VOLUMECHANGE, this.onVolumeChange.bind(this));\n        this.player.on(Event.FULLSCREENCHANGE, this.onScreenChange.bind(this));\n\n        // video.js fluid option\n        if (this.player.options_.fluid === true) {\n            // give wave element a classname so it can be styled\n            this.surfer.drawer.wrapper.className = wavesurferClassName;\n            // listen for window resize events\n            this.responsiveWave = WaveSurfer.util.debounce(\n                this.onResizeChange.bind(this), 150);\n            window.addEventListener(Event.RESIZE, this.responsiveWave);\n        }\n    }\n\n    /**\n     * Initializes the waveform options.\n     *\n     * @private\n     * @param {Object} surferOpts - Plugin options.\n     * @returns {Object} - Updated `surferOpts` object.\n     */\n    parseOptions(surferOpts = {}) {\n        let rect = this.player.el_.getBoundingClientRect();\n        this.originalWidth = this.player.options_.width || rect.width;\n        this.originalHeight = this.player.options_.height || rect.height;\n\n        // controlbar\n        let controlBarHeight = this.player.controlBar.height();\n        if (this.player.options_.controls === true && controlBarHeight === 0) {\n            // the dimensions of the controlbar are not known yet, but we\n            // need it now, so we can calculate the height of the waveform.\n            // The default height is 30px, so use that instead.\n            controlBarHeight = 30;\n        }\n\n        // set waveform element and dimensions\n        // Set the container to player's container if \"container\" option is\n        // not provided. If a waveform needs to be appended to your custom\n        // element, then use below option. For example:\n        // container: document.querySelector(\"#vjs-waveform\")\n        if (surferOpts.container === undefined) {\n            surferOpts.container = this.player.el_;\n        }\n\n        // set the height of generated waveform if user has provided height\n        // from options. If height of waveform need to be customized then use\n        // option below. For example: waveformHeight: 30\n        if (surferOpts.waveformHeight === undefined) {\n            let playerHeight = rect.height;\n            surferOpts.height = playerHeight - controlBarHeight;\n        } else {\n            surferOpts.height = surferOpts.waveformHeight;\n        }\n\n        // split channels\n        if (surferOpts.splitChannels && surferOpts.splitChannels === true) {\n            surferOpts.height /= 2;\n        }\n\n        // use MediaElement as default wavesurfer.js backend if one is not\n        // specified\n        if ('backend' in surferOpts) {\n            this.backend = surferOpts.backend;\n        } else {\n            surferOpts.backend = this.backend = 'MediaElement';\n        }\n\n        return surferOpts;\n    }\n\n    /**\n     * Starts or stops listening to events related to audio-playback.\n     *\n     * @param {boolean} enable - Start or stop listening to playback\n     *     related events.\n     * @private\n     */\n    setupPlaybackEvents(enable) {\n        if (enable === false) {\n            this.surfer.un(Event.READY, this.surferReady);\n            if (this.backend === 'WebAudio') {\n                this.surfer.un(Event.AUDIOPROCESS, this.surferProgress);\n                this.surfer.un(Event.SEEK, this.surferSeek);\n            }\n        } else if (enable === true) {\n            this.surfer.on(Event.READY, this.surferReady);\n            if (this.backend === 'WebAudio') {\n                this.surfer.on(Event.AUDIOPROCESS, this.surferProgress);\n                this.surfer.on(Event.SEEK, this.surferSeek);\n            }\n        }\n    }\n\n    /**\n     * Start loading waveform data.\n     *\n     * @param {string|blob|file} url - Either the URL of the audio file,\n     *     a Blob or a File object.\n     * @param {string|number[]} peaks - Either the URL of peaks\n     *     data for the audio file, or an array with peaks data.\n     */\n    load(url, peaks) {\n        if (url instanceof Blob || url instanceof File) {\n            this.log('Loading object: ' + JSON.stringify(url));\n            this.surfer.loadBlob(url);\n        } else {\n            // load peak data from array or file\n            if (peaks !== undefined) {\n                this.loadPeaks(url, peaks);\n            } else {\n                // no peaks\n                if (typeof url === 'string') {\n                    this.log('Loading URL: ' + url);\n                } else {\n                    this.log('Loading element: ' + url);\n                }\n                this.surfer.load(url);\n            }\n        }\n    }\n\n    /**\n     * Start loading waveform data.\n     *\n     * @param {string|blob|file} url - Either the URL of the audio file,\n     *     a Blob or a File object.\n     * @param {string|number[]} peaks - Either the URL of peaks\n     *     data for the audio file, or an array with peaks data.\n     */\n    loadPeaks(url, peaks) {\n        if (Array.isArray(peaks)) {\n            // use supplied peaks data\n            this.log('Loading URL with array of peaks: ' + url);\n            this.surfer.load(url, peaks);\n        } else {\n            // load peak data from file\n            let requestOptions = {\n                url: peaks,\n                responseType: 'json'\n            };\n\n            // supply xhr options, if any\n            if (this.player.options_.plugins.wavesurfer.xhr !== undefined) {\n                requestOptions.xhr = this.player.options_.plugins.wavesurfer.xhr;\n            }\n            let request = WaveSurfer.util.fetchFile(requestOptions);\n\n            request.once('success', data => {\n                this.log('Loaded Peak Data URL: ' + peaks);\n                // check for data property containing peaks\n                if (data && data.data) {\n                    this.surfer.load(url, data.data);\n                } else {\n                    this.player.trigger(Event.ERROR,\n                        'Could not load peaks data from ' + peaks);\n                    this.log(err, 'error');\n                }\n            });\n            request.on('error', e => {\n                this.log('Unable to retrieve peak data from ' + peaks +\n                    '. Status code: ' + request.response.status, 'warn');\n                this.log('Loading URL: ' + url);\n                this.surfer.load(url);\n            });\n        }\n    }\n\n    /**\n     * Start/resume playback or microphone.\n     */\n    play() {\n        // show pause button\n        if (this.player.controlBar.playToggle !== undefined &&\n            this.player.controlBar.playToggle.contentEl()) {\n            this.player.controlBar.playToggle.handlePlay();\n        }\n\n        if (this.liveMode) {\n            // start/resume microphone visualization\n            if (!this.surfer.microphone.active)\n            {\n                this.log('Start microphone');\n                this.surfer.microphone.start();\n            } else {\n                // toggle paused\n                let paused = !this.surfer.microphone.paused;\n\n                if (paused) {\n                    this.pause();\n                } else {\n                    this.log('Resume microphone');\n                    this.surfer.microphone.play();\n                }\n            }\n        } else {\n            this.log('Start playback');\n\n            // put video.js player UI in playback mode\n            this.player.play();\n\n            // start surfer playback\n            this.surfer.play();\n        }\n    }\n\n    /**\n     * Pauses playback or microphone visualization.\n     */\n    pause() {\n        // show play button\n        if (this.player.controlBar.playToggle !== undefined &&\n            this.player.controlBar.playToggle.contentEl()) {\n            this.player.controlBar.playToggle.handlePause();\n        }\n\n        if (this.liveMode) {\n            // pause microphone visualization\n            this.log('Pause microphone');\n            this.surfer.microphone.pause();\n        } else {\n            // pause playback\n            this.log('Pause playback');\n\n            if (!this.waveFinished) {\n                // pause wavesurfer playback\n                this.surfer.pause();\n            } else {\n                this.waveFinished = false;\n            }\n\n            this.setCurrentTime();\n        }\n    }\n\n    /**\n     * @private\n     */\n    dispose() {\n        if (this.surfer) {\n            if (this.liveMode && this.surfer.microphone) {\n                // destroy microphone plugin\n                this.surfer.microphone.destroy();\n                this.log('Destroyed microphone plugin');\n            }\n            // destroy wavesurfer instance\n            this.surfer.destroy();\n        }\n        this.log('Destroyed plugin');\n    }\n\n    /**\n     * Indicates whether the plugin is destroyed or not.\n     *\n     * @return {boolean} Plugin destroyed or not.\n     */\n    isDestroyed() {\n        return this.player && (this.player.children() === null);\n    }\n\n    /**\n     * Remove the player and waveform.\n     */\n    destroy() {\n        this.player.dispose();\n    }\n\n    /**\n     * Set the volume level.\n     *\n     * @param {number} volume - The new volume level.\n     */\n    setVolume(volume) {\n        if (volume !== undefined) {\n            this.log('Changing volume to: ' + volume);\n\n            // update player volume\n            this.player.volume(volume);\n        }\n    }\n\n    /**\n     * Save waveform image as data URI.\n     *\n     * The default format is `'image/png'`. Other supported types are\n     * `'image/jpeg'` and `'image/webp'`.\n     *\n     * @param {string} [format=image/png] - String indicating the image format.\n     * @param {number} [quality=1] - Number between 0 and 1 indicating image\n     *     quality if the requested type is `'image/jpeg'` or `'image/webp'`.\n     * @returns {string} The data URI of the image data.\n     */\n    exportImage(format, quality) {\n        return this.surfer.exportImage(format, quality);\n    }\n\n    /**\n     * Change the audio output device.\n     *\n     * @param {string} deviceId - Id of audio output device.\n     */\n    setAudioOutput(deviceId) {\n        if (deviceId) {\n            this.surfer.setSinkId(deviceId).then((result) => {\n                // notify listeners\n                this.player.trigger(Event.AUDIO_OUTPUT_READY);\n            }).catch((err) => {\n                // notify listeners\n                this.player.trigger(Event.ERROR, err);\n\n                this.log(err, 'error');\n            });\n        }\n    }\n\n    /**\n     * Get the current time (in seconds) of the stream during playback.\n     *\n     * Returns 0 if no stream is available (yet).\n     *\n     * @returns {float} Current time of the stream.\n     */\n    getCurrentTime() {\n        let currentTime = this.surfer.getCurrentTime();\n        currentTime = isNaN(currentTime) ? 0 : currentTime;\n\n        return currentTime;\n    }\n\n    /**\n     * Updates the player's element displaying the current time.\n     *\n     * @param {number} [currentTime] - Current position of the playhead\n     *     (in seconds).\n     * @param {number} [duration] - Duration of the waveform (in seconds).\n     * @private\n     */\n    setCurrentTime(currentTime, duration) {\n        if (currentTime === undefined) {\n            currentTime = this.surfer.getCurrentTime();\n        }\n\n        if (duration === undefined) {\n            duration = this.surfer.getDuration();\n        }\n\n        currentTime = isNaN(currentTime) ? 0 : currentTime;\n        duration = isNaN(duration) ? 0 : duration;\n\n        // update current time display component\n        if (this.player.controlBar.currentTimeDisplay &&\n            this.player.controlBar.currentTimeDisplay.contentEl()) {\n            let time = Math.min(currentTime, duration);\n\n            this.player.controlBar.currentTimeDisplay.formattedTime_ =\n                this.player.controlBar.currentTimeDisplay.contentEl().lastChild.textContent =\n                    formatTime(time, duration, this.msDisplayMax);\n        }\n\n        if (this.textTracksEnabled && this.player.tech_ && this.player.tech_.el_) {\n            // only needed for text tracks\n            this.player.tech_.setCurrentTime(currentTime);\n        }\n    }\n\n    /**\n     * Get the duration of the stream in seconds.\n     *\n     * Returns 0 if no stream is available (yet).\n     *\n     * @returns {float} Duration of the stream.\n     */\n    getDuration() {\n        let duration = this.surfer.getDuration();\n        duration = isNaN(duration) ? 0 : duration;\n\n        return duration;\n    }\n\n    /**\n     * Updates the player's element displaying the duration time.\n     *\n     * @param {number} [duration] - Duration of the waveform (in seconds).\n     * @private\n     */\n    setDuration(duration) {\n        if (duration === undefined) {\n            duration = this.surfer.getDuration();\n        }\n        duration = isNaN(duration) ? 0 : duration;\n\n        // update duration display component\n        if (this.player.controlBar.durationDisplay &&\n            this.player.controlBar.durationDisplay.contentEl()) {\n            this.player.controlBar.durationDisplay.formattedTime_ =\n                this.player.controlBar.durationDisplay.contentEl().lastChild.textContent =\n                    formatTime(duration, duration, this.msDisplayMax);\n        }\n    }\n\n    /**\n     * Audio is loaded, decoded and the waveform is drawn.\n     *\n     * @fires waveReady\n     * @private\n     */\n    onWaveReady() {\n        this.waveReady = true;\n        this.waveFinished = false;\n        this.liveMode = false;\n\n        this.log('Waveform is ready');\n        this.player.trigger(Event.WAVE_READY);\n\n        // update time display\n        if (this.backend === 'WebAudio') {\n            this.setCurrentTime();\n            this.setDuration();\n\n            // enable and show play button\n            if (this.player.controlBar.playToggle !== undefined &&\n                this.player.controlBar.playToggle.contentEl()) {\n                this.player.controlBar.playToggle.show();\n            }\n        }\n\n        // hide loading spinner\n        if (this.player.loadingSpinner.contentEl()) {\n            this.player.loadingSpinner.hide();\n        }\n\n        // auto-play when ready (if enabled)\n        if (this.player.options_.autoplay === true) {\n            // autoplay is only allowed when audio is muted\n            this.setVolume(0);\n\n            // try auto-play\n            if (this.backend === 'WebAudio') {\n                this.play();\n            } else {\n                this.player.play().catch(e => {\n                    this.onWaveError(e);\n                });\n            }\n        }\n    }\n\n    /**\n     * Fires when audio playback completed.\n     *\n     * @fires playbackFinish\n     * @private\n     */\n    onWaveFinish() {\n        this.log('Finished playback');\n\n        // notify listeners\n        this.player.trigger(Event.PLAYBACK_FINISH);\n\n        // check if loop is enabled\n        if (this.player.options_.loop === true) {\n            if (this.backend === 'WebAudio') {\n                // reset waveform\n                this.surfer.stop();\n                this.play();\n            }\n        } else {\n            // finished\n            this.waveFinished = true;\n\n            if (this.backend === 'WebAudio') {\n                // pause player\n                this.pause();\n\n                // show the replay state of play toggle\n                this.player.trigger(Event.ENDED);\n\n                // this gets called once after the clip has ended and the user\n                // seeks so that we can change the replay button back to a play\n                // button\n                this.surfer.once(Event.SEEK, () => {\n                    if (this.player.controlBar.playToggle !== undefined) {\n                        this.player.controlBar.playToggle.removeClass('vjs-ended');\n                    }\n                    this.player.trigger(Event.PAUSE);\n                });\n            }\n        }\n    }\n\n    /**\n     * Fires continuously during audio playback.\n     *\n     * @param {number} time - Current time/location of the playhead.\n     * @private\n     */\n    onWaveProgress(time) {\n        this.setCurrentTime();\n    }\n\n    /**\n     * Fires during seeking of the waveform.\n     *\n     * @private\n     */\n    onWaveSeek() {\n        this.setCurrentTime();\n    }\n\n    /**\n     * Waveform error.\n     *\n     * @param {string} error - The wavesurfer error.\n     * @private\n     */\n    onWaveError(error) {\n        // notify listeners\n        if (error.name && error.name === 'AbortError' ||\n            error.name === 'DOMException' && error.message.startsWith('The operation was aborted'))\n        {\n            this.player.trigger(Event.ABORT, error);\n        } else {\n            this.player.trigger(Event.ERROR, error);\n\n            this.log(error, 'error');\n        }\n    }\n\n    /**\n     * Fired when the play toggle is clicked.\n     * @private\n     */\n    onPlayToggle() {\n        if (this.player.controlBar.playToggle !== undefined &&\n            this.player.controlBar.playToggle.hasClass('vjs-ended')) {\n            this.player.controlBar.playToggle.removeClass('vjs-ended');\n        }\n        if (this.surfer.isPlaying()) {\n            this.pause();\n        } else {\n            this.play();\n        }\n    }\n\n    /**\n     * Fired when the volume in the video.js player changes.\n     * @private\n     */\n    onVolumeChange() {\n        let volume = this.player.volume();\n        if (this.player.muted()) {\n            // muted volume\n            volume = 0;\n        }\n\n        // update wavesurfer.js volume\n        this.surfer.setVolume(volume);\n    }\n\n    /**\n     * Fired when the video.js player switches in or out of fullscreen mode.\n     * @private\n     */\n    onScreenChange() {\n        // execute with tiny delay so the player element completes\n        // rendering and correct dimensions are reported\n        let fullscreenDelay = this.player.setInterval(() => {\n            let isFullscreen = this.player.isFullscreen();\n            let newWidth, newHeight;\n            if (!isFullscreen) {\n                // restore original dimensions\n                newWidth = this.originalWidth;\n                newHeight = this.originalHeight;\n            }\n\n            if (this.waveReady) {\n                if (this.liveMode && !this.surfer.microphone.active) {\n                    // we're in live mode but the microphone hasn't been\n                    // started yet\n                    return;\n                }\n                // redraw\n                this.redrawWaveform(newWidth, newHeight);\n            }\n\n            // stop fullscreenDelay interval\n            this.player.clearInterval(fullscreenDelay);\n\n        }, 100);\n    }\n\n    /**\n     * Fired when the video.js player is resized.\n     *\n     * @private\n     */\n    onResizeChange() {\n        if (this.surfer !== undefined) {\n            // redraw waveform\n            this.redrawWaveform();\n        }\n    }\n\n    /**\n     * Redraw waveform.\n     *\n     * @param {number} [newWidth] - New width for the waveform.\n     * @param {number} [newHeight] - New height for the waveform.\n     * @private\n     */\n    redrawWaveform(newWidth, newHeight) {\n        if (!this.isDestroyed()) {\n            if (this.player.el_) {\n                let rect = this.player.el_.getBoundingClientRect();\n                if (newWidth === undefined) {\n                    // get player width\n                    newWidth = rect.width;\n                }\n                if (newHeight === undefined) {\n                    // get player height\n                    newHeight = rect.height;\n                }\n            }\n\n            // destroy old drawing\n            this.surfer.drawer.destroy();\n\n            // set new dimensions\n            this.surfer.params.width = newWidth;\n            this.surfer.params.height = newHeight - this.player.controlBar.height();\n\n            // redraw waveform\n            this.surfer.createDrawer();\n            this.surfer.drawer.wrapper.className = wavesurferClassName;\n            this.surfer.drawBuffer();\n\n            // make sure playhead is restored at right position\n            this.surfer.drawer.progress(this.surfer.backend.getPlayedPercents());\n        }\n    }\n\n    /**\n     * Log message to console (if the debug option is enabled).\n     *\n     * @private\n     * @param {Array} args - The arguments to be passed to the matching console\n     *     method.\n     * @param {string} logType - The name of the console method to use.\n     */\n    log(args, logType) {\n        log(args, logType, this.debug);\n    }\n}\n\n// version nr is injected during build\nWavesurfer.VERSION = __VERSION__;\n\n// register plugin once\nvideojs.Wavesurfer = Wavesurfer;\nif (videojs.getPlugin(wavesurferPluginName) === undefined) {\n    videojs.registerPlugin(wavesurferPluginName, Wavesurfer);\n}\n\n// register a star-middleware\nvideojs.use('audio/wav', player => {\n    // make player available on middleware\n    WavesurferMiddleware.player = player;\n\n    return WavesurferMiddleware;\n});\n\nexport {Wavesurfer};",
     "static": true,
     "longname": "/home/thijs/projects/videojs-wavesurfer/src/js/videojs.wavesurfer.js",
     "access": "public",
@@ -874,10 +874,10 @@
   {
     "__docId__": 62,
     "kind": "variable",
-    "name": "wavesurferClassName",
+    "name": "wavesurferPluginName",
     "memberof": "src/js/videojs.wavesurfer.js",
     "static": true,
-    "longname": "src/js/videojs.wavesurfer.js~wavesurferClassName",
+    "longname": "src/js/videojs.wavesurfer.js~wavesurferPluginName",
     "access": "public",
     "export": false,
     "importPath": "videojs-wavesurfer/src/js/videojs.wavesurfer.js",
@@ -894,6 +894,27 @@
   },
   {
     "__docId__": 63,
+    "kind": "variable",
+    "name": "wavesurferClassName",
+    "memberof": "src/js/videojs.wavesurfer.js",
+    "static": true,
+    "longname": "src/js/videojs.wavesurfer.js~wavesurferClassName",
+    "access": "public",
+    "export": false,
+    "importPath": "videojs-wavesurfer/src/js/videojs.wavesurfer.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 21,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 64,
     "kind": "class",
     "name": "Wavesurfer",
     "memberof": "src/js/videojs.wavesurfer.js",
@@ -904,7 +925,7 @@
     "importPath": "videojs-wavesurfer/src/js/videojs.wavesurfer.js",
     "importStyle": "{Wavesurfer}",
     "description": "Draw a waveform for audio and video files in a video.js player.",
-    "lineNumber": 28,
+    "lineNumber": 29,
     "unknown": [
       {
         "tagName": "@class",
@@ -921,7 +942,7 @@
     ]
   },
   {
-    "__docId__": 64,
+    "__docId__": 65,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -931,7 +952,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#constructor",
     "access": "public",
     "description": "The constructor function for the class.",
-    "lineNumber": 35,
+    "lineNumber": 36,
     "params": [
       {
         "nullable": null,
@@ -957,29 +978,12 @@
     ]
   },
   {
-    "__docId__": 65,
+    "__docId__": 66,
     "kind": "member",
     "name": "waveReady",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
     "static": false,
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#waveReady",
-    "access": "public",
-    "description": null,
-    "lineNumber": 43,
-    "undocument": true,
-    "type": {
-      "types": [
-        "boolean"
-      ]
-    }
-  },
-  {
-    "__docId__": 66,
-    "kind": "member",
-    "name": "waveFinished",
-    "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
-    "static": false,
-    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#waveFinished",
     "access": "public",
     "description": null,
     "lineNumber": 44,
@@ -993,10 +997,10 @@
   {
     "__docId__": 67,
     "kind": "member",
-    "name": "liveMode",
+    "name": "waveFinished",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
     "static": false,
-    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#liveMode",
+    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#waveFinished",
     "access": "public",
     "description": null,
     "lineNumber": 45,
@@ -1010,27 +1014,27 @@
   {
     "__docId__": 68,
     "kind": "member",
-    "name": "backend",
+    "name": "liveMode",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
     "static": false,
-    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#backend",
+    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#liveMode",
     "access": "public",
     "description": null,
     "lineNumber": 46,
     "undocument": true,
     "type": {
       "types": [
-        "*"
+        "boolean"
       ]
     }
   },
   {
     "__docId__": 69,
     "kind": "member",
-    "name": "debug",
+    "name": "backend",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
     "static": false,
-    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#debug",
+    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#backend",
     "access": "public",
     "description": null,
     "lineNumber": 47,
@@ -1044,10 +1048,10 @@
   {
     "__docId__": 70,
     "kind": "member",
-    "name": "textTracksEnabled",
+    "name": "debug",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
     "static": false,
-    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#textTracksEnabled",
+    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#debug",
     "access": "public",
     "description": null,
     "lineNumber": 48,
@@ -1061,10 +1065,10 @@
   {
     "__docId__": 71,
     "kind": "member",
-    "name": "msDisplayMax",
+    "name": "textTracksEnabled",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
     "static": false,
-    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#msDisplayMax",
+    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#textTracksEnabled",
     "access": "public",
     "description": null,
     "lineNumber": 49,
@@ -1077,6 +1081,23 @@
   },
   {
     "__docId__": 72,
+    "kind": "member",
+    "name": "msDisplayMax",
+    "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
+    "static": false,
+    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#msDisplayMax",
+    "access": "public",
+    "description": null,
+    "lineNumber": 50,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 73,
     "kind": "method",
     "name": "initialize",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1086,12 +1107,12 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#initialize",
     "access": "private",
     "description": "Player UI is ready: customize controls.",
-    "lineNumber": 60,
+    "lineNumber": 61,
     "params": [],
     "return": null
   },
   {
-    "__docId__": 73,
+    "__docId__": 74,
     "kind": "member",
     "name": "surfer",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1099,24 +1120,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#surfer",
     "access": "public",
     "description": null,
-    "lineNumber": 133,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 77,
-    "kind": "member",
-    "name": "surferReady",
-    "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
-    "static": false,
-    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#surferReady",
-    "access": "public",
-    "description": null,
-    "lineNumber": 155,
+    "lineNumber": 134,
     "undocument": true,
     "type": {
       "types": [
@@ -1127,13 +1131,13 @@
   {
     "__docId__": 78,
     "kind": "member",
-    "name": "surferProgress",
+    "name": "surferReady",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
     "static": false,
-    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#surferProgress",
+    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#surferReady",
     "access": "public",
     "description": null,
-    "lineNumber": 157,
+    "lineNumber": 156,
     "undocument": true,
     "type": {
       "types": [
@@ -1144,10 +1148,10 @@
   {
     "__docId__": 79,
     "kind": "member",
-    "name": "surferSeek",
+    "name": "surferProgress",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
     "static": false,
-    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#surferSeek",
+    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#surferProgress",
     "access": "public",
     "description": null,
     "lineNumber": 158,
@@ -1161,13 +1165,13 @@
   {
     "__docId__": 80,
     "kind": "member",
-    "name": "responsiveWave",
+    "name": "surferSeek",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
     "static": false,
-    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#responsiveWave",
+    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#surferSeek",
     "access": "public",
     "description": null,
-    "lineNumber": 181,
+    "lineNumber": 159,
     "undocument": true,
     "type": {
       "types": [
@@ -1177,6 +1181,23 @@
   },
   {
     "__docId__": 81,
+    "kind": "member",
+    "name": "responsiveWave",
+    "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
+    "static": false,
+    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#responsiveWave",
+    "access": "public",
+    "description": null,
+    "lineNumber": 182,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 82,
     "kind": "method",
     "name": "parseOptions",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1186,7 +1207,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#parseOptions",
     "access": "private",
     "description": "Initializes the waveform options.",
-    "lineNumber": 194,
+    "lineNumber": 195,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1215,29 +1236,12 @@
     }
   },
   {
-    "__docId__": 82,
+    "__docId__": 83,
     "kind": "member",
     "name": "originalWidth",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
     "static": false,
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#originalWidth",
-    "access": "public",
-    "description": null,
-    "lineNumber": 196,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 83,
-    "kind": "member",
-    "name": "originalHeight",
-    "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
-    "static": false,
-    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#originalHeight",
     "access": "public",
     "description": null,
     "lineNumber": 197,
@@ -1249,7 +1253,24 @@
     }
   },
   {
-    "__docId__": 85,
+    "__docId__": 84,
+    "kind": "member",
+    "name": "originalHeight",
+    "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
+    "static": false,
+    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#originalHeight",
+    "access": "public",
+    "description": null,
+    "lineNumber": 198,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 86,
     "kind": "method",
     "name": "setupPlaybackEvents",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1259,7 +1280,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#setupPlaybackEvents",
     "access": "private",
     "description": "Starts or stops listening to events related to audio-playback.",
-    "lineNumber": 250,
+    "lineNumber": 251,
     "params": [
       {
         "nullable": null,
@@ -1275,7 +1296,7 @@
     "return": null
   },
   {
-    "__docId__": 86,
+    "__docId__": 87,
     "kind": "method",
     "name": "load",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1285,46 +1306,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#load",
     "access": "public",
     "description": "Start loading waveform data.",
-    "lineNumber": 274,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "string",
-          "blob",
-          "file"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "url",
-        "description": "Either the URL of the audio file,\n    a Blob or a File object."
-      },
-      {
-        "nullable": null,
-        "types": [
-          "string",
-          "number[]"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "peaks",
-        "description": "Either the URL of peaks\n    data for the audio file, or an array with peaks data."
-      }
-    ],
-    "return": null
-  },
-  {
-    "__docId__": 87,
-    "kind": "method",
-    "name": "loadPeaks",
-    "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#loadPeaks",
-    "access": "public",
-    "description": "Start loading waveform data.",
-    "lineNumber": 302,
+    "lineNumber": 275,
     "params": [
       {
         "nullable": null,
@@ -1355,6 +1337,45 @@
   {
     "__docId__": 88,
     "kind": "method",
+    "name": "loadPeaks",
+    "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#loadPeaks",
+    "access": "public",
+    "description": "Start loading waveform data.",
+    "lineNumber": 303,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string",
+          "blob",
+          "file"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "url",
+        "description": "Either the URL of the audio file,\n    a Blob or a File object."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string",
+          "number[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "peaks",
+        "description": "Either the URL of peaks\n    data for the audio file, or an array with peaks data."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 89,
+    "kind": "method",
     "name": "play",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
     "generator": false,
@@ -1363,12 +1384,12 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#play",
     "access": "public",
     "description": "Start/resume playback or microphone.",
-    "lineNumber": 343,
+    "lineNumber": 344,
     "params": [],
     "return": null
   },
   {
-    "__docId__": 89,
+    "__docId__": 90,
     "kind": "method",
     "name": "pause",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1378,12 +1399,12 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#pause",
     "access": "public",
     "description": "Pauses playback or microphone visualization.",
-    "lineNumber": 381,
+    "lineNumber": 382,
     "params": [],
     "return": null
   },
   {
-    "__docId__": 91,
+    "__docId__": 92,
     "kind": "method",
     "name": "dispose",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1393,12 +1414,12 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#dispose",
     "access": "private",
     "description": "",
-    "lineNumber": 410,
+    "lineNumber": 411,
     "params": [],
     "return": null
   },
   {
-    "__docId__": 92,
+    "__docId__": 93,
     "kind": "method",
     "name": "isDestroyed",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1408,7 +1429,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#isDestroyed",
     "access": "public",
     "description": "Indicates whether the plugin is destroyed or not.",
-    "lineNumber": 428,
+    "lineNumber": 429,
     "return": {
       "nullable": null,
       "types": [
@@ -1420,7 +1441,7 @@
     "params": []
   },
   {
-    "__docId__": 93,
+    "__docId__": 94,
     "kind": "method",
     "name": "destroy",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1430,12 +1451,12 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#destroy",
     "access": "public",
     "description": "Remove the player and waveform.",
-    "lineNumber": 435,
+    "lineNumber": 436,
     "params": [],
     "return": null
   },
   {
-    "__docId__": 94,
+    "__docId__": 95,
     "kind": "method",
     "name": "setVolume",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1445,7 +1466,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#setVolume",
     "access": "public",
     "description": "Set the volume level.",
-    "lineNumber": 444,
+    "lineNumber": 445,
     "params": [
       {
         "nullable": null,
@@ -1461,7 +1482,7 @@
     "return": null
   },
   {
-    "__docId__": 95,
+    "__docId__": 96,
     "kind": "method",
     "name": "exportImage",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1471,7 +1492,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#exportImage",
     "access": "public",
     "description": "Save waveform image as data URI.\n\nThe default format is `'image/png'`. Other supported types are\n`'image/jpeg'` and `'image/webp'`.",
-    "lineNumber": 464,
+    "lineNumber": 465,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1514,7 +1535,7 @@
     }
   },
   {
-    "__docId__": 96,
+    "__docId__": 97,
     "kind": "method",
     "name": "setAudioOutput",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1524,7 +1545,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#setAudioOutput",
     "access": "public",
     "description": "Change the audio output device.",
-    "lineNumber": 473,
+    "lineNumber": 474,
     "params": [
       {
         "nullable": null,
@@ -1540,7 +1561,7 @@
     "return": null
   },
   {
-    "__docId__": 97,
+    "__docId__": 98,
     "kind": "method",
     "name": "getCurrentTime",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1550,7 +1571,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#getCurrentTime",
     "access": "public",
     "description": "Get the current time (in seconds) of the stream during playback.\n\nReturns 0 if no stream is available (yet).",
-    "lineNumber": 494,
+    "lineNumber": 495,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1568,7 +1589,7 @@
     "params": []
   },
   {
-    "__docId__": 98,
+    "__docId__": 99,
     "kind": "method",
     "name": "setCurrentTime",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1578,7 +1599,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#setCurrentTime",
     "access": "private",
     "description": "Updates the player's element displaying the current time.",
-    "lineNumber": 509,
+    "lineNumber": 510,
     "params": [
       {
         "nullable": null,
@@ -1604,7 +1625,7 @@
     "return": null
   },
   {
-    "__docId__": 99,
+    "__docId__": 100,
     "kind": "method",
     "name": "getDuration",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1614,7 +1635,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#getDuration",
     "access": "public",
     "description": "Get the duration of the stream in seconds.\n\nReturns 0 if no stream is available (yet).",
-    "lineNumber": 544,
+    "lineNumber": 545,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1632,7 +1653,7 @@
     "params": []
   },
   {
-    "__docId__": 100,
+    "__docId__": 101,
     "kind": "method",
     "name": "setDuration",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1642,7 +1663,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#setDuration",
     "access": "private",
     "description": "Updates the player's element displaying the duration time.",
-    "lineNumber": 557,
+    "lineNumber": 558,
     "params": [
       {
         "nullable": null,
@@ -1658,7 +1679,7 @@
     "return": null
   },
   {
-    "__docId__": 101,
+    "__docId__": 102,
     "kind": "method",
     "name": "onWaveReady",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1668,7 +1689,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#onWaveReady",
     "access": "private",
     "description": "Audio is loaded, decoded and the waveform is drawn.",
-    "lineNumber": 578,
+    "lineNumber": 579,
     "unknown": [
       {
         "tagName": "@fires",
@@ -1679,7 +1700,7 @@
     "return": null
   },
   {
-    "__docId__": 105,
+    "__docId__": 106,
     "kind": "method",
     "name": "onWaveFinish",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1689,7 +1710,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#onWaveFinish",
     "access": "private",
     "description": "Fires when audio playback completed.",
-    "lineNumber": 625,
+    "lineNumber": 626,
     "unknown": [
       {
         "tagName": "@fires",
@@ -1700,7 +1721,7 @@
     "return": null
   },
   {
-    "__docId__": 107,
+    "__docId__": 108,
     "kind": "method",
     "name": "onWaveProgress",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1710,7 +1731,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#onWaveProgress",
     "access": "private",
     "description": "Fires continuously during audio playback.",
-    "lineNumber": 668,
+    "lineNumber": 669,
     "params": [
       {
         "nullable": null,
@@ -1726,7 +1747,7 @@
     "return": null
   },
   {
-    "__docId__": 108,
+    "__docId__": 109,
     "kind": "method",
     "name": "onWaveSeek",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1736,12 +1757,12 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#onWaveSeek",
     "access": "private",
     "description": "Fires during seeking of the waveform.",
-    "lineNumber": 677,
+    "lineNumber": 678,
     "params": [],
     "return": null
   },
   {
-    "__docId__": 109,
+    "__docId__": 110,
     "kind": "method",
     "name": "onWaveError",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1751,7 +1772,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#onWaveError",
     "access": "private",
     "description": "Waveform error.",
-    "lineNumber": 687,
+    "lineNumber": 688,
     "params": [
       {
         "nullable": null,
@@ -1767,7 +1788,7 @@
     "return": null
   },
   {
-    "__docId__": 110,
+    "__docId__": 111,
     "kind": "method",
     "name": "onPlayToggle",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1777,12 +1798,12 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#onPlayToggle",
     "access": "private",
     "description": "Fired when the play toggle is clicked.",
-    "lineNumber": 704,
+    "lineNumber": 705,
     "params": [],
     "return": null
   },
   {
-    "__docId__": 111,
+    "__docId__": 112,
     "kind": "method",
     "name": "onVolumeChange",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1792,12 +1813,12 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#onVolumeChange",
     "access": "private",
     "description": "Fired when the volume in the video.js player changes.",
-    "lineNumber": 720,
+    "lineNumber": 721,
     "params": [],
     "return": null
   },
   {
-    "__docId__": 112,
+    "__docId__": 113,
     "kind": "method",
     "name": "onScreenChange",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1807,12 +1828,12 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#onScreenChange",
     "access": "private",
     "description": "Fired when the video.js player switches in or out of fullscreen mode.",
-    "lineNumber": 735,
+    "lineNumber": 736,
     "params": [],
     "return": null
   },
   {
-    "__docId__": 113,
+    "__docId__": 114,
     "kind": "method",
     "name": "onResizeChange",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1822,12 +1843,12 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#onResizeChange",
     "access": "private",
     "description": "Fired when the video.js player is resized.",
-    "lineNumber": 768,
+    "lineNumber": 769,
     "params": [],
     "return": null
   },
   {
-    "__docId__": 114,
+    "__docId__": 115,
     "kind": "method",
     "name": "redrawWaveform",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1837,7 +1858,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#redrawWaveform",
     "access": "private",
     "description": "Redraw waveform.",
-    "lineNumber": 782,
+    "lineNumber": 783,
     "params": [
       {
         "nullable": null,
@@ -1863,7 +1884,7 @@
     "return": null
   },
   {
-    "__docId__": 115,
+    "__docId__": 116,
     "kind": "method",
     "name": "log",
     "memberof": "src/js/videojs.wavesurfer.js~Wavesurfer",
@@ -1873,7 +1894,7 @@
     "longname": "src/js/videojs.wavesurfer.js~Wavesurfer#log",
     "access": "private",
     "description": "Log message to console (if the debug option is enabled).",
-    "lineNumber": 821,
+    "lineNumber": 822,
     "params": [
       {
         "nullable": null,

@@ -18,6 +18,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "videojs-wavesurfer/src/js/middleware.js~wavesurfermiddleware",
+    "variable/index.html#static-variable-WavesurferMiddleware",
+    "<span>WavesurferMiddleware</span> <span class=\"search-result-import-path\">videojs-wavesurfer/src/js/middleware.js</span>",
+    "variable"
+  ],
+  [
     "videojs-wavesurfer/src/js/utils/format-time.js~formattime",
     "function/index.html#static-function-formatTime",
     "<span>formatTime</span> <span class=\"search-result-import-path\">videojs-wavesurfer/src/js/utils/format-time.js</span>",
@@ -28,12 +34,6 @@ window.esdocSearchIndex = [
     "function/index.html#static-function-log",
     "<span>log</span> <span class=\"search-result-import-path\">videojs-wavesurfer/src/js/utils/log.js</span>",
     "function"
-  ],
-  [
-    "videojs-wavesurfer/src/js/middleware.js~mymiddleware",
-    "variable/index.html#static-variable-myMiddleware",
-    "<span>myMiddleware</span> <span class=\"search-result-import-path\">videojs-wavesurfer/src/js/middleware.js</span>",
-    "variable"
   ],
   [
     "videojs-wavesurfer/src/js/defaults.js~plugindefaultoptions",

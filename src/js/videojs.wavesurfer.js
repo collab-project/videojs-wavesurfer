@@ -9,7 +9,7 @@ import Event from './event';
 import log from './utils/log';
 import formatTime from './utils/format-time';
 import pluginDefaultOptions from './defaults';
-import myMiddleware from './middleware';
+import WavesurferMiddleware from './middleware';
 import window from 'global/window';
 
 import videojs from 'video.js';
@@ -17,6 +17,7 @@ import WaveSurfer from 'wavesurfer.js';
 
 const Plugin = videojs.getPlugin('plugin');
 
+const wavesurferPluginName = 'wavesurfer';
 const wavesurferClassName = 'vjs-wavedisplay';
 
 /**
@@ -828,16 +829,16 @@ Wavesurfer.VERSION = __VERSION__;
 
 // register plugin once
 videojs.Wavesurfer = Wavesurfer;
-if (videojs.getPlugin('wavesurfer') === undefined) {
-    videojs.registerPlugin('wavesurfer', Wavesurfer);
+if (videojs.getPlugin(wavesurferPluginName) === undefined) {
+    videojs.registerPlugin(wavesurferPluginName, Wavesurfer);
 }
 
 // register a star-middleware
 videojs.use('*', player => {
     // make player available on middleware
-    myMiddleware.player = player;
+    WavesurferMiddleware.player = player;
 
-    return myMiddleware;
+    return WavesurferMiddleware;
 });
 
 export {Wavesurfer};
