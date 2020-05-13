@@ -16,7 +16,7 @@ Install videojs-wavesurfer:
 npm install videojs-wavesurfer
 ```
 
-## Webpack config
+## Configuration
 
 Create the Webpack config file called `webpack.config.js`:
 
@@ -59,7 +59,7 @@ module.exports = {
 };
 ```
 
-## Sample project
+## Application
 
 Create `src/index.html` containing:
 
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
 Download the [example audio file](https://github.com/collab-project/videojs-wavesurfer/raw/master/examples/media/hal.wav)
 and place it in the root directory.
 
-## Run example
+## Run
 
 Start the Webpack development server:
 

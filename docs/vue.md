@@ -2,7 +2,8 @@
 
 This page shows how to get started with [Vue.js](https://vuejs.org/) and videojs-wavesurfer.
 
-For more information, check the video.js [documentation](https://github.com/videojs/video.js/blob/master/docs/guides/vue.md) for Vue.js.
+For more information, check the video.js [documentation](https://github.com/videojs/video.js/blob/master/docs/guides/vue.md)
+for Vue.js.
 
 ## Installation
 
@@ -25,7 +26,7 @@ cd videojs-wavesurfer-app
 npm install --save videojs-wavesurfer
 ```
 
-## Webpack config
+## Configuration
 
 Create `vue.config.js` with the following content:
 
@@ -162,7 +163,7 @@ export default {
 Download the [example audio file](https://github.com/collab-project/videojs-wavesurfer/raw/master/examples/media/hal.wav)
 and place it in the `public` directory.
 
-## Run example
+## Run
 
 Start the Vue.js development server:
 

@@ -50,7 +50,7 @@ Install the dependencies:
 npm install
 ```
 
-Install and save `videojs-wavesurfer` and `@types/video.js`:
+Install `videojs-wavesurfer` and `@types/video.js`:
 
 ```console
 npm install --save videojs-wavesurfer @types/video.js
@@ -106,9 +106,9 @@ module.exports = {
 }
 ```
 
-## Sample Project
+## Application
 
-Create the `src/app/` directory and add a new Angular component for videojs-wavesurfer
+Create the `src/app/` directories and add a new Angular component for videojs-wavesurfer
 in `src/app/videojs.wavesurfer.component.ts`:
 
 ```ts
@@ -297,7 +297,7 @@ And finally, create the main index HTML file in `src/index.html`:
 Download the [example audio file](https://github.com/collab-project/videojs-wavesurfer/raw/master/examples/media/hal.wav)
 and place it in the project directory.
 
-## Run example
+## Run
 
 Start the development server:
 

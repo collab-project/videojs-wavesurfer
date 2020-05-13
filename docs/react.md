@@ -28,6 +28,41 @@ use to configure Webpack:
 npm install react-app-rewired --save-dev
 ```
 
+## Configuration
+
+Create a `config-overrides.js` file in the root directory:
+
+```javascript
+const webpack = require("webpack");
+
+module.exports = function override(config, env) {
+  // Extend the config to work with videojs-wavesurfer without ejecting create react app.
+  // Reference: https://collab-project.github.io/videojs-wavesurfer/#/react
+  const videojsPlugin = new webpack.ProvidePlugin({
+    videojs: "video.js/dist/video.cjs.js"
+  });
+  const videojsAlias = {
+    videojs: "video.js",
+    WaveSurfer: "wavesurfer.js"
+  };
+  config.resolve.alias = { ...config.resolve.alias, ...videojsAlias };
+  config.plugins.push(videojsPlugin);
+  return config;
+};
+```
+
+Change the existing calls to `react-scripts` in the `scripts` section of `package.json`
+for `start`, `build` and `test`:
+
+```json
+"scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
+}
+```
+
 ## Application
 
 Edit `src/index.js`:
@@ -143,7 +178,7 @@ class App extends Component {
 export default App;
 ```
 
-Add this to `src/index.css`:
+Add the following to `src/index.css`:
 
 ```css
 /* change player background color */
@@ -152,51 +187,16 @@ Add this to `src/index.css`:
 }
 ```
 
-## Webpack configuration
-
-Create a `config-overrides.js` file in the root directory:
-
-```javascript
-const webpack = require("webpack");
-
-module.exports = function override(config, env) {
-  // Extend the config to work with the videojs-wavesurfer project without ejecting create react app.
-  // Reference: https://github.com/collab-project/videojs-wavesurfer/wiki/React
-  const videojsPlugin = new webpack.ProvidePlugin({
-    videojs: "video.js/dist/video.cjs.js"
-  });
-  const videojsAlias = {
-    videojs: "video.js",
-    WaveSurfer: "wavesurfer.js"
-  };
-  config.resolve.alias = { ...config.resolve.alias, ...videojsAlias };
-  config.plugins.push(videojsPlugin);
-  return config;
-};
-```
-
-Change the existing calls to `react-scripts` in the `scripts` section of `package.json`
-for `start`, `build` and `test`:
-
-```json
-"scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
-}
-```
-
 ## Media
 
 Download the [example audio file](https://github.com/collab-project/videojs-wavesurfer/raw/master/examples/media/hal.wav)
 and place it in the `public` directory.
 
-## Run example
+## Run
 
 Start the development server:
 
-```
+```console
 npm start
 ```
 

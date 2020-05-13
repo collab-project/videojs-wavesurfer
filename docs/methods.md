@@ -11,6 +11,8 @@ player.on('ready', function() {
 });
 ```
 
+# Plugin
+
 | Method | Description |
 | ------ | ----------- |
 | `destroy` | Destroys the wavesurfer instance and children (including the video.js player). |
@@ -23,7 +25,7 @@ player.on('ready', function() {
 | `exportImage(format, quality)` | Save waveform image as data URI. Default format is `'image/png'`. |
 | `setAudioOutput(deviceId)` | Change the audio output device using its [deviceId](https://developer.mozilla.org/en-US/docs/Web/API/MediaDeviceInfo/deviceId). |
 
-## wavesurfer.js methods
+## wavesurfer.js
 
 You can access the wavesurfer instance, for example to call the
 wavesurfer.js `seekTo` method, by using the `surfer` property of the
