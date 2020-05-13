@@ -1,5 +1,9 @@
 # videojs-wavesurfer changelog
 
+## 3.0.3 - unreleased
+
+- Fix multiple players on single page (#101)
+
 ## 3.0.2 - 2020/05/12
 
 - Fix hiding `bigPlayButton`
