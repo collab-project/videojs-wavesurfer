@@ -32,7 +32,7 @@
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#js">js</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/js/event.js~Event.html">Event</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/js/videojs.wavesurfer.js~Wavesurfer.html">Wavesurfer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-pluginDefaultOptions">pluginDefaultOptions</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-myMiddleware">myMiddleware</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-WavesurferMiddleware">WavesurferMiddleware</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Plugin">Plugin</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#js-utils">js/utils</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatTime">formatTime</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-log">log</a></span></span></li>
@@ -52,7 +52,7 @@ import Event from &apos;./event&apos;;
 import log from &apos;./utils/log&apos;;
 import formatTime from &apos;./utils/format-time&apos;;
 import pluginDefaultOptions from &apos;./defaults&apos;;
-import myMiddleware from &apos;./middleware&apos;;
+import WavesurferMiddleware from &apos;./middleware&apos;;
 import window from &apos;global/window&apos;;
 
 import videojs from &apos;video.js&apos;;
@@ -60,6 +60,7 @@ import WaveSurfer from &apos;wavesurfer.js&apos;;
 
 const Plugin = videojs.getPlugin(&apos;plugin&apos;);
 
+const wavesurferPluginName = &apos;wavesurfer&apos;;
 const wavesurferClassName = &apos;vjs-wavedisplay&apos;;
 
 /**
@@ -871,16 +872,16 @@ Wavesurfer.VERSION = __VERSION__;
 
 // register plugin once
 videojs.Wavesurfer = Wavesurfer;
-if (videojs.getPlugin(&apos;wavesurfer&apos;) === undefined) {
-    videojs.registerPlugin(&apos;wavesurfer&apos;, Wavesurfer);
+if (videojs.getPlugin(wavesurferPluginName) === undefined) {
+    videojs.registerPlugin(wavesurferPluginName, Wavesurfer);
 }
 
 // register a star-middleware
 videojs.use(&apos;*&apos;, player =&gt; {
     // make player available on middleware
-    myMiddleware.player = player;
+    WavesurferMiddleware.player = player;
 
-    return myMiddleware;
+    return WavesurferMiddleware;
 });
 
 export {Wavesurfer};</code></pre>

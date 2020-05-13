@@ -1,6 +1,6 @@
 {
-  "coverage": "66.03%",
-  "expectCount": 53,
+  "coverage": "64.81%",
+  "expectCount": 54,
   "actualCount": 35,
   "files": {
     "src/js/defaults.js": {
@@ -32,25 +32,26 @@
       ]
     },
     "src/js/videojs.wavesurfer.js": {
-      "expectCount": 46,
+      "expectCount": 47,
       "actualCount": 30,
       "undocumentLines": [
         18,
         20,
-        43,
+        21,
         44,
         45,
         46,
         47,
         48,
         49,
-        133,
-        155,
-        157,
+        50,
+        134,
+        156,
         158,
-        181,
-        196,
-        197
+        159,
+        182,
+        197,
+        198
       ]
     }
   }
