@@ -11,3 +11,9 @@
     font-size: 1.75rem;
     margin: 25px 0 .8rem;
 }
+
+.sidebar-toggle {
+    bottom: unset;
+    top: 0;
+}
+
