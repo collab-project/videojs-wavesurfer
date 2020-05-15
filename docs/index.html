@@ -18,7 +18,18 @@
       subMaxLevel: 2,
       alias: {
           '/changelog': 'https://raw.githubusercontent.com/collab-project/videojs-wavesurfer/master/CHANGES.md'
-      }
+      },
+      plugins: [
+          function(hook) {
+              hook.beforeEach(function(content, next) {
+                  const reg = /#[1-9]\d*\b/g;
+                  next(content.replace(reg, function(x) {
+                    // add github issue links
+                    return `[${x}](https://github.com/collab-project/videojs-wavesurfer/issues/${x.substr(1)})`;
+                  }));
+              });
+          }
+      ]
     }
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
