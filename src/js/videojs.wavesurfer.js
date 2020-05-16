@@ -19,6 +19,10 @@ const Plugin = videojs.getPlugin('plugin');
 
 const wavesurferPluginName = 'wavesurfer';
 const wavesurferClassName = 'vjs-wavedisplay';
+const wavesurferStyleName = 'vjs-wavesurfer';
+
+const WEBAUDIO = 'WebAudio';
+const MEDIAELEMENT = 'MediaElement';
 
 /**
  * Draw a waveform for audio and video files in a video.js player.
@@ -37,7 +41,7 @@ class Wavesurfer extends Plugin {
         super(player, options);
 
         // add plugin style
-        player.addClass('vjs-wavesurfer');
+        player.addClass(wavesurferStyleName);
 
         // parse options
         options = videojs.mergeOptions(pluginDefaultOptions, options);
@@ -72,17 +76,6 @@ class Wavesurfer extends Plugin {
             return formatTime(seconds, guide, this.msDisplayMax);
         });
 
-        // the native controls don't work for this UI so disable
-        // them no matter what
-        // XXX: doublecheck this
-        /*
-        if (this.player.usingNativeControls_ === true) {
-            if (this.player.tech_.el_ !== undefined) {
-                this.player.tech_.el_.controls = false;
-            }
-        }
-        */
-
         // controls
         if (this.player.options_.controls === true) {
             // make sure controlBar is showing.
@@ -92,7 +85,7 @@ class Wavesurfer extends Plugin {
             this.player.controlBar.el_.style.display = 'flex';
 
             // progress control is only supported with the MediaElement backend
-            if (this.backend === 'WebAudio' &&
+            if (this.backend === WEBAUDIO &&
                 this.player.controlBar.progressControl !== undefined) {
                 this.player.controlBar.progressControl.hide();
             }
@@ -119,7 +112,7 @@ class Wavesurfer extends Plugin {
                 this.player.controlBar.remainingTimeDisplay.hide();
             }
 
-            if (this.backend === 'WebAudio' &&
+            if (this.backend === WEBAUDIO &&
                 this.player.controlBar.playToggle !== undefined) {
                 // handle play toggle interaction
                 this.player.controlBar.playToggle.on(['tap', 'click'],
@@ -154,7 +147,7 @@ class Wavesurfer extends Plugin {
 
         // listen for wavesurfer.js events
         this.surferReady = this.onWaveReady.bind(this);
-        if (this.backend === 'WebAudio') {
+        if (this.backend === WEBAUDIO) {
             this.surferProgress = this.onWaveProgress.bind(this);
             this.surferSeek = this.onWaveSeek.bind(this);
 
@@ -235,7 +228,7 @@ class Wavesurfer extends Plugin {
         if ('backend' in surferOpts) {
             this.backend = surferOpts.backend;
         } else {
-            surferOpts.backend = this.backend = 'MediaElement';
+            surferOpts.backend = this.backend = MEDIAELEMENT;
         }
 
         return surferOpts;
@@ -251,13 +244,13 @@ class Wavesurfer extends Plugin {
     setupPlaybackEvents(enable) {
         if (enable === false) {
             this.surfer.un(Event.READY, this.surferReady);
-            if (this.backend === 'WebAudio') {
+            if (this.backend === WEBAUDIO) {
                 this.surfer.un(Event.AUDIOPROCESS, this.surferProgress);
                 this.surfer.un(Event.SEEK, this.surferSeek);
             }
         } else if (enable === true) {
             this.surfer.on(Event.READY, this.surferReady);
-            if (this.backend === 'WebAudio') {
+            if (this.backend === WEBAUDIO) {
                 this.surfer.on(Event.AUDIOPROCESS, this.surferProgress);
                 this.surfer.on(Event.SEEK, this.surferSeek);
             }
@@ -585,7 +578,7 @@ class Wavesurfer extends Plugin {
         this.player.trigger(Event.WAVE_READY);
 
         // update time display
-        if (this.backend === 'WebAudio') {
+        if (this.backend === WEBAUDIO) {
             this.setCurrentTime();
             this.setDuration();
 
@@ -607,7 +600,7 @@ class Wavesurfer extends Plugin {
             this.setVolume(0);
 
             // try auto-play
-            if (this.backend === 'WebAudio') {
+            if (this.backend === WEBAUDIO) {
                 this.play();
             } else {
                 this.player.play().catch(e => {
@@ -631,7 +624,7 @@ class Wavesurfer extends Plugin {
 
         // check if loop is enabled
         if (this.player.options_.loop === true) {
-            if (this.backend === 'WebAudio') {
+            if (this.backend === WEBAUDIO) {
                 // reset waveform
                 this.surfer.stop();
                 this.play();
@@ -640,7 +633,7 @@ class Wavesurfer extends Plugin {
             // finished
             this.waveFinished = true;
 
-            if (this.backend === 'WebAudio') {
+            if (this.backend === WEBAUDIO) {
                 // pause player
                 this.pause();
 
