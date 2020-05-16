@@ -1,6 +1,6 @@
 # videojs-wavesurfer changelog
 
-## 3.0.4 - unreleased
+## 3.0.4 - 2020/05/16
 
 - Add compatibility for video.js 7.7.6 and newer
 
