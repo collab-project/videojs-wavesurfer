@@ -26,7 +26,7 @@ Add an `audio` element:
 Hide irrelevant controls, specify the `WebAudio` backend and enable the microphone plugin:
 
 ```javascript
-let player = videojs('myLiveAudio', {
+let options = {
     controls: true,
     width: 600,
     height: 300,
@@ -63,7 +63,9 @@ let player = videojs('myLiveAudio', {
             ]
         }
     }
-});
+};
+
+let player = videojs('myLiveAudio', options);
 ```
 
 The wavesurfer.js microphone plugin has additional configuration
