@@ -514,7 +514,8 @@ class Wavesurfer extends Plugin {
 
         // update current time display component
         if (this.player.controlBar.currentTimeDisplay &&
-            this.player.controlBar.currentTimeDisplay.contentEl()) {
+            this.player.controlBar.currentTimeDisplay.contentEl() &&
+            this.player.controlBar.currentTimeDisplay.contentEl().lastChild) {
             let time = Math.min(currentTime, duration);
 
             this.player.controlBar.currentTimeDisplay.formattedTime_ =
@@ -556,7 +557,8 @@ class Wavesurfer extends Plugin {
 
         // update duration display component
         if (this.player.controlBar.durationDisplay &&
-            this.player.controlBar.durationDisplay.contentEl()) {
+            this.player.controlBar.durationDisplay.contentEl() &&
+            this.player.controlBar.durationDisplay.contentEl().lastChild) {
             this.player.controlBar.durationDisplay.formattedTime_ =
                 this.player.controlBar.durationDisplay.contentEl().lastChild.textContent =
                     formatTime(duration, duration, this.msDisplayMax);

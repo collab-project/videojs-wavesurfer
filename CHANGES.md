@@ -1,5 +1,10 @@
 # videojs-wavesurfer changelog
 
+## 3.0.4 - unreleased
+
+- Add compatibility for video.js 7.7.6 and newer
+
+
 ## 3.0.3 - 2020/05/13
 
 - Fix multiple players on single page (#101)
