@@ -1,6 +1,6 @@
 # videojs-wavesurfer changelog
 
-## 3.1.0 - unreleased
+## 3.1.0 - 2020/05/18
 
 **Backwards-incompatible changes** (when upgrading from a previous version):
 

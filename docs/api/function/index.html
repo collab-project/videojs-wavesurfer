@@ -59,13 +59,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-formatTime">formatTime</a></span></span><span class="code" data-ice="signature">(seconds: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, guide: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, msDisplayMax: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-formatTime">formatTime</a></span></span><span class="code" data-ice="signature">(seconds: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, guide: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, displayMilliseconds: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Format seconds as a time string, H:MM:SS, M:SS or M:SS:MMM.</p>
+        <div data-ice="description"><p>Format seconds as a duration string.</p>
 </div>
       </div>
     </td>
@@ -116,18 +116,25 @@
     
     
     
-    <span class="code" data-ice="name">formatTime</span><span class="code" data-ice="signature">(seconds: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, guide: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, msDisplayMax: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="code" data-ice="name">formatTime</span><span class="code" data-ice="signature">(seconds: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, guide: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, displayMilliseconds: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/utils/format-time.js.html#lineNumber22">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/utils/format-time.js.html#lineNumber29">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import formatTime from &apos;<span><a href="file/src/js/utils/format-time.js.html#lineNumber22">videojs-wavesurfer/src/js/utils/format-time.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import formatTime from &apos;<span><a href="file/src/js/utils/format-time.js.html#lineNumber29">videojs-wavesurfer/src/js/utils/format-time.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>Format seconds as a time string, H:MM:SS, M:SS or M:SS:MMM.</p>
+  <div data-ice="description"><p>Format seconds as a duration string.</p>
+<p>Either formatted as:</p>
+<ul>
+<li>DD:HH:MM:SS (&gt; 24 hours)</li>
+<li>HH:MM:SS (&gt; 1 hour)</li>
+<li>MM:SS:MSS (<code>displayMilliseconds = true</code>)</li>
+<li>MM:SS (<code>displayMilliseconds = false</code>)</li>
+</ul>
 <p>Supplying a guide (in seconds) will force a number of leading zeros
 to cover the length of the guide.</p>
 </div>
@@ -154,16 +161,14 @@ to cover the length of the guide.</p>
       <td data-ice="name" class="code" data-depth="0">guide</td>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Number (in seconds) to model the string
-    after.</p>
+      <td data-ice="description"><p>Number (in seconds) to model the string after.</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">msDisplayMax</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
+      <td data-ice="name" class="code" data-depth="0">displayMilliseconds</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Number (in milliseconds) to model the string
-    after.</p>
+      <td data-ice="description"><p>Display milliseconds or not.</p>
 </td>
     </tr>
 </tbody>
@@ -177,8 +182,7 @@ to cover the length of the guide.</p>
       <tbody>
         <tr>
           <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>Time formatted as H:MM:SS, M:SS or M:SS:MMM, e.g.
-    0:00:12.</p>
+          <td class="return-desc" data-ice="returnDescription"><p>Formatted duration time, e.g &apos;00:12:653&apos;.</p>
 </td>
         </tr>
       </tbody>

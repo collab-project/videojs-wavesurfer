@@ -384,6 +384,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/js/videojs.wavesurfer.js~wavesurfer#displaymilliseconds",
+    "class/src/js/videojs.wavesurfer.js~Wavesurfer.html#instance-member-displayMilliseconds",
+    "src/js/videojs.wavesurfer.js~Wavesurfer#displayMilliseconds",
+    "member"
+  ],
+  [
     "src/js/videojs.wavesurfer.js~wavesurfer#dispose",
     "class/src/js/videojs.wavesurfer.js~Wavesurfer.html#instance-method-dispose",
     "src/js/videojs.wavesurfer.js~Wavesurfer#dispose",
@@ -442,12 +448,6 @@ window.esdocSearchIndex = [
     "class/src/js/videojs.wavesurfer.js~Wavesurfer.html#instance-method-log",
     "src/js/videojs.wavesurfer.js~Wavesurfer#log",
     "method"
-  ],
-  [
-    "src/js/videojs.wavesurfer.js~wavesurfer#msdisplaymax",
-    "class/src/js/videojs.wavesurfer.js~Wavesurfer.html#instance-member-msDisplayMax",
-    "src/js/videojs.wavesurfer.js~Wavesurfer#msDisplayMax",
-    "member"
   ],
   [
     "src/js/videojs.wavesurfer.js~wavesurfer#onplaytoggle",

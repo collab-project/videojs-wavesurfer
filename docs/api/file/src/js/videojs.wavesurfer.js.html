@@ -62,6 +62,12 @@ const Plugin = videojs.getPlugin(&apos;plugin&apos;);
 
 const wavesurferPluginName = &apos;wavesurfer&apos;;
 const wavesurferClassName = &apos;vjs-wavedisplay&apos;;
+const wavesurferStyleName = &apos;vjs-wavesurfer&apos;;
+
+// wavesurfer.js backends
+const WEBAUDIO = &apos;WebAudio&apos;;
+const MEDIAELEMENT = &apos;MediaElement&apos;;
+const MEDIAELEMENT_WEBAUDIO = &apos;MediaElementWebAudio&apos;;
 
 /**
  * Draw a waveform for audio and video files in a video.js player.
@@ -80,7 +86,7 @@ class Wavesurfer extends Plugin {
         super(player, options);
 
         // add plugin style
-        player.addClass(&apos;vjs-wavesurfer&apos;);
+        player.addClass(wavesurferStyleName);
 
         // parse options
         options = videojs.mergeOptions(pluginDefaultOptions, options);
@@ -90,7 +96,12 @@ class Wavesurfer extends Plugin {
         this.backend = null;
         this.debug = (options.debug.toString() === &apos;true&apos;);
         this.textTracksEnabled = (this.player.options_.tracks.length &gt; 0);
-        this.msDisplayMax = parseFloat(options.msDisplayMax);
+        this.displayMilliseconds = options.displayMilliseconds;
+
+        // use custom video.js time format
+        videojs.setFormatTime((seconds, guide) =&gt; {
+            return formatTime(seconds, guide, this.displayMilliseconds);
+        });
 
         // wait until player ui is ready
         this.player.one(Event.READY, this.initialize.bind(this));
@@ -110,22 +121,6 @@ class Wavesurfer extends Plugin {
         // parse options
         let mergedOptions = this.parseOptions(this.player.options_.plugins.wavesurfer);
 
-        // set video.js time format
-        videojs.setFormatTime((seconds, guide) =&gt; {
-            return formatTime(seconds, guide, this.msDisplayMax);
-        });
-
-        // the native controls don&apos;t work for this UI so disable
-        // them no matter what
-        // XXX: doublecheck this
-        /*
-        if (this.player.usingNativeControls_ === true) {
-            if (this.player.tech_.el_ !== undefined) {
-                this.player.tech_.el_.controls = false;
-            }
-        }
-        */
-
         // controls
         if (this.player.options_.controls === true) {
             // make sure controlBar is showing.
@@ -135,7 +130,7 @@ class Wavesurfer extends Plugin {
             this.player.controlBar.el_.style.display = &apos;flex&apos;;
 
             // progress control is only supported with the MediaElement backend
-            if (this.backend === &apos;WebAudio&apos; &amp;&amp;
+            if (this.backend === WEBAUDIO &amp;&amp;
                 this.player.controlBar.progressControl !== undefined) {
                 this.player.controlBar.progressControl.hide();
             }
@@ -162,7 +157,7 @@ class Wavesurfer extends Plugin {
                 this.player.controlBar.remainingTimeDisplay.hide();
             }
 
-            if (this.backend === &apos;WebAudio&apos; &amp;&amp;
+            if (this.backend === WEBAUDIO &amp;&amp;
                 this.player.controlBar.playToggle !== undefined) {
                 // handle play toggle interaction
                 this.player.controlBar.playToggle.on([&apos;tap&apos;, &apos;click&apos;],
@@ -197,7 +192,7 @@ class Wavesurfer extends Plugin {
 
         // listen for wavesurfer.js events
         this.surferReady = this.onWaveReady.bind(this);
-        if (this.backend === &apos;WebAudio&apos;) {
+        if (this.backend === WEBAUDIO) {
             this.surferProgress = this.onWaveProgress.bind(this);
             this.surferSeek = this.onWaveSeek.bind(this);
 
@@ -278,7 +273,7 @@ class Wavesurfer extends Plugin {
         if (&apos;backend&apos; in surferOpts) {
             this.backend = surferOpts.backend;
         } else {
-            surferOpts.backend = this.backend = &apos;MediaElement&apos;;
+            surferOpts.backend = this.backend = MEDIAELEMENT;
         }
 
         return surferOpts;
@@ -294,13 +289,13 @@ class Wavesurfer extends Plugin {
     setupPlaybackEvents(enable) {
         if (enable === false) {
             this.surfer.un(Event.READY, this.surferReady);
-            if (this.backend === &apos;WebAudio&apos;) {
+            if (this.backend === WEBAUDIO) {
                 this.surfer.un(Event.AUDIOPROCESS, this.surferProgress);
                 this.surfer.un(Event.SEEK, this.surferSeek);
             }
         } else if (enable === true) {
             this.surfer.on(Event.READY, this.surferReady);
-            if (this.backend === &apos;WebAudio&apos;) {
+            if (this.backend === WEBAUDIO) {
                 this.surfer.on(Event.AUDIOPROCESS, this.surferProgress);
                 this.surfer.on(Event.SEEK, this.surferSeek);
             }
@@ -564,12 +559,13 @@ class Wavesurfer extends Plugin {
 
         // update current time display component
         if (this.player.controlBar.currentTimeDisplay &amp;&amp;
-            this.player.controlBar.currentTimeDisplay.contentEl()) {
+            this.player.controlBar.currentTimeDisplay.contentEl() &amp;&amp;
+            this.player.controlBar.currentTimeDisplay.contentEl().lastChild) {
             let time = Math.min(currentTime, duration);
 
             this.player.controlBar.currentTimeDisplay.formattedTime_ =
                 this.player.controlBar.currentTimeDisplay.contentEl().lastChild.textContent =
-                    formatTime(time, duration, this.msDisplayMax);
+                    formatTime(time, duration, this.displayMilliseconds);
         }
 
         if (this.textTracksEnabled &amp;&amp; this.player.tech_ &amp;&amp; this.player.tech_.el_) {
@@ -606,10 +602,11 @@ class Wavesurfer extends Plugin {
 
         // update duration display component
         if (this.player.controlBar.durationDisplay &amp;&amp;
-            this.player.controlBar.durationDisplay.contentEl()) {
+            this.player.controlBar.durationDisplay.contentEl() &amp;&amp;
+            this.player.controlBar.durationDisplay.contentEl().lastChild) {
             this.player.controlBar.durationDisplay.formattedTime_ =
                 this.player.controlBar.durationDisplay.contentEl().lastChild.textContent =
-                    formatTime(duration, duration, this.msDisplayMax);
+                    formatTime(duration, duration, this.displayMilliseconds);
         }
     }
 
@@ -627,8 +624,8 @@ class Wavesurfer extends Plugin {
         this.log(&apos;Waveform is ready&apos;);
         this.player.trigger(Event.WAVE_READY);
 
-        // update time display
-        if (this.backend === &apos;WebAudio&apos;) {
+        if (this.backend === WEBAUDIO) {
+            // update time display
             this.setCurrentTime();
             this.setDuration();
 
@@ -650,7 +647,7 @@ class Wavesurfer extends Plugin {
             this.setVolume(0);
 
             // try auto-play
-            if (this.backend === &apos;WebAudio&apos;) {
+            if (this.backend === WEBAUDIO) {
                 this.play();
             } else {
                 this.player.play().catch(e =&gt; {
@@ -674,7 +671,7 @@ class Wavesurfer extends Plugin {
 
         // check if loop is enabled
         if (this.player.options_.loop === true) {
-            if (this.backend === &apos;WebAudio&apos;) {
+            if (this.backend === WEBAUDIO) {
                 // reset waveform
                 this.surfer.stop();
                 this.play();
@@ -683,7 +680,7 @@ class Wavesurfer extends Plugin {
             // finished
             this.waveFinished = true;
 
-            if (this.backend === &apos;WebAudio&apos;) {
+            if (this.backend === WEBAUDIO) {
                 // pause player
                 this.pause();
 
