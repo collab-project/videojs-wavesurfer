@@ -21,8 +21,10 @@ const wavesurferPluginName = 'wavesurfer';
 const wavesurferClassName = 'vjs-wavedisplay';
 const wavesurferStyleName = 'vjs-wavesurfer';
 
+// wavesurfer.js backends
 const WEBAUDIO = 'WebAudio';
 const MEDIAELEMENT = 'MediaElement';
+const MEDIAELEMENT_WEBAUDIO = 'MediaElementWebAudio';
 
 /**
  * Draw a waveform for audio and video files in a video.js player.
@@ -51,7 +53,12 @@ class Wavesurfer extends Plugin {
         this.backend = null;
         this.debug = (options.debug.toString() === 'true');
         this.textTracksEnabled = (this.player.options_.tracks.length > 0);
-        this.msDisplayMax = parseFloat(options.msDisplayMax);
+        this.displayMilliseconds = options.displayMilliseconds;
+
+        // use custom video.js time format
+        videojs.setFormatTime((seconds, guide) => {
+            return formatTime(seconds, guide, this.displayMilliseconds);
+        });
 
         // wait until player ui is ready
         this.player.one(Event.READY, this.initialize.bind(this));
@@ -70,11 +77,6 @@ class Wavesurfer extends Plugin {
 
         // parse options
         let mergedOptions = this.parseOptions(this.player.options_.plugins.wavesurfer);
-
-        // set video.js time format
-        videojs.setFormatTime((seconds, guide) => {
-            return formatTime(seconds, guide, this.msDisplayMax);
-        });
 
         // controls
         if (this.player.options_.controls === true) {
@@ -520,7 +522,7 @@ class Wavesurfer extends Plugin {
 
             this.player.controlBar.currentTimeDisplay.formattedTime_ =
                 this.player.controlBar.currentTimeDisplay.contentEl().lastChild.textContent =
-                    formatTime(time, duration, this.msDisplayMax);
+                    formatTime(time, duration, this.displayMilliseconds);
         }
 
         if (this.textTracksEnabled && this.player.tech_ && this.player.tech_.el_) {
@@ -561,7 +563,7 @@ class Wavesurfer extends Plugin {
             this.player.controlBar.durationDisplay.contentEl().lastChild) {
             this.player.controlBar.durationDisplay.formattedTime_ =
                 this.player.controlBar.durationDisplay.contentEl().lastChild.textContent =
-                    formatTime(duration, duration, this.msDisplayMax);
+                    formatTime(duration, duration, this.displayMilliseconds);
         }
     }
 
@@ -579,8 +581,8 @@ class Wavesurfer extends Plugin {
         this.log('Waveform is ready');
         this.player.trigger(Event.WAVE_READY);
 
-        // update time display
         if (this.backend === WEBAUDIO) {
+            // update time display
             this.setCurrentTime();
             this.setDuration();
 

@@ -123,7 +123,7 @@ const playerOptions = {
         // configure videojs-wavesurfer plugin
         wavesurfer: {
             backend: 'MediaElement',
-            msDisplayMax: 10,
+            displayMilliseconds: true,
             debug: true,
             waveColor: '#4A4A22',
             progressColor: 'black',

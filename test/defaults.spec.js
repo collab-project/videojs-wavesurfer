@@ -16,7 +16,7 @@ describe('pluginDefaultOptions', () => {
     it('contains correct default values', () => {
         expect(pluginDefaultOptions).toEqual({
             debug: false,
-            msDisplayMax: 3
+            displayMilliseconds: true
         });
     });
 });

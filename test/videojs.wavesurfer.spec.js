@@ -135,11 +135,11 @@ describe('Wavesurfer', () => {
             player.wavesurfer().setCurrentTime(0.123);
 
             // only updates player visually
-            expect(player.controlBar.currentTimeDisplay.formattedTime_).toEqual('0:00:123');
+            expect(player.controlBar.currentTimeDisplay.formattedTime_).toEqual('00:00:123');
 
             // invalid values result in 0
             player.wavesurfer().setCurrentTime('foo', 'bar');
-            expect(player.controlBar.currentTimeDisplay.formattedTime_).toEqual('0:00');
+            expect(player.controlBar.currentTimeDisplay.formattedTime_).toEqual('00:00:000');
 
             done();
         });
@@ -171,11 +171,11 @@ describe('Wavesurfer', () => {
             player.wavesurfer().setDuration(0.1);
 
             // only updates player visually
-            expect(player.controlBar.durationDisplay.formattedTime_).toEqual('0:00:100');
+            expect(player.controlBar.durationDisplay.formattedTime_).toEqual('00:00:100');
 
             // invalid values result in 0
             player.wavesurfer().setDuration('foo');
-            expect(player.controlBar.durationDisplay.formattedTime_).toEqual('0:00');
+            expect(player.controlBar.durationDisplay.formattedTime_).toEqual('00:00:000');
 
             done();
         });
