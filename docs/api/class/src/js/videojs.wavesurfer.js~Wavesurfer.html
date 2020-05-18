@@ -564,7 +564,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/js/videojs.wavesurfer.js~Wavesurfer.html#instance-method-exportImage">exportImage</a></span></span><span class="code" data-ice="signature">(format: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, quality: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/js/videojs.wavesurfer.js~Wavesurfer.html#instance-method-exportImage">exportImage</a></span></span><span class="code" data-ice="signature">(format: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, quality: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, type: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span><span>[]</span></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
         </p>
       </div>
       <div>
@@ -2076,11 +2076,11 @@
     
     
     
-    <span class="code" data-ice="name">exportImage</span><span class="code" data-ice="signature">(format: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, quality: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="code" data-ice="name">exportImage</span><span class="code" data-ice="signature">(format: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, quality: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, type: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span><span>[]</span></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber460">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber467">source</a></span></span>
     </span>
   </h3>
 
@@ -2105,18 +2105,26 @@
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">format</td>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
-      <td data-ice="appendix"><ul><li>optional</li>
-<li>default: image/png</li></ul></td>
-      <td data-ice="description"><p>String indicating the image format.</p>
+      <td data-ice="appendix"><ul><li>default: &apos;image/png&apos;</li></ul></td>
+      <td data-ice="description"><p>A string indicating the image format.
+The default format type is <code>&apos;image/png&apos;</code>.</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">quality</td>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
-      <td data-ice="appendix"><ul><li>optional</li>
-<li>default: 1</li></ul></td>
-      <td data-ice="description"><p>Number between 0 and 1 indicating image
-    quality if the requested type is <code>&apos;image/jpeg&apos;</code> or <code>&apos;image/webp&apos;</code>.</p>
+      <td data-ice="appendix"><ul><li>default: 1</li></ul></td>
+      <td data-ice="description"><p>A number between 0 and 1 indicating the image
+quality to use for image formats that use lossy compression such as
+<code>&apos;image/jpeg&apos;`</code> and <code>&apos;image/webp&apos;</code>.</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">type</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Image data type to return. Either &apos;blob&apos; (default)
+or &apos;dataURL&apos;.</p>
 </td>
     </tr>
 </tbody>
@@ -2129,8 +2137,11 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>The data URI of the image data.</p>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span><span>[]</span></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>When using <code>&apos;dataURL&apos;</code> <code>type</code> this returns
+a single data URL or an array of data URLs, one for each canvas. The <code>&apos;blob&apos;</code>
+<code>type</code> returns a <code>Promise</code> resolving with an array of <code>Blob</code> instances, one
+for each canvas.</p>
 </td>
         </tr>
       </tbody>
@@ -2166,7 +2177,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber490">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber497">source</a></span></span>
     </span>
   </h3>
 
@@ -2224,7 +2235,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber541">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber548">source</a></span></span>
     </span>
   </h3>
 
@@ -2567,7 +2578,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber469">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber476">source</a></span></span>
     </span>
   </h3>
 
@@ -2778,7 +2789,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber819">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber826">source</a></span></span>
     </span>
   </h3>
 
@@ -2847,7 +2858,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber702">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber709">source</a></span></span>
     </span>
   </h3>
 
@@ -2891,7 +2902,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber766">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber773">source</a></span></span>
     </span>
   </h3>
 
@@ -2935,7 +2946,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber733">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber740">source</a></span></span>
     </span>
   </h3>
 
@@ -2979,7 +2990,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber718">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber725">source</a></span></span>
     </span>
   </h3>
 
@@ -3023,7 +3034,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber685">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber692">source</a></span></span>
     </span>
   </h3>
 
@@ -3084,7 +3095,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber623">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber630">source</a></span></span>
     </span>
   </h3>
 
@@ -3128,7 +3139,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber666">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber673">source</a></span></span>
     </span>
   </h3>
 
@@ -3189,7 +3200,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber576">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber583">source</a></span></span>
     </span>
   </h3>
 
@@ -3233,7 +3244,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber675">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber682">source</a></span></span>
     </span>
   </h3>
 
@@ -3351,7 +3362,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber780">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber787">source</a></span></span>
     </span>
   </h3>
 
@@ -3419,7 +3430,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber505">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber512">source</a></span></span>
     </span>
   </h3>
 
@@ -3488,7 +3499,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber554">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/js/videojs.wavesurfer.js.html#lineNumber561">source</a></span></span>
     </span>
   </h3>
 

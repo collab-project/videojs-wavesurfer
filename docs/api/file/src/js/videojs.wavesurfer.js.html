@@ -495,13 +495,20 @@ class Wavesurfer extends Plugin {
      * The default format is `&apos;image/png&apos;`. Other supported types are
      * `&apos;image/jpeg&apos;` and `&apos;image/webp&apos;`.
      *
-     * @param {string} [format=image/png] - String indicating the image format.
-     * @param {number} [quality=1] - Number between 0 and 1 indicating image
-     *     quality if the requested type is `&apos;image/jpeg&apos;` or `&apos;image/webp&apos;`.
-     * @returns {string} The data URI of the image data.
+     * @param {string} format=&apos;image/png&apos; A string indicating the image format.
+     * The default format type is `&apos;image/png&apos;`.
+     * @param {number} quality=1 A number between 0 and 1 indicating the image
+     * quality to use for image formats that use lossy compression such as
+     * `&apos;image/jpeg&apos;`` and `&apos;image/webp&apos;`.
+     * @param {string} type Image data type to return. Either &apos;blob&apos; (default)
+     * or &apos;dataURL&apos;.
+     * @return {string|string[]|Promise} When using `&apos;dataURL&apos;` `type` this returns
+     * a single data URL or an array of data URLs, one for each canvas. The `&apos;blob&apos;`
+     * `type` returns a `Promise` resolving with an array of `Blob` instances, one
+     * for each canvas.
      */
-    exportImage(format, quality) {
-        return this.surfer.exportImage(format, quality);
+    exportImage(format, quality, type = &apos;blob&apos;) {
+        return this.surfer.exportImage(format, quality, type);
     }
 
     /**
