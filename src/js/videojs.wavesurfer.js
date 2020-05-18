@@ -169,9 +169,6 @@ class Wavesurfer extends Plugin {
         this.player.on(Event.VOLUMECHANGE, this.onVolumeChange.bind(this));
         this.player.on(Event.FULLSCREENCHANGE, this.onScreenChange.bind(this));
 
-        // make sure initial current time format is displayed correctly
-        this.setCurrentTime();
-
         // video.js fluid option
         if (this.player.options_.fluid === true) {
             // give wave element a classname so it can be styled
