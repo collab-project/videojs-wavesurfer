@@ -55,6 +55,11 @@ class Wavesurfer extends Plugin {
         this.textTracksEnabled = (this.player.options_.tracks.length > 0);
         this.displayMilliseconds = options.displayMilliseconds;
 
+        // use custom video.js time format
+        videojs.setFormatTime((seconds, guide) => {
+            return formatTime(seconds, guide, this.displayMilliseconds);
+        });
+
         // wait until player ui is ready
         this.player.one(Event.READY, this.initialize.bind(this));
     }
@@ -72,11 +77,6 @@ class Wavesurfer extends Plugin {
 
         // parse options
         let mergedOptions = this.parseOptions(this.player.options_.plugins.wavesurfer);
-
-        // set video.js time format
-        videojs.setFormatTime((seconds, guide) => {
-            return formatTime(seconds, guide, this.displayMilliseconds);
-        });
 
         // controls
         if (this.player.options_.controls === true) {
