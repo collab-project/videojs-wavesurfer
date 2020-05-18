@@ -208,7 +208,6 @@ describe('Wavesurfer', () => {
     it('exports image', (done) => {
 
         player.one(Event.WAVE_READY, () => {
-
             // default to png
             let data = player.wavesurfer().exportImage();
             expect(data).toStartWith('data:image/png;base64,');
@@ -221,7 +220,15 @@ describe('Wavesurfer', () => {
             data = player.wavesurfer().exportImage('image/jpeg');
             expect(data).toStartWith('data:image/jpeg;base64,');
 
-            done();
+            // jpeg blob
+            player.wavesurfer().exportImage('image/jpeg', 1, 'blob').then((arrayOfBlob) => {
+                // received a blob
+                expect(arrayOfBlob instanceof Array).toBeTruthy();
+                expect(arrayOfBlob[0] instanceof Blob).toBeTruthy();
+                expect(arrayOfBlob[0].type).toEqual('image/jpeg');
+
+                done();
+            });
         });
 
         player.src(TestHelpers.EXAMPLE_AUDIO_SRC);

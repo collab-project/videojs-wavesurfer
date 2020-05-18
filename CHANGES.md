@@ -1,5 +1,12 @@
 # videojs-wavesurfer changelog
 
+## 3.2.0 - unreleased
+
+**Backwards-incompatible changes** (when upgrading from a previous version):
+
+- The `exportImage` method now returns an array of `Blob` instances
+
+
 ## 3.1.0 - 2020/05/18
 
 **Backwards-incompatible changes** (when upgrading from a previous version):

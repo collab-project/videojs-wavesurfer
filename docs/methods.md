@@ -22,7 +22,7 @@ player.on('ready', function() {
 | `pause` | Pause playback. |
 | `getDuration` | Get the length of the stream in seconds. Returns 0 if no stream is available (yet). |
 | `getCurrentTime` | Get the current time (in seconds) of the stream during playback. Returns 0 if no stream is available (yet). |
-| `exportImage(format, quality)` | Save waveform image as data URI. Default format is `'image/png'`. |
+| `exportImage(format, quality, type)` | Save waveform image as Blob or data URI. Default `format` is `'image/png'`, `quality` is 1 and `type` is `blob`. |
 | `setAudioOutput(deviceId)` | Change the audio output device using its [deviceId](https://developer.mozilla.org/en-US/docs/Web/API/MediaDeviceInfo/deviceId). |
 
 ## wavesurfer.js
