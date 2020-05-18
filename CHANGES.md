@@ -1,5 +1,13 @@
 # videojs-wavesurfer changelog
 
+## 3.1.0 - unreleased
+
+**Backwards-incompatible changes** (when upgrading from a previous version):
+
+- Removed `msDisplayMax` option: use `displayMilliseconds` option instead to include milliseconds
+  in the time displays of the player (#91)
+
+
 ## 3.0.4 - 2020/05/16
 
 - Add compatibility for video.js 7.7.6 and newer

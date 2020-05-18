@@ -84,7 +84,7 @@ Create `src/components/VideoJSWavesurfer.vue`:
                         // configure videojs-wavesurfer plugin
                         wavesurfer: {
                             backend: 'MediaElement',
-                            msDisplayMax: 10,
+                            displayMilliseconds: true,
                             debug: true,
                             waveColor: '#6f7982',
                             progressColor: 'black',

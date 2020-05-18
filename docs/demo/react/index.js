@@ -59,7 +59,7 @@ const videoJsOptions = {
     plugins: {
         wavesurfer: {
             backend: 'MediaElement',
-            msDisplayMax: 10,
+            displayMilliseconds: true,
             debug: true,
             waveColor: 'white',
             progressColor: 'black',

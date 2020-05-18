@@ -49,7 +49,7 @@ let options = {
         wavesurfer: {
             // configure videojs-wavesurfer
             backend: 'MediaElement',
-            msDisplayMax: 10,
+            displayMilliseconds: true,
             debug: true,
             waveColor: 'grey',
             progressColor: 'black',
