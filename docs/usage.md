@@ -2,21 +2,20 @@
 
 The plugin depends on the video.js and wavesurfer.js libraries:
 
-```html
-<!-- style -->
-<link href="video-js.min.css" rel="stylesheet">
-<link href="videojs.wavesurfer.css" rel="stylesheet">
+```javascript
+// style
+import 'video.js/dist/video-js.min.css';
+import 'videojs-wavesurfer/dist/css/videojs.wavesurfer.css';
 
-<!-- libraries -->
-<script src="video.min.js"></script>
-<script src="wavesurfer.min.js"></script>
+// libraries
+import videojs from 'video.js';
+import WaveSurfer from 'wavesurfer.js';
 ```
 
-The plugin automatically registers itself when the `videojs.wavesurfer.js`
-script is loaded:
+The videojs-wavesurfer plugin automatically registers itself after importing it:
 
-```html
-<script src="videojs.wavesurfer.js"></script>
+```javascript
+import Wavesurfer from 'videojs-wavesurfer/dist/videojs.wavesurfer.js';
 ```
 
 Add an `audio` element:
