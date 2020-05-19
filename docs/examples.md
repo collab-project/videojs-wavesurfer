@@ -4,19 +4,19 @@
 
 View the examples online:
 
-| Example | Description | Demo | Source |
-| --- | --- | --- | --- |
-| **Audio** | Basic audio example | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/index.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/index.html) |
-| **Video** | Basic video example | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/video.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/video.html) |
-| **Responsive** | Enable [responsive layout](responsive.md) | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/fluid.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/fluid.html) |
-| **Text tracks** | Display [text tracks](text-tracks.md) | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/texttrack.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/texttrack.html) |
-| **Microphone** | Real-time waveform rendering of [microphone](microphone.md) | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/live.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/live.html) |
-| **Peaks** | Use JSON [peaks data](peaks.md) to render waveform | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/peaks.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/peaks.html) |
-| **Output device** | Change audio [output device](change-device.md) | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/output.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/output.html) |
-| **Input device** | Change audio [input device](change-device.md) | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/input.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/input.html) |
-| **Plugin** | Enable additional [wavesurfer.js plugins](plugins.md) | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/plugin.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/plugin.html) |
-| **React** | Basic [React](react.md) example | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/react/index.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/react/index.html) |
-| **Multi** | Using multiple players on single page | [online demo](https://collab-project.github.io/videojs-wavesurfer/demo/multi.html) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/multi.html) |
+| Example | Description | Source |
+| --- | --- | --- |
+| [Audio](https://collab-project.github.io/videojs-wavesurfer/demo/index.html) | Basic audio example | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/index.html) |
+| [Video](https://collab-project.github.io/videojs-wavesurfer/demo/video.html) | Basic video example | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/video.html) |
+| [Responsive](https://collab-project.github.io/videojs-wavesurfer/demo/fluid.html) | Enable [responsive layout](responsive.md) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/fluid.html) |
+| [Text tracks](https://collab-project.github.io/videojs-wavesurfer/demo/texttrack.html) | Display [text tracks](text-tracks.md) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/texttrack.html) |
+| [Microphone](https://collab-project.github.io/videojs-wavesurfer/demo/live.html) | Real-time waveform rendering of [microphone](microphone.md) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/live.html) |
+| [Peaks](https://collab-project.github.io/videojs-wavesurfer/demo/peaks.html) | Use JSON [peaks data](peaks.md) to render waveform | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/peaks.html) |
+| [Output device](https://collab-project.github.io/videojs-wavesurfer/demo/output.html) | Change audio [output device](change-device.md) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/output.html) |
+| [Input device](https://collab-project.github.io/videojs-wavesurfer/demo/input.html) | Change audio [input device](change-device.md) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/input.html) |
+| [Plugin](https://collab-project.github.io/videojs-wavesurfer/demo/plugin.html) | Enable additional [wavesurfer.js plugins](plugins.md) | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/plugin.html) |
+| [React](https://collab-project.github.io/videojs-wavesurfer/demo/react/index.html) | Basic [React](react.md) example | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/react/index.html) |
+| [Multi](https://collab-project.github.io/videojs-wavesurfer/demo/multi.html) | Using multiple players on single page | [example source](https://github.com/collab-project/videojs-wavesurfer/blob/master/examples/multi.html) |
 
 ## Local setup
 
