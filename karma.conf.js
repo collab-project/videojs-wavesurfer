@@ -172,7 +172,7 @@ module.exports = function(config) {
     };
 
     if (ci) {
-        configuration.browsers = ['Chrome_headless', 'Firefox_headless'];
+        configuration.browsers = ['Firefox_headless'];
         configuration.detectBrowsers.enabled = false;
         configuration.singleRun = true;
 
