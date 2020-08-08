@@ -13,7 +13,7 @@ npm install webpack webpack-dev-server webpack-cli css-loader style-loader -D
 Install videojs-wavesurfer:
 
 ```console
-npm install videojs-wavesurfer
+npm install --save videojs-wavesurfer
 ```
 
 ## Configuration
@@ -22,7 +22,6 @@ Create the Webpack config file called `webpack.config.js`:
 
 ```javascript
 const path = require('path');
-const webpack = require('webpack');
 const basePath = path.resolve(__dirname);
 
 module.exports = {
@@ -39,17 +38,6 @@ module.exports = {
         contentBase: basePath,
         watchContentBase: true
     },
-    resolve: {
-        alias: {
-            videojs: 'video.js',
-            WaveSurfer: 'wavesurfer.js'
-        }
-    },
-    plugins: [
-        new webpack.ProvidePlugin({
-            videojs: 'video.js/dist/video.cjs.js'
-        })
-    ],
     module: {
         rules: [{
             test: /\.css$/,
