@@ -17,7 +17,12 @@ dependencies:
     "name": "angular-videojs-wavesurfer",
     "version": "1.0.0",
     "scripts": {
-        "start": "webpack-dev-server --mode development"
+        "ng": "ng",
+        "start": "ng serve",
+        "build": "ng build",
+        "test": "ng test",
+        "lint": "ng lint",
+        "e2e": "ng e2e"
     },
     "dependencies": {
         "@angular/common": "^9.1.6",
@@ -67,42 +72,6 @@ Create `tsconfig.json`:
         "experimentalDecorators": true,
         "target": "ES5"
     }
-}
-```
-
-Create a Webpack configuration file called `webpack.config.js`:
-
-```javascript
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ProvidePlugin = require('webpack/lib/ProvidePlugin');
-
-module.exports = {
-    entry: './src/main.ts',
-    resolve: {
-        extensions: ['.ts', '.js'],
-        alias: {
-            videojs: 'video.js',
-            WaveSurfer: 'wavesurfer.js'
-        }
-    },
-    module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                use: ['ts-loader']
-            },
-            {
-                test: /\.(html|css)$/,
-                use: 'raw-loader'
-            }
-        ]
-    },
-    plugins: [
-        new ProvidePlugin({
-            videojs: 'video.js/dist/video.cjs.js'
-        }),
-        new HtmlWebpackPlugin({ template: './src/index.html' })
-    ]
 }
 ```
 
@@ -258,15 +227,12 @@ export class AppModule { }
 Create an Angular polyfills file in `src/polyfills.ts`:
 
 ```ts
-import 'core-js/features/reflect';
 import 'zone.js/dist/zone';
 ```
 
 Create the Angular main file in `src/main.ts`:
 
 ```ts
-import './polyfills';
-
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 
@@ -305,4 +271,4 @@ Start the development server:
 npm start
 ```
 
-And open http://localhost:8080/ in a browser.
+And open http://localhost:4200 in a browser.
