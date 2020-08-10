@@ -1,7 +1,7 @@
 # videojs-wavesurfer changelog
 
 
-## 4.0.0 - unreleased
+## 3.3.0 - unreleased
 
 - Fixed webpack externals configuration: it's no longer needed to use additional webpack
   configuration in React/Angular projects (#109)
