@@ -7,78 +7,49 @@ for Angular.
 
 ## Installation
 
-Create a project directory, e.g. `angular-videojs-wavesurfer`.
-
-Create a `package.json` file inside that project directory that lists the project
-dependencies:
-
-```json
-{
-    "name": "angular-videojs-wavesurfer",
-    "version": "1.0.0",
-    "scripts": {
-        "ng": "ng",
-        "start": "ng serve",
-        "build": "ng build",
-        "test": "ng test",
-        "lint": "ng lint",
-        "e2e": "ng e2e"
-    },
-    "dependencies": {
-        "@angular/common": "^9.1.6",
-        "@angular/compiler": "^9.1.6",
-        "@angular/core": "^9.1.6",
-        "@angular/forms": "^9.1.6",
-        "@angular/platform-browser": "^9.1.6",
-        "@angular/platform-browser-dynamic": "^9.1.6",
-        "@angular/router": "^9.1.6",
-        "core-js": "^3.6.5",
-        "rxjs": "^6.5.5",
-        "zone.js": "^0.10.3"
-    },
-    "devDependencies": {
-        "@types/node": "^13.13.5",
-        "html-webpack-plugin": "^4.3.0",
-        "raw-loader": "^4.0.1",
-        "ts-loader": "^7.0.4",
-        "typescript": "^3.8.3",
-        "webpack": "^4.43.0",
-        "webpack-cli": "^3.3.11",
-        "webpack-dev-server": "^3.11.0"
-    }
-}
-```
-
-Install the dependencies:
+Install the [Angular CLI](https://cli.angular.io) globally:
 
 ```console
-npm install
+npm install -g @angular/cli
+```
+
+Create a new application, e.g. `videojs-wavesurfer-angular`:
+
+```console
+ng new videojs-wavesurfer-angular
 ```
 
 Install `videojs-wavesurfer` and `@types/video.js`:
 
 ```console
+cd videojs-wavesurfer-angular
 npm install --save videojs-wavesurfer @types/video.js
-```
-
-## Configuration
-
-Create `tsconfig.json`:
-
-```json
-{
-    "compilerOptions": {
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "target": "ES5"
-    }
-}
 ```
 
 ## Application
 
-Create the `src/app/` directories and add a new Angular component for videojs-wavesurfer
-in `src/app/videojs.wavesurfer.component.ts`:
+Create a new Angular component:
+
+```console
+ng generate component videojs-wavesurfer
+```
+
+Replace the content of `src/app/videojs-wavesurfer/videojs-wavesurfer.component.css` with:
+
+```css
+/* change player background color */
+#audio_clip1 {
+    background-color: #42f489;
+}
+```
+
+Replace the content of `src/app/videojs-wavesurfer/videojs-wavesurfer.component.html` with:
+
+```html
+<audio id="audio_{{idx}}" class="video-js vjs-default-skin"></audio>
+```
+
+Replace the content of `src/app/videojs-wavesurfer/videojs-wavesurfer.component.ts` with:
 
 ```ts
 import {
@@ -102,19 +73,11 @@ WaveSurfer.microphone = MicrophonePlugin;
 import * as Wavesurfer from 'videojs-wavesurfer/dist/videojs.wavesurfer.js';
 
 @Component({
-  selector: 'videojs-wavesurfer',
-  template: `
-    <style>
-    /* change player background color */
-    #audio_clip1 {
-         background-color: #42f489;
-    }
-    </style>
-    <audio id="audio_{{idx}}" class="video-js vjs-default-skin"></audio>
-    `
+  selector: 'app-videojs-wavesurfer',
+  templateUrl: './videojs-wavesurfer.component.html',
+  styleUrls: ['./videojs-wavesurfer.component.css']
 })
-
-export class VideoJSWavesurferComponent implements OnInit, OnDestroy {
+export class VideojsWavesurferComponent implements OnInit, OnDestroy {
 
   // reference to the element itself: used to access events and methods
   private _elementRef: ElementRef
@@ -176,7 +139,7 @@ export class VideoJSWavesurferComponent implements OnInit, OnDestroy {
       videojs.log(msg);
 
       // load file
-      this.player.src({src: '/hal.wav', type: 'audio/wav'});
+      this.player.src({src: 'assets/hal.wav', type: 'audio/wav'});
     });
 
     this.player.on('waveReady', event => {
@@ -208,67 +171,30 @@ export class VideoJSWavesurferComponent implements OnInit, OnDestroy {
 }
 ```
 
-Create the Angular app module in `src/app/app.module.ts`:
-
-```ts
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { VideoJSWavesurferComponent } from './videojs.wavesurfer.component';
-
-@NgModule({
-    imports: [BrowserModule],
-    declarations: [VideoJSWavesurferComponent],
-    bootstrap: [VideoJSWavesurferComponent]
-})
-export class AppModule { }
-```
-
-Create an Angular polyfills file in `src/polyfills.ts`:
-
-```ts
-import 'zone.js/dist/zone';
-```
-
-Create the Angular main file in `src/main.ts`:
-
-```ts
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppModule } from './app/app.module';
-
-platformBrowserDynamic().bootstrapModule(AppModule);
-```
-
-And finally, create the main index HTML file in `src/index.html`:
+Replace content of `src/app/app.component.html` with:
 
 ```html
-<!DOCTYPE html>
-<html>
-<head>
-    <base href="/" />
-    <title>Angular videojs-wavesurfer example</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- styles -->
-    <link href="node_modules/video.js/dist/video-js.css" rel="stylesheet">
-    <link href="node_modules/videojs-wavesurfer/dist/css/videojs.wavesurfer.css" rel="stylesheet">
-</head>
-<body>
-    <videojs-wavesurfer></videojs-wavesurfer>
-</body>
-</html>
+<app-videojs-wavesurfer></app-videojs-wavesurfer>
+```
+
+Add the following to `src/styles.css`:
+
+```css
+@import '~video.js/dist/video-js.css';
+@import '~videojs-wavesurfer/dist/css/videojs.wavesurfer.css';
 ```
 
 ## Media
 
 Download the [example audio file](https://github.com/collab-project/videojs-wavesurfer/raw/master/examples/media/hal.wav)
-and place it in the project directory.
+and place it in the `src/assets` directory.
 
 ## Run
 
 Start the development server:
 
 ```console
-npm start
+ng serve
 ```
 
 And open http://localhost:4200 in a browser.
