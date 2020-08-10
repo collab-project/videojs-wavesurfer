@@ -271,4 +271,4 @@ Start the development server:
 npm start
 ```
 
-And open http://localhost:4200/ in a browser.
+And open http://localhost:4200 in a browser.
