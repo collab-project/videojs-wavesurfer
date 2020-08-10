@@ -49,11 +49,22 @@ module.exports = {
     },
     // specify dependencies for the library that are not resolved by webpack,
     // but become dependencies of the output: they are imported from the
-    // environment during runtime.
-    externals: [
-        {'video.js': 'videojs'},
-        {'wavesurfer.js': 'WaveSurfer'}
-    ],
+    // environment during runtime and never directly included in the
+    // videojs-record library.
+    externals: {
+        'video.js': {
+            commonjs: 'video.js',
+            commonjs2: 'video.js',
+            amd: 'video.js',
+            root: 'videojs' // indicates global variable
+        },
+        'wavesurfer.js': {
+            commonjs: 'wavesurfer.js',
+            commonjs2: 'wavesurfer.js',
+            amd: 'wavesurfer.js',
+            root: 'WaveSurfer' // indicates global variable
+        }
+    },
     module: {
         rules: [
             {

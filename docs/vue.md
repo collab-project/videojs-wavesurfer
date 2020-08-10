@@ -26,30 +26,6 @@ cd videojs-wavesurfer-app
 npm install --save videojs-wavesurfer
 ```
 
-## Configuration
-
-Create `vue.config.js` with the following content:
-
-```javascript
-const webpack = require('webpack');
-
-module.exports = {
-  configureWebpack: {
-    resolve: {
-        alias: {
-            videojs: 'video.js',
-            WaveSurfer: 'wavesurfer.js'
-        }
-    },
-    plugins: [
-        new webpack.ProvidePlugin({
-            videojs: 'video.js/dist/video.cjs.js'
-        })
-    ]
-  }
-}
-```
-
 ## Application
 
 Create `src/components/VideoJSWavesurfer.vue`:
@@ -86,7 +62,7 @@ Create `src/components/VideoJSWavesurfer.vue`:
                             backend: 'MediaElement',
                             displayMilliseconds: true,
                             debug: true,
-                            waveColor: '#6f7982',
+                            waveColor: '#3b4045',
                             progressColor: 'black',
                             cursorColor: 'black',
                             hideScrollbar: true

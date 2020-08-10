@@ -8,64 +8,22 @@ for React.
 
 ## Installation
 
-Create an example React application called `audio-app`:
+Create an example React application called `videojs-wavesurfer-react`:
 
 ```console
-npx create-react-app audio-app
+npx create-react-app videojs-wavesurfer-react
 ```
 
 Install videojs-wavesurfer:
 
 ```console
-cd audio-app
+cd videojs-wavesurfer-react
 npm install --save videojs-wavesurfer
-```
-
-Install [react-app-wired](https://github.com/timarney/react-app-rewired) that we'll
-use to configure Webpack:
-
-```console
-npm install react-app-rewired --save-dev
-```
-
-## Configuration
-
-Create a `config-overrides.js` file in the root directory:
-
-```javascript
-const webpack = require("webpack");
-
-module.exports = function override(config, env) {
-  // Extend the config to work with videojs-wavesurfer without ejecting create react app.
-  // Reference: https://collab-project.github.io/videojs-wavesurfer/#/react
-  const videojsPlugin = new webpack.ProvidePlugin({
-    videojs: "video.js/dist/video.cjs.js"
-  });
-  const videojsAlias = {
-    videojs: "video.js",
-    WaveSurfer: "wavesurfer.js"
-  };
-  config.resolve.alias = { ...config.resolve.alias, ...videojsAlias };
-  config.plugins.push(videojsPlugin);
-  return config;
-};
-```
-
-Change the existing calls to `react-scripts` in the `scripts` section of `package.json`
-for `start`, `build` and `test`:
-
-```json
-"scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
-}
 ```
 
 ## Application
 
-Edit `src/index.js`:
+Replace content of `src/index.js` with:
 
 ```javascript
 import React from 'react';
@@ -106,7 +64,7 @@ ReactDOM.render(
 serviceWorker.unregister();
 ```
 
-Edit `src/App.js`:
+Replace content of `src/App.js`:
 
 ```javascript
 /* eslint-disable */
