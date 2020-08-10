@@ -6,8 +6,8 @@
 
 const replace = require('replace-in-file');
 
-const OLD_VERSION = "7.6.5";
-const NEW_VERSION = "7.7.6";
+const OLD_VERSION = "7.7.6";
+const NEW_VERSION = "7.8.4";
 
 const options = {
   files: 'docs/demo/**/*.html',
