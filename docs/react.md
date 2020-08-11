@@ -97,7 +97,7 @@ class App extends Component {
             // print version information at startup
             const version_info = 'Using video.js ' + videojs.VERSION +
                 ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer') +
-                ' and wavesurfer.js ' + WaveSurfer.VERSION;
+                ', wavesurfer.js ' + WaveSurfer.VERSION + ' and React ' + React.version;
             videojs.log(version_info);
 
             // load file
