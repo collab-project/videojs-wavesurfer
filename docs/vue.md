@@ -37,6 +37,7 @@ Create `src/components/VideoJSWavesurfer.vue`:
 
 <script>
     /* eslint-disable */
+    import Vue from 'vue';
     import 'video.js/dist/video-js.css'
     import 'videojs-wavesurfer/dist/css/videojs.wavesurfer.css'
 
@@ -77,7 +78,7 @@ Create `src/components/VideoJSWavesurfer.vue`:
                 // print version information at startup
                 var msg = 'Using video.js ' + videojs.VERSION +
                     ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer') +
-                    ' and wavesurfer.js ' + WaveSurfer.VERSION;
+                    ', wavesurfer.js ' + WaveSurfer.VERSION + ' and vue.js ' + Vue.version;
                 videojs.log(msg);
 
                 // load file
