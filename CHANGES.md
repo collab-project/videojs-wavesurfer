@@ -1,5 +1,9 @@
 # videojs-wavesurfer changelog
 
+## 3.3.1 - 2020/09/30
+
+- Doc fixes and updated dependencies
+
 ## 3.3.0 - 2020/08/10
 
 - Fixed webpack externals configuration: it's no longer needed to use additional webpack
