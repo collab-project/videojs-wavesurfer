@@ -11,6 +11,6 @@ const main = require('./fragments/main');
 
 module.exports = merge(common, prod, main, {
     output: {
-        filename: 'videojs.wavesurfer.min.js'
+        filename: '[name].min.js'
     }
 });

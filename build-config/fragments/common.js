@@ -12,6 +12,8 @@ const date = datefns.format(new Date(), 'yyyy');
 const rootDir = path.resolve(__dirname, '..', '..');
 const pckg = require(path.join(__dirname, '..', '..', 'package.json'));
 
+process.traceDeprecation = true;
+
 // add JS banner with copyright and version info
 let jsBanner = `${pckg.name}
 @version ${pckg.version}
@@ -46,6 +48,9 @@ module.exports = {
     },
     performance: {
         hints: false
+    },
+    stats: {
+        colors: true
     },
     // specify dependencies for the library that are not resolved by webpack,
     // but become dependencies of the output: they are imported from the
