@@ -5,6 +5,7 @@
 
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
     mode: 'production',
@@ -20,7 +21,8 @@ module.exports = {
                         comments: /@license/i
                     }
                 }
-            })
+            }),
+            new CssMinimizerPlugin()
         ]
     },
     plugins: [

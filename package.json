@@ -65,6 +65,7 @@
     "babel-plugin-istanbul": "^6.0.0",
     "browserslist": "^4.14.5",
     "css-loader": "^5.0.0",
+    "css-minimizer-webpack-plugin": "^1.1.5",
     "date-fns": "^2.16.1",
     "docsify-cli": "^4.4.1",
     "esdoc": "^1.1.0",
