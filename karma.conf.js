@@ -56,7 +56,7 @@ const ci = process.env.TRAVIS || process.env.APPVEYOR;
 module.exports = function(config) {
     let configuration = {
         basePath: '',
-        frameworks: ['jasmine', 'jasmine-matchers', 'detectBrowsers'],
+        frameworks: ['jasmine', 'jasmine-matchers', 'detectBrowsers', 'webpack'],
         hostname: 'localhost',
         port: 9876,
         logLevel: config.LOG_INFO,
