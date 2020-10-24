@@ -22,7 +22,7 @@ let chromeFlags = [
     '--use-fake-device-for-media-stream',
     '--use-fake-ui-for-media-stream',
     '--use-file-for-fake-audio-capture=' + fakeAudioStream,
-    '--user-data-dir=.chrome',
+    '--user-data-dir=' + path.resolve('.chrome'),
     '--disable-translate',
     '--disable-extensions',
     '--disable-infobars',
