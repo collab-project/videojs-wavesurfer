@@ -28,12 +28,7 @@
       2,
       "always"
     ],
-    "comma-spacing": [
-      2,
-      {
-        "after": true
-      }
-    ],
+    "comma-dangle": ["error", "never"],
     "keyword-spacing": ["error", { "before": true }],
     "space-infix-ops": 2,
     "prefer-arrow-callback": 2,
