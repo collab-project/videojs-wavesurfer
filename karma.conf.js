@@ -16,6 +16,7 @@ let fakeAudioStream = path.join(support_dir, 'demo.wav');
 // http://peter.sh/experiments/chromium-command-line-switches/
 let chromeFlags = [
     '--no-sandbox',
+    '--disable-gpu',
     '--no-first-run',
     '--noerrdialogs',
     '--no-default-browser-check',
@@ -172,7 +173,7 @@ module.exports = function(config) {
     };
 
     if (ci) {
-        configuration.browsers = ['Firefox_headless', 'Chrome_Headless'];
+        configuration.browsers = ['Firefox_headless', 'Chrome_headless'];
         configuration.detectBrowsers.enabled = false;
         configuration.singleRun = true;
 
