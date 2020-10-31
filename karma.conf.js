@@ -22,7 +22,7 @@ let chromeFlags = [
     '--use-fake-device-for-media-stream',
     '--use-fake-ui-for-media-stream',
     '--use-file-for-fake-audio-capture=' + fakeAudioStream,
-    '--user-data-dir=.chrome',
+    '--user-data-dir=' + path.resolve('.chrome'),
     '--disable-translate',
     '--disable-extensions',
     '--disable-infobars',
@@ -172,7 +172,7 @@ module.exports = function(config) {
     };
 
     if (ci) {
-        configuration.browsers = ['Firefox_headless'];
+        configuration.browsers = ['Firefox_headless', 'ChromeHeadless'];
         configuration.detectBrowsers.enabled = false;
         configuration.singleRun = true;
 
