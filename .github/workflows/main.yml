@@ -17,6 +17,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Install system dependencies
+      run: sudo apt-get install ubuntu-restricted-addons chromium-codecs-ffmpeg-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly gstreamer1.0-vaapi
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -34,3 +36,8 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     - run: npm docs
+ubuntu-restricted-addons
+      - chromium-codecs-ffmpeg-extra
+      - gstreamer1.0-libav
+      - gstreamer1.0-plugins-ugly
+      - gstreamer1.0-vaapi
