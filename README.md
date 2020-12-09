@@ -11,7 +11,7 @@ input](https://collab-project.github.io/videojs-wavesurfer/#/microphone).
 [![npm version](https://img.shields.io/npm/v/videojs-wavesurfer.svg?style=flat)](https://www.npmjs.com/package/videojs-wavesurfer)
 [![npm](https://img.shields.io/npm/dm/videojs-wavesurfer.svg)](https://github.com/collab-project/videojs-wavesurfer/releases)
 [![License](https://img.shields.io/npm/l/videojs-wavesurfer.svg)](LICENSE)
-[![Build Status](https://travis-ci.org/collab-project/videojs-wavesurfer.svg?branch=master)](https://travis-ci.org/collab-project/videojs-wavesurfer)
+[![Build Status](https://github.com/collab-project/videojs-wavesurfer/workflows/videojs-wavesurfer/badge.svg?branch=master)](https://github.com/collab-project/videojs-wavesurfer/actions?workflow=videojs-wavesurfer)
 [![Coverage Status](https://coveralls.io/repos/github/collab-project/videojs-wavesurfer/badge.svg?branch=master)](https://coveralls.io/github/collab-project/videojs-wavesurfer?branch=master)
 ![Size](https://img.shields.io/bundlephobia/minzip/videojs-wavesurfer.svg?style=flat)
 ![Stars](https://img.shields.io/github/stars/collab-project/videojs-wavesurfer.svg?style=social)
