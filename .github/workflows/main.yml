@@ -34,7 +34,11 @@ jobs:
         restore-keys: |
           ${{ runner.OS }}-node-
           ${{ runner.OS }}-
-    - run: npm install
-    - run: npm run build --if-present
-    - run: npm test
-    - run: npm docs
+    - name: Install Node.js modules
+      run: npm install
+    - name: Build
+      run: npm run build
+    - name: Test
+      run: npm run test
+    - name: Documentation
+      run: npm run docs
