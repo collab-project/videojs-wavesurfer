@@ -106,7 +106,6 @@ module.exports = function(config) {
             'karma-safaritechpreview-launcher',
             'karma-edge-launcher',
             'karma-coverage',
-            'karma-coveralls',
             'karma-verbose-reporter',
             'karma-detect-browsers'
         ],
@@ -166,8 +165,11 @@ module.exports = function(config) {
         colors: true,
         reporters: ['verbose', 'progress', 'coverage'],
         coverageReporter: {
-            type: 'html',
-            dir: 'coverage'
+            dir: 'coverage',
+            reporters: [
+                { type: 'html', subdir: 'html' },
+                { type: 'lcov', subdir: 'lcov' }
+            ]
         },
         webpack: webpackConfig
     };
@@ -176,13 +178,6 @@ module.exports = function(config) {
         configuration.browsers = ['Firefox_headless', 'Chrome_headless'];
         configuration.detectBrowsers.enabled = false;
         configuration.singleRun = true;
-
-        if (process.env.TRAVIS) {
-            // enable coveralls
-            configuration.reporters.push('coveralls');
-            // lcov or lcovonly are required for generating lcov.info files
-            configuration.coverageReporter.type = 'lcov';
-        }
     }
 
     config.set(configuration);
