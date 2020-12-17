@@ -5,12 +5,13 @@
  */
 
 const replace = require('replace-in-file');
+const path = require('path');
 
-const OLD_VERSION = "7.7.6";
-const NEW_VERSION = "7.8.4";
+const OLD_VERSION = "7.8.4";
+const NEW_VERSION = "7.10.1";
 
 const options = {
-  files: 'docs/demo/**/*.html',
+  files: path.resolve(__dirname, '..', 'demo') + '/**/*.html',
   from: new RegExp(OLD_VERSION, 'g'),
   to: NEW_VERSION,
   dry: false
