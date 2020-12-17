@@ -11,21 +11,28 @@ const contentBase = path.resolve(__dirname, '..', '..');
 module.exports = {
     mode: 'development',
     devServer: {
-        contentBase: [contentBase],
-        publicPath: 'localhost:8080/dist/',
-        watchContentBase: true,
-        watchOptions: {
-            ignored: [
-                /.build_cache/,
-                /.chrome/,
-                /.git/,
-                /node_modules/,
-                /bower_components/,
-                /coverage/,
-                /build-config/,
-                /test/
-            ]
-        }
+        port: 8080,
+        static: [
+            {
+                directory: contentBase,
+                staticOptions: {},
+                publicPath: '/',
+                serveIndex: true,
+                watch: {
+                    ignored: [
+                        /.build_cache/,
+                        /.chrome/,
+                        /docs/,
+                        /node_modules/,
+                        /bower_components/,
+                        /coverage/,
+                        /build-config/,
+                        /test/,
+                        /vendor/
+                    ]
+                }
+            }
+        ]
     },
     plugins: [
         new MiniCssExtractPlugin({
