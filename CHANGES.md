@@ -1,8 +1,14 @@
 # videojs-wavesurfer changelog
 
+## Unreleased
+
+- Bump required wavesurfer.js version to 4.3.0 or newer
+
+
 ## 3.3.1 - 2020/09/30
 
 - Doc fixes and updated dependencies
+
 
 ## 3.3.0 - 2020/08/10
 
