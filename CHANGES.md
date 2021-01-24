@@ -1,8 +1,14 @@
 # videojs-wavesurfer changelog
 
+## 3.4.0 - unreleased
+
+- Trigger error event if peaks file cannot be found (#124)
+
+
 ## 3.3.1 - 2020/09/30
 
 - Doc fixes and updated dependencies
+
 
 ## 3.3.0 - 2020/08/10
 
