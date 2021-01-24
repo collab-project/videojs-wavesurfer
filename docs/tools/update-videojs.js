@@ -7,8 +7,8 @@
 const replace = require('replace-in-file');
 const path = require('path');
 
-const OLD_VERSION = "7.8.4";
-const NEW_VERSION = "7.10.1";
+const OLD_VERSION = "7.10.1";
+const NEW_VERSION = "7.10.2";
 
 const options = {
   files: path.resolve(__dirname, '..', 'demo') + '/**/*.html',
