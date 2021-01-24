@@ -335,9 +335,13 @@ describe('Wavesurfer', () => {
     });
 
     /** @test {Wavesurfer#load} */
-    it('ignores peaks if file cannot be found', (done) => {
+    it('throws error if peaks file cannot be found', (done) => {
 
-        player.one(Event.WAVE_READY, done);
+        player.one(Event.ERROR, (element, err) => {
+            expect(err).toStartWith('Unable to retrieve peak data from non_existing_file.json.');
+            expect(err).toEndWith('Status code: 404');
+            done();
+        });
 
         // try loading from non-existing peaks file
         player.src({
