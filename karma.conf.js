@@ -12,6 +12,11 @@ let webpackConfig = require('./build-config/webpack.prod.main.js');
 let support_dir = path.resolve(__dirname, 'test', 'support');
 let fakeAudioStream = path.join(support_dir, 'demo.wav');
 
+// karma watches the test entry points, Do NOT specify the entry option
+// From https://github.com/ryanclark/karma-webpack#getting-started
+delete webpackConfig.entry;
+delete webpackConfig.output;
+
 // Chrome CLI options
 // http://peter.sh/experiments/chromium-command-line-switches/
 let chromeFlags = [
@@ -102,9 +107,6 @@ module.exports = function(config) {
             'karma-jasmine-matchers',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
-            'karma-safari-launcher',
-            'karma-safaritechpreview-launcher',
-            'karma-edge-launcher',
             'karma-coverage',
             'karma-verbose-reporter',
             'karma-detect-browsers'
