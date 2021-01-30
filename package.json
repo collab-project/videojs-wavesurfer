@@ -33,6 +33,7 @@
     "lint:js": "eslint src/js test build-config",
     "lint:html": "htmlhint examples docs/demo",
     "start": "npm run build && webpack-dev-server --config ./build-config/webpack.dev.main.js",
+    "start-doc": "docsify serve docs",
     "test": "karma start karma.conf.js",
     "prepublishOnly": "not-in-install && npm run build || in-install"
   },
