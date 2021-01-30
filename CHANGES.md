@@ -2,7 +2,13 @@
 
 ## Unreleased
 
-- Bump required wavesurfer.js version to 4.3.0 or newer
+- Build using webpack 5 (#118)
+
+
+## 3.4.0 - 2021/01/24
+
+- Trigger error event if peaks file cannot be found (#124)
+- Bump required wavesurfer.js version to 4.4.0 or newer
 
 
 ## 3.3.1 - 2020/09/30

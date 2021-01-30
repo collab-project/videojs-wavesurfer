@@ -165,7 +165,7 @@ module.exports = function(config) {
         colors: true,
         reporters: ['verbose', 'progress', 'coverage'],
         coverageReporter: {
-            dir: 'coverage',
+            dir: path.resolve(__dirname, 'coverage'),
             reporters: [
                 { type: 'html', subdir: 'html' },
                 { type: 'lcov', subdir: 'lcov' }

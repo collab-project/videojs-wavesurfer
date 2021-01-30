@@ -12,6 +12,7 @@
 
     <script src="../dist/videojs.wavesurfer.js"></script>
 
+    <script src="safari-workaround.js"></script>
     <style>
         /* change player background color */
         #myAudio {
@@ -58,6 +59,12 @@ var options = {
         }
     }
 };
+
+// add workaround for video.js issue with Safari text tracks
+// see https://github.com/videojs/video.js/issues/7015
+if (isSafari) {
+    enableTextTracks(options);
+}
 
 // create player
 var player = videojs('myAudio', options, function() {

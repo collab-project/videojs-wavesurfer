@@ -324,11 +324,10 @@ class Wavesurfer extends Plugin {
                     this.log(err, 'error');
                 }
             });
-            request.on('error', e => {
-                this.log('Unable to retrieve peak data from ' + peaks +
-                    '. Status code: ' + request.response.status, 'warn');
-                this.log('Loading URL: ' + url);
-                this.surfer.load(url);
+            request.once('error', e => {
+                this.player.trigger(Event.ERROR,
+                    'Unable to retrieve peak data from ' + peaks +
+                    '. Status code: ' + request.response.status);
             });
         }
     }
