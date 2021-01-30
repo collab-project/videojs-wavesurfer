@@ -12,11 +12,6 @@ let webpackConfig = require('./build-config/webpack.prod.main.js');
 let support_dir = path.resolve(__dirname, 'test', 'support');
 let fakeAudioStream = path.join(support_dir, 'demo.wav');
 
-// karma watches the test entry points, Do NOT specify the entry option
-// From https://github.com/ryanclark/karma-webpack#getting-started
-delete webpackConfig.entry;
-delete webpackConfig.output;
-
 // Chrome CLI options
 // http://peter.sh/experiments/chromium-command-line-switches/
 let chromeFlags = [
