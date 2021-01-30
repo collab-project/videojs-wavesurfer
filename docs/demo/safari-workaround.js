@@ -21,3 +21,14 @@ function updateContext(opts) {
     opts.plugins.wavesurfer.audioContext = context;
     opts.plugins.wavesurfer.audioScriptProcessor = processor;
 }
+
+function enableTextTracks(opts) {
+    // workaround for video.js issue with Safari text tracks
+    // see https://github.com/videojs/video.js/issues/7015
+    opts.html5 = {
+        nativeTextTracks: false,
+        vhs: {
+            overrideNative: true
+        }
+    };
+}
