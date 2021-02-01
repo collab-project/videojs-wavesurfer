@@ -41,6 +41,7 @@ let jsVersionPlugin = new webpack.DefinePlugin({
 });
 
 module.exports = {
+    devtool: false,
     context: rootDir,
     output: {
         libraryTarget: 'umd',

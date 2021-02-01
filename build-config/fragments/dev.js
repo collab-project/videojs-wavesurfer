@@ -5,6 +5,7 @@
 
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 
 const contentBase = path.resolve(__dirname, '..', '..');
 
@@ -35,8 +36,10 @@ module.exports = {
         ]
     },
     plugins: [
+        new RemoveEmptyScriptsPlugin(),
         new MiniCssExtractPlugin({
-            filename: 'css/[name].css'
+            filename: 'css/videojs.wavesurfer.css',
+            chunkFilename: 'css/[id].css'
         })
     ]
 };
