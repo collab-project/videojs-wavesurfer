@@ -5,7 +5,8 @@
 
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 
 module.exports = {
     mode: 'production',
@@ -13,9 +14,7 @@ module.exports = {
         minimize: true,
         minimizer: [
             new TerserPlugin({
-                sourceMap: false,
                 parallel: true,
-                cache: './.build_cache/terser',
                 extractComments: false,
                 terserOptions: {
                     output: {
@@ -24,12 +23,14 @@ module.exports = {
                     }
                 }
             }),
-            new OptimizeCSSAssetsPlugin({})
+            new CssMinimizerPlugin()
         ]
     },
     plugins: [
+        new RemoveEmptyScriptsPlugin(),
         new MiniCssExtractPlugin({
-            filename: 'css/[name].min.css'
+            filename: 'css/videojs.wavesurfer.min.css',
+            chunkFilename: 'css/[id].css'
         })
     ]
 };

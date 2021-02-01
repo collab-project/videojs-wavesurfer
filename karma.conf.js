@@ -57,7 +57,7 @@ const ci = process.env.TRAVIS || process.env.APPVEYOR;
 module.exports = function(config) {
     let configuration = {
         basePath: '',
-        frameworks: ['jasmine', 'jasmine-matchers', 'detectBrowsers'],
+        frameworks: ['jasmine', 'jasmine-matchers', 'detectBrowsers', 'webpack'],
         hostname: 'localhost',
         port: 9876,
         logLevel: config.LOG_INFO,
@@ -102,9 +102,6 @@ module.exports = function(config) {
             'karma-jasmine-matchers',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
-            'karma-safari-launcher',
-            'karma-safaritechpreview-launcher',
-            'karma-edge-launcher',
             'karma-coverage',
             'karma-verbose-reporter',
             'karma-detect-browsers'

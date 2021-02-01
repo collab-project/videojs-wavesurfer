@@ -9,16 +9,16 @@ const sourceDir = path.join(rootDir, 'src');
 
 module.exports = {
     entry: {
-        'videojs.wavesurfer': [
-            // JS
-            path.resolve(sourceDir, 'js', 'videojs.wavesurfer.js'),
-            // SCSS
-            path.resolve(sourceDir, 'css', 'videojs.wavesurfer.scss')
-        ]
+        code: {
+            import: path.join(sourceDir, 'js', 'videojs.wavesurfer.js'),
+            filename: 'videojs.wavesurfer.js'
+        },
+        style: {
+            import: path.join(sourceDir, 'css', 'videojs.wavesurfer.scss')
+        }
     },
     output: {
         path: path.join(rootDir, 'dist'),
-        filename: '[name].js',
         library: 'VideojsWavesurfer'
     }
 };

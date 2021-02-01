@@ -1,5 +1,10 @@
 # videojs-wavesurfer changelog
 
+## Unreleased
+
+- Build using webpack 5 (#118)
+
+
 ## 3.4.0 - 2021/01/24
 
 - Trigger error event if peaks file cannot be found (#124)
