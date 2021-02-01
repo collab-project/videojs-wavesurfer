@@ -1,7 +1,9 @@
 # videojs-wavesurfer changelog
 
-## Unreleased
+## 3.5.0 - unreleased
 
+- Add `formatTime` option and `setFormatTime(impl)` for replacing the default
+  `formatTime` implementation (#125)
 - Build using webpack 5 (#118)
 
 
