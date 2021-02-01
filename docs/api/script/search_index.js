@@ -360,6 +360,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/js/videojs.wavesurfer.js~wavesurfer#_formattime",
+    "class/src/js/videojs.wavesurfer.js~Wavesurfer.html#instance-member-_formatTime",
+    "src/js/videojs.wavesurfer.js~Wavesurfer#_formatTime",
+    "member"
+  ],
+  [
     "src/js/videojs.wavesurfer.js~wavesurfer#backend",
     "class/src/js/videojs.wavesurfer.js~Wavesurfer.html#instance-member-backend",
     "src/js/videojs.wavesurfer.js~Wavesurfer#backend",
@@ -561,6 +567,12 @@ window.esdocSearchIndex = [
     "src/js/videojs.wavesurfer.js~wavesurfer#setduration",
     "class/src/js/videojs.wavesurfer.js~Wavesurfer.html#instance-method-setDuration",
     "src/js/videojs.wavesurfer.js~Wavesurfer#setDuration",
+    "method"
+  ],
+  [
+    "src/js/videojs.wavesurfer.js~wavesurfer#setformattime",
+    "class/src/js/videojs.wavesurfer.js~Wavesurfer.html#instance-method-setFormatTime",
+    "src/js/videojs.wavesurfer.js~Wavesurfer#setFormatTime",
     "method"
   ],
   [
