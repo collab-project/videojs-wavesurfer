@@ -55,10 +55,16 @@ class Wavesurfer extends Plugin {
         this.textTracksEnabled = (this.player.options_.tracks.length > 0);
         this.displayMilliseconds = options.displayMilliseconds;
 
-        // use custom video.js time format
-        videojs.setFormatTime((seconds, guide) => {
-            return formatTime(seconds, guide, this.displayMilliseconds);
-        });
+        // use custom time format for video.js player
+        if (options.formatTime && typeof options.formatTime === 'function') {
+            // user-supplied formatTime
+            this.setFormatTime(options.formatTime);
+        } else {
+            // plugin's default formatTime
+            this.setFormatTime((seconds, guide) => {
+                return formatTime(seconds, guide, this.displayMilliseconds);
+            });
+        }
 
         // wait until player ui is ready
         this.player.one(Event.READY, this.initialize.bind(this));
@@ -528,7 +534,7 @@ class Wavesurfer extends Plugin {
 
             this.player.controlBar.currentTimeDisplay.formattedTime_ =
                 this.player.controlBar.currentTimeDisplay.contentEl().lastChild.textContent =
-                    formatTime(time, duration, this.displayMilliseconds);
+                    this._formatTime(time, duration, this.displayMilliseconds);
         }
 
         if (this.textTracksEnabled && this.player.tech_ && this.player.tech_.el_) {
@@ -569,7 +575,7 @@ class Wavesurfer extends Plugin {
             this.player.controlBar.durationDisplay.contentEl().lastChild) {
             this.player.controlBar.durationDisplay.formattedTime_ =
                 this.player.controlBar.durationDisplay.contentEl().lastChild.textContent =
-                    formatTime(duration, duration, this.displayMilliseconds);
+                    this._formatTime(duration, duration, this.displayMilliseconds);
         }
     }
 
@@ -824,6 +830,19 @@ class Wavesurfer extends Plugin {
      */
     log(args, logType) {
         log(args, logType, this.debug);
+    }
+
+    /**
+     * Replaces the default `formatTime` implementation with a custom implementation.
+     *
+     * @param {function} customImplementation - A function which will be used in place
+     *     of the default `formatTime` implementation. Will receive the current time
+     *     in seconds and the guide (in seconds) as arguments.
+     */
+    setFormatTime(customImplementation) {
+        this._formatTime = customImplementation;
+
+        videojs.setFormatTime(this._formatTime);
     }
 }
 

@@ -11,3 +11,4 @@ Additional options for this plugin are:
 | ------ | ---- | ------- | ----------- |
 | `debug` | boolean | `false` | Display internal log messages using the `videojs.log` method. |
 | `displayMilliseconds` | boolean | `true` | Indicates if milliseconds should be included in time displays, e.g. `00:00:000` vs `00:00`. |
+| `formatTime` | function | builtin `formatTime` | Use a custom time format function, for example: ``(seconds, guide) => `test:${seconds}:${guide}``` |

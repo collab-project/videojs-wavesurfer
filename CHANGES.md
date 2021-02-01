@@ -2,8 +2,8 @@
 
 ## 3.5.0 - unreleased
 
-- Add `setFormatTime(impl)` for replacing the default `formatTime` implementation
-  with a custom implementation (#)
+- Add `formatTime` option and `setFormatTime(impl)` for replacing the default
+  `formatTime` implementation (#125)
 - Build using webpack 5 (#118)
 
 

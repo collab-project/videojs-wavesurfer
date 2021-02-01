@@ -81,6 +81,28 @@ function ws_options_test(backend) {
         // load file
         player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
     });
+
+    /** @test {Wavesurfer} */
+    it('accepts formatTime option', (done) => {
+        player = TestHelpers.makePlayer({
+            height: 100,
+            plugins: {
+                wavesurfer: {
+                    backend: backend,
+                    formatTime: (seconds, guide) => `foo:${seconds}:${guide}`
+                }
+            }
+        });
+
+        player.one(Event.WAVE_READY, () => {
+            expect(player.controlBar.currentTimeDisplay.formattedTime_).toEqual('foo:0:0');
+            expect(player.controlBar.durationDisplay.formattedTime_.substring(0, 5)).toEqual('foo:0');
+            done();
+        });
+
+        // load file
+        player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
+    });
 }
 
 /** @test {Wavesurfer} */
@@ -90,6 +112,7 @@ describe('Wavesurfer options', () => {
         player.dispose();
     });
 
+    // run tests for each wavesurfer.js backend
     ws_options_test(TestHelpers.MEDIA_ELEMENT_BACKEND);
     ws_options_test(TestHelpers.MEDIA_ELEMENT_WEB_AUDIO_BACKEND);
     ws_options_test(TestHelpers.WEB_AUDIO_BACKEND);
