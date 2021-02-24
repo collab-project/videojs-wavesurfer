@@ -1,5 +1,10 @@
 # videojs-wavesurfer changelog
 
+## 3.6.0 - unreleased
+
+- Bump required wavesurfer.js version to 4.5.0 or newer
+
+
 ## 3.5.0 - 2021/02/01
 
 - Add `formatTime` option and `setFormatTime(impl)` for replacing the default
