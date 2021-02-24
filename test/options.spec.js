@@ -76,7 +76,7 @@ function ws_options_test(backend) {
         player.one(Event.ERROR, (element, error) => {
             fail(error);
         });
-        player.one(Event.PLAYBACK_FINISH, done);
+        player.one(Event.ENDED, done);
 
         // load file
         player.src(TestHelpers.EXAMPLE_AUDIO_SRC);
