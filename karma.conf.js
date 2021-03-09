@@ -8,6 +8,7 @@ process.env.BABEL_ENV = 'test';
 const path = require('path');
 require('@babel/register');
 
+const ci = process.env.CI || process.env.APPVEYOR;
 let webpackConfig = require('./build-config/webpack.prod.main.js');
 let support_dir = path.resolve(__dirname, 'test', 'support');
 let fakeAudioStream = path.join(support_dir, 'demo.wav');
@@ -52,7 +53,6 @@ let firefoxFlags = {
     'browser.startup.page': 0,
     'browser.shell.checkDefaultBrowser': false
 };
-const ci = process.env.TRAVIS || process.env.APPVEYOR;
 
 module.exports = function(config) {
     let configuration = {
@@ -102,6 +102,7 @@ module.exports = function(config) {
             'karma-jasmine-matchers',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
+            '@chiragrupani/karma-chromium-edge-launcher',
             'karma-coverage',
             'karma-verbose-reporter',
             'karma-detect-browsers'
@@ -155,6 +156,16 @@ module.exports = function(config) {
             Firefox_headless: {
                 base: 'FirefoxHeadless',
                 prefs: firefoxFlags
+            },
+            Edge_dev: {
+                base: 'Edge',
+                flags: chromeFlags,
+                chromeDataDir: path.resolve(__dirname, '.edge')
+            },
+            Edge_headless: {
+                base: 'EdgeHeadless',
+                flags: chromeFlags,
+                chromeDataDir: path.resolve(__dirname, '.edge')
             }
         },
         captureConsole: true,
@@ -175,6 +186,10 @@ module.exports = function(config) {
         configuration.browsers = ['Firefox_headless', 'Chrome_headless'];
         configuration.detectBrowsers.enabled = false;
         configuration.singleRun = true;
+
+        if (process.env.APPVEYOR) {
+            configuration.browsers.push('Edge_headless');
+        }
     }
 
     config.set(configuration);
