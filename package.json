@@ -55,8 +55,8 @@
     "wavesurfer.js": ">=4.6.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.8",
-    "@babel/preset-env": "^7.13.9",
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
     "@babel/register": "^7.13.8",
     "@chiragrupani/karma-chromium-edge-launcher": "^2.1.0",
     "@jsdevtools/host-environment": "^2.1.2",
@@ -66,13 +66,13 @@
     "babel-plugin-add-module-exports": "^1.0.4",
     "babel-plugin-istanbul": "^6.0.0",
     "browserslist": "^4.16.3",
-    "css-loader": "^5.1.1",
+    "css-loader": "^5.1.2",
     "css-minimizer-webpack-plugin": "^1.2.0",
     "date-fns": "^2.19.0",
-    "docsify-cli": "^4.4.2",
+    "docsify-cli": "^4.4.3",
     "esdoc": "^1.1.0",
     "esdoc-standard-plugin": "^1.0.0",
-    "eslint": "^7.21.0",
+    "eslint": "^7.22.0",
     "htmlhint": "^0.14.2",
     "in-publish": "^2.0.1",
     "jasmine-core": "^3.6.0",
@@ -93,11 +93,11 @@
     "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
-    "webpack": "^5.24.3",
+    "webpack": "^5.25.0",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^4.0.0-beta.0",
     "webpack-merge": "^5.7.3",
     "webpack-remove-empty-scripts": "^0.7.1",
-    "webrtc-adapter": "^7.7.0"
+    "webrtc-adapter": "^7.7.1"
   }
 }
