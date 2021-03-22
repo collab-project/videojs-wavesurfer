@@ -179,10 +179,6 @@ class Wavesurfer extends Plugin {
         if (this.player.options_.fluid === true) {
             // give wave element a classname so it can be styled
             this.surfer.drawer.wrapper.className = wavesurferClassName;
-            // listen for window resize events
-            this.responsiveWave = WaveSurfer.util.debounce(
-                this.onResizeChange.bind(this), 150);
-            window.addEventListener(Event.RESIZE, this.responsiveWave);
         }
     }
 
@@ -768,18 +764,6 @@ class Wavesurfer extends Plugin {
             this.player.clearInterval(fullscreenDelay);
 
         }, 100);
-    }
-
-    /**
-     * Fired when the video.js player is resized.
-     *
-     * @private
-     */
-    onResizeChange() {
-        if (this.surfer !== undefined) {
-            // redraw waveform
-            this.redrawWaveform();
-        }
     }
 
     /**

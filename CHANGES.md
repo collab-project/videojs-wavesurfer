@@ -1,5 +1,10 @@
 # videojs-wavesurfer changelog
 
+## 3.7.0 - unreleased
+
+- Remove unneccessary resize handler for `fluid` mode (#132)
+
+
 ## 3.6.0 - 2021/03/06
 
 - Bump required wavesurfer.js version to 4.6.0 or newer
