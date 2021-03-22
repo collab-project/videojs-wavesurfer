@@ -25,6 +25,7 @@ const path = require('path');
 const basePath = path.resolve(__dirname);
 
 module.exports = {
+    mode: 'development',
     context: path.join(basePath, 'src'),
     entry: {
         app: './app.js'
@@ -162,7 +163,7 @@ and place it in the root directory.
 Start the Webpack development server:
 
 ```
-./node_modules/.bin/webpack-dev-server --mode=development
+./node_modules/.bin/webpack serve --config=webpack.config.js
 ```
 
 And open http://localhost:8080/src/index.html in a browser.
