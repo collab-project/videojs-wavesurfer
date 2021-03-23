@@ -462,12 +462,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/js/videojs.wavesurfer.js~wavesurfer#onresizechange",
-    "class/src/js/videojs.wavesurfer.js~Wavesurfer.html#instance-method-onResizeChange",
-    "src/js/videojs.wavesurfer.js~Wavesurfer#onResizeChange",
-    "method"
-  ],
-  [
     "src/js/videojs.wavesurfer.js~wavesurfer#onscreenchange",
     "class/src/js/videojs.wavesurfer.js~Wavesurfer.html#instance-method-onScreenChange",
     "src/js/videojs.wavesurfer.js~Wavesurfer#onScreenChange",
@@ -544,12 +538,6 @@ window.esdocSearchIndex = [
     "class/src/js/videojs.wavesurfer.js~Wavesurfer.html#instance-method-redrawWaveform",
     "src/js/videojs.wavesurfer.js~Wavesurfer#redrawWaveform",
     "method"
-  ],
-  [
-    "src/js/videojs.wavesurfer.js~wavesurfer#responsivewave",
-    "class/src/js/videojs.wavesurfer.js~Wavesurfer.html#instance-member-responsiveWave",
-    "src/js/videojs.wavesurfer.js~Wavesurfer#responsiveWave",
-    "member"
   ],
   [
     "src/js/videojs.wavesurfer.js~wavesurfer#setaudiooutput",
