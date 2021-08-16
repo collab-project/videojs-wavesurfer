@@ -96,6 +96,11 @@ player.on('waveReady', function() {
     // print wavesurfer.js plugins
     videojs.log('active wavesurfer.js plugins: ',
         player.wavesurfer().surfer.getActivePlugins());
+
+    // listen for regions plugin events
+    player.wavesurfer().surfer.on('region-click', function(region, e) {
+        console.log("region click!");
+    });
 });
 
 // error handling
