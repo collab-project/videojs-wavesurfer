@@ -4,6 +4,7 @@
 # IDE
 .project
 .pydevproject
+.vscode
 
 *.pid
 *.log
