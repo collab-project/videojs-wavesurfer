@@ -16,7 +16,7 @@ npm install -g @vue/cli
 Create a new application, e.g. `videojs-wavesurfer-app`:
 
 ```console
-vue create --default videojs-wavesurfer-app
+vue create --default --packageManager npm videojs-wavesurfer-app
 ```
 
 Install videojs-wavesurfer:
@@ -37,7 +37,7 @@ Create `src/components/VideoJSWavesurfer.vue`:
 
 <script>
     /* eslint-disable */
-    import Vue from 'vue';
+    import { version } from 'vue'
     import 'video.js/dist/video-js.css'
     import 'videojs-wavesurfer/dist/css/videojs.wavesurfer.css'
 
@@ -78,7 +78,7 @@ Create `src/components/VideoJSWavesurfer.vue`:
                 // print version information at startup
                 var msg = 'Using video.js ' + videojs.VERSION +
                     ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer') +
-                    ', wavesurfer.js ' + WaveSurfer.VERSION + ' and vue.js ' + Vue.version;
+                    ', wavesurfer.js ' + WaveSurfer.VERSION + ' and vue.js ' + version;
                 videojs.log(msg);
 
                 // load file
