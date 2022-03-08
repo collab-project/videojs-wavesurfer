@@ -1,0 +1,6 @@
+{
+  "reject": [
+    "video.js",
+    "wavesurfer.js"
+  ]
+}
