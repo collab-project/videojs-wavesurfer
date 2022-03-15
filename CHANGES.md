@@ -1,5 +1,9 @@
 # videojs-wavesurfer changelog
 
+## 3.9.0 - unreleased
+
+- Bump required wavesurfer.js version to 6.0.4 or newer
+
 ## 3.8.0 - 2021/06/15
 
 - Bump required wavesurfer.js version to 5.0.1 or newer
