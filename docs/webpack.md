@@ -4,10 +4,17 @@ This document describes how to setup [Webpack](https://webpack.js.org/) with vid
 
 ## Installation
 
+Create a project directory:
+
+```console
+mkdir videojs-wavesurfer-webpack
+cd videojs-wavesurfer-webpack
+```
+
 Install Webpack:
 
 ```console
-npm install webpack webpack-dev-server webpack-cli css-loader style-loader -D
+npm install -D webpack webpack-dev-server webpack-cli css-loader style-loader
 ```
 
 Install videojs-wavesurfer:
@@ -36,8 +43,11 @@ module.exports = {
         publicPath: '/dist'
     },
     devServer: {
-        contentBase: basePath,
-        watchContentBase: true
+        static: {
+          directory: basePath,
+          serveIndex: true,
+          watch: true,
+        }
     },
     module: {
         rules: [{
