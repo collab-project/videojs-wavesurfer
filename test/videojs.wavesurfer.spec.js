@@ -47,7 +47,9 @@ describe('Wavesurfer', () => {
     it('starts playback', (done) => {
 
         player.one(Event.WAVE_READY, () => {
-            player.one(Event.PLAYBACK_FINISH, done);
+            player.one(Event.PLAYBACK_FINISH, () => {
+                done();
+            });
             // start playback
             player.wavesurfer().play();
         });
@@ -111,7 +113,7 @@ describe('Wavesurfer', () => {
 
         player.one(Event.PLAYBACK_FINISH, () => {
             expect(player.wavesurfer().getCurrentTime()).toBeNear(
-                TestHelpers.EXAMPLE_AUDIO_DURATION, 0.01);
+                TestHelpers.EXAMPLE_AUDIO_DURATION, 0.1);
             done();
         });
 
@@ -250,7 +252,9 @@ describe('Wavesurfer', () => {
     /** @test {Wavesurfer#onWaveFinish} */
     it('fires playbackFinish event', (done) => {
 
-        player.one(Event.PLAYBACK_FINISH, done);
+        player.one(Event.PLAYBACK_FINISH, () => {
+            done();
+        });
         player.one(Event.WAVE_READY, () => {
             expect(player.wavesurfer().waveFinished).toBeFalse();
 
@@ -276,7 +280,9 @@ describe('Wavesurfer', () => {
     /** @test {Wavesurfer#setAudioOutput} */
     it('throws error for non-existing device', (done) => {
 
-        player.one(Event.ERROR, done);
+        player.one(Event.ERROR, () => {
+            done();
+        });
 
         player.one(Event.WAVE_READY, () => {
             // set to non-existing device
@@ -297,7 +303,9 @@ describe('Wavesurfer', () => {
                 return response.blob();
             }).then((blob) => {
                 // load blob
-                player.one(Event.WAVE_READY, done);
+                player.one(Event.WAVE_READY, () => {
+                    done();
+                });
                 player.wavesurfer().load(blob);
             });
         });
@@ -307,7 +315,9 @@ describe('Wavesurfer', () => {
     /** @test {Wavesurfer#load} */
     it('loads peaks from array', (done) => {
 
-        player.one(Event.WAVE_READY, done);
+        player.one(Event.WAVE_READY, () => {
+            done();
+        });
 
         player.src({
             src: TestHelpers.EXAMPLE_AUDIO_FILE,
@@ -325,7 +335,9 @@ describe('Wavesurfer', () => {
     /** @test {Wavesurfer#load} */
     it('loads peaks from JSON file', (done) => {
 
-        player.one(Event.WAVE_READY, done);
+        player.one(Event.WAVE_READY, () => {
+            done();
+        });
 
         player.src({
             src: TestHelpers.EXAMPLE_AUDIO_FILE,
