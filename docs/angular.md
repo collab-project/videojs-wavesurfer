@@ -16,7 +16,7 @@ npm install -g @angular/cli
 Create a new application, e.g. `videojs-wavesurfer-angular`:
 
 ```console
-ng new videojs-wavesurfer-angular
+ng new --strict=false videojs-wavesurfer-angular
 ```
 
 Install `videojs-wavesurfer` and `@types/video.js`:
