@@ -3,7 +3,7 @@
 This page shows how to get started with [React](https://reactjs.org) and
 videojs-wavesurfer using [create-react-app](https://github.com/facebook/create-react-app).
 
-For more information, check the video.js [documentation](https://github.com/videojs/video.js/blob/master/docs/guides/react.md)
+For more information, check the video.js [documentation](https://videojs.com/guides/react/)
 for React.
 
 ## Installation
