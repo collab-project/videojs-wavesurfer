@@ -52,7 +52,7 @@
   ],
   "dependencies": {
     "video.js": ">=7.0.5",
-    "wavesurfer.js": ">=6.0.4"
+    "wavesurfer.js": ">=6.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
