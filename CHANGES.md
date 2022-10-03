@@ -2,7 +2,7 @@
 
 ## 3.9.0 - unreleased
 
-- Bump required wavesurfer.js version to 6.2.0 or newer
+- Bump required wavesurfer.js version to 6.3.0 or newer
 
 ## 3.8.0 - 2021/06/15
 
