@@ -1,6 +1,6 @@
 # React
 
-This page shows how to get started with [React](https://reactjs.org) and
+This guide shows you how to get started with [React](https://reactjs.org) and
 videojs-wavesurfer using [create-react-app](https://github.com/facebook/create-react-app).
 
 For more information, check the video.js [documentation](https://videojs.com/guides/react/)
@@ -23,58 +23,79 @@ npm install --save videojs-wavesurfer
 
 ## Application
 
-Replace content of `src/index.js` with:
+Replace content of `src/App.js` with:
 
 ```javascript
+import './App.css';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-const videoJsOptions = {
+import VideoJSComponent from './VideoJSComponent';
+
+function App() {
+  const playerRef = React.useRef(null);
+  const videoJsOptions = {
     controls: true,
     bigPlayButton: false,
+    inactivityTimeout: 0,
     width: 600,
     height: 300,
     fluid: false,
     plugins: {
-        wavesurfer: {
-            backend: 'MediaElement',
-            displayMilliseconds: true,
-            debug: true,
-            waveColor: '#163b5b',
-            progressColor: 'black',
-            cursorColor: 'black',
-            hideScrollbar: true
-        }
+      wavesurfer: {
+        backend: 'MediaElement',
+        displayMilliseconds: true,
+        debug: true,
+        waveColor: '#163b5b',
+        progressColor: 'black',
+        cursorColor: 'black',
+        hideScrollbar: true
+      }
     }
-};
+  };
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App { ...videoJsOptions }/>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+  const handlePlayerReady = (player) => {
+    playerRef.current = player;
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+    // handle player events
+    player.on('waveReady', (event) => {
+      console.log('waveform: ready!');
+    });
+
+    player.on('playbackFinish', (event) => {
+      console.log('playback finished.');
+    });
+
+    // error handling
+    player.on('error', (element, error) => {
+      console.error(error);
+    });
+  };
+
+  return (
+    <div className="App">
+      <VideoJSComponent options={videoJsOptions} onReady={handlePlayerReady} />
+    </div>
+  );
+}
+
+export default App;
 ```
 
-Replace content of `src/App.js`:
+Add the following to `src/App.css`:
+
+```css
+/* change player background color */
+.App video-js {
+  background-color: #ACB2F2;
+}
+```
+
+Create `src/VideoJSComponent.js`:
 
 ```javascript
-/* eslint-disable */
-import React, { Component } from 'react';
-
-import './App.css';
-
-import 'video.js/dist/video-js.css';
+import React from 'react';
 import videojs from 'video.js';
-
+import 'video.js/dist/video-js.css';
 import WaveSurfer from 'wavesurfer.js';
 
 /*
@@ -90,59 +111,62 @@ WaveSurfer.microphone = MicrophonePlugin;
 import 'videojs-wavesurfer/dist/css/videojs.wavesurfer.css';
 import Wavesurfer from 'videojs-wavesurfer/dist/videojs.wavesurfer.js';
 
-class App extends Component {
-    componentDidMount() {
-        // instantiate Video.js
-        this.player = videojs(this.audioNode, this.props, () => {
-            // print version information at startup
-            const version_info = 'Using video.js ' + videojs.VERSION +
-                ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer') +
-                ', wavesurfer.js ' + WaveSurfer.VERSION + ' and React ' + React.version;
-            videojs.log(version_info);
+export const VideoJSComponent = (props) => {
+  const videoRef = React.useRef(null);
+  const playerRef = React.useRef(null);
+  const {options, onReady} = props;
 
-            // load file
-            this.player.src({src: 'hal.wav', type: 'audio/wav'});
-        });
+  React.useEffect(() => {
 
-        this.player.on('waveReady', (event) => {
-            console.log('waveform: ready!');
-        });
+    // Make sure Video.js player is only initialized once
+    if (!playerRef.current) {
+      // The Video.js player needs to be _inside_ the component el for React 18 Strict Mode.
+      const videoElement = document.createElement("video-js");
 
-        this.player.on('playbackFinish', (event) => {
-            console.log('playback finished.');
-        });
+      videoElement.className = 'video-js vjs-default-skin';
+      videoRef.current.appendChild(videoElement);
 
-        // error handling
-        this.player.on('error', (element, error) => {
-            console.error(error);
-        });
+      const player = playerRef.current = videojs(videoElement, options, () => {
+        // print version information at startup
+        const version_info = 'Using video.js ' + videojs.VERSION +
+          ' with videojs-wavesurfer ' + videojs.getPluginVersion('wavesurfer') +
+          ', wavesurfer.js ' + WaveSurfer.VERSION + ' and React ' + React.version;
+        videojs.log(version_info);
+
+        onReady && onReady(player);
+
+        // load track
+        player.src({src: 'hal.wav', type: 'audio/wav'});
+      });
+
+    // You could update an existing player in the `else` block here
+    // on prop change, for example:
+    } else {
+      //const player = playerRef.current;
+      //player.src({src: 'hal.wav', type: 'audio/wav'});
     }
+  }, [options, videoRef]);
 
-    // destroy player on unmount
-    componentWillUnmount() {
-        if (this.player) {
-            this.player.dispose();
-        }
-    }
-    render() {
-        return (
-        <div data-vjs-player>
-            <audio id="myAudio" ref={node => this.audioNode = node} className="video-js vjs-default-skin"></audio>
-        </div>
-        );
-    }
+  // Dispose the Video.js player when the functional component unmounts
+  React.useEffect(() => {
+    const player = playerRef.current;
+
+    return () => {
+      if (player && !player.isDisposed()) {
+        player.dispose();
+        playerRef.current = null;
+      }
+    };
+  }, [playerRef]);
+
+  return (
+    <div data-vjs-player>
+      <div ref={videoRef} />
+    </div>
+  );
 }
 
-export default App;
-```
-
-Add the following to `src/index.css`:
-
-```css
-/* change player background color */
-#myAudio {
-  background-color: #ACB2F2;
-}
+export default VideoJSComponent;
 ```
 
 ## Media
