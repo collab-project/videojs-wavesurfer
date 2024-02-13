@@ -1,7 +1,7 @@
 {
   "type": "File",
   "start": 0,
-  "end": 320,
+  "end": 335,
   "loc": {
     "start": {
       "line": 1,
@@ -15,7 +15,7 @@
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 320,
+    "end": 335,
     "loc": {
       "start": {
         "line": 1,
@@ -30,8 +30,8 @@
     "body": [
       {
         "type": "Identifier",
-        "start": 65,
-        "end": 281,
+        "start": 71,
+        "end": 293,
         "loc": {
           "start": {
             "line": 7,
@@ -45,8 +45,8 @@
         "declarations": [
           {
             "type": "VariableDeclarator",
-            "start": 71,
-            "end": 280,
+            "start": 77,
+            "end": 292,
             "loc": {
               "start": {
                 "line": 7,
@@ -59,8 +59,8 @@
             },
             "id": {
               "type": "Identifier",
-              "start": 71,
-              "end": 91,
+              "start": 77,
+              "end": 97,
               "loc": {
                 "start": {
                   "line": 7,
@@ -77,8 +77,8 @@
             },
             "init": {
               "type": "ObjectExpression",
-              "start": 94,
-              "end": 280,
+              "start": 100,
+              "end": 292,
               "loc": {
                 "start": {
                   "line": 7,
@@ -92,8 +92,8 @@
               "properties": [
                 {
                   "type": "ObjectProperty",
-                  "start": 137,
-                  "end": 149,
+                  "start": 145,
+                  "end": 157,
                   "loc": {
                     "start": {
                       "line": 9,
@@ -109,8 +109,8 @@
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "start": 137,
-                    "end": 142,
+                    "start": 145,
+                    "end": 150,
                     "loc": {
                       "start": {
                         "line": 9,
@@ -127,8 +127,8 @@
                   },
                   "value": {
                     "type": "BooleanLiteral",
-                    "start": 144,
-                    "end": 149,
+                    "start": 152,
+                    "end": 157,
                     "loc": {
                       "start": {
                         "line": 9,
@@ -145,8 +145,8 @@
                     {
                       "type": "CommentLine",
                       "value": " Display console log messages.",
-                      "start": 100,
-                      "end": 132,
+                      "start": 107,
+                      "end": 139,
                       "loc": {
                         "start": {
                           "line": 8,
@@ -162,8 +162,8 @@
                 },
                 {
                   "type": "ObjectProperty",
-                  "start": 253,
-                  "end": 278,
+                  "start": 264,
+                  "end": 289,
                   "loc": {
                     "start": {
                       "line": 12,
@@ -179,8 +179,8 @@
                   "computed": false,
                   "key": {
                     "type": "Identifier",
-                    "start": 253,
-                    "end": 272,
+                    "start": 264,
+                    "end": 283,
                     "loc": {
                       "start": {
                         "line": 12,
@@ -197,8 +197,8 @@
                   },
                   "value": {
                     "type": "BooleanLiteral",
-                    "start": 274,
-                    "end": 278,
+                    "start": 285,
+                    "end": 289,
                     "loc": {
                       "start": {
                         "line": 12,
@@ -215,8 +215,8 @@
                     {
                       "type": "CommentLine",
                       "value": " Boolean indicating if milliseconds should be included,",
-                      "start": 155,
-                      "end": 212,
+                      "start": 164,
+                      "end": 221,
                       "loc": {
                         "start": {
                           "line": 10,
@@ -231,8 +231,8 @@
                     {
                       "type": "CommentLine",
                       "value": " e.g. \"00:00:000\" vs \"00:00\".",
-                      "start": 217,
-                      "end": 248,
+                      "start": 227,
+                      "end": 258,
                       "loc": {
                         "start": {
                           "line": 11,
@@ -258,8 +258,8 @@
       },
       {
         "type": "Identifier",
-        "start": 283,
-        "end": 319,
+        "start": 297,
+        "end": 333,
         "loc": {
           "start": {
             "line": 15,
@@ -272,8 +272,8 @@
         },
         "declaration": {
           "type": "Identifier",
-          "start": 298,
-          "end": 318,
+          "start": 312,
+          "end": 332,
           "loc": {
             "start": {
               "line": 15,
@@ -293,8 +293,8 @@
       },
       {
         "type": "ExportDefaultDeclaration",
-        "start": 283,
-        "end": 319,
+        "start": 297,
+        "end": 333,
         "loc": {
           "start": {
             "line": 15,
@@ -307,8 +307,8 @@
         },
         "declaration": {
           "type": "VariableDeclaration",
-          "start": 65,
-          "end": 281,
+          "start": 71,
+          "end": 293,
           "loc": {
             "start": {
               "line": 7,
@@ -322,8 +322,8 @@
           "declarations": [
             {
               "type": "VariableDeclarator",
-              "start": 71,
-              "end": 280,
+              "start": 77,
+              "end": 292,
               "loc": {
                 "start": {
                   "line": 7,
@@ -336,8 +336,8 @@
               },
               "id": {
                 "type": "Identifier",
-                "start": 71,
-                "end": 91,
+                "start": 77,
+                "end": 97,
                 "loc": {
                   "start": {
                     "line": 7,
@@ -354,8 +354,8 @@
               },
               "init": {
                 "type": "ObjectExpression",
-                "start": 94,
-                "end": 280,
+                "start": 100,
+                "end": 292,
                 "loc": {
                   "start": {
                     "line": 7,
@@ -369,8 +369,8 @@
                 "properties": [
                   {
                     "type": "ObjectProperty",
-                    "start": 137,
-                    "end": 149,
+                    "start": 145,
+                    "end": 157,
                     "loc": {
                       "start": {
                         "line": 9,
@@ -386,8 +386,8 @@
                     "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "start": 137,
-                      "end": 142,
+                      "start": 145,
+                      "end": 150,
                       "loc": {
                         "start": {
                           "line": 9,
@@ -404,8 +404,8 @@
                     },
                     "value": {
                       "type": "BooleanLiteral",
-                      "start": 144,
-                      "end": 149,
+                      "start": 152,
+                      "end": 157,
                       "loc": {
                         "start": {
                           "line": 9,
@@ -422,8 +422,8 @@
                       {
                         "type": "CommentLine",
                         "value": " Display console log messages.",
-                        "start": 100,
-                        "end": 132,
+                        "start": 107,
+                        "end": 139,
                         "loc": {
                           "start": {
                             "line": 8,
@@ -439,8 +439,8 @@
                   },
                   {
                     "type": "ObjectProperty",
-                    "start": 253,
-                    "end": 278,
+                    "start": 264,
+                    "end": 289,
                     "loc": {
                       "start": {
                         "line": 12,
@@ -456,8 +456,8 @@
                     "computed": false,
                     "key": {
                       "type": "Identifier",
-                      "start": 253,
-                      "end": 272,
+                      "start": 264,
+                      "end": 283,
                       "loc": {
                         "start": {
                           "line": 12,
@@ -474,8 +474,8 @@
                     },
                     "value": {
                       "type": "BooleanLiteral",
-                      "start": 274,
-                      "end": 278,
+                      "start": 285,
+                      "end": 289,
                       "loc": {
                         "start": {
                           "line": 12,
@@ -492,8 +492,8 @@
                       {
                         "type": "CommentLine",
                         "value": " Boolean indicating if milliseconds should be included,",
-                        "start": 155,
-                        "end": 212,
+                        "start": 164,
+                        "end": 221,
                         "loc": {
                           "start": {
                             "line": 10,
@@ -508,8 +508,8 @@
                       {
                         "type": "CommentLine",
                         "value": " e.g. \"00:00:000\" vs \"00:00\".",
-                        "start": 217,
-                        "end": 248,
+                        "start": 227,
+                        "end": 258,
                         "loc": {
                           "start": {
                             "line": 11,
@@ -532,9 +532,9 @@
           "leadingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * @file defaults.js\n * @since 2.0.0\n ",
+              "value": "*\r\n * @file defaults.js\r\n * @since 2.0.0\r\n ",
               "start": 0,
-              "end": 44,
+              "end": 47,
               "loc": {
                 "start": {
                   "line": 1,
@@ -549,8 +549,8 @@
             {
               "type": "CommentLine",
               "value": " plugin defaults",
-              "start": 46,
-              "end": 64,
+              "start": 51,
+              "end": 69,
               "loc": {
                 "start": {
                   "line": 6,
@@ -572,9 +572,9 @@
   "comments": [
     {
       "type": "CommentBlock",
-      "value": "*\n * @file defaults.js\n * @since 2.0.0\n ",
+      "value": "*\r\n * @file defaults.js\r\n * @since 2.0.0\r\n ",
       "start": 0,
-      "end": 44,
+      "end": 47,
       "loc": {
         "start": {
           "line": 1,
@@ -589,8 +589,8 @@
     {
       "type": "CommentLine",
       "value": " plugin defaults",
-      "start": 46,
-      "end": 64,
+      "start": 51,
+      "end": 69,
       "loc": {
         "start": {
           "line": 6,
@@ -605,8 +605,8 @@
     {
       "type": "CommentLine",
       "value": " Display console log messages.",
-      "start": 100,
-      "end": 132,
+      "start": 107,
+      "end": 139,
       "loc": {
         "start": {
           "line": 8,
@@ -621,8 +621,8 @@
     {
       "type": "CommentLine",
       "value": " Boolean indicating if milliseconds should be included,",
-      "start": 155,
-      "end": 212,
+      "start": 164,
+      "end": 221,
       "loc": {
         "start": {
           "line": 10,
@@ -637,8 +637,8 @@
     {
       "type": "CommentLine",
       "value": " e.g. \"00:00:000\" vs \"00:00\".",
-      "start": 217,
-      "end": 248,
+      "start": 227,
+      "end": 258,
       "loc": {
         "start": {
           "line": 11,
@@ -654,9 +654,9 @@
   "tokens": [
     {
       "type": "CommentBlock",
-      "value": "*\n * @file defaults.js\n * @since 2.0.0\n ",
+      "value": "*\r\n * @file defaults.js\r\n * @since 2.0.0\r\n ",
       "start": 0,
-      "end": 44,
+      "end": 47,
       "loc": {
         "start": {
           "line": 1,
@@ -671,8 +671,8 @@
     {
       "type": "CommentLine",
       "value": " plugin defaults",
-      "start": 46,
-      "end": 64,
+      "start": 51,
+      "end": 69,
       "loc": {
         "start": {
           "line": 6,
@@ -699,8 +699,8 @@
         "updateContext": null
       },
       "value": "const",
-      "start": 65,
-      "end": 70,
+      "start": 71,
+      "end": 76,
       "loc": {
         "start": {
           "line": 7,
@@ -725,8 +725,8 @@
         "binop": null
       },
       "value": "pluginDefaultOptions",
-      "start": 71,
-      "end": 91,
+      "start": 77,
+      "end": 97,
       "loc": {
         "start": {
           "line": 7,
@@ -752,8 +752,8 @@
         "updateContext": null
       },
       "value": "=",
-      "start": 92,
-      "end": 93,
+      "start": 98,
+      "end": 99,
       "loc": {
         "start": {
           "line": 7,
@@ -777,8 +777,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 94,
-      "end": 95,
+      "start": 100,
+      "end": 101,
       "loc": {
         "start": {
           "line": 7,
@@ -793,8 +793,8 @@
     {
       "type": "CommentLine",
       "value": " Display console log messages.",
-      "start": 100,
-      "end": 132,
+      "start": 107,
+      "end": 139,
       "loc": {
         "start": {
           "line": 8,
@@ -819,8 +819,8 @@
         "binop": null
       },
       "value": "debug",
-      "start": 137,
-      "end": 142,
+      "start": 145,
+      "end": 150,
       "loc": {
         "start": {
           "line": 9,
@@ -845,8 +845,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 142,
-      "end": 143,
+      "start": 150,
+      "end": 151,
       "loc": {
         "start": {
           "line": 9,
@@ -873,8 +873,8 @@
         "updateContext": null
       },
       "value": "false",
-      "start": 144,
-      "end": 149,
+      "start": 152,
+      "end": 157,
       "loc": {
         "start": {
           "line": 9,
@@ -899,8 +899,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 149,
-      "end": 150,
+      "start": 157,
+      "end": 158,
       "loc": {
         "start": {
           "line": 9,
@@ -915,8 +915,8 @@
     {
       "type": "CommentLine",
       "value": " Boolean indicating if milliseconds should be included,",
-      "start": 155,
-      "end": 212,
+      "start": 164,
+      "end": 221,
       "loc": {
         "start": {
           "line": 10,
@@ -931,8 +931,8 @@
     {
       "type": "CommentLine",
       "value": " e.g. \"00:00:000\" vs \"00:00\".",
-      "start": 217,
-      "end": 248,
+      "start": 227,
+      "end": 258,
       "loc": {
         "start": {
           "line": 11,
@@ -957,8 +957,8 @@
         "binop": null
       },
       "value": "displayMilliseconds",
-      "start": 253,
-      "end": 272,
+      "start": 264,
+      "end": 283,
       "loc": {
         "start": {
           "line": 12,
@@ -983,8 +983,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 272,
-      "end": 273,
+      "start": 283,
+      "end": 284,
       "loc": {
         "start": {
           "line": 12,
@@ -1011,8 +1011,8 @@
         "updateContext": null
       },
       "value": "true",
-      "start": 274,
-      "end": 278,
+      "start": 285,
+      "end": 289,
       "loc": {
         "start": {
           "line": 12,
@@ -1036,8 +1036,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 279,
-      "end": 280,
+      "start": 291,
+      "end": 292,
       "loc": {
         "start": {
           "line": 13,
@@ -1062,8 +1062,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 280,
-      "end": 281,
+      "start": 292,
+      "end": 293,
       "loc": {
         "start": {
           "line": 13,
@@ -1090,8 +1090,8 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 283,
-      "end": 289,
+      "start": 297,
+      "end": 303,
       "loc": {
         "start": {
           "line": 15,
@@ -1118,8 +1118,8 @@
         "updateContext": null
       },
       "value": "default",
-      "start": 290,
-      "end": 297,
+      "start": 304,
+      "end": 311,
       "loc": {
         "start": {
           "line": 15,
@@ -1144,8 +1144,8 @@
         "binop": null
       },
       "value": "pluginDefaultOptions",
-      "start": 298,
-      "end": 318,
+      "start": 312,
+      "end": 332,
       "loc": {
         "start": {
           "line": 15,
@@ -1170,8 +1170,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 318,
-      "end": 319,
+      "start": 332,
+      "end": 333,
       "loc": {
         "start": {
           "line": 15,
@@ -1196,8 +1196,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 320,
-      "end": 320,
+      "start": 335,
+      "end": 335,
       "loc": {
         "start": {
           "line": 16,
