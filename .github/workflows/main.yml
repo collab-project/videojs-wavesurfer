@@ -18,11 +18,18 @@ jobs:
           - 20
         architecture:
           - x64
-    name: Node ${{ matrix.node_version }} - ${{ matrix.architecture }} on ${{ matrix.os }}
+    name: ${{ matrix.os }} - Node ${{ matrix.node-version }} (${{ matrix.architecture }})
     steps:
       - uses: actions/checkout@v4
       - name: Update system
-        run: sudo apt-get update
+        shell: bash
+        run: |
+              if [ "$RUNNER_OS" == "Linux" ]; then
+                  sudo apt-get update
+              else
+                  echo "$RUNNER_OS not supported"
+                  exit 1
+              fi
       - name: Install system dependencies
         shell: bash
         run: |
