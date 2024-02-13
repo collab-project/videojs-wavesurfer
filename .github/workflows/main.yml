@@ -13,20 +13,20 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16]
+        node-version: [20]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Update system
       run: sudo apt-get update
     - name: Install system dependencies
       run: sudo apt-get install -y ubuntu-restricted-addons chromium-codecs-ffmpeg-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly gstreamer1.0-vaapi
     - name: Using Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
     - name: Cache Node.js modules
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         # npm cache files are stored in `~/.npm` on Linux/macOS
         path: ~/.npm
@@ -42,7 +42,7 @@ jobs:
       run: npm run test
     - name: Coveralls
       if: always()
-      uses: coverallsapp/github-action@master
+      uses: coverallsapp/github-action@v2
       with:
         path-to-lcov: ${{ github.workspace }}/coverage/lcov/lcov.info
         github-token: ${{ secrets.GITHUB_TOKEN }}
