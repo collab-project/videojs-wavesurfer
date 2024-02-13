@@ -89,7 +89,12 @@ class Wavesurfer extends Plugin {
         player.addClass(wavesurferStyleName);
 
         // parse options
-        options = videojs.mergeOptions(pluginDefaultOptions, options);
+        if (videojs.obj !== undefined) {
+            // video.js v8 and newer
+            options = videojs.obj.merge(pluginDefaultOptions, options);
+        } else {
+            options = videojs.mergeOptions(pluginDefaultOptions, options);
+        }
         this.waveReady = false;
         this.waveFinished = false;
         this.liveMode = false;
@@ -869,7 +874,12 @@ class Wavesurfer extends Plugin {
     setFormatTime(customImplementation) {
         this._formatTime = customImplementation;
 
-        videojs.setFormatTime(this._formatTime);
+        if (videojs.time) {
+            // video.js v8 and newer
+            videojs.time.setFormatTime(this._formatTime);
+        } else {
+            videojs.setFormatTime(this._formatTime);
+        }
     }
 }
 
