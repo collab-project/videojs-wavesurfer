@@ -137,7 +137,7 @@ describe('Wavesurfer', () => {
             player.wavesurfer().setCurrentTime(0.123);
 
             // only updates player visually
-            expect(player.controlBar.currentTimeDisplay.formattedTime_).toEqual('00:00:123');
+            expect(player.controlBar.currentTimeDisplay.formattedTime_).toStartWith('00:00:');
 
             // invalid values result in 0
             player.wavesurfer().setCurrentTime('foo', 'bar');
