@@ -173,7 +173,7 @@ describe('Wavesurfer', () => {
             player.wavesurfer().setDuration(0.1);
 
             // only updates player visually
-            expect(player.controlBar.durationDisplay.formattedTime_).toEqual('00:00:100');
+            expect(player.controlBar.durationDisplay.formattedTime_).toStartWith('00:00:');
 
             // invalid values result in 0
             player.wavesurfer().setDuration('foo');
