@@ -1,6 +1,6 @@
 # Usage
 
-The plugin depends on the video.js and wavesurfer.js libraries:
+The plugin depends on the video.js and wavesurfer.js 6.x libraries:
 
 ```javascript
 // style

@@ -26,14 +26,14 @@ Alternative CDN locations:
 
 - https://cdn.jsdelivr.net/npm/videojs-wavesurfer/
 - https://cdnjs.com/libraries/videojs-wavesurfer
-- http://www.bootcdn.cn/videojs-wavesurfer
+- https://www.bootcdn.cn/videojs-wavesurfer/
 
 ## Upgrade
 
 Since v3.0 this plugin is compatible with:
 
 - video.js 7.0.5 or newer
-- wavesurfer.js 3.3.0 or newer
+- wavesurfer.js 6.3.0 or newer. wavesurfer.js 7.x is not supported.
 
 If you want to use this plugin with an older video.js or wavesurfer.js version,
 check the [archived releases](https://github.com/collab-project/videojs-wavesurfer/releases)
