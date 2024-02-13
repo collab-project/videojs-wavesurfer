@@ -4,7 +4,7 @@
 
 import document from 'global/document';
 
-import {Player, mergeOptions} from 'video.js';
+import {Player, obj} from 'video.js';
 
 const TestHelpers = {
 
@@ -75,7 +75,7 @@ const TestHelpers = {
         document.getElementsByTagName('body')[0].appendChild(elementTag);
 
         // default options
-        let opts = mergeOptions({
+        let opts = obj.merge({
             controls: true,
             autoplay: false,
             fluid: false,

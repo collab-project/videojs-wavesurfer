@@ -1,5 +1,11 @@
 # videojs-wavesurfer changelog
 
+## 3.10.0 - unreleased
+
+- Fix deprecation warnings for video.js v8.x
+- Limit wavesurfer.js version; v7.x or newer is not supported
+
+
 ## 3.9.0 - 2022/10/03
 
 - Bump required wavesurfer.js version to 6.3.0 or newer

@@ -131,6 +131,13 @@ module.exports = function(config) {
                     if (ch > -1) {
                         availableBrowsers[ch] = 'Chromium_dev';
                     }
+                    if (availableBrowsers.indexOf('IE') > -1) {
+                        // remove obsolete IE
+                        let i = result.indexOf('IE');
+                        if (i !== -1) {
+                            result.splice(i, 1);
+                        }
+                    }
                     return result;
                 }
             }
