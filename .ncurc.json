@@ -1,5 +1,6 @@
 {
   "reject": [
+    "parse-ms",
     "video.js",
     "wavesurfer.js"
   ]
